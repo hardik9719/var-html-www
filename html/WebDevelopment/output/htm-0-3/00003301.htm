@@ -1,0 +1,9 @@
+<html>\n<title>".$this->title."</title>\n<body>\n".
+	       "<form><input type=hidden name=formid value=$formid>\n".
+	       $form."<p>\n";
+
+	if ($this->capb_backup) {
+		$form.="<input type=submit value=".gettext("Back")." name=back>\n";
+	}
+	$form.="<input type=submit value=".gettext("Next").">\n";
+	$form.="</form>\n</body>\n</html>

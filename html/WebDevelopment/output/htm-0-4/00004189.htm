@@ -1,0 +1,38 @@
+<html><h1 class="refsect1">TO_YMINTERVAL</h1>
+<p><code>TO_YMINTERVAL</code> converts a text expression to an <code>INTERVAL YEAR TO MONTH</code> data type. The function accepts argument in one of the two formats:</p>
+<ul>
+<li>
+<p>SQL interval format compatible with the SQL standard (ISO/IEC 9075:2003)</p>
+</li>
+<li>
+<p>ISO duration format compatible with the ISO 8601:2004 standard</p>
+</li>
+</ul>
+<p class="titleinrefsubsect"><a id="sthref704" name="sthref704"></a>Return Value</p>
+<pre xml:space="preserve" class="oac_no_warn">INTERVAL YEAR TO MONTH
+</pre>
+<p class="titleinrefsubsect"><a id="sthref705" name="sthref705"></a>Syntax</p>
+<pre xml:space="preserve" class="oac_no_warn"><span class="bold">TO_YMINTERVAL </span> ( ' { sql_format | ym_iso_format } ' )
+
+sql_format::=
+[+|-] years - months
+
+<span class="italic">ym_iso_format</span>::=
+[-] <span class="bold">P </span> [ years <span class="bold">Y </span> ] [months <span class="bold">M </span>] [days <span class="bold">D </span>] [ <span class="bold">T </span> [hours <span class="bold">H </span>] [minutes <span class="bold">M </span>] [seconds [. frac_secs] <span class="bold">S </span> ] ]
+</pre>
+<p class="titleinrefsubsect"><a id="sthref706" name="sthref706"></a>Arguments</p>
+<p><span class="bolditalic">In SQL format:</span></p>
+<p><code>years</code> is an integer between 0 and 999999999</p>
+<p><code>months</code> is an integer between 0 and 11.</p>
+<p>Additional blanks are allowed between format elements.</p>
+<p><span class="bolditalic">In ISO format:</span></p>
+<p><code>years</code> and <code>months</code> are integers between 0 and 999999999.</p>
+<p><code>days</code>, <code>hours</code>, <code>minutes</code>, <code>seconds</code>, and <code>frac_secs</code> are nonnegative integers and are ignored.</p>
+<p>No blanks are allowed in the value.</p>
+<p class="titleinrefsubsect"><a id="sthref707" name="sthref707"></a>Examples</p>
+<p><code>TO_YMINTERVAL('1-6')</code> and <code>TO_YMINTERVAL('P1Y6M')</code> return the value <code>+01-06</code> for 1 year and 6 months.</p>
+<p><code>SYSDATE + TO_YMINTERVAL('1-6')</code> adds one year and six months to the current date. When <code>SYSDATE</code> is <code>15-APR-08</code>, the value is <code>15-OCT-09</code>.</p>
+<p><code>SYSDATE + TO_YMINTERVAL('P1Y6M')</code> adds one year and six months to the current date using ISO format. When <code>SYSDATE</code> is <code>15-APR-08</code>, the value is <code>15-OCT-09</code>.</p>
+<p><code>SYSDATE + TO_YMINTERVAL('-1-2')</code> subtracts one year and two months from the current date. When <code>SYSDATE</code> is <code>15-APR-08</code>, the value is <code>15-FEB-07</code>.</p>
+</div>
+</html>

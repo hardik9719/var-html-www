@@ -1,0 +1,16 @@
+<html><h1 class="refsect1">TRANSLATE</h1>
+<p><code>TRANSLATE</code> enables you to make several single-character, one-to-one substitutions in one operation. This expression returns an expression with all occurrences of each character in one string replaced by its corresponding character in a second string.</p>
+<p class="titleinrefsubsect"><a id="sthref708" name="sthref708"></a>Return Value</p>
+<pre xml:space="preserve" class="oac_no_warn">CHAR | NCHAR | VARCHAR2 | NVARCHAR2
+</pre>
+<p class="titleinrefsubsect"><a id="sthref709" name="sthref709"></a>Syntax</p>
+<pre xml:space="preserve" class="oac_no_warn"><span class="bold">TRANSLATE</span>(expr, from_string, to_string)
+</pre>
+<p class="titleinrefsubsect"><a id="sthref710" name="sthref710"></a>Arguments</p>
+<p><code>expr</code> is a text expression to be modified.</p>
+<p><code>from_string</code> consists of one or more characters to be replaced in <code>expr</code>.</p>
+<p><code>to_string</code> consists of one or more characters that replace the corresponding characters in <code>from_string</code>. This string can be shorter than <code>from_string</code>, so that a null replaces the extra characters. However, <code>to_string</code> cannot be empty.</p>
+<p class="titleinrefsubsect"><a id="sthref711" name="sthref711"></a>Example</p>
+<p><code>TRANSLATE('disk', 'dk', 'Dc')</code> returns the value <code>Disc</code>.</p>
+</div>
+</html>

@@ -1,0 +1,16 @@
+<html>
+            <head>
+                <link rel="stylesheet" type="text/css" href="stylesheet.css"/>
+            </head>
+            <body>
+                <h2>Files</h2>
+                <p>
+                    <table width="100%">
+                        <!-- For each file create its part -->
+                        <xsl:apply-templates select="file[count(error) != 0]" mode="all.classes">
+                            <xsl:sort select="substring-after(@name, $basedir)"/>
+                        </xsl:apply-templates>
+                    </table>
+                </p>
+            </body>
+        </html>

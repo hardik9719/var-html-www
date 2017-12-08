@@ -1,0 +1,15 @@
+<html><h1 class="refsect1">FROM_TZ</h1>
+<p><code>FROM_TZ</code> converts a timestamp value and a time zone to a <code>TIMESTAMP WITH TIME ZONE</code> data type.</p>
+<p class="titleinrefsubsect"><a id="sthref424" name="sthref424"></a>Return Value</p>
+<pre xml:space="preserve" class="oac_no_warn">TIMESTAMP WITH TIME ZONE
+</pre>
+<p class="titleinrefsubsect"><a id="sthref425" name="sthref425"></a>Syntax</p>
+<pre xml:space="preserve" class="oac_no_warn"><span class="bold">FROM_TZ</span> (timestamp_value, time_zone_value)
+</pre>
+<p class="titleinrefsubsect"><a id="sthref426" name="sthref426"></a>Arguments</p>
+<p><code>timestamp_value</code> is an expression with a <code>TIMESTAMP</code> data type.</p>
+<p><code>time_zone_value</code> is a text expression that returns a string in the format <code>TZH:TZM</code> or in <code>TZR</code> with optional <code>TZD</code> format.</p>
+<p class="titleinrefsubsect"><a id="sthref427" name="sthref427"></a>Example</p>
+<p><code>FROM_TZ(TIMESTAMP '2008-03-26 08:00:00', '3:00')</code> returns the value <code>26-MAR-08 08.00.00.000000 AM +03:00</code>.</p>
+</div>
+</html>

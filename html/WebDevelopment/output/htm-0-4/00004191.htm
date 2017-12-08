@@ -1,0 +1,15 @@
+<html><h1 class="refsect1">TRANSLATE (USING)</h1>
+<p><code>TRANSLATE</code> converts a text string between the database character set and the national character set.</p>
+<p><span class="bold">Note</span>: The <code>TRANSLATE USING</code> function is supported primarily for ANSI compatibility. Oracle recommends that you use the <code>TO_CHAR</code> and <code>TO_NCHAR</code> functions for converting data to the database or national character sets. <code>TO_CHAR</code> and <code>TO_NCHAR</code> can take as arguments a greater variety of data types than <code>TRANSLATE USING</code>, which accepts only character data.</p>
+<p class="titleinrefsubsect"><a id="sthref712" name="sthref712"></a>Return Value</p>
+<pre xml:space="preserve" class="oac_no_warn">VARCHAR2 | NVARCHAR2
+</pre>
+<p class="titleinrefsubsect"><a id="sthref713" name="sthref713"></a>Syntax</p>
+<pre xml:space="preserve" class="oac_no_warn"><span class="bold">TRANSLATE </span>(char <span class="bold">USING </span>{ <span class="bold">CHAR_CS </span>| <span class="bold">NCHAR_CS</span> } )
+</pre>
+<p class="titleinrefsubsect"><a id="sthref714" name="sthref714"></a>Arguments</p>
+<p><code>char</code> is a text expression to be converted to the database character set (<code>USING CHAR_CS</code>) or the national character set (<code>USING NCHAR_CS</code>).</p>
+<p class="titleinrefsubsect"><a id="sthref715" name="sthref715"></a>Example</p>
+<p><code>TRANSLATE('north by northwest' USING NCHAR_CS)</code> returns the value <code>north by northwest</code> in the national character set.</p>
+</div>
+</html>

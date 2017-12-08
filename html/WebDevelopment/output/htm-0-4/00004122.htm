@@ -1,0 +1,30 @@
+<html><h1 class="refsect1">INSTR</h1>
+<p>The <code>INSTR</code> functions search <code>string</code> for <code>substring</code>. The function returns an integer indicating the position of the character in <code>string</code>, or a zero (0) if does not find a match.</p>
+<ul>
+<li>
+<p><code>INSTR</code> calculates strings using characters as defined by the input character set.</p>
+</li>
+<li>
+<p><code>INSTRB</code> uses bytes instead of characters.</p>
+</li>
+<li>
+<p><code>INSTRC</code> uses Unicode complete characters.</p>
+</li>
+</ul>
+<p><code>REGEXP_INSTR</code> provides additional options.</p>
+<p class="titleinrefsubsect"><a id="sthref440" name="sthref440"></a>Return Value</p>
+<pre xml:space="preserve" class="oac_no_warn">NUMBER
+</pre>
+<p class="titleinrefsubsect"><a id="sthref441" name="sthref441"></a>Syntax</p>
+<pre xml:space="preserve" class="oac_no_warn">{ <span class="bold">INSTR</span> | <span class="bold">INSTRB</span> | <span class="bold">INSTRC</span> }
+(string , substring [, position [, occurrence ] ])
+</pre>
+<p class="titleinrefsubsect"><a id="sthref442" name="sthref442"></a>Arguments</p>
+<p><code>string</code> is the text expression to search.</p>
+<p><code>substring</code> is the text string to search for.</p>
+<p><code>position</code> is a nonzero integer indicating the character in <code>string</code> where the function begins the search. When position is negative, then <code>INSTR</code> counts and searches backward from the end of string. The default value of position is 1, which means that the function begins searching at the first character of string.</p>
+<p><code>occurrence</code> is an integer indicating which occurrence of string the function should search for. The value of occurrence must be positive. The default values of occurrence is 1, meaning the function searches for the first occurrence of <code>substring</code>.</p>
+<p class="titleinrefsubsect"><a id="sthref443" name="sthref443"></a>Example</p>
+<p><code>INSTR('CORPORATE FLOOR','OR', 3, 2)</code> searches the string CORPORATE FLOOR beginning with the third character (R) for the second instance of the substring OR. It returns the value <code>14</code>, which is the position of the second O in FLOOR.</p>
+</div>
+</html>

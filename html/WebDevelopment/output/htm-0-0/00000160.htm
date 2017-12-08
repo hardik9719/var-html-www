@@ -1,0 +1,84 @@
+<html>
+					<xsl:if test="$fRtl = 'true'">
+						<xsl:attribute name="dir">rtl</xsl:attribute>
+					</xsl:if>
+					<head>
+					  	<meta http-equiv="Content-Type" content="text/html" />
+						<xsl:call-template name="DefaultStyle"></xsl:call-template>
+					</head>
+					<body scroll="auto">
+						<xsl:call-template name="dlcstyleBody" />
+						<span>
+							<xsl:choose>
+								<xsl:when test="/ct:contentTypeSchema">
+									<xsl:choose>
+										<xsl:when test="$fxsnvCore = 'true'">
+											<!-- Core properties only -->
+											<div style="MARGIN-TOP: 0px">
+												<xsl:for-each select="xsd:schema[@targetNamespace= $coreNSUri]/xsd:complexType/*/xsd:element[
+																		not(@ref) or @ref != 'dc:description']">
+													<xsl:call-template name="outputPropertyCoreAndDc" />
+												</xsl:for-each>
+											</div>
+											<div style="MARGIN-TOP: 0px">
+												<xsl:for-each select="xsd:schema[@targetNamespace= $coreNSUri]/xsd:complexType/*/xsd:element[
+																		@ref = 'dc:description']">
+													<xsl:call-template name="outputPropertyCoreAndDc" />
+												</xsl:for-each>
+											</div>
+										</xsl:when>
+										<xsl:otherwise>
+											<xsl:variable name="elements"
+												select="xsd:schema[not(@ma:root = 'true')]//xsd:element[
+															(not(@name) or @name != 'contentType') and
+															@ma:index and
+															not(@ma:hidden = 'true') and
+															(not(@ma:readOnly = 'true') or
+															@name = 'RatingCount' or @name = 'AverageRating')]" />
+											<div style="MARGIN-TOP: 0px">
+												<!-- First set of properties to be shown -->
+												<xsl:for-each select="$elements[
+																	@ma:richText = 'true' or
+																	not(@ref = 'dc:description' or
+																		xsd:simpleType/xsd:restriction/@base = 'dms:Note' or
+																		xsd:complexType/xsd:complexContent/*/@base = 'dms:MultiChoice' or
+																		xsd:complexType/xsd:complexContent/*/@base = 'dms:MultiChoiceFillIn' or
+																		xsd:complexType/xsd:complexContent/*/@base = 'dms:MultiChoiceLookup')]">
+													<xsl:sort select="@ma:index" data-type="number" />
+													<xsl:call-template name="outputProperty" />
+												</xsl:for-each>
+											</div>
+											<div style="MARGIN-TOP: 0px">
+												<!-- Display large controls at the bottom of the form -->
+												<xsl:for-each select="$elements[
+																	not(@ma:richText = 'true') and
+																	(@ref = 'dc:description' or
+																	 xsd:simpleType/xsd:restriction/@base = 'dms:Note' or
+																	 xsd:complexType/xsd:complexContent/*/@base = 'dms:MultiChoice' or
+																	 xsd:complexType/xsd:complexContent/*/@base = 'dms:MultiChoiceFillIn' or
+																	 xsd:complexType/xsd:complexContent/*/@base = 'dms:MultiChoiceLookup')]">
+													<xsl:sort select="@ma:index" data-type="number" />
+													<xsl:call-template name="outputProperty" />
+												</xsl:for-each>
+											</div>
+										</xsl:otherwise>
+									</xsl:choose>
+								</xsl:when>
+								<xsl:when test="/xsd:schema[@targetNamespace= $coreNSUri]">
+									<div style="MARGIN-TOP: 0px">
+										<!-- First set of properties to be shown -->
+										<xsl:for-each select="xsd:complexType/*/xsd:element[not(@ref) or @ref != 'dc:description']">
+											<xsl:call-template name="outputPropertyCoreAndDc" />
+										</xsl:for-each>
+									</div>
+									<div style="MARGIN-TOP: 0px">
+										<!-- Display large controls at the bottom of the form -->
+										<xsl:for-each select="xsd:complexType/*/xsd:element[@ref = 'dc:description']">
+											<xsl:call-template name="outputPropertyCoreAndDc" />
+										</xsl:for-each>
+									</div>
+								</xsl:when>
+							</xsl:choose>
+						</span>
+					</body>
+				</html>

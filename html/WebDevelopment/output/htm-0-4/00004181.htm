@@ -1,0 +1,20 @@
+<html><h1 class="refsect1">TO_DATE</h1>
+<p><code>TO_DATE</code> converts a text expression to a <code>DATE</code> data type.</p>
+<p class="titleinrefsubsect"><a id="sthref672" name="sthref672"></a>Return Value</p>
+<pre xml:space="preserve" class="oac_no_warn">DATE
+</pre>
+<p class="titleinrefsubsect"><a id="sthref673" name="sthref673"></a>Syntax</p>
+<pre xml:space="preserve" class="oac_no_warn"><span class="bold">TO_DATE</span>(char [, fmt [, 'nlsparam' ] ])
+</pre>
+<p class="titleinrefsubsect"><a id="sthref674" name="sthref674"></a>Arguments</p>
+<p><code>char</code> is a text expression that represents a date.</p>
+<p><code>fmt</code> is a datetime model format specifying the format of <code>char</code>. The default date format is determined implicitly by the <code>NLS_TERRITORY</code> initialization parameter or can be set explicitly by the <code>NLS_DATE_FORMAT</code> parameter. For data type formats, refer to the <span class="italic">Oracle Database SQL Language Reference</span>.</p>
+<p><code>nlsparam</code> specifies the language of <code>char</code>. This argument can have this form:</p>
+<pre xml:space="preserve" class="oac_no_warn">'NLS_DATE_LANGUAGE = language' 
+</pre>
+<p>By default, <code>char</code> is in the session date language.</p>
+<p class="titleinrefsubsect"><a id="sthref675" name="sthref675"></a>Examples</p>
+<p><code>TO_DATE('October 13, 2008', 'MONTH DD, YYYY')</code> returns the value <code>13-OCT-08</code>.</p>
+<p><code>TO_DATE('13 Octubre 2008', 'dd month yyyy', 'NLS_DATE_LANGUAGE=SPANISH')</code> also returns the value <code>13-OCT-08</code></p>
+</div>
+</html>

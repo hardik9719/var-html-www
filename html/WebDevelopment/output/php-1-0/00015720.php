@@ -1,0 +1,1 @@
+<?php\nrequire 'db_connect.php';\n$name=$_POST[\"name\"];\n$lat=$_POST[\"latitude\"];\n$lng=$_POST[\"longitude\"];\n$updateQuery= \"update UserLocation set latitude='$lat', longitude='$lng' where name='$name' \";\n$updateQuery=mysqli_query($connection,$updateQuery);\nif($updateQuery)\n echo $name;\nelse\n\techo \"Cannot update\";\n\n?>

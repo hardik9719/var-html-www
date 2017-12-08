@@ -1,0 +1,86 @@
+<html>
+      <head>
+          <link rel="stylesheet" type="text/css" href="stylesheet.css"/>
+      </head>
+      <body>
+         <xsl:call-template name="pageHeader"/>
+  <table width="100%"><tr align="left"><h2>Packages</h2><td>
+  </td><td align="right">
+  [<a href="overview-summary.html">summary</a>]
+  [packages]
+  [<a href="overview-cycles.html">cycles</a>]
+  [<a href="overview-explanations.html">explanations</a>]
+   </td></tr></table>
+
+  <xsl:for-each select="./Packages/Package">
+    <xsl:if test="count(error) = 0">
+      <h3><a><xsl:attribute name="name">PK<xsl:value-of select="@name"/></xsl:attribute>
+      <xsl:value-of select="@name"/></a></h3>
+
+      <table width="100%"><tr>
+        <td><a href="overview-explanations.html#EXafferent">Afferent Couplings</a>: <xsl:value-of select="Stats/Ca"/></td>
+        <td><a href="overview-explanations.html#EXefferent">Efferent Couplings</a>: <xsl:value-of select="Stats/Ce"/></td>
+        <td><a href="overview-explanations.html#EXabstractness">Abstractness</a>: <xsl:value-of select="Stats/A"/></td>
+        <td><a href="overview-explanations.html#EXinstability">Instability</a>: <xsl:value-of select="Stats/I"/></td>
+        <td><a href="overview-explanations.html#EXdistance">Distance</a>: <xsl:value-of select="Stats/D"/></td>
+      </tr></table>
+
+      <table width="100%" class="details">
+        <tr>
+          <th>Abstract Classes</th>
+          <th>Concrete Classes</th>
+          <th>Used by Packages</th>
+          <th>Uses Packages</th>
+        </tr>
+        <tr>
+          <td valign="top" width="25%">
+          <xsl:if test="count(AbstractClasses/Class)=0">
+              <i>None</i>
+            </xsl:if>
+            <xsl:for-each select="AbstractClasses/Class">
+              <xsl:value-of select="node()"/><br/>
+            </xsl:for-each>
+          </td>
+          <td valign="top" width="25%">
+            <xsl:if test="count(ConcreteClasses/Class)=0">
+              <i>None</i>
+            </xsl:if>
+            <xsl:for-each select="ConcreteClasses/Class">
+              <xsl:value-of select="node()"/><br/>
+            </xsl:for-each>
+          </td>
+          <td valign="top" width="25%">
+            <xsl:if test="count(UsedBy/Package)=0">
+              <i>None</i>
+            </xsl:if>
+            <xsl:for-each select="UsedBy/Package">
+              <a>
+                        <xsl:attribute name="href">overview-packages.html#PK<xsl:value-of select="node()"/></xsl:attribute>
+                <xsl:value-of select="node()"/>
+              </a><br/>
+            </xsl:for-each>
+          </td>
+          <td valign="top" width="25%">
+            <xsl:if test="count(DependsUpon/Package)=0">
+              <i>None</i>
+            </xsl:if>
+            <xsl:for-each select="DependsUpon/Package">
+              <a>
+                        <xsl:attribute name="href">overview-packages.html#PK<xsl:value-of select="node()"/></xsl:attribute>
+                <xsl:value-of select="node()"/>
+              </a><br/>
+            </xsl:for-each>
+          </td>
+        </tr>
+      </table>
+    </xsl:if>
+  </xsl:for-each>
+  <!-- this is often a long listing; provide a lower navigation table also -->
+  <table width="100%"><tr align="left"><td></td><td align="right">
+  [<a href="overview-summary.html">summary</a>]
+  [packages]
+  [<a href="overview-cycles.html">cycles</a>]
+  [<a href="overview-explanations.html">explanations</a>]
+   </td></tr></table>
+      </body>
+   </html>

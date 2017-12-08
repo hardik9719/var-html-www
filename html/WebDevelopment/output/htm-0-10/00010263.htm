@@ -1,0 +1,39 @@
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+
+    <title>Skype</title>
+
+    <script src="/Content/Scripts/HashFragment.js"></script>
+
+    <script type="text/javascript">
+        var message = "";
+        (function () {
+            var target = "https://word-edit.officeapps.live.com/we/wordeditorframe.aspx",
+                messageObject = {"skypetoken":"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjEyIn0.eyJpYXQiOjE1MDEwMDEyOTIsImV4cCI6MTUwMTA4NzY4NCwic2t5cGVpZCI6ImhhcmRpay50YW5uYTE5Iiwic2NwIjo5NTgsImNzaSI6IjMiLCJjaWQiOiJjNWE2ZTMzY2E3Y2FiZGM5IiwiYWF0IjoxNTAxMDAxMDY3fQ.zKZGDe8Oc6hKtdTD6-ntmluP_EViSTHqDOv6ftjIeNOH-FtSfRZgfmWTQo8et7ih33Ie7RGAj-H6pWWHBaBtYqkRDACn-dgPN5zcDP6oziHTJ9y9wkyIl_CTv55I54F_qW8OUuwjolVykMT-jE24Skx-z00XpU4RJdrahrZbjsJrN85uY13PSOjvYKz8CnHjJiz-4R48zTd0bfSk","expires_in":"86392","skypeid":"hardik.tanna19","state":"silentloginsdk_1501001284116"};
+
+            window.hashFragment.parseHashParams();
+            var error = window.hashFragment.getHashParam("error");
+            var errorDescription = window.hashFragment.getHashParam("error_description");
+
+            if (!!error && error.length) {
+                messageObject.error = error;
+                messageObject.error_description = errorDescription;
+            }
+            
+            var message = JSON.stringify(messageObject);
+
+            if (!!window.opener) {                              // Send postMessage from a Popup and close window
+                window.opener.postMessage(message, target);
+                window.close();
+            } else if (!!window.parent) {                       // Send postMessage from an Iframe
+                window.parent.postMessage(message, target);
+            }
+        }());
+    </script>
+</head>
+<body>
+</body>
+</html>

@@ -1,0 +1,16 @@
+<html>
+    <head>
+        <TITLE>Tomcat Status</TITLE>
+        <STYLE type="text/css">
+            body, table, tr, td, a, div, span {
+                vertical-align : top;
+            }
+        </STYLE>
+    </head>
+    <body>
+      <div style='font-size:20px;'>Tomcat Status</div>
+
+      <xsl:apply-templates select="jvm"/>
+      <xsl:apply-templates select="connector"/>
+     </body>
+    </html>

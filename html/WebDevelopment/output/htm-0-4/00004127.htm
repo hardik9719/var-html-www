@@ -1,0 +1,15 @@
+<html><h1 class="refsect1">LNNVL</h1>
+<p><code>LNNVL</code> evaluates a condition when one or both operands of the condition may be null. <code>LNNVL</code> can be used anywhere a scalar expression can appear, even in contexts where the <code>IS [NOT] NULL</code>, <code>AND</code>, or <code>OR</code> conditions are not valid but would otherwise be required to account for potential nulls.</p>
+<p><span class="bold">NOTE</span>: This function returns <code>1</code> (true) if the condition is false or unknown, and <code>0</code> (false) if the condition is true.</p>
+<p class="titleinrefsubsect"><a id="sthref460" name="sthref460"></a>Return Value</p>
+<pre xml:space="preserve" class="oac_no_warn">NUMBER
+</pre>
+<p class="titleinrefsubsect"><a id="sthref461" name="sthref461"></a>Syntax</p>
+<pre xml:space="preserve" class="oac_no_warn"><span class="bold">LNNVL</span>(condition)
+</pre>
+<p class="titleinrefsubsect"><a id="sthref462" name="sthref462"></a>Arguments</p>
+<p><code>condition</code> can be any expression containing scalar values.</p>
+<p class="titleinrefsubsect"><a id="sthref463" name="sthref463"></a>Examples</p>
+<p><code>LNNVL(1 &gt; 4)</code> returns <code>1</code> (true).</p>
+</div>
+</html>

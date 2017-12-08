@@ -1,0 +1,16 @@
+<html> @0
+    <head> @0.0
+      <title> @0.0.0
+        "I like stuff!"
+    <body lang="en-JP"> @0.1 (IMPLICIT)
+      "stuff"
+      <p class="par123"> @0.1.1
+        "um, p < 4!"
+      <div foo="bar"> @0.1.2
+        "123"
+
+And printing $h->as_HTML will give something like:
+
+  <html><head><title>I like stuff!</title></head>
+  <body lang="en-JP">stuff<p class="par123">um, p &lt; 4!
+  <div foo="bar">123</div></body></html>

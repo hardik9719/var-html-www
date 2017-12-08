@@ -1,0 +1,11 @@
+<html>" in content)
+      self.assertTrue("<title>Android System Trace</title>" in content)
+      self.assertTrue("{{SYSTRACE_TRACE_VIEWER_HTML}}" in content)
+
+
+  @decorators.HostOnlyTest
+  def test_suffix(self):
+    with open(os.path.join(SCRIPT_DIR, 'suffix.html')) as f:
+      content = f.read().strip()
+
+      self.assertTrue("</html>

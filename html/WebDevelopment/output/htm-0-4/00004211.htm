@@ -1,0 +1,107 @@
+<html><h1 class="refsect1">HIER_TOP</h1>
+<p><code>HIER_TOP</code> returns the topmost ancestor of either all members of a hierarchy or a particular member. The hierarchy can be either level-based or value-based.</p>
+<p class="titleinrefsubsect"><a id="sthref156" name="sthref156"></a>Return Value</p>
+<pre xml:space="preserve" class="oac_no_warn">VARCHAR2
+</pre>
+<p class="titleinrefsubsect"><a id="sthref157" name="sthref157"></a>Syntax</p>
+<pre xml:space="preserve" class="oac_no_warn"><span class="bold">HIER_TOP (</span> 
+   [member_expression] [<span class="bold">WITHIN</span>]
+   {<span class="bold">DIMENSION</span> dimension_id | <span class="bold">HIERARCHY</span> hierarchy_id} <span class="bold">)</span> 
+</pre>
+<p class="titleinrefsubsect"><a id="sthref158" name="sthref158"></a>Arguments</p>
+<p class="subhead2"><a id="OLAXS245" name="OLAXS245"></a><a id="sthref159" name="sthref159"></a><span class="italic">member_expression</span></p>
+<p>Identifies a single dimension member within the hierarchy used for the calculation. If this optional argument is specified, then the result does not vary across dimension members.</p>
+<p class="subhead2"><a id="OLAXS246" name="OLAXS246"></a><a id="sthref160" name="sthref160"></a><span class="italic">dimension_id</span></p>
+<p>The dimension over which the values are calculated using the default hierarchy.</p>
+<p class="subhead2"><a id="OLAXS247" name="OLAXS247"></a><a id="sthref161" name="sthref161"></a><span class="italic">hierarchy_id</span></p>
+<p>The hierarchy over which the values are calculated. If <code><span class="codeinlineitalic">dimension_id</span></code> is used instead, the default hierarchy is used.</p>
+<p class="titleinrefsubsect"><a id="sthref162" name="sthref162"></a>Example</p>
+<p>This example returns the top member of the default hierarchy of the Time dimension.</p>
+<p><code>HIER_TOP(DIMENSION "TIME")</code></p>
+<div class="inftblinformal">
+<table class="Informal" title="HIER_TOP Example 1" summary="Ouput from HIER_TOP example 1" dir="ltr" border="1" width="100%" frame="hsides" rules="groups" cellpadding="3" cellspacing="0">
+<col width="*" />
+<col width="50%" />
+<thead>
+<tr align="left" valign="top">
+<th align="left" valign="bottom" id="r1c1-t14">Time</th>
+<th align="left" valign="bottom" id="r1c2-t14">Top</th>
+</tr>
+</thead>
+<tbody>
+<tr align="left" valign="top">
+<td align="left" id="r2c1-t14" headers="r1c1-t14">2006</td>
+<td align="left" headers="r2c1-t14 r1c2-t14">TOTAL</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r3c1-t14" headers="r1c1-t14">Q1.06</td>
+<td align="left" headers="r3c1-t14 r1c2-t14">TOTAL</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r4c1-t14" headers="r1c1-t14">Q2.06</td>
+<td align="left" headers="r4c1-t14 r1c2-t14">TOTAL</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r5c1-t14" headers="r1c1-t14">Q3.06</td>
+<td align="left" headers="r5c1-t14 r1c2-t14">TOTAL</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r6c1-t14" headers="r1c1-t14">Q4.06</td>
+<td align="left" headers="r6c1-t14 r1c2-t14">TOTAL</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r7c1-t14" headers="r1c1-t14">JAN-06</td>
+<td align="left" headers="r7c1-t14 r1c2-t14">TOTAL</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r8c1-t14" headers="r1c1-t14">FEB-06</td>
+<td align="left" headers="r8c1-t14 r1c2-t14">TOTAL</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r9c1-t14" headers="r1c1-t14">MAR-06</td>
+<td align="left" headers="r9c1-t14 r1c2-t14">TOTAL</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r10c1-t14" headers="r1c1-t14">APR-06</td>
+<td align="left" headers="r10c1-t14 r1c2-t14">TOTAL</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r11c1-t14" headers="r1c1-t14">MAY-06</td>
+<td align="left" headers="r11c1-t14 r1c2-t14">TOTAL</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r12c1-t14" headers="r1c1-t14">JUN-06</td>
+<td align="left" headers="r12c1-t14 r1c2-t14">TOTAL</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r13c1-t14" headers="r1c1-t14">JUL-06</td>
+<td align="left" headers="r13c1-t14 r1c2-t14">TOTAL</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r14c1-t14" headers="r1c1-t14">AUG-06</td>
+<td align="left" headers="r14c1-t14 r1c2-t14">TOTAL</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r15c1-t14" headers="r1c1-t14">SEP-06</td>
+<td align="left" headers="r15c1-t14 r1c2-t14">TOTAL</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r16c1-t14" headers="r1c1-t14">OCT-06</td>
+<td align="left" headers="r16c1-t14 r1c2-t14">TOTAL</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r17c1-t14" headers="r1c1-t14">NOV-06</td>
+<td align="left" headers="r17c1-t14 r1c2-t14">TOTAL</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r18c1-t14" headers="r1c1-t14">DEC-06</td>
+<td align="left" headers="r18c1-t14 r1c2-t14">TOTAL</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="inftblinformal" -->
+<p>The next example returns <code>TOTAL</code>, which is the top member for Europe in the default hierarchy of the Customer dimension.</p>
+<p><code>HIER_TOP('EMEA' WITHIN DIMENSION CUSTOMER)</code></p>
+</div>
+</html>

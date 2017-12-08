@@ -1,0 +1,15 @@
+<html>
+        <head>
+            <xsl:call-template name="create.stylesheet.link">
+                <xsl:with-param name="package.name"/>
+            </xsl:call-template>
+        </head>
+        <body>
+            <h2>Classes</h2>
+            <table width="100%">
+                <xsl:apply-templates select=".//class" mode="all.classes">
+                    <xsl:sort select="@name"/>
+                </xsl:apply-templates>
+            </table>
+        </body>
+    </html>

@@ -1,0 +1,24 @@
+<html><h1 class="refsect1">NUMTOYMINTERVAL</h1>
+<p><code>NUMTOYMINTERVAL</code> converts a number to an <code>INTERVAL YEAR TO MONTH</code> data type.</p>
+<p class="titleinrefsubsect"><a id="sthref536" name="sthref536"></a>Return Value</p>
+<pre xml:space="preserve" class="oac_no_warn">INTERVAL YEAR TO MONTH
+</pre>
+<p class="titleinrefsubsect"><a id="sthref537" name="sthref537"></a>Syntax</p>
+<pre xml:space="preserve" class="oac_no_warn"><span class="bold">NUMTOYMINTERVAL</span>(n, 'interval_unit')
+</pre>
+<p class="titleinrefsubsect"><a id="sthref538" name="sthref538"></a>Arguments</p>
+<p><code>n</code> can be any numeric expression.</p>
+<p><code>interval_unit</code> is a text expression that specifies the units. It must resolve to one of the following values:</p>
+<ul>
+<li>
+<p><code>YEAR</code></p>
+</li>
+<li>
+<p><code>MONTH</code></p>
+</li>
+</ul>
+<p>These values are case insensitive.</p>
+<p class="titleinrefsubsect"><a id="sthref539" name="sthref539"></a>Example</p>
+<p><code>NUMTOYMINTERVAL(18, 'MONTH')</code> returns the value <code>+01-06</code>.</p>
+</div>
+</html>

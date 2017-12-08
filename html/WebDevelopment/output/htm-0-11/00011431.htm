@@ -1,0 +1,537 @@
+<html>`` Element of the tree.
+
+    You can pass a different BeautifulSoup parser through the
+    `beautifulsoup` keyword, and a diffent Element factory function
+    through the `makeelement` keyword.  By default, the standard
+    ``BeautifulSoup`` class and the default factory of `lxml.html` are
+    used.
+    """
+    return _parse(data, beautifulsoup, makeelement, **bsargs)
+
+
+def parse(file, beautifulsoup=None, makeelement=None, **bsargs):
+    """Parse a file into an ElemenTree using the BeautifulSoup parser.
+
+    You can pass a different BeautifulSoup parser through the
+    `beautifulsoup` keyword, and a diffent Element factory function
+    through the `makeelement` keyword.  By default, the standard
+    ``BeautifulSoup`` class and the default factory of `lxml.html` are
+    used.
+    """
+    if not hasattr(file, 'read'):
+        file = open(file)
+    root = _parse(file, beautifulsoup, makeelement, **bsargs)
+    return etree.ElementTree(root)
+
+
+def convert_tree(beautiful_soup_tree, makeelement=None):
+    """Convert a BeautifulSoup tree to a list of Element trees.
+
+    Returns a list instead of a single root Element to support
+    HTML-like soup with more than one root element.
+
+    You can pass a different Element factory through the `makeelement`
+    keyword.
+    """
+    root = _convert_tree(beautiful_soup_tree, makeelement)
+    children = root.getchildren()
+    for child in children:
+        root.remove(child)
+    return children
+
+
+# helpers
+
+def _parse(source, beautifulsoup, makeelement, **bsargs):
+    if beautifulsoup is None:
+        beautifulsoup = BeautifulSoup
+    if hasattr(beautifulsoup, "HTML_ENTITIES"):  # bs3
+        if 'convertEntities' not in bsargs:
+            bsargs['convertEntities'] = 'html'
+    if hasattr(beautifulsoup, "DEFAULT_BUILDER_FEATURES"):  # bs4
+        if 'features' not in bsargs:
+            bsargs['features'] = ['html.parser']  # use Python html parser
+    tree = beautifulsoup(source, **bsargs)
+    root = _convert_tree(tree, makeelement)
+    # from ET: wrap the document in a html root element, if necessary
+    if len(root) == 1 and root[0].tag == "html":
+        return root[0]
+    root.tag = "html"
+    return root
+
+
+_parse_doctype_declaration = re.compile(
+    r'(?:\s|[<!])*DOCTYPE\s*HTML'
+    r'(?:\s+PUBLIC)?(?:\s+(\'[^\']*\'|"[^"]*"))?'
+    r'(?:\s+(\'[^\']*\'|"[^"]*"))?',
+    re.IGNORECASE).match
+
+
+class _PseudoTag:
+    # Minimal imitation of BeautifulSoup.Tag
+    def __init__(self, contents):
+        self.name = 'html'
+        self.attrs = []
+        self.contents = contents
+
+    def __iter__(self):
+        return self.contents.__iter__()
+
+
+def _convert_tree(beautiful_soup_tree, makeelement):
+    if makeelement is None:
+        makeelement = html.html_parser.makeelement
+
+    # Split the tree into three parts:
+    # i) everything before the root element: document type
+    # declaration, comments, processing instructions, whitespace
+    # ii) the root(s),
+    # iii) everything after the root: comments, processing
+    # instructions, whitespace
+    first_element_idx = last_element_idx = None
+    html_root = declaration = None
+    for i, e in enumerate(beautiful_soup_tree):
+        if isinstance(e, Tag):
+            if first_element_idx is None:
+                first_element_idx = i
+            last_element_idx = i
+            if html_root is None and e.name and e.name.lower() == 'html':
+                html_root = e
+        elif declaration is None and isinstance(e, _DECLARATION_OR_DOCTYPE):
+            declaration = e
+
+    # For a nice, well-formatted document, the variable roots below is
+    # a list consisting of a single <html> element. However, the document
+    # may be a soup like '<meta><head><title>Hello</head><body>Hi
+    # all<\p>'. In this example roots is a list containing meta, head
+    # and body elements.
+    pre_root = beautiful_soup_tree.contents[:first_element_idx]
+    roots = beautiful_soup_tree.contents[first_element_idx:last_element_idx+1]
+    post_root = beautiful_soup_tree.contents[last_element_idx+1:]
+
+    # Reorganize so that there is one <html> root...
+    if html_root is not None:
+        # ... use existing one if possible, ...
+        i = roots.index(html_root)
+        html_root.contents = roots[:i] + html_root.contents + roots[i+1:]
+    else:
+        # ... otherwise create a new one.
+        html_root = _PseudoTag(roots)
+
+    convert_node = _init_node_converters(makeelement)
+
+    # Process pre_root
+    res_root = convert_node(html_root)
+    prev = res_root
+    for e in reversed(pre_root):
+        converted = convert_node(e)
+        if converted is not None:
+            prev.addprevious(converted)
+            prev = converted
+
+    # ditto for post_root
+    prev = res_root
+    for e in post_root:
+        converted = convert_node(e)
+        if converted is not None:
+            prev.addnext(converted)
+            prev = converted
+
+    if declaration is not None:
+        try:
+            # bs4 provides full Doctype string
+            doctype_string = declaration.output_ready()
+        except AttributeError:
+            doctype_string = declaration.string
+
+        match = _parse_doctype_declaration(doctype_string)
+        if not match:
+            # Something is wrong if we end up in here. Since soupparser should
+            # tolerate errors, do not raise Exception, just let it pass.
+            pass
+        else:
+            external_id, sys_uri = match.groups()
+            docinfo = res_root.getroottree().docinfo
+            # strip quotes and update DOCTYPE values (any of None, '', '...')
+            docinfo.public_id = external_id and external_id[1:-1]
+            docinfo.system_url = sys_uri and sys_uri[1:-1]
+
+    return res_root
+
+
+def _init_node_converters(makeelement):
+    converters = {}
+    ordered_node_types = []
+
+    def converter(*types):
+        def add(handler):
+            for t in types:
+                converters[t] = handler
+                ordered_node_types.append(t)
+            return handler
+        return add
+
+    def find_best_converter(node):
+        for t in ordered_node_types:
+            if isinstance(node, t):
+                return converters[t]
+        return None
+
+    def convert_node(bs_node, parent=None):
+        # duplicated in convert_tag() below
+        try:
+            handler = converters[type(bs_node)]
+        except KeyError:
+            handler = converters[type(bs_node)] = find_best_converter(bs_node)
+        if handler is None:
+            return None
+        return handler(bs_node, parent)
+
+    def map_attrs(bs_attrs):
+        if isinstance(bs_attrs, dict):  # bs4
+            attribs = {}
+            for k, v in bs_attrs.items():
+                if isinstance(v, list):
+                    v = " ".join(v)
+                attribs[k] = unescape(v)
+        else:
+            attribs = dict((k, unescape(v)) for k, v in bs_attrs)
+        return attribs
+
+    def append_text(parent, text):
+        if len(parent) == 0:
+            parent.text = (parent.text or '') + text
+        else:
+            parent[-1].tail = (parent[-1].tail or '') + text
+
+    # converters are tried in order of their definition
+
+    @converter(Tag, _PseudoTag)
+    def convert_tag(bs_node, parent):
+        attrs = bs_node.attrs
+        if parent is not None:
+            attribs = map_attrs(attrs) if attrs else None
+            res = etree.SubElement(parent, bs_node.name, attrib=attribs)
+        else:
+            attribs = map_attrs(attrs) if attrs else {}
+            res = makeelement(bs_node.name, attrib=attribs)
+
+        for child in bs_node:
+            # avoid double recursion by inlining convert_node(), see above
+            try:
+                handler = converters[type(child)]
+            except KeyError:
+                pass
+            else:
+                if handler is not None:
+                    handler(child, res)
+                continue
+            convert_node(child, res)
+        return res
+
+    @converter(Comment)
+    def convert_comment(bs_node, parent):
+        res = etree.Comment(bs_node)
+        if parent is not None:
+            parent.append(res)
+        return res
+
+    @converter(ProcessingInstruction)
+    def convert_pi(bs_node, parent):
+        if bs_node.endswith('?'):
+            # The PI is of XML style (<?as df?>) but BeautifulSoup
+            # interpreted it as being SGML style (<?as df>). Fix.
+            bs_node = bs_node[:-1]
+        res = etree.ProcessingInstruction(*bs_node.split(' ', 1))
+        if parent is not None:
+            parent.append(res)
+        return res
+
+    @converter(NavigableString)
+    def convert_text(bs_node, parent):
+        if parent is not None:
+            append_text(parent, unescape(bs_node))
+        return None
+
+    return convert_node
+
+
+# copied from ET's ElementSoup
+
+try:
+    from html.entities import name2codepoint  # Python 3
+except ImportError:
+    from htmlentitydefs import name2codepoint
+
+
+handle_entities = re.compile("&(\w+);").sub
+
+
+try:
+    unichr
+except NameError:
+    # Python 3
+    unichr = chr
+
+
+def unescape(string):
+    if not string:
+        return ''
+    # work around oddities in BeautifulSoup's entity handling
+    def unescape_entity(m):
+        try:
+            return unichr(name2codepoint[m.group(1)])
+        except KeyError:
+            return m.group(0)  # use as is
+    return handle_entities(unescape_entity, string)
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+{!LXŒ˝  „            (   @   sﬂ  d  Z  d d l m Z d d d d d d d	 d
+ d d d d d d d d
+ d g Z d d l Z d d l Z d d l Z d d l m Z y d d l	 m
+ Z
+ m Z Wn( e k
+ r« d d l m
+ Z
+ m Z Yn Xd d l m Z d d l m Z d d l m Z y d d l m Z Wn" e k
+ r0d d l m Z Yn Xy e Wn e k
+ rSe Z Yn Xy e Wn e k
+ r|e e f Z Yn Xd d Ñ  Z d Z e j d d  d! e i ÉZ e j d" d  d! e i ÉZ e j d# d  d! e i ÉZ  e j d$ É Z! e j d% É Z" e j d& É Z# e j$ d' d( d) d* e j% É j& Z' e j$ d+ É j& Z( e j d, d  d! e i ÉZ) e j$ d- É Z* e j$ d. e j% É j+ Z, d/ d0 Ñ  Z- d1 d2 Ñ  Z. d3 d4 Ñ  Z/ Gd5 d6 Ñ  d6 e É Z0 Gd7 d8 Ñ  d8 e1 É Z2 Gd9 d: Ñ  d: e1 É Z3 e3 d d; d< ÉZ4 e3 d d; d< ÉZ5 e3 d d; d= ÉZ6 e3 d d; d= ÉZ7 e3 d d; d< ÉZ8 e3 d d; d= ÉZ9 Gd> d? Ñ  d? e j: e2 É Z; Gd@ dA Ñ  dA e j< e2 É Z= GdB dC Ñ  dC e j> e2 É Z? GdD dE Ñ  dE e j@ e2 É ZA GdF dG Ñ  dG e jB É ZC e j$ e dH É e j% É jD ZE e j$ dH jF dI É e j% É jD ZG d d< dJ d Ñ ZH d< d d dK d Ñ ZI d< d d dL d Ñ ZJ d d dM d Ñ ZK d d dN d Ñ ZL dO dP Ñ  ZM dQ dR Ñ  ZN GdS dT Ñ  dT e= É ZO eO eC jP dU <d d dV d Ñ ZQ dW dX Ñ  ZR GdY dZ Ñ  dZ e
+ É ZS Gd[ d\ Ñ  d\ e1 É ZT Gd] d^ Ñ  d^ e1 É ZU Gd_ d` Ñ  d` eU e= É ZV eV eC jP da <Gdb dc Ñ  dc eU e= É ZW eW eC jP dd <Gde df Ñ  df e É ZX Gdg dh Ñ  dh eY É ZZ Gdi dj Ñ  dj eY É Z[ Gdk dl Ñ  dl e É Z\ Gdm dn Ñ  dn eU e= É Z] e] eC jP do <Gdp dq Ñ  dq e= É Z^ e^ eC jP dr <ds dt Ñ  Z_ du dv Ñ  Z` e j$ dw É ja Zb e j$ dw jF dx É É ja Zc d< d< d dy d= d dz d Ñ Zd e ed j  É ed _  d d{ d
+ Ñ Ze Gd| d} Ñ  d} e jf É Zf Gd~ d Ñ  d e jg É Zh dÄ d Ñ  Zi ef É  Zj eh É  Zk d S)Åz.The ``lxml.html`` tool set for HTML handling.
+È    )⁄absolute_import⁄document_fromstring⁄fragment_fromstring⁄fragments_fromstring⁄
+fromstring⁄tostring⁄Element⁄defs⁄open_in_browser⁄submit_form⁄find_rel_links⁄
+find_class⁄make_links_absolute⁄resolve_base_href⁄	iterlinks⁄rewrite_links⁄parseN)⁄partial)⁄MutableMapping⁄
+MutableSetÈ   )⁄etreeÈ   )r	   )⁄SetMixin)⁄urljoinc             C   s]   |  s
+ |  St  j d d k r8 t j d t j É j } n t j d t j É j } | d |  É S)Nr   È   z^(\s*)u'z^(\s*)b'z\1')⁄sys⁄version_info⁄re⁄compile⁄M⁄sub)⁄sr!   © r#   ˙4/usr/lib/python3/dist-packages/lxml/html/__init__.py⁄__fix_docstringL   s    r%   zhttp://www.w3.org/1999/xhtmlz9descendant-or-self::a[@rel]|descendant-or-self::x:a[@rel]⁄
+namespaces⁄xz7descendant-or-self::option|descendant-or-self::x:optionz3descendant-or-self::form|descendant-or-self::x:formztdescendant-or-self::*[@class and contains(concat(' ', normalize-space(@class), ' '), concat(' ', $class_name, ' '))]zdescendant-or-self::*[@id=$id]zstring()zurl\((z["][^"]*["]|z['][^']*[']|z[^)]*)\)z@import "(.*?)"z%//label[@for=$id]|//x:label[@for=$id]z[^ ]+z%[^;=]*;\s*(?:url\s*=\s*)?(?P<url>.*)$c             C   s~   |  d  d Ö d k r, |  d d  Ö d k sX |  d  d Ö d k rp |  d d  Ö d k rp |  d d Ö | d f S|  | f Sd  S)Nr   ˙"˙'Èˇˇˇˇr*   r*   r#   )r"   ⁄posr#   r#   r$   ⁄_unquote_matchk   s    Xr,   c             C   sF   t  |  t É r t | d d ÉSt  |  t É r> t | d d ÉS| Sd S)z1Convert the result back into the input type.
+    ⁄encodingzutf-8⁄unicodeN)⁄
+issubclass⁄bytesr   r.   )⁄typ⁄resultr#   r#   r$   ⁄_transform_resultr   s
+    r3   c             C   sT   t  |  t É rP |  d d k rP |  d t t É d Ö t k rP |  j d É d S|  S)Nr   ˙{r   ˙}r*   )⁄
+isinstance⁄
+basestring⁄len⁄XHTML_NAMESPACE⁄split)⁄tagr#   r#   r$   ⁄_nons}   s    0r<   c                   sà   e  Z d  Z d Z d d Ñ  Z d d Ñ  Z d d Ñ  Z á  f d d	 Ü  Z d
+ d Ñ  Z d d Ñ  Z	 d d Ñ  Z
+ d d Ñ  Z d d Ñ  Z á  S)⁄Classesa*  Provides access to an element's class attribute as a set-like collection.
+    Usage::
+
+        >>> el = fromstring('<p class="hidden large">Text</p>')
+        >>> classes = el.classes  # or: classes = Classes(el.attrib)
+        >>> classes |= ['block', 'paragraph']
+        >>> el.get('class')
+        'hidden large block paragraph'
+        >>> classes.toggle('hidden')
+        False
+        >>> el.get('class')
+        'large block paragraph'
+        >>> classes -= ('some', 'classes', 'block')
+        >>> el.get('class')
+        'large paragraph'
+    c             C   s%   | |  _  t | j d d É |  _ d  S)N⁄class⁄ )⁄_attributesr   ⁄get⁄_get_class_value)⁄selfZ
+attributesr#   r#   r$   ⁄__init__ï   s    	zClasses.__init__c             C   sr   | s t  j d | É r) t d | É Ç |  j É  j É  } | | k rK d S| j | É d j | É |  j d <d S)z[
+        Add a class.
+
+        This has no effect if the class is already present.
+        z\szInvalid class name: %rN˙ r>   )r   ⁄search⁄
+ValueErrorrB   r:   ⁄append⁄joinr@   )rC   ⁄value⁄classesr#   r#   r$   ⁄addô   s    zClasses.addc                sä   à  s t  j d à  É r) t d à  É Ç á  f d d Ü  |  j É  j É  DÉ } | rm d j | É |  j d <n d |  j k rÜ |  j d =d S)zn
+        Remove a class if it is currently present.
+
+        If the class is not present, do nothing.
+        z\szInvalid class name: %rc                s"   g  |  ] } | à  k r | ë q Sr#   r#   )⁄.0⁄name)rJ   r#   r$   ˙
+<listcomp>Ø   s   	 z#Classes.discard.<locals>.<listcomp>rE   r>   N)r   rF   rG   rB   r:   rI   r@   )rC   rJ   rK   r#   )rJ   r$   ⁄discardß   s    %zClasses.discardc                sC   | s t  j d | É r) t d | É Ç t t |  É j | É d S)zw
+        Remove a class; it must currently be present.
+
+        If the class is not present, raise a KeyError.
+        z\szInvalid class name: %rN)r   rF   rG   ⁄superr=   ⁄remove)rC   rJ   )⁄	__class__r#   r$   rR   ∂   s    zClasses.removec             C   s(   |  j  É  } | | k o' | | j É  k S)N)rB   r:   )rC   rN   rK   r#   r#   r$   ⁄__contains__¿   s    zClasses.__contains__c             C   s   t  |  j É  j É  É S)N)⁄iterrB   r:   )rC   r#   r#   r$   ⁄__iter__ƒ   s    zClasses.__iter__c             C   s   t  |  j É  j É  É S)N)r8   rB   r:   )rC   r#   r#   r$   ⁄__len__«   s    zClasses.__len__c             C   sh   |  j  É  j É  } d } x- | D]% } | | k r | j | É d } q W| rd d j | É |  j d <d S)z.
+        Add all names from 'values'.
+        FTrE   r>   N)rB   r:   rH   rI   r@   )rC   ⁄valuesrK   ZextendedrJ   r#   r#   r$   ⁄updateÃ   s    
+zClasses.updatec             C   sß   | s t  j d | É r) t d | É Ç |  j É  j É  } y | j | É d } Wn% t k
+ ry | j | É d } Yn X| rô d j | É |  j d <n
+ |  j d =| S)z—
+        Add a class name if it isn't there yet, or remove it if it exists.
+
+        Returns true if the class was added (and is now enabled) and
+        false if it was removed (and is now disabled).
+        z\szInvalid class name: %rFTrE   r>   )	r   rF   rG   rB   r:   rR   rH   rI   r@   )rC   rJ   rK   ⁄enabledr#   r#   r$   ⁄toggleŸ   s    
+
+zClasses.toggle)⁄__name__⁄
+__module__⁄__qualname__⁄__doc__rD   rL   rP   rR   rT   rV   rW   rY   r[   r#   r#   )rS   r$   r=   Ñ   s   
+r=   c                   si  e  Z d  Z d á  f d d Ü Z e d d Ñ  É Z e j d d Ñ  É Z e d d Ñ  É Z e d	 d
+ Ñ  É Z e d d Ñ  É Z	 e d d Ñ  É Z
+ e d d Ñ  É Z e j d d Ñ  É Z e j d d Ñ  É Z d d Ñ  Z d d Ñ  Z d d Ñ  Z d d Ñ  Z d d Ñ  Z d d Ñ  Z d d  d! Ñ Z d d" d d# d$ Ñ Z d d% d& Ñ Z d' d( Ñ  Z d" d d) d* Ñ Z á  S)+⁄	HtmlMixinNc                s   t  t |  É j | | É d S)z˜set(self, key, value=None)
+
+        Sets an element attribute.  If no value is provided, or if the value is None,
+        creates a 'boolean' attribute without value, e.g. "<form novalidate></form>"
+        for ``form.set('novalidate')``.
+        N)rQ   ⁄HtmlElement⁄set)rC   ⁄keyrJ   )rS   r#   r$   rb   Ú   s    zHtmlMixin.setc             C   s   t  |  j É S)zB
+        A set-like wrapper around the 'class' attribute.
+        )r=   ⁄attrib)rC   r#   r#   r$   rK   ˚   s    zHtmlMixin.classesc             C   s]   t  | t É s t Ç | j É  } | r: |  j d | É n |  j d É d  k	 rY |  j d =d  S)Nr>   )r6   r=   ⁄AssertionErrorrB   rb   rA   rd   )rC   rK   rJ   r#   r#   r$   rK     s    c             C   s   |  j  É  j j S)zü
+        Returns the base URL, given when the page was parsed.
+
+        Use with ``urlparse.urljoin(el.base_url, href)`` to get
+        absolute URLs.
+        )Zgetroottree⁄docinfoZURL)rC   r#   r#   r$   ⁄base_url  s    zHtmlMixin.base_urlc             C   s
+   t  |  É S)z0
+        Return a list of all the forms
+        )⁄_forms_xpath)rC   r#   r#   r$   ⁄forms  s    zHtmlMixin.formsc             C   s   |  j  d d d t i Éd S)zt
+        Return the <body> element.  Can be called from a child element
+        to get the document's head.
+        z//body|//x:bodyr&   r'   r   )⁄xpathr9   )rC   r#   r#   r$   ⁄body  s    zHtmlMixin.bodyc             C   s   |  j  d d d t i Éd S)zu
+        Returns the <head> element.  Can be called from a child
+        element to get the document's head.
+        z//head|//x:headr&   r'   r   )rj   r9   )rC   r#   r#   r$   ⁄head$  s    zHtmlMixin.headc             C   sA   |  j  d É } | s d St |  d | É} | s5 d S| d Sd S)zN
+        Get or set any <label> element associated with this element.
+        ⁄idNr   )rA   ⁄_label_xpath)rC   rm   r2   r#   r#   r$   ⁄label,  s    zHtmlMixin.labelc             C   s^   |  j  d É } | s% t d |  É Ç t | j É d k rJ t d | É Ç | j d | É d  S)Nrm   z9You cannot set a label for an element (%r) that has no idro   z5You can only assign label to a label element (not %r)⁄for)rA   ⁄	TypeErrorr<   r;   rb   )rC   ro   rm   r#   r#   r$   ro   :  s    
+
+c             C   s#   |  j  } | d  k	 r | j d =d  S)Nrp   )ro   rd   )rC   ro   r#   r#   r$   ro   G  s    	c             C   sÖ   |  j  É  } | d k	 s t Ç |  j rt |  j É  } | d k r[ | j pK d |  j | _ n | j pg d |  j | _ | j |  É d S)z¢
+        Removes this element from the tree, including its children and
+        text.  The tail text is joined to the previous element or
+        parent.
+        Nr?   )⁄	getparentre   ⁄tail⁄getprevious⁄textrR   )rC   ⁄parent⁄previousr#   r#   r$   ⁄	drop_treeM  s    	zHtmlMixin.drop_treec             C   s3  |  j  É  } | d k	 s t Ç |  j É  } |  j rÜ t |  j t É rÜ | d k rm | j p] d |  j | _ n | j py d |  j | _ |  j rt |  É r¡ |  d } | j p± d |  j | _ nA | d k rÈ | j pŸ d |  j | _ n | j pı d |  j | _ | j	 |  É } |  d d Ö | | | d Ö <d S)a]  
+        Remove the tag, but not its children or text.  The children and text
+        are merged into the parent.
+
+        Example::
+
+            >>> h = fragment_fromstring('<div>Hello <b>World!</b></div>')
+            >>> h.find('.//b').drop_tag()
+            >>> print(tostring(h, encoding='unicode'))
+            <div>Hello World!</div>
+        Nr?   r   r*   )
+rr   re   rt   ru   r6   r;   r7   rs   r8   ⁄index)rC   rv   rw   Zlastry   r#   r#   r$   ⁄drop_tag]  s     	
+zHtmlMixin.drop_tagc                s)   à  j  É  â  á  f d d Ü  t |  É DÉ S)z]
+        Find any links like ``<a rel="{rel}">...</a>``; returns a list of elements.
+        c                s1   g  |  ]' } | j  d  É j É  à  k r | ë q S)⁄rel)rA   ⁄lower)rM   ⁄el)r{   r#   r$   rO   Ç  s   	 z,HtmlMixin.find_rel_links.<locals>.<listcomp>)r|   ⁄_rel_links_xpath)rC   r{   r#   )r{   r$   r   }  s    zHtmlMixin.find_rel_linksc             C   s   t  |  d | ÉS)z>
+        Find any elements with the given class name.
+        ⁄
+class_name)⁄_class_xpath)rC   r   r#   r#   r$   r   Ö  s    zHtmlMixin.find_classc             G   sK   y t  |  d | Éd SWn, t k
+ rF | r6 | d St | É Ç Yn Xd S)aî  
+        Get the first element in a document with the given id.  If none is
+        found, return the default argument if provided or raise KeyError
+        otherwise.
+
+        Note that there can be more than one element with the same id,
+        and this isn't uncommon in HTML documents found in the wild.
+        Browsers return only the first match, and this function does
+        the same.
+        rm   r   N)⁄	_id_xpath⁄
+IndexError⁄KeyError)rC   rm   ⁄defaultr#   r#   r$   ⁄get_element_by_idã  s    zHtmlMixin.get_element_by_idc             C   s
+   t  |  É S)zT
+        Return the text content of the tag (and the text in any children).
+        )⁄_collect_string_content)rC   r#   r#   r$   ⁄text_content†  s    zHtmlMixin.text_content⁄htmlc             C   s&   d d l  m } | | d | É|  É S)a  
+        Run the CSS expression on this element and its children,
+        returning a list of the results.
+
+        Equivalent to lxml.cssselect.CSSSelect(expr, translator='html')(self)
+        -- note that pre-compiling the expression can provide a substantial
+        speedup.
+        r   )⁄CSSSelector⁄
+translator)Zlxml.cssselectrâ   )rC   ⁄exprrä   râ   r#   r#   r$   ⁄	cssselect¶  s    
+zHtmlMixin.cssselectTc                s¡   à  d k r- |  j  â  à  d k r- t d É Ç | r= |  j É  | d k r^ á  f d d Ü  } nR | d k r á  f d d Ü  } n1 | d k r† á  f d d Ü  } n t d	 | É Ç |  j | É d S)
+aÖ  
+        Make all links in the document absolute, given the
+        ``base_url`` for the document (the full URL where the document
+        came from), or if no ``base_url`` is given, then the ``.base_url``
+        of the document.
+
+        If ``resolve_base_href`` is true, then any ``<base href>``
+        tags in the document are used *and* removed from the document.
+        If it is false then any such tag is ignored.
+
+        If ``handle_failures`` is None (default), a failure to process
+        a URL will abort the processing.  If set to 'ignore', errors
+        are ignored.  If set to 'discard', failing URLs will be removed.
+        Nz3No base_url given, and the document has no base_url⁄ignorec                s.   y t  à  |  É SWn t k
+ r) |  SYn Xd  S)N)r   rG   )⁄href)rg   r#   r$   ⁄	link_repl–  s    z0HtmlMixin.make_links_absolute.<locals>.link_replrP   c                s.   y t  à  |  É SWn t k
+ r) d  SYn Xd  S)N)r   rG   )ré   )rg   r#   r$   rè   ÷  s    c                s   t  à  |  É S)N)r   )ré   )rg   r#   r$   rè   ‹  s    z(unexpected value for handle_failures: %r)rg   rq   r   rG   r   )rC   rg   r   ⁄handle_failuresrè   r#   )rg   r$   r   ∑  s     		
+zHtmlMixin.make_links_absolutec             C   sr   d } |  j  d d d t i É} x' | D] } | j d É } | j É  q( W| sU d S|  j | d d d | Éd S)	aç  
+        Find any ``<base href>`` tag in the document, and apply its
+        values to all links found in the document.  Also remove the
+        tag once it has been applied.
+
+        If ``handle_failures`` is None (default), a failure to process
+        a URL will abort the processing.  If set to 'ignore', errors
+        are ignored.  If set to 'discard', failing URLs will be removed.
+        Nz//base[@href]|//x:base[@href]r&   r'   ré   r   Frê   )rj   r9   rA   rx   r   )rC   rê   ⁄	base_hrefZbasetags⁄br#   r#   r$   r   ‰  s    
+zHtmlMixin.resolve_base_hrefc             c   sê  t  j } xÄ|  j t j É D]l} | j } t | j É } | d k rCd } d | k rx | j d É } | d | d f VxU d D]M } | | k r | j | É } | d k	 rª t	 | | É } | | | d f Vq Wd | k ruxñ t
+ j | j d É É D]G } | j d É } | d k	 r%t	 | | É } | d | | j É  f Vqı Wn2 x/ | D]' } | | k rJ| | | | d f VqJW| d k r1| j d	 d
+ É j É  }	 |	 d k r
+| j d d
+ É }
+ t |
+ É } | rÿ| j d É n |
+ j É  } | r
+t | | r| j d É n |
+ j | É É \ } } | d | | f VnŸ | d k rÅ| j d É pOd
+ } | j É  d k r
+| d | j d É d f Vnâ | d k r
+| j r
+d d Ñ  t | j É DÉ d d Ñ  t | j É DÉ } | r
+| j d d É x% | D] \ } } | d | | f VqÈWd | k r t t | d É É } | r xS | d d d Ö D]> } t | j d É | j d É É \ } } | d | | f VqFWq Wd S)a  
+        Yield (element, attribute, link, pos), where attribute may be None
+        (indicating the link is in the text).  ``pos`` is the position
+        where the link occurs; often 0, but sometimes something else in
+        the case of links in stylesheets or style tags.
+
+        Note: <base href> is *not* taken into account in any way.  The
+        link you get is exactly the link in the document.
+
+        Note: multiple links inside of a single text string or
+        attribute value are returned in reversed order.  This makes it
+        possible to replace or delete them from the text string value
+        based on their reported text positions.  Otherwise, a
+        modification at one text position can change the positions of
+        links reported later on.
+        ⁄objectN⁄codebaser   ⁄classid⁄data⁄archive⁄metaz
+http-equivr?   Zrefresh⁄content⁄urlZparam⁄	valuetype⁄refrJ   Zstylec             S   s>   g  |  ]4 } t  | j d  É | j d  É É d d d Ö ë q S)r   Nr*   )r,   ⁄group⁄start)rM   ⁄matchr#   r#   r$   rO   >  s   	z'HtmlMixin.iterlinks.<locals>.<listcomp>c             S   s.   g  |  ]$ } | j  d  É | j d  É f ë q S)r   )rû   rù   )rM   rü   r#   r#   r$   rO   A  s   	⁄reverseTr   )rï   rñ   r*   )r	   ⁄
+link_attrsrU   r   r   rd   r<   r;   rA   r   ⁄_archive_re⁄finditerrù   rû   r|   ⁄_parse_meta_refresh_url⁄stripr,   ⁄findru   ⁄_iter_css_urls⁄_iter_css_imports⁄sort⁄list)rC   r°   r}   Zattribsr;   rî   rd   rJ   rü   Z
+http_equivrô   rö   r+   rõ   Zurlsrû   r#   r#   r$   r   ˘  sj    		!0		'zHtmlMixin.iterlinksc             C   sh  | d k	 r" |  j  | d | Én | r2 |  j É  x/|  j É  D]!\ } } } } | | j É  É } | | k rr q? | d k r£ | d k rñ d | _ q? | j | =q? | d k rÌ | j d | Ö | | j | t | É d Ö }	 |	 | _ q? | j | É }
+ | r$t |
+ É t | É k r$| }	 n, |
+ d | Ö | |
+ | t | É d Ö }	 | j | |	 É q? Wd S)aÖ  
+        Rewrite all the links in the document.  For each link
+        ``link_repl_func(link)`` will be called, and the return value
+        will replace the old link.
+
+        Note that links may not be absolute (unless you first called
+        ``make_links_absolute()``), and may be internal (e.g.,
+        ``'#anchor'``).  They can also be values like
+        ``'mailto:email'`` or ``'javascript:expr'``.
+
+        If you give ``base_href`` then all links passed to
+        ``link_repl_func()`` will take that into account.
+
+        If the ``link_repl_func`` returns None, the attribute or
+        tag text will be removed completely.
+        Nr   r?   )	r   r   r   r•   ru   rd   r8   rA   rb   )rC   Zlink_repl_funcr   rë   r}   rd   ⁄linkr+   Znew_link⁄new⁄curr#   r#   r$   r   S  s,    
+
+2	,zHtmlMixin.rewrite_links)r\   r]   r^   rb   ⁄propertyrK   ⁄setterrg   ri   rk   rl   ro   ⁄deleterrx   rz   r   r   rÖ   rá   rå   r   r   r   r   r#   r#   )rS   r$   r`      s.   		
+ ,Zr`   c               @   s4   e  Z d  Z d Z d e d d Ñ Z d d Ñ  Z d S)⁄_MethodFunca5  
+    An object that represents a method on an element as a function;
+    the function takes either an element or an HTML string.  It
+    returns whatever the function normally returns, or if the function
+    works in-place (and so returns None) it returns a serialized form
+    of the resulting document.
+    Fc             C   s.   | |  _  | |  _ t | |  j  É j |  _ d  S)N)rN   ⁄copy⁄getattrr_   )rC   rN   r≤   Zsource_classr#   r#   r$   rD   ç  s    		z_MethodFunc.__init__c             O   s    t  | É } t | t É rL d | k r: t d |  j É Ç t | | ç } n< d | k rj | j d É } n	 |  j } | rà t j | É } t	 | |  j É } | | | é  } | d  k r¬ t
+ | | É S| Sd  S)Nr≤   zQThe keyword 'copy' can only be used with element inputs to %s, not a string input)⁄typer6   r7   rq   rN   r   ⁄popr≤   ⁄deepcopyr≥   r3   )rC   ⁄doc⁄args⁄kwZresult_typeZmake_a_copy⁄methr2   r#   r#   r$   ⁄__call__ë  s     	z_MethodFunc.__call__N)r\   r]   r^   r_   r`   rD   rª   r#   r#   r#   r$   r±   Ö  s   r±   r≤   FTc               @   s   e  Z d  Z d S)⁄HtmlCommentN)r\   r]   r^   r#   r#   r#   r$   rº   ±  s   rº   c               @   s"   e  Z d  Z e j Z e j Z d S)ra   N)r\   r]   r^   r`   rå   rb   r#   r#   r#   r$   ra   µ  s   	ra   c               @   s   e  Z d  Z d S)⁄HtmlProcessingInstructionN)r\   r]   r^   r#   r#   r#   r$   rΩ   ª  s   rΩ   c               @   s   e  Z d  Z d S)⁄
+HtmlEntityN)r\   r]   r^   r#   r#   r#   r$   ræ   ø  s   ræ   c               @   s:   e  Z d  Z d Z i  Z d d d d Ñ Z d d Ñ  Z d S)⁄HtmlElementClassLookupav  A lookup scheme for HTML Element classes.
+
+    To create a lookup instance with different Element classes, pass a tag
+    name mapping of Element classes in the ``classes`` keyword argument and/or
+    a tag name mapping of Mixin classes in the ``mixins`` keyword argument.
+    The special key '*' denotes a Mixin class that should be mixed into all
+    Element classes.
+    Nc       
+      C   s  t  j j |  É | d  k r+ |  j j É  } | ri  } xl | D]d \ } } | d k râ xI | j É  D] } | j | g  É j | É qc Wq> | j | g  É j | É q> WxX | j É  D]J \ } } | j	 | t
+ É } t | | g É }	 t | j |	 i  É | | <q≥ W| |  _ d  S)N⁄*)r   ⁄CustomElementClassLookuprD   ⁄_default_element_classesr≤   ⁄keys⁄
+setdefaultrH   ⁄itemsrA   ra   ⁄tupler¥   r\   ⁄_element_classes)
+rC   rK   ZmixinsZmixersrN   rJ   ⁄nZ	mix_basesr≠   ⁄basesr#   r#   r$   rD   Œ  s     zHtmlElementClassLookup.__init__c             C   sY   | d k r% |  j  j | j É  t É S| d k r5 t S| d k rE t S| d k rU t Sd  S)N⁄element⁄commentZPIZentity)r«   rA   r|   ra   rº   rΩ   ræ   )rC   Z	node_typeZdocument⁄	namespacerN   r#   r#   r$   ⁄lookup‡  s    zHtmlElementClassLookup.lookup)r\   r]   r^   r_   r¬   rD   rÕ   r#   r#   r#   r$   rø   √  s   rø   z^\s*<(?:html|!doctype)⁄asciic             K   s•   | d  k r t  } t j |  | | ç } | d  k rB t j d É Ç | rs | j d É d  k rs | j d t d É É | r° | j d É d  k r° | j t d É É | S)NzDocument is emptyrl   r   rk   )⁄html_parserr   r   ⁄ParserErrorr¶   ⁄insertr   rH   )rà   ⁄parserZensure_head_bodyrπ   rJ   r#   r#   r$   r   ˜  s    	c       	      K   sT  | d k r t  } t |  t É rP t |  É sf d j d É |  d j d É }  n t |  É sf d |  }  t |  d | d | | ç} t | j É d k sú t	 Ç d	 d
+ Ñ  | DÉ } t
+ | É d k s◊ t	 d | |  f É Ç | d } g  } | r| j r| j j É  rt j d | j É Ç | j rC| j j É  rC| j | j É | j | É | S)aR  Parses several HTML elements, returning a list of elements.
+
+    The first item in the list may be a string.
+    If no_leading_text is true, then it will be an error if there is
+    leading text, and it will always be a list of only elements.
+
+    base_url will set the document's base_url attribute
+    (and the tree's docinfo.URL).
+    Nz<html><body>rŒ   z</body></html>

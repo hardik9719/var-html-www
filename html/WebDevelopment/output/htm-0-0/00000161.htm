@@ -1,0 +1,252 @@
+<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40">
+					<head>
+					</head>
+					<body>
+			            <xsl:variable name="LCID">
+			              <xsl:choose>
+			                <xsl:when test="b:LCID='0' or b:LCID='' or not(b:LCID)">
+			                  <xsl:value-of select="/*/b:Locals/b:DefaultLCID"/>
+			                </xsl:when>
+			                <xsl:otherwise>
+			                  <xsl:value-of select="b:LCID"/>
+			                </xsl:otherwise>
+			              </xsl:choose>
+			            </xsl:variable>
+
+			            <xsl:element name="p">
+
+						<xsl:attribute name="lang">
+							<xsl:value-of select="/*/b:Locals/b:Local[@LCID=$LCID]/@Culture"/>
+						</xsl:attribute>
+						<xsl:attribute name="dir">
+							<xsl:value-of select="/*/b:Locals/b:Local[@LCID=$LCID]/b:Properties/b:Direction"/>
+						</xsl:attribute>
+
+						<xsl:variable name="type">
+							<xsl:value-of select="msxsl:node-set($ListPopulatedWithMain)/b:Citation/b:Source/b:SourceType"/>
+						</xsl:variable>
+
+						<xsl:variable name="title0">
+							<xsl:choose>
+								<xsl:when test="string-length(msxsl:node-set($ListPopulatedWithMain)/b:Citation/b:Source/b:ShortTitle)>0">
+									<xsl:value-of select="msxsl:node-set($ListPopulatedWithMain)/b:Citation/b:Source/b:ShortTitle" />
+								</xsl:when>
+
+								<xsl:otherwise>
+									<xsl:value-of select="msxsl:node-set($ListPopulatedWithMain)/b:Citation/b:Source/b:Title" />
+								</xsl:otherwise>
+							</xsl:choose>
+						</xsl:variable>
+
+						<xsl:variable name="year0">
+							<xsl:value-of select="msxsl:node-set($ListPopulatedWithMain)/b:Citation/b:Source/b:Year" />
+						</xsl:variable>						
+
+						<xsl:variable name="authorMain">
+							<xsl:copy-of select="msxsl:node-set($ListPopulatedWithMain)/b:Citation/b:Source/b:Author/b:Main"/>
+						</xsl:variable>
+
+						<xsl:variable name="author0">
+							<xsl:choose>
+								<xsl:when test="(msxsl:node-set($ListPopulatedWithMain)/b:Citation/b:Source/b:SourceType = 'JournalArticle' or
+									msxsl:node-set($ListPopulatedWithMain)/b:Citation/b:Source/b:SourceType = 'ConferenceProceedings')
+									and string-length(msxsl:node-set($ListPopulatedWithMain)/b:Citation/b:Source/b:Title) > 0">
+									<xsl:value-of select="msxsl:node-set($ListPopulatedWithMain)/b:Citation/b:Source/b:Title" />
+								</xsl:when>
+								<xsl:when test="string-length(msxsl:node-set($ListPopulatedWithMain)/b:Citation/b:Source/b:Author/b:Main/b:Corporate) > 0">
+									<xsl:value-of select="msxsl:node-set($ListPopulatedWithMain)/b:Citation/b:Source/b:Author/b:Main/b:Corporate" />
+								</xsl:when>
+								<xsl:otherwise>
+									<xsl:variable name="cAuthors">
+										<xsl:value-of select="count(msxsl:node-set($ListPopulatedWithMain)/b:Citation/b:Source/b:Author/b:Main/b:NameList/b:Person)" />
+									</xsl:variable>
+									<xsl:for-each select="msxsl:node-set($ListPopulatedWithMain)/b:Citation/b:Source/b:Author/b:Main/b:NameList/b:Person">
+										
+										<xsl:choose>
+											<xsl:when test="position() >= 2">
+											</xsl:when>
+											<xsl:when test="position() = 1">
+												<xsl:call-template name="formatNameCore">
+													<xsl:with-param name="FML">
+														<xsl:call-template name="templ_prop_SimpleAuthor_L"/>
+													</xsl:with-param>
+													<xsl:with-param name="FM">
+														<xsl:call-template name="templ_prop_SimpleAuthor_F"/>
+													</xsl:with-param>
+													<xsl:with-param name="ML">
+														<xsl:call-template name="templ_prop_SimpleAuthor_L"/>
+													</xsl:with-param>
+													<xsl:with-param name="FL">
+														<xsl:call-template name="templ_prop_SimpleAuthor_L"/>
+													</xsl:with-param>
+													<xsl:with-param name="upperLast">no</xsl:with-param>
+													<xsl:with-param name="withDot">no</xsl:with-param>
+												</xsl:call-template>
+											</xsl:when>
+										</xsl:choose>
+									</xsl:for-each>
+									<xsl:if test = "$cAuthors > 1">
+										
+										<xsl:call-template name="templ_str_AndOthersUnCap"/>
+									</xsl:if>
+								</xsl:otherwise>
+							</xsl:choose>
+						</xsl:variable>
+
+						<xsl:variable name="title">
+							<xsl:choose>
+								<xsl:when test="msxsl:node-set($ListPopulatedWithMain)/b:Citation/b:NoTitle">
+								</xsl:when>
+								
+								<xsl:otherwise>
+									<xsl:value-of select="$title0" />
+								</xsl:otherwise>
+							</xsl:choose>
+						</xsl:variable>
+
+						<xsl:variable name="year">
+							<xsl:choose>
+								<xsl:when test="msxsl:node-set($ListPopulatedWithMain)/b:Citation/b:NoYear">
+								</xsl:when>
+								
+								<xsl:otherwise>
+									<xsl:value-of select="$year0" />
+								</xsl:otherwise>
+							</xsl:choose>
+						</xsl:variable>						
+
+						<xsl:variable name="author">
+							<xsl:choose>
+								<xsl:when test="msxsl:node-set($ListPopulatedWithMain)/b:Citation/b:NoAuthor">
+								</xsl:when>
+								<xsl:otherwise>
+									<xsl:value-of select="$author0" />
+								</xsl:otherwise>
+							</xsl:choose>
+						</xsl:variable>
+
+					    <xsl:variable name="prop_APA_Hyphens">
+					      <xsl:call-template name="templ_prop_Hyphens"/>
+					    </xsl:variable>
+
+						<xsl:variable name="volume" select="msxsl:node-set($ListPopulatedWithMain)/b:Citation/b:Volume"/>
+
+						<xsl:variable name="volVolume">
+							<xsl:if test="string-length($volume) > 0">
+								<xsl:call-template name="StringFormat">
+									<xsl:with-param name="format">
+									  <xsl:choose>
+										<xsl:when test="not(string-length($volume)=string-length(translate($volume, ',', '')))">
+										  <xsl:call-template name="templ_str_VolumesShortUnCap"/>
+										</xsl:when>
+										<xsl:when test="string-length($volume)=string-length(translate($volume, $prop_APA_Hyphens, ''))">
+										  <xsl:call-template name="templ_str_VolumeShortUnCap"/>
+										</xsl:when>
+										<xsl:otherwise>
+										  <xsl:call-template name="templ_str_VolumesShortUnCap"/>
+										</xsl:otherwise>
+									  </xsl:choose>
+									</xsl:with-param>
+									<xsl:with-param name="parameters">
+										<t:params>
+											<t:param>
+												<xsl:value-of select="$volume"/>
+											</t:param>
+										</t:params>
+									</xsl:with-param>
+								</xsl:call-template>
+							</xsl:if>
+						</xsl:variable>
+
+
+						<xsl:variable name="pages" select="msxsl:node-set($ListPopulatedWithMain)/b:Citation/b:Pages"/>
+
+		                <xsl:variable name="ppPages">
+		                  <xsl:if test="string-length($pages)>0">
+		                    <xsl:choose>
+		                      <xsl:when test="not(string-length($pages)=string-length(translate($pages, ',', '')))">
+		                        <xsl:call-template name="templ_str_PagesCountinousShort"/>
+		                      </xsl:when>
+		                      <xsl:when test="string-length($pages)=string-length(translate($pages, $prop_APA_Hyphens, ''))">
+		                        <xsl:call-template name="templ_str_PageShort"/>
+		                      </xsl:when>
+		                      <xsl:otherwise>
+		                        <xsl:call-template name="templ_str_PagesCountinousShort"/>
+		                      </xsl:otherwise>
+		                    </xsl:choose>
+		                    <xsl:call-template name="templ_prop_Space"/>
+		                    <xsl:value-of select="$pages"/>
+		                  </xsl:if>
+		                </xsl:variable>
+
+						<xsl:variable name="displayAuthor">
+							<xsl:value-of select="$author" />
+						</xsl:variable>
+
+						<xsl:variable name="displayTitle">
+						</xsl:variable>
+
+						
+						<xsl:if test="msxsl:node-set($ListPopulatedWithMain)/b:Citation/b:FirstAuthor">
+							<xsl:call-template name="templ_prop_OpenBracket"/>
+						</xsl:if>
+					
+						<xsl:if test="msxsl:node-set($ListPopulatedWithMain)/b:Citation/b:PagePrefix">
+							<xsl:value-of select="/b:Citation/b:PagePrefix"/>
+						</xsl:if>
+
+						<xsl:value-of select="$displayAuthor" />
+
+						<xsl:if test="string-length($displayTitle) > 0">
+							<xsl:if test="string-length($displayAuthor) > 0">
+								<xsl:call-template name="templ_prop_ListSeparator"/>
+							</xsl:if>
+							<xsl:value-of select="$displayTitle"/>
+						</xsl:if>
+
+						<xsl:if test="string-length($year) > 0">
+							<xsl:if test="string-length($displayAuthor) > 0 or string-length($displayTitle) > 0">
+								<xsl:call-template name="templ_prop_ListSeparator"/>
+							</xsl:if>	
+							<xsl:value-of select="$year"/>
+						</xsl:if>
+
+						<xsl:if test="string-length($author0) = 0 and string-length($year0) = 0">
+							<xsl:value-of select="msxsl:node-set($ListPopulatedWithMain)/b:Citation/b:Source/b:Tag"/>
+						</xsl:if>
+
+						<xsl:if test="string-length($volume) > 0 or string-length($pages) > 0">
+							<xsl:if test="string-length($displayAuthor) > 0 or string-length($displayTitle) > 0 or string-length($year) > 0">
+								<xsl:call-template name="templ_prop_Space"/>
+							</xsl:if>			
+
+							<xsl:choose>
+								<xsl:when test="string-length($volume) > 0 and string-length($pages) > 0">
+									<xsl:value-of select="$volume"/>
+				                    <xsl:call-template name="templ_prop_Enum"/>
+				                    <xsl:value-of select="$pages"/>
+				                </xsl:when>
+								<xsl:when test="string-length($volVolume) > 0">
+									<xsl:value-of select="$volVolume"/>
+				                </xsl:when>
+								<xsl:when test="string-length($ppPages) > 0">
+									<xsl:value-of select="$ppPages"/>
+				                </xsl:when>
+							</xsl:choose>
+						</xsl:if>
+
+						<xsl:if test="/b:Citation/b:PageSuffix">
+							<xsl:value-of select="/b:Citation/b:PageSuffix"/>
+						</xsl:if>
+						
+						<xsl:if test="/b:Citation/b:LastAuthor">
+							<xsl:call-template name="templ_prop_CloseBracket"/>
+						</xsl:if>
+						<xsl:if test="not(/b:Citation/b:LastAuthor)">
+							<xsl:call-template name="templ_prop_GroupSeparator"/>
+						</xsl:if>
+					
+
+						</xsl:element>
+					</body>
+				</html>

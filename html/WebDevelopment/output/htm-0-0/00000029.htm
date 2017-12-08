@@ -1,0 +1,313 @@
+<html>
+<head>
+<meta name="Version" content="4730"> <meta name="Microsoft Theme" content="none">
+<title>Document Subscription</title>
+<style type="text/css"><!-- .dlgTitle {font: 12pt/14pt tahoma; font-weight: normal; color: "WindowText"; font-style: normal} .dlgLabel {font: 8pt/9pt tahoma; color: "WindowText"} .dlgLabelB {font: 8pt/9pt tahoma; font-weight:bold; color: "WindowText"} .dlgLabelI {font: 8pt/9pt tahoma; font-style:italic; color: "WindowText"} .dlgLabelU {font: 8pt/9pt tahoma; text-decoration:underline; color: "WindowText"} .dlgControl {font: 9pt tahoma; color: "WindowText"; width: 400px} .dlgLabelDisabled {font: 8pt/9pt tahoma; color: "GrayText"; filter: dropshadow(color=white, offx=1, offy=1)} .dlgEdit {font: 8pt/9pt tahoma; color: "WindowText"; width: 400px} .dlgLink {cursor: hand; text-decoration:none; color: "ButtonText"} .dlgLinkDisabled {cursor: default; text-decoration:none; color: "ButtonShadow"} .dlgBtn {cursor: hand; border-width: 0; color: "ButtonText"} .dlgBtnDisabled {cursor: default; border-width: 0; color: "ButtonShadow"; filter: dropshadow(color=white, offx=1, offy=1)} .dlgPushBtn {cursor: hand; font: 8pt/9pt tahoma; color: "ButtonText"; width=102px} .dlgOKCancelBtn {font: 8pt/9pt tahoma; color: "ButtonText"; width=80px} .dlgDropDown {font: 8pt/9pt tahoma; color: "WindowText"; width: 200px} .dlgTextEdit {font: 9pt tahoma; color: "WindowText"; width: 400px; height: 140px} .dlgHalfEdit {font: 8pt/9pt tahoma; color: "WindowText"; width: 262px} .dlgSmallDropDown {font: 8pt/9pt tahoma; color: "WindowText"; width: 100px} --></style>
+<script> 
+function CloseDialog(fCancel)
+{
+	if (fCancel && !OnCancel())
+		return;
+	if (fCancel || ReturnDialogArgs())
+		window.close();
+}
+function BodyKeyDown()
+{
+	kc = window.event.keyCode;
+	if (kc == 27)  
+		{
+		CloseDialog(true);
+		window.event.keyCode = 34;  
+		}
+	else if (kc == 13 && OnEnter())  
+		CloseDialog(false);
+}
+var L_TitleSubscribe_Text = "Subscribe for Event Notification";
+var L_EmailIsRequired_Text = "An e-mail address is required to receive document notifications. Please enter an e-mail address or click 'Cancel' to exit.";
+var L_CurrentUrlIsRequired_Text = "A valid document address (url) is required. Please enter a document address or click 'Cancel' to exit.";
+var L_LocationUrlIsRequired_Text = "A valid folder address (url) is required. Please enter a folder address or click 'Cancel' to exit.";
+dialogWidth = "507px";
+dialogHeight = "380px";
+OWS_CT_NONE	= 0;
+OWS_EVT_CMTALL = 7;
+function InitDialog()
+{
+	dialogHeight = 380+(380 -25)-document.body.clientHeight+"px";
+	dialogArguments.Attribute("owscancel") = 1;
+	EnableDocument();
+	diidTLocation.value = dialogArguments.Attribute("owsslocation");
+	diidTFilename.value = dialogArguments.Attribute("owssfilename");
+	diidTEmail.value = dialogArguments.Attribute(2);
+	if (diidTEmail.value == "")
+		{
+		diidTEmail.focus();
+		return true;
+		}
+	diidOK.focus();
+	return true;		
+}
+function OnEnter() 
+{
+	if (diidTEmail.value == "")
+    {
+		alert(L_EmailIsRequired_Text);
+		diidTEmail.focus();
+		return false;
+    }
+    var checkOK = "@";
+    var checkStr = diidTEmail.value;
+    var allValid = true;
+    for (i = 0;  i < checkStr.length;  i++)
+    {
+        if ((checkStr.charAt(i) == checkOK.charAt(0)) &&
+            (i < (checkStr.length - 1)) &&
+            (i > 0))
+            break;
+    }
+    if (i == checkStr.length)
+        allValid = false;
+    if (!allValid)
+    {
+        alert(L_EmailIsRequired_Text);
+        diidTEmail.focus();
+        return false;
+    }
+	if (diidRDocCurrent.checked && diidTFilename.value == "")
+		{
+		alert(L_CurrentUrlIsRequired_Text);
+		diidTFilename.focus();
+		return false;
+		}
+	if (diidRDocAny.checked && diidTLocation.value == "")
+		{
+		alert(L_LocationUrlIsRequired_Text);
+		diidTLocation.focus();
+		return false;
+		}
+	return true;
+}
+function OnCancel() 
+{ 
+	return true; 
+}
+function ReturnDialogArgs()
+{
+	if (!OnEnter())
+		return false;
+	if (diidRDocAny.checked)
+		{
+		dialogArguments.Attribute("owsslocation") = diidTLocation.value;
+		dialogArguments.Attribute("owssfilename") = "";
+		}
+	else
+		{
+		dialogArguments.Attribute("owssfilename") = diidTFilename.value;
+		dialogArguments.Attribute("owsslocation") = "";
+		}
+	if (diidRDocAny.checked && diidSAuthor.value!=0)
+		{
+		dialogArguments.Attribute("owssauthor") = diidTAuthor.value;
+		dialogArguments.Attribute("owssauthsel") = diidSAuthor.value;
+		}
+	else
+		{
+		dialogArguments.Attribute("owssauthor") = "";
+		dialogArguments.Attribute("owssauthsel") = OWS_CT_NONE;
+		}
+	dialogArguments.Attribute("owssevent") = diidSEvent.value;
+	dialogArguments.Attribute("owssemail") = diidTEmail.value;
+	dialogArguments.Attribute("owsswhen") = diidSNotify.value;
+	dialogArguments.Attribute("owscancel") = 0;
+	dialogArguments.Attribute(2) = diidTEmail.value;
+	return true;
+}
+function RadioClick(lId)
+{	
+	switch (lId)
+		{
+	case 6:
+		if (!diidRDocAny.checked)
+			{	
+			diidRDocAny.checked = true;
+			diidRDocCurrent.checked = false;
+			diidRDocAny.focus();
+			}
+		EnableDocument();
+		break;
+	case 5:
+		if (!diidRDocCurrent.checked)
+			{	
+			diidRDocAny.checked = false;
+			diidRDocCurrent.checked = true;
+			diidRDocCurrent.focus();
+			}
+		EnableDocument();
+		break;
+		}
+}
+function EnableDocument()
+{
+	if (diidRDocAny.checked)
+		{
+		diidTextLocation.style.color = "WindowText";
+		diidChooseLocation.style.color = "WindowText";
+		diidTLocation.style.backgroundColor = "Window";
+		diidTLocation.style.color = "WindowText";
+		diidTLocation.disabled = false;
+		diidTFilename.style.backgroundColor = "ThreedFace";
+		diidTFilename.style.color = "GrayText";
+		diidTFilename.disabled = true;
+		diidTextAuthor.style.color = "WindowText";
+		diidSAuthor.disabled = false;
+		diidSAuthor.style.backgroundColor = "Window";
+		if (diidSAuthor.value !=0)
+			{
+			diidTAuthor.style.backgroundColor = "Window";
+			diidTAuthor.disabled = false;
+			}
+		else
+			{
+			diidTAuthor.style.backgroundColor = "ThreedFace";
+			diidTAuthor.disabled = true;
+			}
+		}		
+	else
+		{
+		diidTFilename.style.backgroundColor = "Window";
+		diidTFilename.style.color = "WindowText";
+		diidTFilename.disabled = false;
+		diidTextLocation.style.color = "GrayText";
+		diidChooseLocation.style.color = "GrayText";
+		diidTLocation.style.backgroundColor = "ThreedFace";
+		diidTLocation.style.color = "GrayText";
+		diidTLocation.disabled = true;
+		diidTextAuthor.style.color = "GrayText";
+		diidSAuthor.disabled = true;
+		diidSAuthor.style.backgroundColor = "ThreedFace";
+		diidTAuthor.style.backgroundColor = "ThreedFace";
+		diidTAuthor.disabled = true;
+		}
+}
+</script>
+</head>
+<body
+	topmargin="5" leftmargin="6" bottommargin="0" rightmargin="7"
+	bgcolor="ThreedFace" text="ThreedShadow"
+	bgproperties="fixed"
+	onLoad="InitDialog()" onkeydown="BodyKeyDown()" scroll="no">
+<table border="0" style="padding-top:4px;padding-bottom:4px;padding-left:4px" cellspacing="0" width=486> <tr> <td width="1%" nowrap bgcolor="ThreedFace"> <div id="diidTitle" class="dlgLabel">Subscribe&nbsp;to:</div></td><td><hr></td></tr> </table>
+<table border="0" cellpadding="3" cellspacing="0" filler>
+	<tr>
+		<td width=29 valign="middle">
+		<input id=diidRDocCurrent type="radio" value="Current" checked name=DocRadio
+				onclick=RadioClick(5) accesskey=f>
+		</td>
+		<td width=78 valign="middle" nowrap>
+		<div id=diidDocCurrentLabel class="dlgLabel" onclick=RadioClick(5)>
+		<u>F</u>ile
+		</div></td>
+		<td width=351 valign="middle" >
+		<input class="dlgHalfEdit" id=diidTFilename type="text" size="43" maxlength=449 name=TextFilename accesskey=f onFocus=select()></td>
+	</tr>
+    <tr>
+		<td width=29 valign="middle">
+		<input id=diidRDocAny type="radio" value="Any" name=DocRadio
+      			onclick=RadioClick(6) accesskey=d>
+		</td>
+		<td width=66 valign="middle" colspan="3" nowrap>
+		<div id=diidDocAnyLabel class="dlgLabel" onclick=RadioClick(6)>
+		Fol<u>d</u>er
+		</div></td><td width=371></td>
+    </tr>
+</table>
+<table border="0" cellpadding="3" cellspacing="0" filler>
+    <tr>
+		<td valign="middle" width="29"></td>
+		<td valign="middle" width="67" nowrap>
+		<div id=diidTextLocation class="dlgLabelDisabled">
+		<u>P</u>ath
+		</div></td>
+		<td valign="middle" width="105" >
+		<div id=diidChooseLocation class="dlgLabelDisabled">equals</div></td>
+		<td valign="middle" width=260>
+		<input class="dlgHalfEdit" id=diidTLocation type="text" name=TextLocation accesskey=p onFocus=select()  maxlength=449 size=30></td>
+    </tr>
+    <tr>
+		<td valign="middle" width="29"></td>
+		<td valign="middle" width="67" nowrap>
+		<div id=diidTextAuthor class="dlgLabelDisabled">
+		M<u>o</u>dified&nbsp;by
+		 </div></td>
+		<td valign="middle" width="105">
+		<select disabled=true class="dlgSmallDropDown" id=diidSAuthor name=SelectAuthor size="1" onChange="EnableDocument()" accesskey=o>
+		<option id=diidDoesntMatterLabel selected value=0>doesn't matter</option>
+		<option id=diidContainsLabel value=8>contains</option>
+		</select></td>
+	<td valign="middle" width=260>
+		<input class="dlgHalfEdit" id=diidTAuthor type="text" name=TextAuthor onFocus=select() size=30 maxLength=254>
+		<span class="dlgLabel"> </span></td>
+	</tr>
+	</table>
+<table border="0" style="padding-top:4px;padding-bottom:4px;padding-left:4px" cellspacing="0" width=486> <tr> <td width="1%" nowrap bgcolor="ThreedFace"> <div id="diidTitle" class="dlgLabel">Notify&nbsp;me</div></td><td><hr></td></tr> </table>
+<table border="0" cellpadding="3" cellspacing="0" filler>
+    <tr>
+ 	<td width=29></td>
+      <td valign="middle" width="66" nowrap>
+      <div id=diidWhenLabel class="dlgLabel">
+		<u>W</u>hen:
+	</td>
+      <td valign="middle" width=371><select class="dlgHalfEdit" id=diidSEvent name=SelectEvent size="1" onChange="EnableDocument()" accesskey=w>
+		<option id=diidAnythingChangesLabel selected value=8>anything changes</option>
+		<option id=diidDocumentCreatedLabel value=0>a new document is created</option>
+		<option id=diidDocumentModifiedLabel value=1>a document is modified</option>
+		<option id=diidDocumentDeletedLabel value=2>a document is deleted</option>
+		<option id=diidDocumentMovedLabel value=3>a document is moved</option>
+		<option id=diidDiscussionChangedLabel value=7>a discussion item is inserted or deleted</option>
+      </select></td>
+    </tr>
+</table>
+<table border="0" style="padding-top:4px;padding-bottom:4px;padding-left:4px" cellspacing="0" width=486> <tr> <td width="1%" nowrap bgcolor="ThreedFace"> <div id="diidTitle" class="dlgLabel">Email&nbsp;options</div></td><td><hr></td></tr> </table>
+<table border="0" cellpadding="3" cellspacing="0" filler>
+	<tr>
+	<td width=29></td>
+      <td valign="middle" width="66" nowrap>
+		<div id=diidAddressLabel class="dlgLabel">
+		Add<u>r</u>ess:
+		</div></td>
+		<td valign="middle" width=371 height="29">
+		<input class="dlgHalfEdit" id=diidTEmail type="text" size="30" name=TextEmail value="" accesskey=r onFocus=select() maxLength=254></td>
+    </tr>
+	<tr>
+	<td width=29></td>
+	<td width=66></td>
+	<td width=371 nowrap>
+	<div id=diidAddressSampleLabel class="dlgLabel">
+	(e.g. someone@example.com)
+	</div>
+	</td>
+	</tr>
+    <tr>
+	<td width=29></td>
+	<td valign="middle" width="66" nowrap>
+	<div id=diidTimeLabel class="dlgLabel">
+	Ti<u>m</u>e: 
+	</div></td>
+      <td valign="middle" width=371 height="29">
+      <select class="dlgHalfEdit" id=diidSNotify name=DropTime size="1" accesskey=m>
+        <option id=diidWhenChangedLabel value=0>when a change occurs</option>
+        <option id=diidOnceADayLabel selected value=1>once a day</option>
+        <option id=diidOnceAWeekLabel value=2>once a week</option>
+      </select></td>
+    </tr>
+</table>
+<table border="0" cellpadding="1" style="padding-left:3px" cellspacing="0" filler>
+	<tr>
+      <td>
+	  <hr>
+      </td>
+    </tr>
+</table>
+<table border="0" cellpadding="0" style="padding-top:0;padding-bottom:0" cellspacing="0" width=486> <tr> <td bgcolor="ThreedFace" align="right">  <input type="button" class="dlgOKCancelBtn" id="diidOK" value="OK" onclick="CloseDialog(0)" /> &nbsp<input type="button" class="dlgOKCancelBtn" id="diidCancel" value="Cancel" onclick="CloseDialog(1)" onkeydown="window.event.cancelBubble = true" /> </td></tr> </table>
+</body>
+</body>
+</html>

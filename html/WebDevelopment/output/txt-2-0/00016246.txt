@@ -1,0 +1,1461 @@
+-----BEGIN PGP SIGNATURE-----
+            # [...]
+            # -----END PGP SIGNATURE-----
+            # Field-P2: another value
+            #
+            # At the time of writing: If $open_section is true, it
+            # will remain so until the empty line after the PGP
+            # header.
+            die "syntax error at line $.: Data after the PGP SIGNATURE\n";
+        }
+        # new empty field?
+        elsif (m/^([^: \t]+):\s*$/o) {
+            $lines->{'START-OF-PARAGRAPH'} = $. if not $open_section;
+            $open_section = 1;
+
+            my ($tag) = (lc $1);
+            $section->{$tag} = '';
+            $lines->{$tag} = $.;
+
+            $last_tag = $tag;
+        }
+        # new field?
+        elsif (m/^([^: \t]+):\s*(.*)$/o) {
+            $lines->{'START-OF-PARAGRAPH'} = $. if not $open_section;
+            $open_section = 1;
+
+            # Policy: Horizontal whitespace (spaces and tabs) may occur
+            # immediately before or after the value and is ignored there.
+            my ($tag,$value) = (lc $1,$2);
+            rstrip($value);
+            if (exists $section->{$tag}) {
+                # Policy: A paragraph must not contain more than one instance
+                # of a particular field name.
+                die "syntax error at line $.: Duplicate field $tag.\n";
+            }
+            $section->{$tag} = $value;
+            $lines->{$tag} = $.;
+
+            $last_tag = $tag;
+        }
+        # continued field?
+        elsif (m/^([ \t].*\S.*)$/o) {
+            $open_section
+              or die join(q{ },
+                "syntax error at line $.:",
+                'Continuation line outside a paragraph (maybe line',
+                ($. - 1), qq{should be " .").\n});
+
+            # Policy: Many fields' values may span several lines; in this case
+            # each continuation line must start with a space or a tab.  Any
+            # trailing spaces or tabs at the end of individual lines of a
+            # field value are ignored.
+            my $value = rstrip($1);
+            $section->{$last_tag} .= "\n" . $value;
+        }
+        # None of the above => syntax error
+        else {
+            my $message = "syntax error at line $.";
+            if (m/^\s+$/) {
+                $message
+                  .= ": Whitespace line not allowed (possibly missing a \".\").\n";
+            } else {
+                # Replace non-printables and non-space characters with
+                # "_" - just in case.
+                s/[^[:graph:][:space:]]/_/go;
+                $message .= ": Cannot parse line \"$_\"\n";
+            }
+            die $message;
+        }
+    }
+    # pass the last section (if not already done).
+    $code->($section, $lines) if $open_section;
+
+    # Given the API, we cannot use this check to prevent any
+    # paragraphs from being emitted to the code argument, so we might
+    # as well just do this last.
+    if ($signed and not $signature) {
+        # The "at line X" may seem a little weird, but it keeps the
+        # message format identical.
+        die join(q{ },
+            "syntax error at line $.:",
+            qq{End of file before "BEGIN PGP SIGNATURE"\n"});
+    }
+}
+
+=item read_dpkg_control_utf8(FILE[, FLAGS[, LINES]])
+
+=item read_dpkg_control(FILE[, FLAGS[, LINES]])
+
+This is a convenience function to ease using L</parse_dpkg_control>
+with paths to files (rather than open handles).  The first argument
+must be the path to a FILE, which should be read as a debian control
+file.  If the file is empty, an empty list is returned.
+
+Otherwise, this behaves like:
+
+ use autodie;
+ 
+ open(my $fd, '<:encoding(UTF-8)', FILE); # or '<'
+ my @p = parse_dpkg_control($fd, FLAGS, LINES);
+ close($fd);
+ return @p;
+
+This goes without saying that may fail with any of the messages that
+L</parse_dpkg_control(HANDLE[, FLAGS[, LINES]])> do.  It can also emit
+autodie exceptions if open or close fails.
+
+=cut
+
+sub read_dpkg_control {
+    my ($file, $flags, $lines) = @_;
+
+    open(my $CONTROL, '<', $file);
+    my @data = parse_dpkg_control($CONTROL, $flags, $lines);
+    close($CONTROL);
+
+    return @data;
+}
+
+sub read_dpkg_control_utf8 {
+    my ($file, $flags, $lines) = @_;
+
+    open(my $CONTROL, '<:encoding(UTF-8)', $file);
+    my @data = parse_dpkg_control($CONTROL, $flags, $lines);
+    close($CONTROL);
+
+    return @data;
+}
+
+=item dpkg_deb_has_ctrl_tarfile()
+
+Check if lintian could use dpkg-deb instead of ar and tar
+
+=cut
+
+{
+    my $dpkg_deb_has_ctrl_tarfile_cache;
+
+    sub dpkg_deb_has_ctrl_tarfile {
+        if (not defined($dpkg_deb_has_ctrl_tarfile_cache)) {
+            my $help = safe_qx({'err' => '/dev/null'},'dpkg-deb', '--help');
+            if (index($help, '--ctrl-tarfile') > -1) {
+                $dpkg_deb_has_ctrl_tarfile_cache = 1;
+            } else {
+                $dpkg_deb_has_ctrl_tarfile_cache = 0;
+            }
+        }
+        return $dpkg_deb_has_ctrl_tarfile_cache;
+    }
+}
+
+=item get_deb_info(DEBFILE)
+
+Extracts the control file from DEBFILE and returns it as a hashref.
+
+Basically, this is a fancy convenience for setting up an ar + tar pipe
+and passing said pipe to L</parse_dpkg_control(HANDLE[, FLAGS[, LINES]])>.
+
+DEBFILE must be an ar file containing a "control.tar.gz" member, which
+in turn should contain a "control" file.  If the "control" file is
+empty this will return an empty list.
+
+Note: the control file is only expected to have a single paragraph and
+thus only the first is returned (in the unlikely case that there are
+more than one).
+
+This function may fail with any of the messages that
+L</parse_dpkg_control> do.  It can also emit:
+
+ "cannot fork to unpack %s: %s\n"
+
+=cut
+
+{
+
+    sub get_deb_info {
+        my ($file) = @_;
+
+        # dpkg-deb -f $file is very slow. Instead, we use ar and tar.
+        my $opts = {
+            fail => 'exception',
+            pipe_out => FileHandle->new
+        };
+
+        if (dpkg_deb_has_ctrl_tarfile()) {
+            spawn(
+                $opts, ['dpkg-deb', '--ctrl-tarfile', $file],
+                '|', ['tar', '--wildcards', '-xO', '-f', '-', '*control']);
+        } else {
+            spawn($opts, ['ar', 'p', $file, 'control.tar.gz'],
+                '|', ['tar', '--wildcards', '-xzO', '-f', '-', '*control']);
+        }
+        my @data = parse_dpkg_control($opts->{pipe_out});
+
+        # Consume all data before exiting so that we don't kill child processes
+        # with SIGPIPE.  This will normally only be an issue with malformed
+        # control files.
+        drain_pipe($opts->{pipe_out});
+        close($opts->{pipe_out});
+        $opts->{harness}->finish;
+        return $data[0];
+    }
+}
+
+=item get_dsc_control (DSCFILE)
+
+Convenience function for reading dsc files.  It will read the DSCFILE
+using L</read_dpkg_control(FILE[, FLAGS[, LINES]])> and then return the
+first paragraph.  If the file has no paragraphs, C<undef> is returned
+instead.
+
+Note: the control file is only expected to have a single paragraph and
+thus only the first is returned (in the unlikely case that there are
+more than one).
+
+This function may fail with any of the messages that
+L</read_dpkg_control(FILE[, FLAGS[, LINES]])> do.
+
+=cut
+
+sub get_dsc_info {
+    my ($file) = @_;
+    my @data = read_dpkg_control($file);
+    return (defined($data[0])? $data[0] : undef);
+}
+
+=item slurp_entire_file (FOH[, NOCLOSE])
+
+Reads the contents of FOH into memory and return it as a scalar.  FOH
+can be either the path to a file or an open file handle.
+
+If it is a handle, the optional NOCLOSE parameter can be used to
+prevent the sub from closing the handle.  The NOCLOSE parameter has no
+effect if FOH is not a handle.
+
+=cut
+
+sub slurp_entire_file {
+    my ($file, $noclose) = @_;
+    my $fd;
+    if (openhandle($file)) {
+        $fd = $file;
+    } else {
+        open($fd, '<', $file);
+    }
+    local $/;
+    local $_ = <$fd>;
+    close($fd) unless $noclose && openhandle($file);
+    return $_;
+}
+
+=item drain_pipe(FD)
+
+Reads and discards any remaining contents from FD, which is assumed to
+be a pipe.  This is mostly done to avoid having the "write"-end die
+with a SIGPIPE due to a "broken pipe" (which can happen if you just
+close the pipe).
+
+May cause an exception if there are issues reading from the pipe.
+
+Caveat: This will block until the pipe is closed from the "write"-end,
+so only use it with pipes where the "write"-end will eventually close
+their end by themselves (or something else will make them close it).
+
+=cut
+
+sub drain_pipe {
+    my ($fd) = @_;
+    my $buffer;
+
+    1 while (read($fd, $buffer, 4096) > 0);
+
+    return 1;
+}
+
+=item get_file_digest(ALGO, FILE)
+
+Creates an ALGO digest object that is seeded with the contents of
+FILE.  If you just want the hex digest, please use
+L</get_file_checksum(ALGO, FILE)> instead.
+
+ALGO can be 'md5' or shaX, where X is any number supported by
+L<Digest::SHA> (e.g. 'sha256').
+
+This sub is a convenience wrapper around Digest::{MD5,SHA}.
+
+=cut
+
+sub get_file_digest {
+    my ($alg, $file) = @_;
+    open(my $fd, '<', $file);
+    my $digest;
+    if ($alg eq 'md5') {
+        $digest = Digest::MD5->new;
+    } elsif ($alg =~ /sha(\d+)/) {
+        $digest = Digest::SHA->new($1);
+    }
+    $digest->addfile($fd);
+    close($fd);
+    return $digest;
+}
+
+=item get_file_checksum(ALGO, FILE)
+
+Returns a hexadecimal string of the message digest checksum generated
+by the algorithm ALGO on FILE.
+
+ALGO can be 'md5' or shaX, where X is any number supported by
+L<Digest::SHA> (e.g. 'sha256').
+
+This sub is a convenience wrapper around Digest::{MD5,SHA}.
+
+=cut
+
+sub get_file_checksum {
+    my $digest = get_file_digest(@_);
+    return $digest->hexdigest;
+}
+
+=item is_string_utf8_encoded(STRING)
+
+Returns a truth value if STRING can be decoded as valid UTF-8.
+
+=cut
+
+{
+    my $decoder = Encode::find_encoding('UTF-8');
+    die('No UTF-8 decoder !?') unless ref($decoder);
+
+    sub is_string_utf8_encoded {
+        my ($str) = @_;
+        if ($str =~ m,\e[-!"\$%()*+./],) {
+            # ISO-2022
+            return 0;
+        }
+        eval {$decoder->decode($str, Encode::FB_CROAK);};
+        if ($@) {
+            # fail
+            return 0;
+        }
+        # pass
+        return 1;
+    }
+}
+
+=item file_is_encoded_in_non_utf8 (...)
+
+Undocumented
+
+=cut
+
+sub file_is_encoded_in_non_utf8 {
+    my ($file) = @_;
+
+    open(my $fd, '<', $file);
+    my $line = 0;
+    while (<$fd>) {
+        if (!is_string_utf8_encoded($_)) {
+            $line = $.;
+            last;
+        }
+    }
+    close($fd);
+
+    return $line;
+}
+
+=item do_fork()
+
+Overrides fork to reset signal handlers etc. in the child.
+
+=cut
+
+sub do_fork() {
+    my ($pid, $fork_error);
+    my $orig_mask = POSIX::SigSet->new;
+    my $fork_mask = POSIX::SigSet->new;
+    $fork_mask->fillset;
+    sigprocmask(SIG_BLOCK, $fork_mask, $orig_mask)
+      or die("sigprocmask failed: $!\n");
+    $pid = CORE::fork();
+    $fork_error = $!;
+    if ($pid == 0) {
+
+        for my $sig (keys(%SIG)) {
+            if (ref($SIG{$sig}) eq 'CODE') {
+                $SIG{$sig} = 'DEFAULT';
+            }
+        }
+    }
+    sigprocmask(SIG_SETMASK, $orig_mask, undef)
+      or die("sigprocmask failed: $!\n");
+    if ($pid == -1) {
+        $! = $fork_error;
+    }
+    return $pid;
+}
+
+=item system_env (CMD)
+
+Behaves like system (CMD) except that the environment of CMD is
+cleaned (as defined by L</clean_env>(1)).
+
+=cut
+
+sub system_env {
+    my $pid = do_fork;
+    if (not defined $pid) {
+        return -1;
+    } elsif ($pid == 0) {
+        clean_env(1);
+        exec @_ or die("exec of $_[0] failed: $!\n");
+    } else {
+        waitpid $pid, 0;
+        return $?;
+    }
+}
+
+=item clean_env ([CLOC])
+
+Destructively cleans %ENV - removes all variables %ENV except a
+selected few whitelisted variables.
+
+The list of whitelisted %ENV variables are:
+
+ PATH
+ LC_ALL (*)
+ TMPDIR
+
+(*) LC_ALL is a special case as clean_env will change its value to
+either "C.UTF-8" or "C" (if CLOC is given and a truth value).
+
+=cut
+
+sub clean_env {
+    my ($cloc) = @_;
+    my @whitelist = qw(PATH TMPDIR);
+    my %newenv
+      = map { exists $ENV{$_} ? ($_ => $ENV{$_}) : () } (@whitelist);
+    %ENV = %newenv;
+    $ENV{'LC_ALL'} = 'C.UTF-8';
+
+    if ($cloc) {
+        $ENV{LC_ALL} = 'C';
+    }
+    return;
+}
+
+=item perm2oct(PERM)
+
+Translates PERM to an octal permission.  PERM should be a string describing
+the permissions as done by I<tar t> or I<ls -l>.  That is, it should be a
+string like "-rw-r--r--".
+
+If the string does not appear to be a valid permission, it will cause
+a trappable error.
+
+Examples:
+
+ # Good
+ perm2oct('-rw-r--r--') == 0644
+ perm2oct('-rwxr-xr-x') == 0755
+
+ # Bad
+ perm2oct('broken')      # too short to be recognised
+ perm2oct('-resurunet')  # contains unknown permissions
+
+=cut
+
+sub perm2oct {
+    my ($t) = @_;
+
+    my $o = 0;
+
+    # Types:
+    #  file (-), block/character device (b & c), directory (d),
+    #  hardlink (h), symlink (l), named pipe (p).
+    if (
+        $t !~ m/^   [-bcdhlp]                # file type
+                    ([-r])([-w])([-xsS])     # user
+                    ([-r])([-w])([-xsS])     # group
+                    ([-r])([-w])([-xtT])     # other
+               /xsmo
+      ) {
+        croak "$t does not appear to be a permission string";
+    }
+
+    $o += 00400 if $1 eq 'r';   # owner read
+    $o += 00200 if $2 eq 'w';   # owner write
+    $o += 00100 if $3 eq 'x';   # owner execute
+    $o += 04000 if $3 eq 'S';   # setuid
+    $o += 04100 if $3 eq 's';   # setuid + owner execute
+    $o += 00040 if $4 eq 'r';   # group read
+    $o += 00020 if $5 eq 'w';   # group write
+    $o += 00010 if $6 eq 'x';   # group execute
+    $o += 02000 if $6 eq 'S';   # setgid
+    $o += 02010 if $6 eq 's';   # setgid + group execute
+    $o += 00004 if $7 eq 'r';   # other read
+    $o += 00002 if $8 eq 'w';   # other write
+    $o += 00001 if $9 eq 'x';   # other execute
+    $o += 01000 if $9 eq 'T';   # stickybit
+    $o += 01001 if $9 eq 't';   # stickybit + other execute
+
+    return $o;
+}
+
+=item delete_dir (ARGS)
+
+Convenient way of calling I<rm -fr ARGS>.
+
+=cut
+
+sub delete_dir {
+    return spawn(undef, ['rm', '-rf', '--', @_]);
+}
+
+=item copy_dir (ARGS)
+
+Convenient way of calling I<cp -a ARGS>.
+
+=cut
+
+sub copy_dir {
+    # --reflink=auto (coreutils >= 7.5).  On FS that support it,
+    # make a CoW copy of the data; otherwise fallback to a regular
+    # deep copy.
+    return spawn(undef, ['cp', '-a', '--reflink=auto', '--', @_]);
+}
+
+=item gunzip_file (IN, OUT)
+
+Decompresses contents of the file IN and stores the contents in the
+file OUT.  IN is I<not> removed by this call.  On error, this function
+will cause a trappable error.
+
+=cut
+
+sub gunzip_file {
+    my ($in, $out) = @_;
+    spawn({out => $out, fail => 'error'}, ['gzip', '-dc', $in]);
+    return;
+}
+
+=item open_gz (FILE)
+
+Opens a handle that reads from the GZip compressed FILE.
+
+On failure, this sub emits a trappable error.
+
+Note: The handle may be a pipe from an external processes.
+
+=cut
+
+# Preferred implementation of open_gz (used if the perlio layer
+# is available)
+sub __open_gz_pio {
+    my ($file) = @_;
+    open(my $fd, '<:gzip', $file);
+    return $fd;
+}
+
+# Fallback implementation of open_gz
+sub __open_gz_ext {
+    my ($file) = @_;
+    open(my $fd, '-|', 'gzip', '-dc', $file);
+    return $fd;
+}
+
+=item touch_file(FILE)
+
+Updates the "mtime" of FILE.  If FILE does not exist, it will be
+created.
+
+On failure, this sub will emit a trappable error.
+
+=cut
+
+sub touch_file {
+    my ($file) = @_;
+
+    # We use '>>' because '>' truncates the file if it has contents
+    # (which `touch file` doesn't).
+    open(my $fd, '>>', $file);
+    # open with '>>' does not update the mtime if the file already
+    # exists, so use utime to solve that.
+    utime(undef, undef, $fd);
+    close($fd);
+
+    return 1;
+}
+
+=item fail (MSG[, ...])
+
+Use to signal an internal error. The argument(s) will used to print a
+diagnostic message to the user.
+
+If multiple arguments are given, they will be merged into a single
+string (by join (' ', @_)).  If only one argument is given it will be
+stringified and used directly.
+
+=cut
+
+sub fail {
+    my $str = 'internal error: ';
+    if (@_) {
+        $str .= join ' ', @_;
+    } else {
+        if ($!) {
+            $str .= "$!";
+        } else {
+            $str .= 'No context.';
+        }
+    }
+    $! = 2; # set return code outside eval()
+    croak $str;
+}
+
+=item locate_helper_tool(TOOLNAME)
+
+Given the name of a helper tool, returns the path to it.  The tool
+must be available in the "helpers" subdir of one of the "lintian root"
+directories used by Lintian.
+
+The tool name should follow the same rules as check names.
+Particularly, third-party checks should namespace their tools in the
+same way they namespace their checks.  E.g. "python/some-helper".
+
+If the tool cannot be found, this sub will cause a trappable error.
+
+=cut
+
+{
+    my %_CACHE;
+
+    sub locate_helper_tool {
+        my ($toolname) = @_;
+        if ($toolname =~ m{(?:\A|/) \.\. (?:\Z|/)}xsm) {
+            fail("$toolname is not a valid tool name");
+        }
+        return $_CACHE{$toolname} if exists $_CACHE{$toolname};
+
+        my $toolpath_str = $ENV{'LINTIAN_HELPER_DIRS'};
+        if (defined($toolpath_str)) {
+            # NB: We rely on LINTIAN_HELPER_DIRS to contain only
+            # absolute paths.  Otherwise we may return relative
+            # paths.
+            for my $dir (split(':', $toolpath_str)) {
+                my $tool = "$dir/$toolname";
+                next unless -f -x $tool;
+                $_CACHE{$toolname} = $tool;
+                return $tool;
+            }
+        }
+        $toolpath_str //= '<N/A>';
+        fail(
+            sprintf(
+                'Cannot locate %s (search dirs: %s)',
+                $toolname, $toolpath_str
+            ));
+    }
+}
+
+=item strip ([LINE])
+
+Strips whitespace from the beginning and the end of LINE and returns
+it.  If LINE is omitted, C<$_> will be used instead. Example
+
+ @lines = map { strip } <$fd>;
+
+In void context, the input argument will be modified so it can be
+used as a replacement for chomp in some cases:
+
+  while ( my $line = <$fd> ) {
+    strip ($line);
+    # $line no longer has any leading or trailing whitespace
+  }
+
+Otherwise, a copy of the string is returned:
+
+  while ( my $orig = <$fd> ) {
+    my $stripped = strip ($orig);
+    if ($stripped ne $orig) {
+        # $orig had leading or/and trailing whitespace
+    }
+  }
+
+=item lstrip ([LINE])
+
+Like L<strip|/strip ([LINE])> but only strip leading whitespace.
+
+=item rstrip ([LINE])
+
+Like L<strip|/strip ([LINE])> but only strip trailing whitespace.
+
+=cut
+
+# prototype for default to $_
+sub strip (_) { ## no critic (Subroutines::RequireFinalReturn)
+    if (defined wantarray) {
+        # perl 5.14 s///r would have been useful here.
+        my ($arg) = @_;
+        $arg =~ s/^\s++//;
+        # unpack 'A*' is faster than s/\s++$//
+        return unpack('A*', $arg);
+    }
+    $_[0] =~ s/^\s++//;
+    $_[0] = unpack('A*', $_[0]);
+    # void context, so no return needed here.
+}
+
+# prototype for default to $_
+sub lstrip (_) { ## no critic (Subroutines::RequireFinalReturn)
+    if (defined wantarray) {
+        # perl 5.14 s///r would have been useful here.
+        my ($arg) = @_;
+        $arg =~ s/^\s++//;
+        return $arg;
+    }
+    $_[0] =~ s/^\s++//;
+    # void context, so no return needed here.
+}
+
+# prototype for default to $_
+sub rstrip (_) {  ## no critic (Subroutines::RequireFinalReturn)
+    if (defined wantarray) {
+        # unpack 'A*' is faster than s/\s++$//
+        return unpack('A*', $_[0]);
+    }
+    $_[0] = unpack('A*', $_[0]);
+    # void context, so no return needed here.
+}
+
+=item check_path (CMD)
+
+Returns 1 if CMD can be found in PATH (i.e. $ENV{PATH}) and is
+executable.  Otherwise, the function return 0.
+
+=cut
+
+sub check_path {
+    my $command = shift;
+
+    return 0 unless exists $ENV{PATH};
+    for my $element (split ':', $ENV{PATH}) {
+        next unless length $element;
+        return 1 if -f "$element/$command" and -x _;
+    }
+    return 0;
+}
+
+=item dequote_name(STR, REMOVESLASH)
+
+Strip an extra layer quoting in index file names and optionally
+remove an initial "./" if any.
+
+Remove initial ./ by default
+
+=cut
+
+sub dequote_name {
+    my ($name, $slsd) = @_;
+    $slsd = 1 unless defined $slsd;
+    $name =~ s,^\.?/,, if $slsd;
+    # Optimise for the case where the filename does not contain
+    # backslashes.  It is a fairly rare to see that in practise.
+    if (index($name, '\\') > -1) {
+        $name =~ s/(\G|[^\\](?:\\\\)*)\\(\d{3})/"$1" . chr(oct $2)/ge;
+        $name =~ s/\\\\/\\/g;
+    }
+    return $name;
+}
+
+=item signal_number2name(NUM)
+
+Given a number, returns the name of the signal (without leading
+"SIG").  Example:
+
+    signal_number2name(2) eq 'INT'
+
+=cut
+
+{
+    my @signame;
+
+    sub signal_number2name {
+        my ($number) = @_;
+        if (not @signame) {
+            require Config;
+            # Doubt this happens for Lintian, but the code might
+            # Cargo-cult-copied or copy-wasted into another project.
+            # Speaking of which, thanks to
+            #  http://www.ccsf.edu/Pub/Perl/perlipc/Signals.html
+            defined($Config::Config{sig_name})
+              or die "Signals not available\n";
+            my $i = 0;
+            for my $name (split(' ', $Config::Config{sig_name})) {
+                $signame[$i] = $name;
+                $i++;
+            }
+        }
+        return $signame[$number];
+    }
+}
+
+=item normalize_pkg_path(PATH)
+
+Normalize PATH by removing superfluous path segments.  PATH is assumed
+to be relative the package root.  Note that the result will never
+start nor end with a slash, even if PATH does.
+
+As the name suggests, this is a path "normalization" rather than a
+true path resolution (for that use Cwd::realpath).  Particularly,
+it assumes none of the path segments are symlinks.
+
+normalize_pkg_path will return C<q{}> (i.e. the empty string) if PATH
+is normalized to the root dir and C<undef> if the path cannot be
+normalized without escaping the package root.
+
+Examples:
+  normalize_pkg_path('usr/share/java/../../../usr/share/ant/file')
+    eq 'usr/share/ant/file'
+  normalize_pkg_path('usr/..') eq q{};
+
+ The following will return C<undef>:
+  normalize_pkg_path('usr/bin/../../../../etc/passwd')
+
+=item normalize_pkg_path(CURDIR, LINK_TARGET)
+
+Normalize the path obtained by following a link with LINK_TARGET as
+its target from CURDIR as the current directory.  CURDIR is assumed to
+be relative to the package root.  Note that the result will never
+start nor end with a slash, even if CURDIR or DEST does.
+
+normalize_pkg_path will return C<q{}> (i.e. the empty string) if the
+target is the root dir and C<undef> if the path cannot be normalized
+without escaping the package root.
+
+B<CAVEAT>: This function is I<not always sufficient> to test if it is
+safe to open a given symlink.  Use
+L<is_ancestor_of|Lintian::Util/is_ancestor_of(PARENTDIR, PATH)> for
+that.  If you must use this function, remember to check that the
+target is not a symlink (or if it is, that it can be resolved safely).
+
+Examples:
+
+  normalize_pkg_path('usr/share/java', '../ant/file') eq 'usr/share/ant/file'
+  normalize_pkg_path('usr/share/java', '../../../usr/share/ant/file')
+  normalize_pkg_path('usr/share/java', '/usr/share/ant/file')
+    eq 'usr/share/ant/file'
+  normalize_pkg_path('/usr/share/java', '/') eq q{};
+  normalize_pkg_path('/', 'usr/..') eq q{};
+
+ The following will return C<undef>:
+  normalize_pkg_path('usr/bin', '../../../../etc/passwd')
+  normalize_pkg_path('usr/bin', '/../etc/passwd')
+
+=cut
+
+sub normalize_pkg_path {
+    my ($path, $dest) = @_;
+    my (@normalised, @queue);
+
+    if (@_ == 2) {
+        # We are doing CURDIR + LINK_TARGET
+        if (substr($dest, 0, 1) eq '/') {
+            # Link is absolute
+            # short circuit $dest eq '/' case.
+            return q{} if $dest eq '/';
+            $path = $dest;
+        } else {
+            # link is relative
+            $path = join('/', $path, $dest);
+        }
+    }
+
+    $path =~ s,//++,/,go;
+    $path =~ s,/$,,o;
+    $path =~ s,^/,,o;
+
+    # Add all segments to the queue
+    @queue = split(m,/,o, $path);
+
+    # Loop through @dc and modify @cc so that in the
+    # end of the loop, @cc will contain the path that
+    # - note that @cc will be empty if we end in the
+    # root (e.g. '/' + 'usr' + '..' -> '/'), this is
+    # fine.
+    while (my $target = shift(@queue)) {
+        if ($target eq '..') {
+            # are we out of bounds?
+            return unless @normalised;
+            # usr/share/java + '..' -> usr/share
+            pop(@normalised);
+        } else {
+            # usr/share + java -> usr/share/java
+            # but usr/share + "." -> usr/share
+            push(@normalised, $target) if $target ne '.';
+        }
+    }
+    return q{} unless @normalised;
+    return join('/', @normalised);
+}
+
+=item parse_boolean (STR)
+
+Attempt to parse STR as a boolean and return its value.
+If STR is not a valid/recognised boolean, the sub will
+invoke croak.
+
+The following values recognised (string checks are not
+case sensitive):
+
+=over 4
+
+=item The integer 0 is considered false
+
+=item Any non-zero integer is considered true
+
+=item "true", "y" and "yes" are considered true
+
+=item "false", "n" and "no" are considered false
+
+=back
+
+=cut
+
+sub parse_boolean {
+    my ($str) = @_;
+    return $str == 0 ? 0 : 1 if $str =~ m/^-?\d++$/o;
+    $str = lc $str;
+    return 1 if $str eq 'true' or $str =~ m/^y(?:es)?$/;
+    return 0 if $str eq 'false' or $str =~ m/^no?$/;
+    croak "\"$str\" is not a valid boolean value";
+}
+
+=item is_ancestor_of(PARENTDIR, PATH)
+
+Returns true if and only if PATH is PARENTDIR or a path stored
+somewhere within PARENTDIR (or its subdirs).
+
+This function will resolve the paths; any failure to resolve the path
+will cause a trappable error.
+
+=cut
+
+sub is_ancestor_of {
+    my ($ancestor, $file) = @_;
+    my $resolved_file = abs_path($file)// croak("resolving $file failed: $!");
+    my $resolved_ancestor = abs_path($ancestor)
+      // croak("resolving $ancestor failed: $!");
+    my $len;
+    return 1 if $resolved_ancestor eq $resolved_file;
+    # add a slash, "path/some-dir" is not "path/some-dir-2" and this
+    # allows us to blindly match against the root dir.
+    $resolved_file .= '/';
+    $resolved_ancestor .= '/';
+
+    # If $resolved_file is contained within $resolved_ancestor, then
+    # $resolved_ancestor will be a prefix of $resolved_file.
+    $len = length($resolved_ancestor);
+    if (substr($resolved_file, 0, $len) eq $resolved_ancestor) {
+        return 1;
+    }
+    return 0;
+}
+
+=item unix_locale_split(STR)
+
+Read STR as a locale code (e.g. en_GB.UTF-8) and return a list of
+locale codes ordered by preference.  As an example, en_GB.UTF-8
+might return
+
+  en_GB
+  en
+
+Note encoding I<is ignored> as all Lintian files are always encoded in
+UTF-8.
+
+B<Special cases>: The "C" or "POSIX" locale returns the empty list.
+Other strings that do not match the expected format causes a trappable
+error.
+
+=cut
+
+sub unix_locale_split {
+    my ($str) = @_;
+    my ($locale_part, undef) = split(m/\./, $str, 2);
+    my @parts;
+    if ($locale_part eq 'POSIX' or $locale_part eq 'C') {
+        return;
+    }
+
+    if ($locale_part !~ m/\A [a-z0-9-]+ (?: _ [a-z0-9-]+)* \Z/xsmi) {
+        croak("Cannot parse $str as a locale string");
+    }
+
+    while ($locale_part ne '') {
+        my $end;
+        push(@parts, $locale_part);
+        $end = rindex($locale_part, '_');
+        last if ($end == -1);
+        $locale_part = substr($locale_part, 0, $end);
+    }
+
+    return @parts;
+}
+
+=item pipe_tee(INHANDLE, OUTHANDLES[, OPTS])
+
+Read bytes from INHANDLE and copy them into all of the handles in the
+listref OUTHANDLES. The optional OPTS argument is a hashref of
+options, see below.
+
+The subroutine will continue to read from INHANDLE until it is
+exhausted or an error occurs (either during read or write).  In case
+of errors, a trappable error will be raised.  The handles are left
+open when the subroutine returns, caller must close them afterwards.
+
+Caller should ensure that handles are using "blocking" I/O.  The
+subroutine will use L<sysread|perlfunc/sysread> and
+L<syswrite|perlfunc/syswrite> when reading and writing.
+
+
+OPTS, if given, may contain the following key-value pairs:
+
+=over 4
+
+=item chunk_size
+
+A suggested buffer size for read/write.  If given, it will be to
+sysread as LENGTH argument when reading from INHANDLE.
+
+=back
+
+=cut
+
+sub pipe_tee {
+    my ($in_fd, $out_ref, $opts) = @_;
+    my $read_size = ($opts && $opts->{'chunk_size'}) // 8096;
+    my @outs = @{$out_ref};
+    my $buffer;
+    while (1) {
+        # Disable autodie, because it includes the buffer
+        # exception.  Said buffer will get printed on errors
+        # yielding completely unreadable errors and a terminal
+        # drowned in binary characters.
+        no autodie qw(sysread syswrite);
+        my $rlen = sysread($in_fd, $buffer, $read_size);
+        if (not $rlen) {
+            last if defined($rlen);
+            croak("Failed to read from input handle: $!");
+        }
+        for my $out_fd (@outs) {
+            my $written = 0;
+            while ($written < $rlen) {
+                my $remain = $rlen - $written;
+                my $res = syswrite($out_fd, $buffer, $remain,$written);
+                if (!defined($res)) {
+                    croak("Failed to write to output handle: $!");
+                }
+                $written += $res;
+            }
+        }
+    }
+    return 1;
+}
+
+=item load_state_cache(STATE_DIR)
+
+[Reporting tools only] Load the state cache from STATE_DIR.
+
+=cut
+
+sub load_state_cache {
+    my ($state_dir) = @_;
+    my $state_file = "$state_dir/state-cache";
+    my $state = {};
+    my $fd;
+    require YAML::XS;
+    eval {open($fd, '<:raw', $state_file);};
+    if (my $err = $@) {
+        if ($err->errno != ENOENT) {
+            # Present, but unreadable for some reason
+            die($err);
+        }
+        # Not present; presume empty
+        return $state;
+    }
+    eval {$state = YAML::XS::Load(slurp_entire_file($fd, 1));};
+    # Not sure what Load does in case of issues; perldoc YAML says
+    # very little about it.  Based on YAML::Error, I guess it will
+    # write stuff to STDERR and use die/croak, but it remains a
+    # guess.
+    if (my $err = $@) {
+        die("$state_file was invalid; please fix or remove it.\n$err");
+    }
+    $state //= {};
+
+    if (ref($state) ne 'HASH') {
+        die("$state_file was invalid; please fix or remove it.");
+    }
+    close($fd);
+    return $state;
+}
+
+=item save_state_cache(STATE_DIR, STATE)
+
+[Reporting tools only] Save the STATE cache to STATE_DIR.
+
+=cut
+
+sub save_state_cache {
+    my ($state_dir, $state) = @_;
+    my $state_file = "$state_dir/state-cache";
+    my ($tmp_fd, $tmp_path);
+    require YAML::XS;
+
+    ($tmp_fd, $tmp_path) = tempfile('state-cache-XXXXXX', DIR => $state_dir);
+    ## TODO: Should tmp_fd be binmode'd as we use YAML::XS?
+
+    # atomic replacement of the state file; not a substitute for
+    # proper locking, but it will at least ensure that the file
+    # is in a consistent state.
+    eval {
+        print {$tmp_fd} YAML::XS::Dump($state);
+
+        close($tmp_fd) or die("close $tmp_path: $!");
+
+        # There is no secret in this.  Set it to 0644, so it does not
+        # require sudo access on lintian.d.o to read the file.
+        chmod(0644, $tmp_path);
+
+        rename($tmp_path, $state_file)
+          or die("rename $tmp_path -> $state_file: $!");
+    };
+    if (my $err = $@) {
+        if (-e $tmp_path) {
+            # Ignore error as we have a more important one
+            no autodie qw(unlink);
+            unlink($tmp_path);
+        }
+        die($err);
+    }
+    return 1;
+}
+
+=item find_backlog(LINTIAN_VERSION, STATE)
+
+[Reporting tools only] Given the current lintian version and the
+harness state, return a list of group ids that are part of the
+backlog.  The list is sorted based on what version of Lintian
+processed the package.
+
+Note the result is by design not deterministic to reduce the
+risk of all large packages being in the same run (e.g. like
+gcc-5 + gcc-5-cross + gcc-6 + gcc-6-cross).
+
+=cut
+
+sub find_backlog {
+    my ($lintian_version, $state) = @_;
+    my (@backlog, %by_version);
+    for my $group_id (keys(%{$state->{'groups'}})) {
+        my $last_version = '0';
+        my $group_data = $state->{'groups'}{$group_id};
+        my $is_out_of_date;
+        if (exists($group_data->{'out-of-date'})) {
+            $is_out_of_date = $group_data->{'out-of-date'};
+        }
+        if (exists($group_data->{'last-processed-by'})) {
+            $last_version = $group_data->{'last-processed-by'};
+        }
+        $is_out_of_date = 1
+          if not versions_equal($last_version, $lintian_version);
+        push(@{$by_version{$last_version}}, $group_id) if $is_out_of_date;
+    }
+    for my $v (sort(versions_comparator keys(%by_version))) {
+        push(@backlog, shuffle(@{$by_version{$v}}));
+    }
+    return @backlog;
+}
+
+=item untaint(VALUE)
+
+Untaint VALUE
+
+=cut
+
+sub untaint {
+    return $_[0] = $1 if $_[0] =~ m/^(.*)$/;
+    return;
+}
+
+=back
+
+=head1 SEE ALSO
+
+lintian(1)
+
+=cut
+
+1;
+
+# Local Variables:
+# indent-tabs-mode: nil
+# cperl-indent-level: 4
+# End:
+# vim: syntax=perl sw=4 sts=4 sr et
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  #!/bin/sh
+
+set -e
+
+if [ -x /usr/sbin/update-initramfs ]; then
+	/usr/sbin/update-initramfs -u -k all
+fi
+
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       Package: linux-firmware
+Version: 1.164.1
+Architecture: all
+Maintainer: Ubuntu Kernel Team <kernel-team@lists.ubuntu.com>
+Installed-Size: 158923
+Conflicts: atmel-firmware
+Replaces: atmel-firmware, linux-restricted-common
+Provides: atmel-firmware
+Section: misc
+Priority: optional
+Multi-Arch: foreign
+Description: Firmware for Linux kernel drivers
+ This package provides firmware used by Linux kernel drivers.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         €B  ,         Ø   €A     æó…~%      `                                                                                                                                                                                                                       Ô Ìÿÿ;À Ø÷ Ø4 Ø6 Ø8 Ø: Ø< Ø> ØF€ÏH€ÏJ€ÏL€ÏN€Ï€@|   ˆ  €  €”  €Ì  @Ô€@|   ˆ  €Ì  @Ô€@|   ˆ  €Ì  ÀÌ  @Ô€@|   ˆ L$ $@A|  XPÀ•} À˜ ÀÑ  €  ™ ÀÑ
+@Ø  €  ÀÑ@Ø€@|   ˆ  €Ì @Ì   Ì  Ì‘ €@A|. @Í6@Í€@|   ˆ1 $Ä @–4 ÄÆÀ™  €Ì  @Ì  @Ì  @Ì  @Ì€@|   ˆ1 $Ä @–4 Ä»À™ È Å|+ (Ä ¨*  Ñ €Î  €Ì   Ì  @Ì€@|   ˆ1 $Ä @–4 Ä¬À™ È Å|<'ÄÔ7Ä4 l	@o+ @›+ ÄÀX \
+ÀÙ}  Ü): ÀÍ;  Ñ9 @Ø' ÄÿÿÀ™) 0Äÿÿt& 7  › Àš 2À
+@r~t  € À–ïÿ3À	@r~&  Ø<@ÎÔ Ìr"CÎ 4Ä @› 0Ä  Ì   Ï   Ì
+ 4Ä °ª¢, t'(-0#  ì
+ @—' @Ø   Ï  ÀÎ  @Î+  Ì-  Ñ+ (Ä ¨*  Ñ €Î Ä  Ì À™ Ä  ÀÍ   Ì
+ (Ä0 ¨~ , HNì" €–' €Ø  ÀÎ   Ø  @Ì  @Ì ˆ  €Ì  @Ì€@|   ˆ1 $Ä @–4 Ä\À™ È Å|@A|€A|ÀA|À"À  *   Î  @Í  €Í  ÀÍ B|@B|  hP@j~> è €–+ (ÄÀ¬ °
+ /  0+:  Ï; @Ò9 @Ø' ,ÄÿÿÀš) 4Ä€c €› B@~€B|ÀB|Eÿ@– ´2
+ Ä Ø €•À>ÀÒ  € À>À rü+ ˆ0 Ì+ 8Ä ¸+  Ì Ä @›+  Ì-  Ñ  Ñ €Ï 0Ä  ›  ÀÍ   Ì À”' ÀØ  ÀÏ  €Ø €• '~   Ï d
+  €Ì  ÀÎ#ÿ@– )}Ú  €ÿÿp:  —ÿÿÀô  €@A~+ 8Ä pA
+ ³  Ñ  Ï+  Ì-  Ñ 0Ä  ›  ÀÍ   Ì À”' ÀØ  ÀÏ  €Ø €• '~   Ï T	 d
+  €Ì  ÀÎ )}îÿ@™ãÿ@š  €1 $Ä @–4 ÄòÀ™ È Å|<'ÄÔ7Ä4 l	@o+ @›+ ÄÀX \
+ÀÙ}  Ü): ÀÍ;  Ñ9 @Ø' ÄÿÿÀ™) 0Äÿÿt& 7  › Àš 2À
+@r~. € À–ïÿ3À	@r~&  Ø<@ÎÔ Ìr"CÎ 4Ä @› 0Ä  Ì   Ï   Ì
+ 4Ä °ª¢, t'(-0#  ì
+ @—' @Ø   Ï  ÀÎ  @Î,  Ì-  Ñ+ (Ä ¨*  Ñ €Î Ä  Ì À™ Ä  ÀÍ   Ì
+ (Ä0 ¨~ , HNì" €–' €Ø  ÀÎ  @Ø  @Ì  @Ì ˆ  €Ì  @Ì€@|   ˆ1 $Ä @–4 Ä¢À™ È Å|@A|€A|ÀA|À"À  *   Î  @Í  €Í  ÀÍ B|@B|  hP@j~> è €–+ (ÄÀ¬ °
+ /  0+:  Ï; @Ò9 @Ø' ,ÄÿÿÀš) 4Ä€c €› B@~€B|ÀB|‹ş@– ´2
+ Ä Ø €•À>ÀŒ € À>À rü+ ˆ0 Ì+ 8Ä ¸+  Ì Ä @›,  Ì-  Ñ  Ñ €Ï 0Ä  ›  ÀÍ   Ì À”' ÀØ  ÀÏ  ÀØ €• '~   Ï d
+  €Ì  ÀÎiş@– )}” €ÿÿp:  —ÿÿÀ® €@A~+ 8Ä pA
+ ³  Ñ  Ï,  Ì-  Ñ 0Ä  ›  ÀÍ   Ì À”' ÀØ  ÀÏ  ÀØ €• '~   Ï T	 d
+  €Ì  ÀÎ )}îÿ@™ãÿ@š  €	 Ä ˜%"  Ø@B|€B|ñ€•  ¬RÀæ~À@| A| ÄÿÿÀ™ ˆp ˆ + Ä Ô@Õ~
+ } @Ñ  Î  €Ì  @Î  €Î  ÀÌ  :Ü   Í-ş€—À@| A|Ö €	 Ä €˜%Ê € Ä Ä  ™  Ì  ÀÍ   Ì	 Ä ˜%Ê € Œ$ Ä	 Ä À˜  ™ Ä  Ì  ÀÍ   Ì0 ˜Ê €8 ˜Ê € Ä  ÀÍ   Ì  €ÌÀ@|  ÀÌ| Ğ(  €† € € €• €  Ä $Æ@A|@ `Ør"CÍ@ `Î<@Í  @ÍÔ@Ø  €  Ä $Æ@A|@ `Øs"CÍ@ `Î>@Í  @Í  €  @Ô€@|   ˆ" €À@|üĞ 1  ™ @Ô  €ÿÿÌ$ ¸$ €› Ä À™ Ä  Ì  ÀÍ   Ì  €Ì  ÀÌ  @Ô€@|   ˆ Ä  ÀÍ   Ì  €Ì  @Ô€@|   ˆ Ä  ÀÍ   Ì È  €Ì  @Ì Å|  U
+€E}   Í  €Í€@|   ˆ  €ÌÀ@|  ÀÌ| ĞQ(  €†| €U €^ €s €  Ä $Æ@A|@ `Øq"CÍ@ `Î:@Í  @Í  €  Ä $Æ@A| P%f(@ `ØŸ¢CÍ  €†j €l €n €n € @Øo € €Øo €  Ø@ `Î@Í  @Í  €  Ä $Æ@A|@ `Ø¢¢CÍ@ `Î8@Í  @Í  €  @Ô€@|   ˆÀ@|  PP }@A| T }+ 4ÄÀl p
+@/  t+: @Ï;  Ñ9 @Ø'  Äÿÿ š) È @Ñ*  Ì) È) È) È) È  ŒU. €Í6€Í À( ˆ* ˆ( ˆ €À@|  PP@} @Ñ*  Ì€@|   ˆ1 $Ä @–4 Ä[À™¢CÌ È Ä ˆ0 ˆ   €ÌÀX|ÀÜ|  ĞTú¡ÃÌù¡Í@A|¢CÍ  @Í  @Ì€@|   ˆÀ@| Ä A| Ä@A|q"ÃÌr"Ís"CÍ:ÀÌ< Í>@Í €™  Ì  ÀÍ   Ì
+ 4Ä ˆBÂ(ª¢,Ö¢0 €x' t'(/  (-¤  À¨
+  ì
+  0 €—' @Ø @—' €Ø   Î  €Î  ÀÌ  @Î  ÀÎ   Í  @Î   Ï  @ÍÔ@Ø€@|   ˆ1 $Ä @–4 ÄÀ™ ˆ0 ˆ ¢CÌú¡CÌù¡CÌ  €Ì@A|¢CÍ  @Í  @Ì€@|   ˆ1 $Ä @–4 ÄÀ™À@|ÿÿ¢ÃÌŸ¢Øú¡Íù¡Í¢ÃÌ  €Ì  ÀÌ  @Ì€@|   ˆ1 $Ä @–4 ÄûÀ™À@| A|ÿÿ  €Ì  ÀÌ   ÍŸ¢Øú¡CÍù¡CÍ€A| Ì œ  €Í¢ÃÍ¢ÃÍúÿÀ˜€@|   ˆÀ@| Ğ$ (Ÿ¢ÃÌ  €†$ €& €( €( € @Ø) € €Ø) €  Ø  €Ì  ÀÌ Äãü@•ÀÌ€@|   ˆÀ@|¢¢ÃÌ
+ 4Ä €t' @—' @Ø ˆMÂ((/   À¨
+   Î  €Î  ÀÌ8ÀÌ€@|   ˆ Ä À•  Ä  šÖ/ÄÿÿÀ–À@|  à1 Ô	@a}  €Ì A| @•$ ÀÌ   ÀÌ   Í €•%  Í  Ì‘ €~  èˆ  A|  %h
+ š  Ä  TP }  š… Ä À™_ ÀÍ€A|` €Íe €€A|5 ¼> ¤ÀÏG ÀÏ À—  – 4Ä @›  ,† ÌÆ ÌT ìÌ~ Ä#@•4 Ä À•	 Œ  €ÍÄÎ+Ä  ¨R€~ €–  –  Ì+ ,Ä 	 Ü ì
+Àî}  ì*: ÀÎ; €Ò9 @Ø' ,ÄÿÿÀš) ÄÏÀÍ  –  Î4 ¨? œ!  Ñ €– ,Æ À•À–  
+€B|€B|% À—  šœ 4Æ @š Ø  Ø Ø Ø Ø Ø
+ Ø Ø& Ø@ Ø¼ € 4Ä  d7 @– Æ Æ ¬ÿì& 0
+ 0
+À. ì@M} ÌÀ}€µ} x 9}@W
+@m} /À	ÀÚ~€o} ,Æ ( À•ÜÀ–  ÌÃ €	  Ì €Î4 °  ›ø°  Ïÿ?/À	À¯} , ì
+Àÿ~ @š` üc‹  Ø àÏ  Ñ àÓÜ €` Ta` üc‹ `Ï  Ï àĞ `Ñ  Ñ àÓ› (È  €Î  ¨V  €Î$ (Ä °   Ï '¨À™§ š÷hØ~ Ä­
+À•÷ŸÆÿÿÀ™¡@–$ (Ä@¯Æ À–› ,ÈìFÀÀ  TÀ•} `&À+ 4Ä	 L@4 ÀÒ ÀÌ  ÀÍ  @Î  @Ï  @Ú› ,È ìFÀÀ  TÀ•}  &À+ 4Ä L64 ÀÒ ÀÌ  ÀÍ  @Î  @Ï  @Ù Ä  Ì  ÀÍ   Ì  Ì› ,ÈìFÀÀ  TÀ•} €&À+ 4Ä LF4 ÀÒ ÀÌ  ÀÍ  @Î  @Ï  @Ù÷hØ ÀÀB  TÀ•}  ÀÍ   Ì$ (Ä*  Ì“ÆŸ¢Í %2l  À†6 €8 €: €: € @Ø; € €Ø; €  Ø ÀÀ*  TÀ•}  ÀÍ   Í“Æ  •ÀÀ4  TÀ•}› ,È ìF    ÀÍ  ˜)  €Í   Ì   Ì  ÀÎ  èV  €Î ìF  1ôÿ@•$ (Ä“Æ %^  •› ,ÈÀìFÀÀ  TÀ•}  $+ 4Ä L,À( À¨
+ ÀÒ ÀÌ  ÀÍ  @Î  €Î  €Ø ìF*À( À¨
+ ÀÒ ÀÌ  ÀÍ  @Î  €Î  €Ø ìF(À( À¨
+ ÀÒ ÀÌ  ÀÍ  @Î  €Î  €Ø ìF L À( À¨
+ ÀÒ ÀÌ  ÀÍ  @Î  €Î   Ù ìF LÀ( À¨
+ ÀÒ ÀÌ  ÀÍ  @Î  €Î  €Ø ìFÀ( À¨
+ ÀÒ ÀÌ  ÀÍ  @Î  €Î  €Ø ìFÀ( À¨
+ ÀÒ ÀÌ  ÀÍ  @Î  €Î  €Ø ìF L$À( À¨
+ ÀÒ ÀÌ  ÀÍ  @Î  €Î   Ù ìF L0À( À¨
+ ÀÒ ÀÌ  ÀÍ  @Î  €Î  €Ø$ (Ä “Æ   •› ,È@ìFÀÀ  TÀ•}  $+ 4Ä L |
+À( À¨
+ ÀÒ ÀÌ  ÀÍ  @Î  €Î  €Ø ìFÀ( À¨
+ ÀÒ ÀÌ  ÀÍ  @Î  €Î  €Ø ìF  81ìÿ€—$ (Ä“Æ-  •  › ,È0ìFÀÀ  TÀ•}  $ÄA @Ø&Ä €•A @Î €• ˜	€©} €• + Ä
+ Z}ÀÃ( À¨
+  8  4 @&À ¼
+@~~
+@v~ ÀÒ  Î  ÀÍ  @Î  €Î  @Í |Àş~ tÀOòÿÀ—  4 ¸À“îÿÀ—$ (Ä“Æ>  •  › ,È ìFÀÀ  TÀ•} + Ä
+ Z}  8  4 @&À ¼
+@~~ |
+@~~„Â( À¨
+ ÀÒ  Î  ÀÍ  @Î  €Î  @Í ìF…Â( À¨
+ ÀÒ  Î  ÀÍ  @Î  €Î  @Í ìF†Â( À¨
+ ÀÒ  Î  ÀÍ  @Î  €Î  @Í ìF‹Â( À¨
+ ÀÒ  Î  ÀÍ  @Î  €Î  @Í ìF tÀOÕÿÀ—  4 ¸À“ÑÿÀ—$ (Ä“Æ  • › ,È@ìFÀÀ  TÀ•}+ Ä  )€Â( À¨
+  8 @&À ¼
+@~~ ÀÒ  Î  ÀÍ  @Î  €Î  @Ø ìF ¸À“ôÿÀ—6 4Ä5 8È  ¸W
+ µ  •" $Ä d3p ÄA @Ø  Ç €•A  Í€À À
+ÀØ|ÀÀ PÜ)  ÀÍ   Í  @Ï  €Ï   Ì   Ì  ÀÌ$ (Ä÷ŸÆÿÿÀ™6£Æ.  Î8£Æ¢¢Î:£Æq"Î<£Ær"ÎÔ@Ø>£Æs"Î~ $Ä	@–€@|   ˆ ˆ A|  TP€A|  Ä }   $? ˜!!  Ñ¼ €@ À@ @Ø&  ØJ0ÍŸ € $Ä `
+$ (Äƒ Æ À”€A|iú@–húÀ˜ Æ Æ
+€Y}  š÷hØ €•  Ì `Í~ $Ää@–¸ €	  Ì	 `Í~ $Äß@–  š÷ÆÿÿÀ˜ 4Ä @›1 4Ä @—T  ØP  ØR  Ø  š\  Ø[  Ø› ,ÈY  ÌD ØF= €Ñ È> ÀÍ? @ØH ØF= €Ñ  ÜU> ÀÍ? @Ø  ØF= €Ñ> €Ø? @ØW  Ø* ÄÿÿÀ™  Î€@|   ˆÀ@| Ğ 1>ú • @•èĞ0 Ô4 Øæ( B|@B|  €†ï €• €û €• €• €ù €• €• € € T& @Í  aÔú€•  9Æö €@À9Ä €—€@|   ˆ ,ü € ,  dRøè ì
+€ê~ &~
+ @™< €Î=  Ò> @Ô? @Ø	ú€•* 8Äÿÿ€›€@|   ˆ  :Ü ¸< €Î=  Ò> @Ì? @Øûÿ€›õÿ€™€@|   ˆ… Ä À™^  Í  dR &~O  ÒÀ@|W ÀÌ Ì: À˜ @ÌT @ÌU @ÌP @ÌQ @ÌR @ÌS @ÌÀ@| A|  QÀ} ÀÑÀ@| A|  QÀ}  ÀÑ$ ,Ä\ @Ì[ @ÌÀ@|  PP@} @ÑÀ@| Ğ$,Í! Ğ ,Í" ĞH Ô
+ Q},Í# Ğ,Í$ Ğ,Í% Ğ,Í& Ğ
+,Í' Ğ,Í* Ğ@,Í  Ì0 Ğ  ™  Ì Ğÿ%,Í( Ğ&,Í  2Ü? ›õ €P  ØQ  ØR  ØS  ØT  ØU  Ø$ ,Ä\  Ø[  Ø,Ø,Ø ,Ø,Ø,Ø,Ø
+,Ø,Ø&,Ø@,Ø @Ôõ €èĞ 1O •… Ä À™b  Í$ ,Ä.lÌ0lÌ¾ €À@| A|€C|ÀC|  Q  üS€¿ÀĞ|@  , ì €Ó è* €Î ÀĞ
+€Ş~ €Î   @| Ä Ä  ˜Q@Y} +Ä /Ä 3Ä 7Ä Ü	  ìR€®~  tS 7@+@v~? ¨V? 0W	€²~	 *~ñÿÀ™àÿ –  ôS@{@e}  XUY  Ì= @Ó> @Í> €Í? @Ø* ,ÄÿÿÀš€@|   ˆ$  ÄÀ@| A|ıàÌú Íÿ %  TQÀÔ|ğ  œ1 À•+ ,ÄÀÔ Ü
+À]}  Ü): ÀÍ; ÀĞ9 @Ø' ,ÄÿÿÀš) È @A}( ,ÀÕ~ À™  Ì‘ €  Ì‘ € ÀĞ  @™  4 \/	 ^} €™  Ì  Ì‘ € ˜ , ì&? €™ 0  –  Ì‘ €@  8 ¸
+@• @Í 0' ((@ 8 < Ä Ä Ä #Ä@]}À¡}
+@]}  œ	 }	@}	€’~ ¸ ü @›ñÿÀ›$  ÄıÆúÆ €š  Ì 4• ›ÿ %  QÀÔ|@  ( ¨
+@•~ ÀĞ @Íã €  Ì 4ˆÀ–  Ì@|‘ €  Ì 4 Àš  Ì@|€— ¸ ?Äıÿ€›‘ €  –  Ì‘ € ( ¨ ¨* €Î Ä Ä Ä Ä Ä Ä 'Ä +Ä ü °	Àó ğ	Àó p	Àó€ˆ}ÀÌ} À— Q~@•~€|ÀÔ|	@| B Àš `/  Ì 4W š  Ì@|‘ €$  ÄıÆúÆÿ %  QÀÔ| ÀĞ €À@| Ğ 1 0Ä} Œ	 @—  — ,† ØÆ$ Ä~ $ÄD@–(œÍT €  ™  €Ì  ÀÌ  @Ô·ø@—÷œÛ~ Ä:À”÷ÏÅ è0 €šıÿÀ˜  €.  ›ò Œ  €Z@•ğÔ ,	 ì
+@Õ~èĞ Ì$
+ÀÔ|@A|  XP@Y}€A|  \P€}ÀA|  `PÀá} B| $%5 ÀÌ6 @Ñ7 €Ñ8 ÀÑ9 @Ø @–' (Äÿÿ€š( $È€^~ø€š , ì ì
+ÿÿÀš< ,Ä ì2 À– 0Ä  —1 ,Ä	 À–4 ,Ä À– ,$  Ä(Æ Ì	 Œ  €9 @Ø} €' (Äÿÿ€š€@|   ˆÀ@|$ Ä Ğ 1 0Ä} Œ @—  — ,† ÜÆ~ $Äï@–(ØÍ  ™  €Ì  ÀÌ  @Ôcø@—÷˜Û~ ÄæÀ”÷Å è0 €šıÿÀ˜  €  —(Å Ì	 Œ  €ò Œ  €@• €™1  Ø  Ä %şÿ •Ç €1 @Ø  Ä %şÿ •
+ÄAÌÄAÌÄAÌ@A| Ğ$ Xÿ T%ÄÍÄÍÄAÍÄAÌ@A|€A|3 è4 ìÄAÌÄAÌÄÍÄAÍ2 Ü |€|- À• À–Ä1Ä  0SÄ5Ä €– À–Ä9Ä  ¸SÄ=Ä 73  Ó €–€¿4 €Ó0 Ü! À• Àš w}	  — €  ¸Q  0S€— 7 ; €— €< 0Ä 03  — 8Ä €—1 0Ä	  —4 0Ä  — ¬$  Ä(Æ Ì	 Œ €&  ØÙ €1 Ü À•Ä5Äıÿ@—$ Ä @™2  Ø  €2 @Ø€@|   ˆÀ@| Ğ 1ø •¥@•0 ÔèĞ4 ü è$"¨€A|ÀA|  €†< €, €. €• €• €) €• €  ÜQ }B € ,/ € ,ğè	 ì
+€ê~  ÜQ  ¨*€}: €Î; €Ñ9 @Ø' (Äÿÿ€š)  ÈB €  ¡Å @• ˜  ¥Å  dR &~F(€A|ÀA|  €†L €• €Y €• €• €W €&  Ø  Î @• ˜   V  Î½÷À—  ¹Å €—€@|   ˆ ,Z € ,  ÜQøè ì
+€ê~€}< €Î= €Ñ>  Î @•  $V> @Î? @Ø©÷À—* 8Äÿÿ€›€@|   ˆÀ@| ,
+ ğ
+À ğ
+À Ø$ €™  €Ì  ÀÌ  @Ô  € A|@A|€A|ÀA| B| ,Ä ì>şÿÀš(  ÌwÀÁÌ…ÀÍ†ÀAÍ‡ÀÍˆÀÁÍ‰ÀÎ Ğˆ÷ • Äÿÿ@™€@|   ˆ$ (Ä÷hØ  €Ì  @Ì~ ÄÀ”÷ÆÿÿÀ˜€@|   ˆ 0Ä$ (Ä 4Ä  ›  Ì  @Ï   ÌÀ@|  €Ì  ÀÌ  @Ô Ğï ™÷hØ~ Äğ@•’ € @Ô€@|   ˆÀ@|èè 2&  • Ä$  ™< Ğ  •< 0Ä 03$ 8Ä4£Ç	 #  ›V  ÌÓ € @Ô  €@A|€B|  ˜R@Y}2  Ä @Ø" $Ä  ØÀ%~ Ü% À• TE  hUø ˜ ˜1 €™¨  €Ì  ÀÌ  @Í  €Î  @Ô  €  €Ì  ÀÌ  @Ô€@|   ˆÀ@| Ä Ü< Ø À™ Ä1÷ •  	† Æ&  Ø €™P àÌ‘ € ÌR àÌ‘ € h1 €–@|
+ÀÔ|) €Í  €Ì  ÀÌ‘ €0 (Ä €–$ 8Ä4³Ç  ›= 0Ä ,? ÀšA05Ä €—a05Ä? t' ,@÷~ s 0Z  Ï4xØ   	 Œ  € ,Ä Àš   g @Ø ì
+† ÌÆ ÌT ìÌ~ Ä‡@•$  Ä› (È³¡ÄäÜ Ü9	¢%Ä d&  d2	@æ}`Î8 Ä$àÍY  Ì ”Fœ Ä= @Ñ> ÀÍ Ä> ÀÍ Ä> ÀÍ Ä> ÀÍ Ä> ÀÍ‘ Ä> ÀÍ È> ÀÍ  ÜU> ÀÍ? @Ø  š( ”F È= @Ñ> ÀÍ  ÜU> ÀÍ? @Ø0 ”F6 Ä= @Ñ> ÀÍ5 0È  0W>  Ï
+Àñ}
+@^~ È> ÀÍ  ÜU> ÀÍ? @Ø @– À&À Fd*  @Î$  @Î$ (Ä› ÈY  Ì ÔD= @Ñ6ŸÆ> ÀÍ8ŸÆ> ÀÍ:ŸÆ> ÀÍ<ŸÆ> ÀÍ>ŸÆ> ÀÍ? @ØD ÔD= @Ñ È> ÀÍ  ÜU> ÀÍ? @ØÔD= @ÑFŸÆ> ÀÍ? @Ø TE= @ÑHŸÆ> ÀÍ? @Ø TE= @ÑJŸÆ> ÀÍ? @Ø TE= @ÑLŸÆ> ÀÍ? @Ø TE= @ÑNŸÆ> ÀÍ? @Ø÷hØ À ÌP Ì( ÌP  ÀÌ   ÌH @ØI @Ø Ü Ü)N ÀÍ~ Ä@•• (Äÿÿ€–	 À–” Ä À”  ÃÜ ÀÌ~ Ä@• @ÔM @Ø @Ø“ Ä À”  ÃÜ ÀÌ~ Äû@• @ÔM @ØJ  ØH  ØN  Ø À" ,ÄÀí}2 Ä
+ÀÜ|V ÀÌ~ Äî@•W  Ø  ØA @ØB @Ø$ (Ä÷ŸÆÿÿÀ™$  Ä< ,Ä ì2¼ À–  š±0-Ä@01ÄA05Ä»	 €²0-Ä`01Äa05Ä  ìRÀò~ ìR? t' $@w~= 0Ä ( ¨R€ê~ ?  ™ s$ 8Ä4ŸÇ À™ÿ Œ 0 0S ó~€À Ü)Y  Ì=  Ó> ÀÍ? @Ø tS€o ”F"Æ 'Æ d
+À]~‚
+ Œ= @Ñ> ÀÍ? @Ø9 0Ä 0S€ò~ ”F Ä‚
+ Œ= @Ñ> ÀÍ? @Ø ”F Ä‚
+ Œ= @Ñ> ÀÍ? @Ø ”F Ä‚
+ Œ= @Ñ> ÀÍ? @Ø ”F‘ Ä‚
+ Œ= @Ñ> ÀÍ? @Ø ”Fœ Ä‚
+ Œ= @Ñ> ÀÍ? @Ø ”F Ä‚
+ Œ= @Ñ> ÀÍ? @Ø  ”F È‚
+ Œ= @Ñ> ÀÍ? @Ø$ ”F  ÜU‚
+ Œ= @Ñ> ÀÍ? @Ø  š( ”F È‚
+ Œ= @Ñ> ÀÍ? @Ø, ”F  ÜU‚
+ Œ= @Ñ> ÀÍ? @Ø8 ”F È‚
+ Œ= @Ñ> ÀÍ? @Ø  ÜU< ”F‚
+ Œ= @Ñ> ÀÍ? @ØÆ Æ ˜
+ÀÙ}Æ €•) Ü! ˜% ˜
+ÀÙ}Æ ˜
+ÀÙ}Æ ˜
+ÀÙ}Æ ˜
+ÀÙ}
+Æ ˜
+ÀÙ}Æ ˜
+ÀÙ}&Æ ˜
+ÀÙ}@Æ  ˜5
+ ˜
+ÀÙ}8 Ä ˜
+ÀÙ}Æ ˜
+ÀÙ}@ ”F‚
+ Œ= @Ñ> ÀÍ? @Ø  ”F‚
+ Œ= @Ñ> @Ø? @Ø: 0Ä 0S@ñ~; Ä> Ü!= @Ñ> ÀÍ? @ØB3Æ?  @™ 0S@ñ~DÆ> Ü!= @Ñ> ÀÍ? @ØP  ØQ  ØR  ØS  ØT  ØU  Ø Ø  Ø Ø Ø Ø Ø
+ Ø Ø\  Ø[  Ø& Ø@ Øg  Ø    y}  •@u}    Ä A| =  ™  Ø0 €•$ Ä
+ @™±0-Ä@01Ä  ìRÀò~À!5Ä tA0)Ä+ Ä±
+ €²0-Ä`01Ä  ìRÀò~¿!5Ä ta0)Ä+ Ä±
+ € Ø0	 €•ÍÀ-ÄÌÀ1Ä  ìRÀò~† 4Ä t+ Ä±
+ €ĞÀ-ÄÏÀ1Ä  ìRÀò~‡ 4Ä t+ Ä  Ø0 €• $?  &@b~€f €–  4 tSÀö~Àø ô  ¸+
+@{; ÀÒ: @Ï9 @Ø' 8Äÿÿ€›) Äˆ
+ €H @ØI @Ø ÔN @Í~ $ÄÊ@–• Äÿÿ@•  Ø0	 €•’ Ä @•  Cİ @Í~ $ÄÀ@– @Ôé
+ € Ø0	 €•“ Ä €•  ƒİ €Í~ $Ä¶@– @Ôé
+ €” Ä À•  Ãİ ÀÍ~ $Ä®@– @ÔJ  ØH  ØL @ØN  Ø~ $Ä§@–  €À@| $Ä @š…  Ä  šb  Î  PP† ŒÀĞ|ü`$ ÄÀC| @–i Œh @›  Ãß äÏŠ Œ @Ô  €î_ÅÿÿÀ•ñTØô[Å €•ñØüÿ€™î_Å0  Äÿÿ2 €•ò Œ_ €  –i Œ € à=N  šëwÅ`   †_ €c €c € €* €A €+ (Ä[ ¨ , ì
+Àê~ èD< ÀÎ= €Ò> @Ø? @Ø[ € À6À Fx+  €Ï,  ÀÎ  €Ï,  ÀÎ  €Ï,  ÀÎ$ (Ä÷hØB , ìÀn  ÀÎ   Ì~ ,ÄXÀ–÷¯ÆÿÿÀš €À6ÀX , ìÀn  ÀÎÿÿ;À  €Ï  €Ïÿ 8À  €Ï   Ì   Ì   Ì À6À$ (Ä÷hØB , ìÀn  ÀÎ   Ì~ ,Ä>À–÷¯ÆÿÿÀš €i Œ t;şÿ@›c €  Ãß äÏŠ Œ @Ô Ü	îÔÍñØŠ Œ€@|   ˆ+ (ÄÀ¬ °
+ /  0+:  Ï; ÀĞ9 @Ø' ,ÄÿÿÀš) 4Ä lÆ@ dØ³01Ä (  —  (	@k@ äÎ    8Ç@ pØ û5Ä@ °Ï t'  —1 8Ä	@{   #  Ø <ÄÀ›   # @Ø <Ä	À—   † Œ  ÄÀ@| ÿ6À Äÿ?0À	@õ|	€Q}€}	€ó| €™  ƒß  ÏŠ Œ @Ô  €Š Œ€@|   ˆ 0Ä  —} Œ @›  €Ì  @Ô  €† ŒÀ@|  ›… $Ä @šb @Î A|  €Ì  ÀÌ   Í@A|= X €™  @ÍŠ Œ  €$ Ä  — ,† ÜÆ~ $ÄØ@–(ØÍ÷˜Û  @Í~ ÄÓÀ”÷Å è0 €šıÿÀ˜Š Œ  €Š Œ  ›ò Œ  €(Å Ì	 Œ  €$ Ä €ÀBÔÍ  €Ì  @Ô€@|   ˆ ô$Üx   €‡ú €ä €ç €ê €ñ €ô €÷ €ú €€ €—ı €€ €—ı €€ €— ø3 €—&  Ø  ‘Íû €€	 €›ı €€ €›ı €€ €›ı €  — ,   d ğ  —< 0Ä 03  — ,Ä ø3
+€¯ €— Àšğ Œ €–û €$ 8Ä1 0Ä  —4 0Ä  — ì
+(Ç Ì	 Œû €@~À|   À@|( Ü) àf ü£ š 0Ä ø3
+€³ €—d ô @—} Œ @—$ Ä  — ,† ĞÆ~ $Äl@–(Í/ €… $Ä @šb @Î À™  €Ì  ÀÌ  @Ô ø3
+€³Úó€—Ùó@—÷”Û~ Ä\À”÷OÅ è0 €šıÿÀ˜  €  ›ò Œ  €$ 8Ä(Ç Ì	 Œ  € A|  TP€A|ÀA| B| ø3 €—&  Ø  ‘Í  PU 0:    ›   $ d
+  Ìşÿ@š ì$ Àš (Ä ¬Æ@ hØ  1Å  —@ èÎn € } ğ 4	 t
+@s  t+: @Ï;  Ñ9 @Ø' 8Äÿÿ€›) 0ÄØ Œ óÀšV €À@|( Ü) àf üI š 0Ä ø3
+€³ €—d ô @—} Œ @—$ Ä  — ,† ĞÆ~ $Ä@–(Í‰ €… $Ä @šb @Î À™  €Ì  ÀÌ  @Ô ø3
+€³€ó€—ó@—÷”Û~ ÄÀ”÷OÅ è0 €šıÿÀ˜  €  ›ò Œ  €$ 8Ä(Ç Ì	 Œ  € A|  TP€A|  \P€}ÀA|  `PÀá} B| ø3 €—&  Ø  ‘Í  PU 0:    ›   $ d
+  Ìşÿ@š ì$ Àš (Ä ¬Æ@ hØ  1Å  —@ èÎÌ € } ğ 4	 t
+@s  t+: @Ï;  Ñ9 @Ø' 8Äÿÿ€›) 0ÈØ ŒBóÀš´ € Ä  ÀÍ   Ì  €Ì  @Ô€@|   ˆÀ@| Ğ$ 1 Ä  ™  Ì~ $Ä¸@– @™ Ä  ÀÍ   Ì  €Ì  ÀÌ  @Ô€@|   ˆÀ@| A| Ô X1ÿ Ü$ @•"ó€™ Í  €  €Ì  ÀÌ   Í€@|   ˆ$  ÄÀ@| Ô X1ÿ Ü$ @•ó€™ ÓÅ&  ØAÀ!Í  €  €Ì  ÀÌ€@|   ˆ, ÄÿÿÀ”C  ÌÀ@|ÿĞ$êÔôØD  ÍF @ÍE €ÍŸ¢CÌú¡CÌù¡CÌÀ@|¢ÃÌ¢ÃÌ€@|   ˆ
+ 0Ä €8' 4' €—' @Ø @—' @ØÀA|ÿÿÔ%À( ˜i ˜) ˜  €Í¡  ˜	  €Í  @ÍğÔÀ( ˜y ˜) ˜  €ÍBÂ À˜	  €Í  @Í Ì€A| ´%$ ˜ A|/  Ä- 8Ä  T	ÿÿ@™– &  Ø ÄÎÄ)Ä€º~ùÿ€–1  Ø  Ä T%şÿ@•
+ÄØÄÚÄØÄØÄØ $ dÄAÎ4 $ÀÄAÎÄAØ ¤ÄAÎÄ%Ä dB. (ÄÀ¥~ èÄÎ- $ÀÄAÎ $Èú¡CÎ  dVù¡CÎ€| €•&  Ø ÄÁÍÄÄıÿ@• Ø&  Ø ÄÍÄÄ ,Ä  ÀÎ   Ì0 0  —' @ØÀ( ˜v ˜) ˜  €ÍL,X ,˜	  €Í  @Í  Ì&  ØÄØÄ-Ä äÿ3À	 ó~€²~ @–À‚~ßÿ1À	 1}œ Œ’ €À|@Á| ~ğÿ — —~  —ÀÖ~€–~@M}Š €œ Œy € ØÄÍÄÌÄÁØ  ÄÎÄÏ2  Ø€@|   ˆ¢ÃÎ¢ÃÎÀ0( 0' 0+ 0   Ï  ÀÎ   Í   àÈ!  @Í  @Ì€@|   ˆÀ@|ÀA|$ Ä… Ä À™BÔÍ€A|D”Í€@|   ˆ  Ü @1 @•  Ä  ÜJ  Ì  Ì‘ € @Ô€@|   ˆ (ÄI €–è  %@A|øÿÀ	@Y}  XP@Y}€A|  \P€}ÀA|  `PÀá}ÀÙ}+ 4ÄÀl p
+@/  t+: @Ï; @Ñ9 @Ø'  Äÿÿ š)  È ~ßÌ  À„ç €è €ê €ì €î €ğ €ò €ç €ù €@â}õ €@â}õ €@~õ €@~õ €@~õ €@~õ €ù € @š 	
+  • €üÿÀ	@U|  XP@Y}0À	€…} @Ô € @Ì @Ì @ÌüÿÀ	@U|  XP@Y}0À	€…} € @Ô  € @Ì @Ì , ì
+€­}` ˜a ¨
+‹ (Ø ¨Í hÑ ¨Ñ‘ €ÀA|è  €†( €( €( €( €( €( €( €* €4 €4 €4 €8 € @Ô  € B|  dP
+@&~ , ì< ÀÎ= @Ò>  Ö? @Ø  €  €Ì  ÀÍ  @Ô  €À@| À˜@A|  XP@•}+ $ÄÀh l
+Àê~  ì*: ÀÎ; @Ñ9 @Ø' (Äÿÿ€š) ÄõÿÀ•  €  €Ì  ÀÍ  ÀÌ  @Ô  €À@|x ô
+ ÄTt  @‡d €W €[ €/  @•' @Ød € ¨$ €š0  @•' @Ød €8  @•' @Ø  €Ì  ÀÌ  @Ô€@|   ˆ Ä À˜ Ä  Ì  ÀÌ   Ì
+ Ä % @•' @Ø  €Ì  @Ô€@|   ˆÀ@|  PPÀ}@A|  XP@•}ÀA|  `PÀ~@B|  hP@¦~ÀB|Y  Ì= ÀĞ€]}> €Í   U>  ÎÀå} ì
+úÿÀš? @Ø* Äÿÿ ™  €~ $Ä @–€@|   ˆ• €                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        Ï  U ÿ " 7 >	 ¦
+    ¶    0  5  :  E  T $ % &   ğ
+" # å' › F w ­  @( * ¤ , õ- 0/ 0 2 ¬3 Ö4 ¥5 ^8 º6 Ú7 < W? @ ŒB –C §D ØJ kP ÒU æ^ ò_ È` éa i "s :v Aw Ky ç} õ~   –X    ªG Œ  iQ w[    ‘ q“ ¡9 Ñ‹          O! #›                                              †
+Y                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          ”)  4        "   ”(      /^I        
+                                                                                                                                                                                                                         | È     ”@™    ì „    ÿ èÑÍ         ØÈ     X,€•    Ø!È     $ @–    O	 „    @ØÈ        T ™    ì „    4ĞÈ     ¨ €š    ; €     €@|        b  Ì Œ@ØÁÌ     @Ğ ÀÌ~  Ìíÿ€”    @ØÈ        ıÿ ™    ; €      €Ì @Ì @Ì @Ì @Ì @Ì @Ì 8    •     @Ì @Ì ¸ÿ  Ì €Ï; €      €Ì @Ì @Ì 8    •     @Ì @Ì ¸ @Ì @Ì À@|     ÀÌ ğ À@|    	 ÀÌÿ?Ü Ø#@ó}     À@|    
+ ÀÌ  •         À@| ÀÌ À@|  PP À} @A| lE Ú~     @6~ €N~ €Î  ¨V €Î @Ìÿ  Ì €Ï; €      €Ì À@| Ü À•    f  Ì  PP @} À@| ÀÌ Ø ˜ Ü @Ì  A|
+  Í  Íÿ  B|  dP €b~À}      ß~ 0 @ @Ï  tW @ÏÀ}     ø  «  Ï  0W  Ïÿ  Ì  Ò; €      €Ì ¤ À@|  PP @} À@|	 ÀÌÿ?Ü Ø À@|
+ ÀÌÿÔ Ğ  ’}     ÀB| ÀÎ ìF o}      1~ @Ñ}#€e} @·} @Ï  tW @Ï À@|  PP @} À@| ÀÌÿ?Ü Ø À@| ÀÌÿÔ Ğ  ’}     ÀB| ÀÎ ìF o}      1~ @Ñ}#€e} @·} @Ï  tW @Ï @Ì À@| ÀÌ ÀÌÿ  Ì @Ó; €      €Ì @Ì @Ì	 @Ì À@|ÿĞ
+  Í ÌÿĞ  Í @Ì À@| ÀÌ ä À@|  PP @} À@| ÀÌÿ?Ü Ø À@| ÀÌÿà è ¨ ÀB| ÀÎ ìF -~    @©}      S} Àò}#€æ~ @·~ @Ï  tW @Ï @Ì À@| ÀÌ ÀÌÿ  Ì €Ó; €      €Ì @Ì @Ì	 @Ì À@|ÿĞ
+  Í ÌÿĞ  Í @Ì @Ì @Ì @Ì @Ì À@|ÿĞ  Í ÌÿĞ  Í @Ì @Ì @Ì À@| ÀÌ ÀÌÿ  Ì ÀÓ; €      €Ì 4 @Ì @Ì À@| Ğ  @W @Ï ğ  Ï ì ÀÎ S €      €Ì	 4 @Ì @Ì @Ì @Ì @Ì	 @Ì À@|
+ ÀÌ ÀÌ À@| ÀÌ @O @Ï ì$ 4Ğ(  ™Ê     ¨ €šØ   Ê    Ø   Ê      PQ ÀĞ|Ø$  QÊ          	} ÔP @Q} ÌT @Í ÀÌ Ø   Ê    > Ü Ü  À~ g ‚Ì… €    b  Ì4Ø   Ê    8Ø$  YÊ    0Ø  ÑÉ     @Ñ|  \U €} @Í €Í À|ÿ  Ì    4Ğ0Ñ „      	Ë    l 9È     ¨E€š     ˆ ¨    óÿ€–    4ĞÈ     ¨
+ €š    (Ğ(g Ìb  ÌØ   Ê    § €    0Ø   Ê    ,Ğ(     ì ì‘À–      ™Ê     À,} €ƒ} “}  —     €Ÿ} û|@Ø$  ›     €À~É € @Ã| ß|  ›    @ß|  iÏ€Ø| €} @ƒ| Ÿ|  ›    @Ÿ|  aÏ€ ˆ  ¥Ì        ¯ „      QÊ        ıÿ ™    ; € À€| Ì Ì @Ò Ì ŒÌLÌLÌLÌLÌLÌLÌLÌLÌ; €     À€| Ì Ì @Ñ ÌŒÌLÌLÌLÌLÌ; € À€| Ì Ì @Ğ ÌŒÌ; €     À€| Ì Ì @Ñ ÌŒÌ	LÌ	LÌ	LÌ	LÌ; €     À€| Ì Ì €Ğ ÌŒÌLÌ; €    (Ø( €Ñ  ™Ê     °~  ÌX  —ÿÿŒ  ÀM}  éÍ4Ø$  eÌ8Ø   aÌ0Ø(  )Ì<Ø,  C|  -Ï    <  Ì À@|  A|…  Ì°ØÁÌ    ´ØÍ    Š  Ì€Ò|; €–      Q €}0Ø$Ú „     @•     T@ @•    €Ø$Ú „    „Ø$Ú „    ˆØ$Ú „    ŒØ$Ú „    Ø$Ú „    ”Ø$Ú „    i  Ì 0C BĞD ÑE ÂÌH ÌG ÌF Íb  Ì4ĞÈ     ˜ l È     ŒxÀ˜    ÷ÿ •    0ØÈ     T<Ø1È    €
+ €•    B  Ì  €     €@| €@| €@| €@| €@|‹ @Ğb  Ì; €    C BĞD Ñ H ˆE ‚Ì À@|Ğ(  ™Ê     ¨ ¨G ‚ÎH BÌF ÂÌ  Ñ; €    Ğ(  ™Ê     À@| €Ğ ¨ €–à P €ÌQ ÀÌÛ „    b  Ì; €U €Ì ÀĞ Œ ÌV @ÌW @Ì    X   É    l È     4 ™     X	 €•     X	 Ì€} €•    ¯ „    Ñ „    l È    	 Œ#À˜    ì „    Y   É    âÿÀ•â P €Ì e ÀÌå „    	 €    ; €     À@|  ÛÈ        C BĞD ÑE BÌH ‚ÍG ÌF BÌ  Ñ; € ¨ œ ¬€Â~€é} ˆ ´q @Ï  A| @A| ÀA|s ÀÍr @Ì €Ñ @B|ÿÿ` L À”     ÌD 0:    ›@   $ €•     h  ˆ „    Ğ9È     0 0'€³ĞÏ     d
+şÿ@š     Àš    t  Ì  3É         €    R ÍS BÍt  Ì  2È    ¯ „    Ñ „    l 9È     ¸Ç€›    #  ›    l 9È     ¸À€›     À–    ì „     @~ À”Ğ(  ¹Ê     ¨ ¸ €— è ¨
+Ñÿ€–     ÌHÎÿÀ˜ö P €Ì e ÀÌå „    = „    	 €         €•     (  ˆ „    = „    ; €Ğ(  ­Ê     0 8 ƒ€ó~  ©Ï   ˆ     ´ÿ xpĞ-È    ÿ ğ 9
+À }€À| ˆ @A| €Ği €    R BÌS BÌ @A|  È    l È     ŒxÀ˜    €} @A|4Ğ(  ™Ê        š    ¼Ø$  eÍ    b  Ì €”@Ø$  eÍ      A} @}      QÊ        ÀQ}úÿÀ™    l È     ŒZÀ˜      š    ¼ØÍ    ïÿ ™    ; € ¨ ¬ ¨ ¸ Ì*( ğ*À€û|  ğ. ¨ ¼@? <À÷  A| @A| €A| ÀA|  B| @B| €B|ÿ¨  ÒD À–    C BÑ  ÂÎ¡ BÏ¢ ÂÌD ÂÏG ĞE Í£ Î¤ BÎ¥ ‚Í¦ ÂÍF BÍ €›     ØÀ} Ø ²}0  –      È     ĞÈ      P(  •    Ô €    § @Ï¨  Î© @Îª  Ì  È     ˆ
+ À”     ĞÈ      P  ™    Ş €    « 0È      ›     ˆûÿ€˜    œ €    Ù P ÀÌÛ „    Ş €    Ú P ÀÌÛ „    ; € œ Ü ˜ @A| À@|  A|  %C ÎD BÌG ÂÍE BÍH ÍF ÂÌ @Ñ; €    C ‚Ğ À@|  A|G ĞI BÌJ BÌK BÌL BÌM BÌ @A| HD ‚ÌE ÂÌN BÍO BĞF Í €Ò; €] €Ì^ @Ì_ @Ì ÀĞ; €    C ÑD Òa ĞE BÌF BÌ ÀĞ; €C ÑD Òa BĞE BÌF BÌ ÀĞ; €       ÀĞ4Ğ1È     8	 ° (Ø5È     x ;h 5È     t 7 €™     €B| ÀA|  —Z €Ì[ €Î\ ÀÍ €•       ˆ    ÷ P ÀÌÛ „    b  Ì~  Ì  €    ì „    İ	 „    p È        
+ €•0Ğ  É     Œ Ì À˜€ ,&  €    ¯ „    }  Ì¼	 „    l È     L‚ À˜    ÿ ˜ ˜%/ €™    ĞÈ     L Ğ)  •    ÙÈ     $  •      8| 9È     ¨ ¸
+ €›4Ğ,  ÙÊ     Œ Ğ  ™    LĞ0k  Ïd  Ì  Ë      ¨ıÿ€–    0  Ì            k  Ì0 @Ğ  8| 9È     ¨ ¸
+|€—    ÿ ˜ ˜%) €™    ÿÿŒ Ì$ À˜     Œ Ì! À˜    ĞÈ     L Ğ  •    l È     Œ À”    4ĞÈ     Œ Ğ  •    b  ÌÚ €    ÙÈ     §ÿ •     ¤ÿ •ğ P  Í	 €    4Ğ,  ÙÊ     Œ Ğ†ÿ •    l È      À”ŒĞ  É     ÌÿÿĞ% À”    % À”    % À”    b  Ìb  Ì~  Ìô „    € È        ¡€™        l È    / €•    Ñ „    l È     Œ À”    ğ P €Ì	 €    l È     Œ À”ò P €Ì€    ™ 	    å „     e  Í	 €l È     Œ	 À”Ü P €Ìå „     e  Í	 €    l È     Œ À”    	 €    ¼	 „     ØÈ     Ø$ €™    ÿ ˜ ˜%  €•    0ĞÈ    ÿ Œ Ø$ €•    LÒÈ     Ø ˜ €•    ÄØÈ     Ø ˜ €•    i  Ì    ÄØ(  Ê    ÿĞ  )Í    . €    ô „    <Ø8  ™Ë        
+ €•    (Ø,  ÙÊ     ŒÍÿÀ”    h €    4Ğ,  ÙÊ     ŒØúÀ”    ØÈ       •      ÙÊ     ŒñşÀ”     ØÈ     Øêş€•    ÄØ(  Ê          Ø   ©Í    DØ(  ™Ê    €   •          ÙÊ     Œ3 À˜    | 9È     ¨ ¸
+ €›      ÙÊ    ŒÌ$ À˜    <Ø8  ™Ë        ! €•    ØÈ     Âş ™     ÒÈ     »ş€•    ÒÈ     ¶ş€•     ˆ Œ²şÀ˜ÄØÈ    ûÿØÄØÍk	 „    ÄØÈ         Ø ÄØÍ9 €      ÙÊ     Œ ÌüÿÀ”    Ğ$  YÊ     Œ ÌDØÈ    €  À”    ó P €Ì‡  •    	 €    ş •    	 €    LĞ9È     ¸ €—    8Ğ9È     ¸ıÿ€—    d  ÌLĞ(  ¹Ê      ¸üÿ€—    Ğ9È     ¨ ¸ €—    õ (P €ÎÛ „    LĞ9È     ¸ıÿ€›       ˆ    l 9È     ¨ €–ô 8P €ÏÛ „       ˆ    `  Ì4Ğ(  ¹Ê     ¨ ¸
+ûÿ€›       ˆ     Ø9È     ´ x ØÏ   ˆ      8| 9È     ¨:€›       ˆ    LÒÈ     Ø ˜ €•       ˆ    ÄØÈ    ` Ø  ˜% €•       ˆ    € Ğ ÄØÍ       ˆ    › @ĞLĞ0k  Ïd  ÌDØ(  ™Ê    €   •    } @Ğ      Ë      ˆıÿ€”    0  Ì    Ø(  ‘Ê          )Í    (Ğ(  )Í    0Ø(  ‘Ê          )Í        …  Ì    Û „    k  Ì0 @ĞDØ(  ‘Ê     	 €™     !  éÌ    €  €•    }  ÌDØ(  ™Ê ˜ €•      )Ì    LĞÈ     LòıÀ˜    ì „     ØÈ     Œ À˜    c  Ì? €    ›  Ì<Ø8  ™Ë     €•    i  Ìh €    4ĞÈ     Œ À˜    i  Ì  €    l È     ŒkşÀ˜    DØÈ    € XÄÿ€™    ? €    °ØÈ    ´ØÈ    €Ñ|L €•    „ È        öÿ€™    4Ğ(  ™Ê     ¨. €–      Q €}0Ø$ò „    €Ø$ò „    „Ø$ò „    ˆØ$ò „    ŒØ$ò „    Ø$ò „    ”Ø$ò „    <ØÈ    0ØÈ     P@Ø À‘}  áÍ          Ê        üÿ ™    ‹ @Ğ4ĞÈ     ¨ıÿ€š    ‚ @Ğ@ØÈ        ıÿ ™Ğ(  ™Ê     Œ Ø €•Û 8P €ÏÛ „    ƒ  Ğ¼Ø$  %Ì    Ô €     À}   U è €–     (; ‚ÎR ÂÍS Î  È         €–      (; ‚Î  eÍ     ˜E   ˆ     À}   UR ÂÍS Î  È          eÍ     ˜E   ˆ     À}   U  UÊ    C BĞÀ ÂÍG ÌÂ BÍÁ Î ˜E   ˆ     À}   U  UÊ    C BĞD ÑE ÂÍH BÍG ÌF Î ˜E   ˆ    „ È        ıÿ€™    ŒĞ(  ™Ê      ”Hû( @•        Iû(:	 „    | È     @A}€•}z €ÍŒĞ(  ™Ê       ”Hû( @•        Iû(:	 „    { @Ğ} @Ğ™ @Ğš @Ğ› @Ğœ @Ğ @Ğ˜ @Ğİ	 „    | È     ” X	Ïÿ€•    | È     ” X	S €•    | È     ” X	€•    | È     ” X	Ô€•    | È     ”ãÿ@™    0  Ì    0 @Ğ            œ  Ì›  Ìš  Ì™  Ì˜  Ì}  Ìi  Ì  Ì] „    ¼	 „    ; €     Ò  ÕÈ     X
+ €•    Ò  áÉ     $ @–    k	 „     Ô  ÕÈ     X
+ €•    Ô  áÉ     $ @–    †	 „     Ö  ÕÈ     X
+ €•    Ö  áÉ     $ @–    ¡	 „       ˆ    E	 „    ŒĞ(  ™Ê      ”Hû( @•        Iû(:	 „    „Ğ(  Ê    ˆĞ(  ‘Ê      Q €}ğÑ(  Ê    ôÑ(  ‘Ê      Q €Œ|@  Ğ$  ˆT  •    æ „     d ÌøÿÀ˜    àÑ(  Ê    äÑ(  ‘Ê      Q €Œ|@  Ò$  ˆT  •    æ „     d ÌøÿÀ˜    èÑ(  Ê     €|@ Ó$ d
+  ˆT  •    æ „     d ÌøÿÀ˜    àÑ(  Ê    äÑ(  ‘Ê      Q €Œ|@  Ô$  ˆT  •    æ „     d ÌøÿÀ˜    èÑ(  Ê     €|@ Õ$ d
+  ˆT  •    æ „     d ÌøÿÀ˜    àÑ(  Ê    äÑ(  ‘Ê      Q €Œ|@  Ö$  ˆT  •    æ „     d ÌøÿÀ˜    èÑ(  Ê     €|@ ×$ d
+  ˆT  •    æ „     d ÌøÿÀ˜    Å BĞÜÑ(  Ê     €|  $ $ dR  ˆT  •    ò „     d ÌøÿÀ˜     Ø(  ™Ê     @A}À•}  éÍ        x )È        ôÿ€–    ŒĞ(  ™Ê       ”Hû( @•        Iû(:	 „    | È     @A}€•}z €Í    * €    E	 „    ŒĞ(  ™Ê      ”Hû( @•        Iû(:	 „    „Ğ(  Ê    ˆĞ(  ‘Ê      Q €}ğÑ(  Ê    ôÑ(  ‘Ê      Q €Œ|@  Ğ$  ˆT  •    Å „     d ÌøÿÀ˜    àÑ(  Ê    äÑ(  ‘Ê      Q €Œ|@  Ò$  ˆT  •    Å „     d ÌøÿÀ˜    èÑ(  Ê     €|@ Ó$ d
+  ˆT  •    Å „     d ÌøÿÀ˜    àÑ(  Ê    äÑ(  ‘Ê      Q €Œ|@  Ô$  ˆT  •    Å „     d ÌøÿÀ˜    èÑ(  Ê     €|@ Õ$ d
+  ˆT  •    Å „     d ÌøÿÀ˜    àÑ(  Ê    äÑ(  ‘Ê      Q €Œ|@  Ö$  ˆT  •    Å „     d ÌøÿÀ˜    èÑ(  Ê     €|@ ×$ d
+  ˆT  •    Å „     d ÌøÿÀ˜    ÜÑ(  Ê     €|  $ $ dR  ˆT  •    Ú „     d ÌøÿÀ˜    ŒĞ(  ™Ê       ”Hû( @•        Iû(:	 „    | È     @A}€•}z €Í    * €    E	 „    ŒĞ(  ™Ê      ”Hû( @•        Iû(:	 „    ŒĞ(  ™Ê       ”Hû( @•        Iû(:	 „    | È     @A}€•}z €Í    {  Ì* €      ‘  Î    Z  Î[ €Î\ ÀÍ    ’  Ì   ˆ    { @Ğ} @Ğ™ @Ğš @Ğ› @Ğœ @Ğ @Ğ˜ @Ğ   ˆ    ° ĞØ-È    ± ÂÎØ-È    ² ÂÎœØ-È     ğ 4³ BÏØ-È     ğ 4´ BÏ Ø(  ­Ê     ğ 4µ BÏ ğ 4¶ BÏ   ˆ    ° BĞÒ-È    ± ÂÎÒ-È    ² ÂÎœÒ-È     ğ 4³ BÏÒ-È     ğ 4´ BÏ Ò-È     ğ 4µ BÏ ğ 4¶ BÏ   ˆ    ° ‚ĞÔ-È    ± ÂÎÔ-È    ² ÂÎœÔ-È     ğ 4³ BÏÔ-È     ğ 4´ BÏ Ô-È     ğ 4µ BÏ ğ 4¶ BÏ   ˆ    ° ÑÖ-È    ± ÂÎÖ-È    ² ÂÎœÖ-È     ğ 4³ BÏÖ-È     ğ 4´ BÏ Ö-È     ğ 4µ BÏ ğ 4¶ BÏ   ˆ    ŒĞÈ     ¸ ¨ €š    Ä È     ¸ ¤    •  ĞĞÈ     8 ” @•     ¸ (€¹~ Ú}€y~@}Àa}ë	 „    Æ @Ğ€Á}“ €Í       ˆ    ” È         À•    Ä !È    Àá}ë	 „    Ç ÀÍ“  Ğ   ˆ    ŒĞÈ     ”Pû( @•        Qû(‘ €Ñ    Z  Î[ €Î\ ÀÍ    ’  ÌÃ ÀÍ   ˆ            )   9  L  }  ¥  ã   2  B! Õ1 å2 ğ3 ø4 5 @ tP …` “p Ï€ Ã T ƒ  ß° ïÀ Ğ Ñ Ò à Gğ 9ú9û9üäÀúl»\şrÎÀmÅo
+tX                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            €)  4        "   €(     ³%v         
+                                                                                                                                                                                                                          | È     ”@™    ì „    ÿ èÑÍ         ØÈ     X,€•    Ø!È     $ @–    O	 „    @ØÈ        T ™    ì „    4ĞÈ     ¨ €š    ; €     €@|        b  Ì Œ@ØÁÌ     @Ğ ÀÌ~  Ìíÿ€”    @ØÈ        ıÿ ™    ; €      €Ì @Ì @Ì @Ì @Ì @Ì @Ì 8    •     @Ì @Ì ¸ÿ  Ì €Ï; €      €Ì @Ì @Ì 8    •     @Ì @Ì ¸ @Ì @Ì À@|     ÀÌ ğ À@|    	 ÀÌÿ?Ü Ø#@ó}     À@|    
+ ÀÌ  •         À@| ÀÌ À@|  PP À} @A| lE Ú~     @6~ €N~ €Î  ¨V €Î @Ìÿ  Ì €Ï; €      €Ì À@| Ü À•    f  Ì  PP @} À@| ÀÌ Ø ˜ Ü @Ì  A|
+  Í  Íÿ  B|  dP €b~À}      ß~ 0 @ @Ï  tW @ÏÀ}     ø  «  Ï  0W  Ïÿ  Ì  Ò; €      €Ì ¤ À@|  PP @} À@|	 ÀÌÿ?Ü Ø À@|
+ ÀÌÿÔ Ğ  ’}     ÀB| ÀÎ ìF o}      1~ @Ñ}#€e} @·} @Ï  tW @Ï À@|  PP @} À@| ÀÌÿ?Ü Ø À@| ÀÌÿÔ Ğ  ’}     ÀB| ÀÎ ìF o}      1~ @Ñ}#€e} @·} @Ï  tW @Ï @Ì À@| ÀÌ ÀÌÿ  Ì @Ó; €      €Ì @Ì @Ì	 @Ì À@|ÿĞ
+  Í ÌÿĞ  Í @Ì À@| ÀÌ ä À@|  PP @} À@| ÀÌÿ?Ü Ø À@| ÀÌÿà è ¨ ÀB| ÀÎ ìF -~    @©}      S} Àò}#€æ~ @·~ @Ï  tW @Ï @Ì À@| ÀÌ ÀÌÿ  Ì €Ó; €      €Ì @Ì @Ì	 @Ì À@|ÿĞ
+  Í ÌÿĞ  Í @Ì @Ì @Ì @Ì @Ì À@|ÿĞ  Í ÌÿĞ  Í @Ì @Ì @Ì À@| ÀÌ ÀÌÿ  Ì ÀÓ; €      €Ì 4 @Ì @Ì À@| Ğ  @W @Ï ğ  Ï ì ÀÎ S €      €Ì	 4 @Ì @Ì @Ì @Ì @Ì	 @Ì À@|
+ ÀÌ ÀÌ À@| ÀÌ @O @Ï ì$ 4Ğ(  ™Ê     ¨ €šØ   Ê    Ø   Ê      PQ ÀĞ|Ø$  QÊ          	} ÔP @Q} ÌT @Í ÀÌ Ø   Ê    > Ü Ü  À~ g ‚Ì… €    b  Ì4Ø   Ê    8Ø$  YÊ    0Ø  ÑÉ     @Ñ|  \U €} @Í €Í À|ÿ  Ì    4Ğ0Ñ „      	Ë    l 9È     ¨E€š     ˆ ¨    óÿ€–    4ĞÈ     ¨
+ €š    (Ğ(g Ìb  ÌØ   Ê    § €    0Ø   Ê    ,Ğ(     ì ì‘À–      ™Ê     À,} €ƒ} “}  —     €Ÿ} û|@Ø$  ›     €À~É € @Ã| ß|  ›    @ß|  iÏ€Ø| €} @ƒ| Ÿ|  ›    @Ÿ|  aÏ€ ˆ  ¥Ì        ¯ „      QÊ        ıÿ ™    ; € À€| Ì Ì @Ò Ì ŒÌLÌLÌLÌLÌLÌLÌLÌLÌ; €     À€| Ì Ì @Ñ ÌŒÌLÌLÌLÌLÌ; € À€| Ì Ì @Ğ ÌŒÌ; €     À€| Ì Ì @Ñ ÌŒÌ	LÌ	LÌ	LÌ	LÌ; €     À€| Ì Ì €Ğ ÌŒÌLÌ; €    (Ø( €Ñ  ™Ê     °~  ÌX  —ÿÿŒ  ÀM}  éÍ4Ø$  eÌ8Ø   aÌ0Ø(  )Ì<Ø,  C|  -Ï    <  Ì À@|  A|…  Ì°ØÁÌ    ´ØÍ    Š  Ì€Ò|; €–      Q €}0Ø$Ú „     @•     T@ @•    €Ø$Ú „    „Ø$Ú „    ˆØ$Ú „    ŒØ$Ú „    Ø$Ú „    ”Ø$Ú „    i  Ì 0C BĞD ÑE ÂÌH ÌG ÌF Íb  Ì4ĞÈ     ˜ l È     ŒxÀ˜    ÷ÿ •    0ØÈ     T<Ø1È    €
+ €•    B  Ì  €     €@| €@| €@| €@| €@|‹ @Ğb  Ì; €    C BĞD Ñ H ˆE ‚Ì À@|Ğ(  ™Ê     ¨ ¨G ‚ÎH BÌF ÂÌ  Ñ; €    Ğ(  ™Ê     À@| €Ğ ¨ €–à P €ÌQ ÀÌÛ „    b  Ì; €U €Ì ÀĞ Œ ÌV @ÌW @Ì    X   É    l È     4 ™     X	 €•     X	 Ì€} €•    ¯ „    Ñ „    l È    	 Œ#À˜    ì „    Y   É    âÿÀ•â P €Ì e ÀÌå „    	 €    ; €     À@|  ÛÈ        C BĞD ÑE BÌH ‚ÍG ÌF BÌ  Ñ; € ¨ œ ¬€Â~€é} ˆ ´q @Ï  A| @A| ÀA|s ÀÍr @Ì €Ñ @B|ÿÿ` L À”     ÌD 0:    ›@   $ €•     h  ˆ „    Ğ9È     0 0'€³ĞÏ     d
+şÿ@š     Àš    t  Ì  3É         €    R ÍS BÍt  Ì  2È    ¯ „    Ñ „    l 9È     ¸Ç€›    #  ›    l 9È     ¸À€›     À–    ì „     @~ À”Ğ(  ¹Ê     ¨ ¸ €— è ¨
+Ñÿ€–     ÌHÎÿÀ˜ö P €Ì e ÀÌå „    = „    	 €         €•     (  ˆ „    = „    ; €Ğ(  ­Ê     0 8 ƒ€ó~  ©Ï   ˆ     ´ÿ xpĞ-È    ÿ ğ 9
+À }€À| ˆ @A| €Ği €    R BÌS BÌ @A|  È    l È     ŒxÀ˜    €} @A|4Ğ(  ™Ê        š    ¼Ø$  eÍ    b  Ì €”@Ø$  eÍ      A} @}      QÊ        ÀQ}úÿÀ™    l È     ŒZÀ˜      š    ¼ØÍ    ïÿ ™    ; € ¨ ¬ ¨ ¸ Ì*( ğ*À€û|  ğ. ¨ ¼@? <À÷  A| @A| €A| ÀA|  B| @B| €B|ÿ¨  ÒD À–    C BÑ  ÂÎ¡ BÏ¢ ÂÌD ÂÏG ĞE Í£ Î¤ BÎ¥ ‚Í¦ ÂÍF BÍ €›     ØÀ} Ø ²}0  –      È     ĞÈ      P(  •    Ô €    § @Ï¨  Î© @Îª  Ì  È     ˆ
+ À”     ĞÈ      P  ™    Ş €    « 0È      ›     ˆûÿ€˜    œ €    Ù P ÀÌÛ „    Ş €    Ú P ÀÌÛ „    ; € œ Ü ˜ @A| À@|  A|  %C ÎD BÌG ÂÍE BÍH ÍF ÂÌ @Ñ; €    C ‚Ğ À@|  A|G ĞI BÌJ BÌK BÌL BÌM BÌ @A| HD ‚ÌE ÂÌN BÍO BĞF Í €Ò; €] €Ì^ @Ì_ @Ì ÀĞ; €    C ÑD Òa ĞE BÌF BÌ ÀĞ; €C ÑD Òa BĞE BÌF BÌ ÀĞ; €       ÀĞ4Ğ1È     8	 ° (Ø5È     x ;h 5È     t 7 €™     €B| ÀA|  —Z €Ì[ €Î\ ÀÍ €•       ˆ    ÷ P ÀÌÛ „    b  Ì~  Ì  €    ì „    İ	 „    p È        
+ €•0Ğ  É     Œ Ì À˜€ ,&  €    ¯ „    }  Ì¼	 „    l È     L‚ À˜    ÿ ˜ ˜%/ €™    ĞÈ     L Ğ)  •    ÙÈ     $  •      8| 9È     ¨ ¸
+ €›4Ğ,  ÙÊ     Œ Ğ  ™    LĞ0k  Ïd  Ì  Ë      ¨ıÿ€–    0  Ì            k  Ì0 @Ğ  8| 9È     ¨ ¸
+|€—    ÿ ˜ ˜%) €™    ÿÿŒ Ì$ À˜     Œ Ì! À˜    ĞÈ     L Ğ  •    l È     Œ À”    4ĞÈ     Œ Ğ  •    b  ÌÚ €    ÙÈ     §ÿ •     ¤ÿ •ğ P  Í	 €    4Ğ,  ÙÊ     Œ Ğ†ÿ •    l È      À”ŒĞ  É     ÌÿÿĞ% À”    % À”    % À”    b  Ìb  Ì~  Ìô „    € È        ¡€™        l È    / €•    Ñ „    l È     Œ À”    ğ P €Ì	 €    l È     Œ À”ò P €Ì€    ™ 	    å „     e  Í	 €l È     Œ	 À”Ü P €Ìå „     e  Í	 €    l È     Œ À”    	 €    ¼	 „     ØÈ     Ø$ €™    ÿ ˜ ˜%  €•    0ĞÈ    ÿ Œ Ø$ €•    LÒÈ     Ø ˜ €•    ÄØÈ     Ø ˜ €•    i  Ì    ÄØ(  Ê    ÿĞ  )Í    . €    ô „    <Ø8  ™Ë        
+ €•    (Ø,  ÙÊ     ŒÍÿÀ”    h €    4Ğ,  ÙÊ     ŒØúÀ”    ØÈ       •      ÙÊ     ŒñşÀ”     ØÈ     Øêş€•    ÄØ(  Ê          Ø   ©Í    DØ(  ™Ê    €   •          ÙÊ     Œ3 À˜    | 9È     ¨ ¸
+ €›      ÙÊ    ŒÌ$ À˜    <Ø8  ™Ë        ! €•    ØÈ     Âş ™     ÒÈ     »ş€•    ÒÈ     ¶ş€•     ˆ Œ²şÀ˜ÄØÈ    ûÿØÄØÍk	 „    ÄØÈ         Ø ÄØÍ9 €      ÙÊ     Œ ÌüÿÀ”    Ğ$  YÊ     Œ ÌDØÈ    €  À”    ó P €Ì‡  •    	 €    ş •    	 €    LĞ9È     ¸ €—    8Ğ9È     ¸ıÿ€—    d  ÌLĞ(  ¹Ê      ¸üÿ€—    Ğ9È     ¨ ¸ €—    õ (P €ÎÛ „    LĞ9È     ¸ıÿ€›       ˆ    l 9È     ¨ €–ô 8P €ÏÛ „       ˆ    `  Ì4Ğ(  ¹Ê     ¨ ¸
+ûÿ€›       ˆ     Ø9È     ´ x ØÏ   ˆ      8| 9È     ¨:€›       ˆ    LÒÈ     Ø ˜ €•       ˆ    ÄØÈ    ` Ø  ˜% €•       ˆ    € Ğ ÄØÍ       ˆ    › @ĞLĞ0k  Ïd  ÌDØ(  ™Ê    €   •    } @Ğ      Ë      ˆıÿ€”    0  Ì    Ø(  ‘Ê          )Í    (Ğ(  )Í    0Ø(  ‘Ê          )Í        …  Ì    Û „    k  Ì0 @ĞDØ(  ‘Ê     	 €™     !  éÌ    €  €•    }  ÌDØ(  ™Ê ˜ €•      )Ì    LĞÈ     LòıÀ˜    ì „     ØÈ     Œ À˜    c  Ì? €    ›  Ì<Ø8  ™Ë     €•    i  Ìh €    4ĞÈ     Œ À˜    i  Ì  €    l È     ŒkşÀ˜    DØÈ    € XÄÿ€™    ? €    °ØÈ    ´ØÈ    €Ñ|L €•    „ È        öÿ€™    4Ğ(  ™Ê     ¨. €–      Q €}0Ø$ò „    €Ø$ò „    „Ø$ò „    ˆØ$ò „    ŒØ$ò „    Ø$ò „    ”Ø$ò „    <ØÈ    0ØÈ     P@Ø À‘}  áÍ          Ê        üÿ ™    ‹ @Ğ4ĞÈ     ¨ıÿ€š    ‚ @Ğ@ØÈ        ıÿ ™Ğ(  ™Ê     Œ Ø €•Û 8P €ÏÛ „    ƒ  Ğ¼Ø$  %Ì    Ô €     À}   U è €–     (; ‚ÎR ÂÍS Î  È         €–      (; ‚Î  eÍ     ˜E   ˆ     À}   UR ÂÍS Î  È          eÍ     ˜E   ˆ     À}   U  UÊ    C BĞÀ ÂÍG ÌÂ BÍÁ Î ˜E   ˆ     À}   U  UÊ    C BĞD ÑE ÂÍH BÍG ÌF Î ˜E   ˆ    „ È        ıÿ€™    ŒĞ(  ™Ê      ”Hû( @•        Iû(:	 „    | È     @A}€•}z €ÍŒĞ(  ™Ê       ”Hû( @•        Iû(:	 „    { @Ğ} @Ğ™ @Ğš @Ğ› @Ğœ @Ğ @Ğ˜ @Ğİ	 „    | È     ” X	Ïÿ€•    | È     ” X	S €•    | È     ” X	€•    | È     ” X	Ô€•    | È     ”ãÿ@™    0  Ì    0 @Ğ            œ  Ì›  Ìš  Ì™  Ì˜  Ì}  Ìi  Ì  Ì] „    ¼	 „    ; €     Ò  ÕÈ     X
+ €•    Ò  áÉ     $ @–    k	 „     Ô  ÕÈ     X
+ €•    Ô  áÉ     $ @–    †	 „     Ö  ÕÈ     X
+ €•    Ö  áÉ     $ @–    ¡	 „       ˆ    E	 „    ŒĞ(  ™Ê      ”Hû( @•        Iû(:	 „    „Ğ(  Ê    ˆĞ(  ‘Ê      Q €}ğÑ(  Ê    ôÑ(  ‘Ê      Q €Œ|@  Ğ$  ˆT  •    æ „     d ÌøÿÀ˜    àÑ(  Ê    äÑ(  ‘Ê      Q €Œ|@  Ò$  ˆT  •    æ „     d ÌøÿÀ˜    èÑ(  Ê     €|@ Ó$ d
+  ˆT  •    æ „     d ÌøÿÀ˜    àÑ(  Ê    äÑ(  ‘Ê      Q €Œ|@  Ô$  ˆT  •    æ „     d ÌøÿÀ˜    èÑ(  Ê     €|@ Õ$ d
+  ˆT  •    æ „     d ÌøÿÀ˜    àÑ(  Ê    äÑ(  ‘Ê      Q €Œ|@  Ö$  ˆT  •    æ „     d ÌøÿÀ˜    èÑ(  Ê     €|@ ×$ d
+  ˆT  •    æ „     d ÌøÿÀ˜    Å BĞÜÑ(  Ê     €|  $ $ dR  ˆT  •    ò „     d ÌøÿÀ˜     Ø(  ™Ê     @A}À•}  éÍ        x )È        ôÿ€–    ŒĞ(  ™Ê       ”Hû( @•        Iû(:	 „    | È     @A}€•}z €Í    * €    E	 „    ŒĞ(  ™Ê      ”Hû( @•        Iû(:	 „    „Ğ(  Ê    ˆĞ(  ‘Ê      Q €}ğÑ(  Ê    ôÑ(  ‘Ê      Q €Œ|@  Ğ$  ˆT  •    Å „     d ÌøÿÀ˜    àÑ(  Ê    äÑ(  ‘Ê      Q €Œ|@  Ò$  ˆT  •    Å „     d ÌøÿÀ˜    èÑ(  Ê     €|@ Ó$ d
+  ˆT  •    Å „     d ÌøÿÀ˜    àÑ(  Ê    äÑ(  ‘Ê      Q €Œ|@  Ô$  ˆT  •    Å „     d ÌøÿÀ˜    èÑ(  Ê     €|@ Õ$ d
+  ˆT  •    Å „     d ÌøÿÀ˜    àÑ(  Ê    äÑ(  ‘Ê      Q €Œ|@  Ö$  ˆT  •    Å „     d ÌøÿÀ˜    èÑ(  Ê     €|@ ×$ d
+  ˆT  •    Å „     d ÌøÿÀ˜    ÜÑ(  Ê     €|  $ $ dR  ˆT  •    Ú „     d ÌøÿÀ˜    ŒĞ(  ™Ê       ”Hû( @•        Iû(:	 „    | È     @A}€•}z €Í    * €    E	 „    ŒĞ(  ™Ê      ”Hû( @•        Iû(:	 „    ŒĞ(  ™Ê       ”Hû( @•        Iû(:	 „    | È     @A}€•}z €Í    {  Ì* €      ‘  Î    Z  Î[ €Î\ ÀÍ    ’  Ì   ˆ    { @Ğ} @Ğ™ @Ğš @Ğ› @Ğœ @Ğ @Ğ˜ @Ğ   ˆ    ° ĞØ-È    ± ÂÎØ-È    ² ÂÎœØ-È     ğ 4³ BÏØ-È     ğ 4´ BÏ Ø(  ­Ê     ğ 4µ BÏ ğ 4¶ BÏ   ˆ    ° BĞÒ-È    ± ÂÎÒ-È    ² ÂÎœÒ-È     ğ 4³ BÏÒ-È     ğ 4´ BÏ Ò-È     ğ 4µ BÏ ğ 4¶ BÏ   ˆ    ° ‚ĞÔ-È    ± ÂÎÔ-È    ² ÂÎœÔ-È     ğ 4³ BÏÔ-È     ğ 4´ BÏ Ô-È     ğ 4µ BÏ ğ 4¶ BÏ   ˆ    ° ÑÖ-È    ± ÂÎÖ-È    ² ÂÎœÖ-È     ğ 4³ BÏÖ-È     ğ 4´ BÏ Ö-È     ğ 4µ BÏ ğ 4¶ BÏ   ˆ    ŒĞÈ     ¸ ¨ €š    Ä È     ¸ ¤    •  ĞĞÈ     8 ” @•     ¸ (€¹~ Ú}€y~@}Àa}ë	 „    Æ @Ğ€Á}“ €Í       ˆ    ” È         À•    Ä !È    Àá}ë	 „    Ç ÀÍ“  Ğ   ˆ    ŒĞÈ     ”Pû( @•        Qû(‘ €Ñ    Z  Î[ €Î\ ÀÍ    ’  ÌÃ ÀÍ   ˆ            )   9  L  }  ¥  ã   2  B! Õ1 å2 ğ3 ø4 5 @ tP …` “p Ï€ Ã T ƒ  ß° ïÀ Ğ Ñ Ò à Gğ 9ú9û9ü                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 Y ÿÿÿÿ´         ­úíÎ   ¨        ,î ±± ¦şş}     	   Œ   @€x  „­¬€_ˆ ? AŒ   @”T%d’˜ÈN,.œÀ Ú,À¶ ÄlÛ¶mÈÛ6ÓmÌ`Û¶m 	P ’	 I €	ào[å	   	0ğ	€€C 	   €	     	   €
+?  „
+`'v ˆ
+ `"`  ` ÄÁ‹      0 ØpïJ| °ÒZ±x ŞyX \  D   ä„ ?ğçÀ , Ü Ø@ -ğ ˆ Rk=” A  €  œÈ  İİ—T à¦	 =  = € UÑm#  Àe¨ä'ÊT Äÿÿÿ?Èÿÿã?Ìÿÿÿ?Ğÿÿÿ?Ô?şÿ?Øÿÿÿ?Üÿÿÿ8àÿÿÿ?¼Ø  ¸B € J  Š  Ê  
+  J    Z  š   Ú  $  (Z  ,*  0j  4ª  8ê  <*  @j  D:  H+  .ğ Lk  P«  Të  X+  \\  `,  dl  h¬  lì  p  t^  x  |Ï  €  „O  ˆ  Œn  ®  ”î  ˜.  œn   >  ¤~  ¨¾  ¬/  °o  ´¯  ¸ï  ¼/  Ào  Ä¯  È¿   Ìÿ  Ğ?  Ô  Ø¿  Üÿ  à?  ä  è¿  /D ìÿ  ğ?  ô  ø¿  üÿ       ÎÀ     éÿ¼ÿA     À ²² ğ ÁÁ ­şş´  Ì±  ÿÌÌ ¶û© ! àÿÌÌ €„ Û“ÿÌÌ ìÿ   /ıÁ mığÿ  Pı!& oıôÿ G :ı€g ‰ıøÿà¦ ı ‡ XıüÿÀ¦ fı`	 ı  À&	 ı`' ı  ç 	ı ç 	ı `æ Xı`æ XıÿÌÌ3 
+   `mğ f      ÿÌÌ"   2 
+d  
+ÿ  ÿÌÌÿÌÌ	ÿ ÿÿÿÌÌ¸ „ àıàıàıàıXııXııT% ’$            dÿÿÌÌ  ç *ı `æ *ıÿÌÌ  
+ÿÌÌ ÿÌÌ É°´ ÿÌÌÿÌÌ  ÿÌÌ      << iŒ   æÿÌÂÂ                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         0Y ÿÿÿÿæ         ­úíÎ   Ú        ĞĞ,î ±± ·şş}     	   Œ   @€x  „­¬€_ˆ ? AŒ   @”T%d’˜ÈN,.œÀ Ú,À¶ ÄlÛ¶mÈÛ6ÓmÌ`Û¶m 	P ’	 I €	ào[å	   	0ğ	€€C 	   €	     	   b  ` ÄÁ‹      0 ØpïJ| °ÒZ±x ŞzX X mO  \  D   ä„ ?ğçÀ , Ä €Ö‚Ü Ø@ ˆ Rl=-ğ ” A  €  œÈ  İİ—T à¦	 =  = € UÑm#  Àe¨ä'ÊT Äÿÿÿ?Èÿÿã?Ìÿÿÿ?Ğÿÿÿ?Ô?şÿ?Øÿÿÿ?Üÿÿÿ8àÿÿÿ?¼Ø  ¸B   J  Š  Ê  
+  J    Z  š   Ú  $  (Z  ,*  0j  4ª  8ê  <*  @j  D:  H+  Lk  .ğ P«  Të  X+  \\  `,  dl  h¬  l  p-  tm  x­  |í  €-  „m  ˆ=  Œ}  ®  ”î  ˜.  œn   >  ¤~  ¨¾  ¬/  °o  ´¯  ¸ï  ¼/  Ào  Ä¯  È¿   Ìÿ  Ğ?  Ô  Ø¿  Üÿ  à?  ä  è¿  ìÿ  /D ğ?  ô  ø¿  üÿ       ÎÀ     éÿ¼ÿA    À ¸   ²² ğ ÁÁ ½şş¸  Ì±  ÿÌÌ ¶û© ! àÿÌÌ €„ Û“ÿÌÌ ìÿ`'  /ı`'  mığÿ  Pı  oıôÿ`G :ı`G ‰ıøÿ@G ı@G Xıüÿ@ç Xı@ç Xı   ç Xı ç Xı €g@Xı€g@Xı  g@Xı g@XıÿÌÌ3 
+   `mğ f      ÿÌÌ"   2 
+d  
+ÿ  ÿÌÌÿÌÌ	ÿ ÿÿÿÌÌ¸ Œ àıàıàıàıXııXııT% ’$            dÿÿÌÌ €g@Xı  g@XıÿÌÌ 
+ÿÌÌ ÿÌÌ É°´ ÿÌÌ ÿÌÌ  ÿÌÌ       	   ÿÌ#ÌÀIĞHÿÌÂÂ & ÑÑ  	 $          ÒÒ                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       0Y ÿÿÿÿ          ­úíÎ   ”        ŠŠ,î ±± ´şşr     	   Œ   @€x  „-p >ˆ ?ˆcŒ   @”T%d’˜ÈN,.œ@@Ú,À¶ ÄlÛ¶mÈÛ6ÓmÌ`Û¶m 	P ’	 I €	ào[å	   	0ğ	€€C 	   €	     	   W  ` ÄÁ‹   h ffàl ÌÌ L  €cí   0 ØpïJ| °ÒZ±x ŞzX \  D   ä„ ?ğçÀ , Ü Ø@ -ğ ˆ Rm=” A  €  œÈ  İİ—T à¦	 =  = € UÑm#   J  Š  Ê  
+  J    Z  š   Ú  $  (Z  ,*  0j  4ª  8ê  <*  @j  D:  H+  Lk  P«  Të  X+  \\  `,  dl  h¬  l  p-  tm  x­  .ò |í  €-  „m  ˆ=  Œ}  ®  ”î  ˜.  œn   >  ¤~  ¨¾  ¬/  °o  ´¯  ¸ï  ¼/  Ào  Ä¯  È¿   Ìÿ  Ğ?  Ô  Ø¿  Üÿ  à?  ä  è¿  ìÿ  ğ?  ô  ø¿  üÿ       ÎÀ     éÿ¼ÿA    À ¸   ²² ğ ÁÁ ¼şş¸  Ì±  ÿÌÌ ¶û© ! àÿÌÌ €„ Û“ÿÌÌ ìÿ   /ıÁ mığÿ  Pı!& oıôÿ G :ı€g ‰ıøÿà¦ ı ‡ XıüÿÀ¦ fı`	 ı  À&	 ı`' ı  ç 	ı ç 	ı  g Xı g XıÿÌÌ3 
+   `mğ f      ÿÌÌ"   2 
+d  
+ÿ  ÿÌÌÿÌÌ	ÿ ÿÿÿÌÌ¸ Œ àıàıàıàıXııXııT% ’$            dÿÿÌÌ  ç 	ı  g XıÿÌÌ 
+ÿÌÌ ÿÌÌ É°´ ÿÌÌ ÿÌÌ  ÿÌÌ      << iŒ   æÿÌ#ÌÀIĞHÿÌÂÂ & ÑÑ  	 $          ÒÒ                                                                                                                                                                                                                                                                                                                                                              

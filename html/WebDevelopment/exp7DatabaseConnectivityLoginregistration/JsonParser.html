@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<p id="demo"></p>
+<script>
+	var xmlhttp = new XMLHttpRequest();
+	xmlhttp.onreadystatechange = function() {
+	    if (this.readyState == 4 && this.status == 200) {
+	      var obj = JSON.parse(this.responseText);
+	      console.log(obj);
+	      var table="<table border=1>";
+	      		table += "<tr><td>Username</td>";
+	        	table += "<td>Password</td>";
+	        	table += "<td>Email</td>";
+	        	table += "<td>Number</td></tr>";
+	      for(var i=0;i<obj.length;i++){
+	    	table += "<tr><td>" + obj[i].Username +"</td>";
+	      	table += "<td>" + obj[i].Password + "</td>";
+	      	table += "<td>" + obj[i].Email + "</td>";
+	      	table += "<td>" + obj[i].Number + "</td></tr>";
+	      }
+	        table+="</table>";
+	        document.getElementById('demo').innerHTML=table;
+	    }
+	};
+	xmlhttp.open("GET", "data.json", true);
+	xmlhttp.send();
+
+</script>
+</body>
+</html>

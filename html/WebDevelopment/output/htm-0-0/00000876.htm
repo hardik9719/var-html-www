@@ -1,0 +1,24 @@
+<html> tag.
+        b, body, head, html = predecessors
+        self.assertEqual(b['id'], '1')
+        self.assertEqual(body.name, "body")
+        self.assertEqual(head.name, "head")
+        self.assertEqual(html.name, "html")
+
+
+class SiblingTest(TreeTest):
+
+    def setUp(self):
+        super(SiblingTest, self).setUp()
+        markup = '''<html>
+                    <span id="1">
+                     <span id="1.1"></span>
+                    </span>
+                    <span id="2">
+                     <span id="2.1"></span>
+                    </span>
+                    <span id="3">
+                     <span id="3.1"></span>
+                    </span>
+                    <span id="4"></span>
+                    </html>

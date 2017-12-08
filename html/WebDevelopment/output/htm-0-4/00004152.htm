@@ -1,0 +1,39 @@
+<html><h1 class="refsect1">REGEXP_COUNT</h1>
+<p><code>REGEXP_COUNT</code> searches a string for a regular pattern and returns the number of times the pattern occurs. If no match is found, the function returns 0.</p>
+<p>The function evaluates strings using characters as defined by the input character set.</p>
+<p class="titleinrefsubsect"><a id="sthref560" name="sthref560"></a>Return Value</p>
+<pre xml:space="preserve" class="oac_no_warn">NUMBER
+</pre>
+<p class="titleinrefsubsect"><a id="sthref561" name="sthref561"></a>Syntax</p>
+<pre xml:space="preserve" class="oac_no_warn"><span class="bold">REGEXP_COUNT</span> (source_char, pattern
+              [, position
+                 [, match_parameter ]
+              ]
+             )
+</pre>
+<p class="titleinrefsubsect"><a id="sthref562" name="sthref562"></a>Arguments</p>
+<p><code>source_char</code> is the text expression to search.</p>
+<p><code>pattern</code> is the string to search for. A period matches any character. For a list of operators, refer to the <span class="italic">Oracle Database SQL Language Reference</span>, Appendix D, "Oracle Regular Expression Support."</p>
+<p><code>position</code> is a nonzero integer indicating the character of <code>source_char</code> where the function begins the search. When <code>position</code> is negative, then the function counts and searches backward from the end of string. The default value of <code>position</code> is 1, which means that the function begins searching at the first character of <code>source_char</code>.</p>
+<p><code>match_parameter</code> is a text literal that lets you change the default matching behavior of the function. You can specify one or more of the following values:</p>
+<ul>
+<li>
+<p><code>c</code>: Case-sensitive matching.</p>
+</li>
+<li>
+<p><code>i</code>: Case-insensitive matching.</p>
+</li>
+<li>
+<p><code>m</code>: Treat the source string as multiple lines. The function interprets <code>^</code> and <code>$</code> as the start and end, respectively, of any line anywhere in the source string, rather than only at the start or end of the entire source string. By default, the function treats the source string as a single line.</p>
+</li>
+<li>
+<p><code>n</code>: New-line character is among the characters matched by a period (the wildcard character). By default, it is not.</p>
+</li>
+<li>
+<p><code>x</code>: Ignore whitespace characters.</p>
+</li>
+</ul>
+<p class="titleinrefsubsect"><a id="sthref563" name="sthref563"></a>Example</p>
+<p><code>REGEXP_COUNT('Mississippi', 'i', 1)</code> searches the string <code>Mississippi</code> for the letter <code>i</code>, beginning the search at the first letter. It returns the value <code>4</code>.</p>
+</div>
+</html>

@@ -1,0 +1,20 @@
+<html><head><title>JSP Chat</title></head><body bgcolor=\"#FFFFFF\">");
+        writer.println("<div>Welcome to the chat. <a href='chat'>Click here to reload this window</a></div>");
+        writer.flush();
+
+        synchronized(connections) {
+            connections.add(response);
+        }
+
+        messageSender.send("Tomcat", request.getSession(true).getAttribute("nickname") + " joined the chat.");
+    }
+
+    protected void end(CometEvent event, HttpServletRequest request, HttpServletResponse response)
+        throws IOException {
+        log("End for session: " + request.getSession(true).getId());
+        synchronized(connections) {
+            connections.remove(response);
+        }
+
+        PrintWriter writer = response.getWriter();
+        writer.println("</body></html>

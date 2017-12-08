@@ -1,0 +1,20 @@
+<html><h1 class="refsect1">TO_TIMESTAMP</h1>
+<p><code>TO_TIMESTAMP</code> converts a text expression to a value of <code>TIMESTAMP</code>.</p>
+<p class="titleinrefsubsect"><a id="sthref696" name="sthref696"></a>Return Value</p>
+<pre xml:space="preserve" class="oac_no_warn">TIMESTAMP
+</pre>
+<p class="titleinrefsubsect"><a id="sthref697" name="sthref697"></a>Syntax</p>
+<pre xml:space="preserve" class="oac_no_warn"><span class="bold">TO_TIMESTAMP</span>(char [, fmt [ 'nlsparam' ] ])
+</pre>
+<p class="titleinrefsubsect"><a id="sthref698" name="sthref698"></a>Arguments</p>
+<p><code>char</code> is a text expression to be converted.</p>
+<p><code>fmt</code> is a datetime model format specifying the format of <code>char</code>. The default date format is determined implicitly by the <code>NLS_TERRITORY</code> initialization parameter or can be set explicitly by the <code>NLS_DATE_FORMAT</code> parameter. For data type formats, refer to the <span class="italic">Oracle Database SQL Language Reference</span>.</p>
+<p><code>nlsparam</code> specifies the language in which month and day names and abbreviations given in <code>char</code>. This argument has this form:</p>
+<pre xml:space="preserve" class="oac_no_warn">'NLS_DATE_LANGUAGE = language' 
+</pre>
+<p>By default, <code>char</code> is in the session date language.</p>
+<p class="titleinrefsubsect"><a id="sthref699" name="sthref699"></a>Examples</p>
+<p><code>TO_TIMESTAMP('10-SEP-0614:10:10.123000','DD-MON-RRHH24:MI:SS.FF')</code> returns the value <code>10-SEP-06 02.10.10.123000 PM</code>.</p>
+<p><code>TO_TIMESTAMP('10-AGOSTO-0714:10:10', 'DD-MON-RRHH24:MI:SS.FF', 'NLS_DATE_LANGUAGE=SPANISH')</code> returns the value <code>10-AUG-07 02.10.10.000000 PM</code>.</p>
+</div>
+</html>

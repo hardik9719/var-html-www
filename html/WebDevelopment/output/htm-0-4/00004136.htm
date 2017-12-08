@@ -1,0 +1,177 @@
+<html><h1 class="refsect1">NEW_TIME</h1>
+<p><code>NEW_TIME</code> converts the date and time from one time zone to another. Before using this function, set the <code>NLS_DATE_FORMAT</code> parameter to display 24-hour time.</p>
+<p class="titleinrefsubsect"><a id="sthref495" name="sthref495"></a>Return Value</p>
+<pre xml:space="preserve" class="oac_no_warn">DATE
+</pre>
+<p class="titleinrefsubsect"><a id="sthref496" name="sthref496"></a>Syntax</p>
+<pre xml:space="preserve" class="oac_no_warn"><span class="bold">NEW_TIME</span>(date, timezone1, timezone2)
+</pre>
+<p class="titleinrefsubsect"><a id="sthref497" name="sthref497"></a>Arguments</p>
+<p><code>date</code> is a datetime expression to be converted to a new time zone.</p>
+<p><code>timezone1</code> is the time zone of <code>date</code>.</p>
+<p><code>timezone2</code> is the new time zone.</p>
+<p>The time zone arguments are limited to the values in<a href="#BABHBEHI">Table 3-2</a>. For other time zones, use <code>FROM_TZ</code>.</p>
+<div class="tblformal">
+<p class="titleintable"><a id="OLAXS437" name="OLAXS437"></a><a id="sthref498" name="sthref498"></a><a id="BABHBEHI" name="BABHBEHI"></a>Table 3-2 Time Zones</p>
+<table class="Formal" title="Time Zones" summary="Time zones supported by NEW_TIME" dir="ltr" border="1" width="100%" frame="hsides" rules="groups" cellpadding="3" cellspacing="0">
+<col width="*" />
+<col width="32%" />
+<thead>
+<tr align="left" valign="top">
+<th align="left" valign="bottom" id="r1c1-t3">Time Zone</th>
+<th align="left" valign="bottom" id="r1c2-t3">Abbreviation</th>
+</tr>
+</thead>
+<tbody>
+<tr align="left" valign="top">
+<td align="left" id="r2c1-t3" headers="r1c1-t3">
+<p>Alaska-Hawaii Daylight Time</p>
+</td>
+<td align="left" headers="r2c1-t3 r1c2-t3">
+<p>HDT</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r3c1-t3" headers="r1c1-t3">
+<p>Alaska-Hawaii Standard Time</p>
+</td>
+<td align="left" headers="r3c1-t3 r1c2-t3">
+<p>HST</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r4c1-t3" headers="r1c1-t3">
+<p>Atlantic Daylight Time</p>
+</td>
+<td align="left" headers="r4c1-t3 r1c2-t3">
+<p>ADT</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r5c1-t3" headers="r1c1-t3">
+<p>Atlantic Standard Time</p>
+</td>
+<td align="left" headers="r5c1-t3 r1c2-t3">
+<p>AST</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r6c1-t3" headers="r1c1-t3">
+<p>Bering Daylight Time</p>
+</td>
+<td align="left" headers="r6c1-t3 r1c2-t3">
+<p>BDT</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r7c1-t3" headers="r1c1-t3">
+<p>Bering Standard Time</p>
+</td>
+<td align="left" headers="r7c1-t3 r1c2-t3">
+<p>BST</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r8c1-t3" headers="r1c1-t3">
+<p>Central Daylight Time</p>
+</td>
+<td align="left" headers="r8c1-t3 r1c2-t3">
+<p>CDT</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r9c1-t3" headers="r1c1-t3">
+<p>Central Standard Time</p>
+</td>
+<td align="left" headers="r9c1-t3 r1c2-t3">
+<p>CST</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r10c1-t3" headers="r1c1-t3">
+<p>Eastern Daylight Time</p>
+</td>
+<td align="left" headers="r10c1-t3 r1c2-t3">
+<p>EDT</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r11c1-t3" headers="r1c1-t3">
+<p>Eastern Standard Time</p>
+</td>
+<td align="left" headers="r11c1-t3 r1c2-t3">
+<p>EST</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r12c1-t3" headers="r1c1-t3">
+<p>Greenwich Mean Time</p>
+</td>
+<td align="left" headers="r12c1-t3 r1c2-t3">
+<p>GMT</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r13c1-t3" headers="r1c1-t3">
+<p>Mountain Daylight Time</p>
+</td>
+<td align="left" headers="r13c1-t3 r1c2-t3">
+<p>MDT</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r14c1-t3" headers="r1c1-t3">
+<p>Mountain Standard Time</p>
+</td>
+<td align="left" headers="r14c1-t3 r1c2-t3">
+<p>MST</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r15c1-t3" headers="r1c1-t3">
+<p>Newfoundland Standard Time</p>
+</td>
+<td align="left" headers="r15c1-t3 r1c2-t3">
+<p>NST</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r16c1-t3" headers="r1c1-t3">
+<p>Pacific Daylight Time</p>
+</td>
+<td align="left" headers="r16c1-t3 r1c2-t3">
+<p>PDT</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r17c1-t3" headers="r1c1-t3">
+<p>Pacific Standard Time</p>
+</td>
+<td align="left" headers="r17c1-t3 r1c2-t3">
+<p>PST</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r18c1-t3" headers="r1c1-t3">
+<p>Yukon Daylight Time</p>
+</td>
+<td align="left" headers="r18c1-t3 r1c2-t3">
+<p>YDT</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r19c1-t3" headers="r1c1-t3">
+<p>Yukon Standard Time</p>
+</td>
+<td align="left" headers="r19c1-t3 r1c2-t3">
+<p>YST</p>
+</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="tblformal" -->
+<p class="titleinrefsubsect"><a id="sthref499" name="sthref499"></a>Example</p>
+<p><code>NEW_TIME(SYSDATE, 'PST', 'EST')</code> returns a value such as <code>18-JAN-07 04:38:07</code> in Eastern Standard Time when <code>SYSDATE</code> is <code>18-JAN-07 01:38:07</code> in Pacific Standard Time. For this example, <code>NLS_DATE_FORMAT</code> is set to <code>DD-MON-RR HH:MI:SS</code>.</p>
+</div>
+</html>

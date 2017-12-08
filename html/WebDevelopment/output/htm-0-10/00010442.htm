@@ -1,0 +1,16 @@
+<html>
+        <head>
+            <xsl:call-template name="create.stylesheet.link">
+                <xsl:with-param name="package.name"/>
+            </xsl:call-template>
+        </head>
+        <body>
+            <h2><a href="overview-summary.html" target="classFrame">Home</a></h2>
+            <h2>Packages</h2>
+                <table width="100%">
+                    <xsl:apply-templates select="class[not(./@package = preceding-sibling::class/@package)]" mode="all.packages">
+                        <xsl:sort select="@package" order="ascending"/>
+                    </xsl:apply-templates>
+                </table>
+        </body>
+    </html>

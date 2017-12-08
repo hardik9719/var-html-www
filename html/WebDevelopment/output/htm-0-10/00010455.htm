@@ -1,0 +1,60 @@
+<html>
+      <head>
+         <link rel="stylesheet" type="text/css" href="stylesheet.css"/>
+      </head>
+      <body>
+         <xsl:call-template name="pageHeader"/>
+  <table width="100%"><tr align="left"><h2>Summary</h2><td>
+  </td><td align="right">
+  [summary]
+  [<a href="overview-packages.html">packages</a>]
+  [<a href="overview-cycles.html">cycles</a>]
+  [<a href="overview-explanations.html">explanations</a>]
+   </td></tr></table>
+         <table width="100%" class="details">
+            <tr>
+               <th>Package</th>
+               <th>Total Classes</th>
+               <th><a href="overview-explanations.html#EXnumber">Abstract Classes</a></th>
+               <th><a href="overview-explanations.html#EXnumber">Concrete Classes</a></th>
+               <th><a href="overview-explanations.html#EXafferent">Afferent Couplings</a></th>
+               <th><a href="overview-explanations.html#EXefferent">Efferent Couplings</a></th>
+               <th><a href="overview-explanations.html#EXabstractness">Abstractness</a></th>
+               <th><a href="overview-explanations.html#EXinstability">Instability</a></th>
+               <th><a href="overview-explanations.html#EXdistance">Distance</a></th>
+
+            </tr>
+            <xsl:for-each select="./Packages/Package">
+               <xsl:if test="count(error) = 0">
+                  <tr>
+                     <td align="left">
+                        <a>
+                           <xsl:attribute name="href">overview-packages.html#PK<xsl:value-of select="@name"/>
+                           </xsl:attribute>
+                           <xsl:value-of select="@name"/>
+                        </a>
+                     </td>
+                     <td align="right"><xsl:value-of select="Stats/TotalClasses"/></td>
+                     <td align="right"><xsl:value-of select="Stats/AbstractClasses"/></td>
+                     <td align="right"><xsl:value-of select="Stats/ConcreteClasses"/></td>
+                     <td align="right"><xsl:value-of select="Stats/Ca"/></td>
+                     <td align="right"><xsl:value-of select="Stats/Ce"/></td>
+                     <td align="right"><xsl:value-of select="Stats/A"/></td>
+                     <td align="right"><xsl:value-of select="Stats/I"/></td>
+                     <td align="right"><xsl:value-of select="Stats/D"/></td>
+                  </tr>
+               </xsl:if>
+            </xsl:for-each>
+            <xsl:for-each select="./Packages/Package">
+               <xsl:if test="count(error) &gt; 0">
+                  <tr>
+                     <td align="left">
+                        <xsl:value-of select="@name"/>
+                     </td>
+                     <td align="left" colspan="8"><xsl:value-of select="error"/></td>
+                  </tr>
+               </xsl:if>
+            </xsl:for-each>
+         </table>
+      </body>
+   </html>

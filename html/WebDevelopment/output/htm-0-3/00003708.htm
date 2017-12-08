@@ -1,0 +1,9 @@
+<html>
+	<head><title>CGI Examples</title></head>
+	<body>
+		<h3>CGI Examples</h3>
+		% for my $route ( sort keys( %{ $cgi_scripts } ) ) {
+			<a href="<%= $route %>"><%= $cgi_scripts->{$route} %></a><br />
+		% }
+	</body>
+</html>

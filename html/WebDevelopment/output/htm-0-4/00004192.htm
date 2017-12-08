@@ -1,0 +1,25 @@
+<html><h1 class="refsect1">TRIM</h1>
+<p><code>TRIM</code> removes leading or trailing characters (or both) from a character string.</p>
+<p class="titleinrefsubsect"><a id="sthref716" name="sthref716"></a>Return Value</p>
+<pre xml:space="preserve" class="oac_no_warn">VARCHAR2
+</pre>
+<p class="titleinrefsubsect"><a id="sthref717" name="sthref717"></a>Syntax</p>
+<pre xml:space="preserve" class="oac_no_warn"><span class="bold">TRIM</span>([ { { <span class="bold">LEADING</span> | <span class="bold">TRAILING</span> | <span class="bold">BOTH</span> }[ trim_character ]  
+       | trim_character
+       }
+       <span class="bold">FROM</span> 
+     ]
+     trim_source
+    )
+</pre>
+<p class="titleinrefsubsect"><a id="sthref718" name="sthref718"></a>Arguments</p>
+<p><code>LEADING</code> removes matching characters from the beginning of the string.</p>
+<p><code>TRAILING</code> removes matching characters from the end of the string.</p>
+<p><code>BOTH</code> removes matching characters from both the beginning and the end of the string. (Default)</p>
+<p><code>trim_character</code> is a single character to be removed. By default, it is a space.</p>
+<p><code>trim_source</code> is the text expression to be trimmed.</p>
+<p class="titleinrefsubsect"><a id="sthref719" name="sthref719"></a>Examples</p>
+<p><code>TRIM('0' FROM '00026501.6703000')</code> returns the value <code>26501.6703</code>.</p>
+<p><code>TRIM(LEADING '!' FROM '!!Help! Help!!')</code> returns the value <code>Help! Help!!</code> .</p>
+</div>
+</html>

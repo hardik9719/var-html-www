@@ -1,0 +1,17 @@
+<html><h1 class="refsect1">CHR</h1>
+<p><code>CHR</code> converts an integer to the character with its binary equivalent in either the database character set or the national character set.</p>
+<p>For single-byte character sets, if <code>n</code> &gt; 256, then <code>CHR</code> converts the binary equivalent of <code>mod(n, 256)</code>.</p>
+<p>For the Unicode national character sets and all multibyte character sets, <code>n</code> must resolve to one entire code point. Code points are not validated, and the result of specifying invalid code points is indeterminate.</p>
+<p class="titleinrefsubsect"><a id="sthref378" name="sthref378"></a>Return Value</p>
+<pre xml:space="preserve" class="oac_no_warn">VARCHAR2 | NVARCHAR2
+</pre>
+<p class="titleinrefsubsect"><a id="sthref379" name="sthref379"></a>Syntax</p>
+<pre xml:space="preserve" class="oac_no_warn"><span class="bold">CHR</span>(n [ USING NCHAR_CS ]) 
+</pre>
+<p class="titleinrefsubsect"><a id="sthref380" name="sthref380"></a>Arguments</p>
+<p><code>n</code> is a numeric expression.</p>
+<p><code>USING NCHAR_CS</code> returns a character in the national character set. Otherwise, the return value is in the database character set. The OLAP engine uses the UTF8 national character set, so the return value may be different from the SQL <code>CHR</code> function, which uses the database UTF16 national character set.</p>
+<p class="titleinrefsubsect"><a id="sthref381" name="sthref381"></a>Example</p>
+<p><code>CHR(67)</code>, <code>CHR(67 USING NCHAR_CS)</code>, and <code>CHR(323)</code> all return the letter <code>C</code> on an ASCII-based system with the WE8DEC database character set and the UTF8 national character set. <code>CHR(323)</code> is evaluated as <code>CHR(MOD(323, 256))</code>.</p>
+</div>
+</html>

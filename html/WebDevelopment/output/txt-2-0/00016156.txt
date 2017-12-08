@@ -1,0 +1,1038 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
+
+Origin: Ubuntu
+Label: Ubuntu
+Suite: zesty-backports
+Version: 17.04
+Codename: zesty
+Date: Mon, 17 Jul 2017  0:27:43 UTC
+Architectures: amd64 arm64 armhf i386 ppc64el s390x
+Components: main restricted universe multiverse
+Description: Ubuntu Zesty Backports
+NotAutomatic: yes
+ButAutomaticUpgrades: yes
+MD5Sum:
+ fbce41504d561645bb71b2e90533351b             5454 Contents-armhf.gz
+ 8801f399a4015a80a5dfe6c89f1788d8            67905 Contents-armhf
+ 9d1ecf9cecf88e8a62c8f824dd482072            67723 Contents-ppc64el
+ 79d113aa3d27613f2634a5f21e11f0e6             5430 Contents-ppc64el.gz
+ 3c9980f40a4c6d77a261dd89f6b6d50a            67720 Contents-arm64
+ 150c3401ec551ae8938eb92f951ec6e4            67902 Contents-amd64
+ cd045259d79fd2763e6617835e8e852c             5427 Contents-arm64.gz
+ 2ea9c1455a2f9fad34c5f7d61c94d10b             5450 Contents-amd64.gz
+ 9c500ad69ba87652a0c15553ce6e0991            67718 Contents-s390x
+ ac290aeabf81bfe97332f8b3d19a8f71            67900 Contents-i386
+ 6780c28e5ec4f306ce82e2973fb78dfb             5426 Contents-s390x.gz
+ 856e3eca0577a9cfe26fe44de17c20d4             5453 Contents-i386.gz
+ ed388e93c9f22598d6fec3afab091ab5             4194 main/binary-amd64/Packages
+ f1fa66056ae0a1509d1a95bb55f4fa4a              105 main/binary-amd64/Release
+ 90e424549b2d3d8dcc94b3ea6db9d010             1442 main/binary-amd64/Packages.gz
+ 96aa6c11dfa21f390c9216d5fdb339dc             1488 main/binary-amd64/Packages.xz
+ 6d27e38731ff709b274bb5d6aaf216aa              105 main/binary-arm64/Release
+ 982c20df5cb8981f1555f6c294ac37c9             4195 main/binary-arm64/Packages
+ 27f38cc839b6cc937347ed87358ee6b6             1484 main/binary-arm64/Packages.xz
+ 51e59d4524eeb68db2d83850e62b6400             1446 main/binary-arm64/Packages.gz
+ a7dfcd72bf65fc50348a44aa70384b8a              105 main/binary-armhf/Release
+ 5f0c12afb221728b4204961b521bd9fd             4192 main/binary-armhf/Packages
+ 60d44e18b1d0069a30c60809fa770ec0             1488 main/binary-armhf/Packages.xz
+ 21c92a8031a491ef6fbb7c4e0623d231             1440 main/binary-armhf/Packages.gz
+ cfbb0b39cb6ff2950b393c5e4e0f3cb6             1484 main/binary-i386/Packages.xz
+ ab00f581f133fa3fb948cbc9dfc9daee              104 main/binary-i386/Release
+ 53cb72a8e228759aa5b3f5714893ce51             1443 main/binary-i386/Packages.gz
+ 0d68b572a63d5fcb9e82f10b382bc5b3             4186 main/binary-i386/Packages
+ a2b390af0c3ab015cf76507667e9f0e3             1488 main/binary-ppc64el/Packages.xz
+ 34a22bfc848f4c7509bf97ed3b4c8168              107 main/binary-ppc64el/Release
+ f8e7f9b33fbd05da286a0d65cce21d65             1446 main/binary-ppc64el/Packages.gz
+ 8107bc6da078ea217bab00a88ca3b36f             4208 main/binary-ppc64el/Packages
+ c746bc19babec9132ab75aff950c9b66              105 main/binary-s390x/Release
+ f6c822c467d809e6b3bb92ac5399bdb3             1446 main/binary-s390x/Packages.gz
+ d64f6d27d3982cc0f67e9b58af1b8808             4194 main/binary-s390x/Packages
+ 10a36b7e13c45512f1fb7f71fecae422             1492 main/binary-s390x/Packages.xz
+ e62ff0123a74adfc6903d59a449cbdb0               40 main/debian-installer/binary-amd64/Packages.gz
+ d41d8cd98f00b204e9800998ecf8427e                0 main/debian-installer/binary-amd64/Packages
+ 05a2a1d284b1f093d602cff1b16f23dd               64 main/debian-installer/binary-amd64/Packages.xz
+ d41d8cd98f00b204e9800998ecf8427e                0 main/debian-installer/binary-arm64/Packages
+ e62ff0123a74adfc6903d59a449cbdb0               40 main/debian-installer/binary-arm64/Packages.gz
+ 05a2a1d284b1f093d602cff1b16f23dd               64 main/debian-installer/binary-arm64/Packages.xz
+ e62ff0123a74adfc6903d59a449cbdb0               40 main/debian-installer/binary-armhf/Packages.gz
+ 05a2a1d284b1f093d602cff1b16f23dd               64 main/debian-installer/binary-armhf/Packages.xz
+ d41d8cd98f00b204e9800998ecf8427e                0 main/debian-installer/binary-armhf/Packages
+ d41d8cd98f00b204e9800998ecf8427e                0 main/debian-installer/binary-i386/Packages
+ e62ff0123a74adfc6903d59a449cbdb0               40 main/debian-installer/binary-i386/Packages.gz
+ 05a2a1d284b1f093d602cff1b16f23dd               64 main/debian-installer/binary-i386/Packages.xz
+ 05a2a1d284b1f093d602cff1b16f23dd               64 main/debian-installer/binary-ppc64el/Packages.xz
+ e62ff0123a74adfc6903d59a449cbdb0               40 main/debian-installer/binary-ppc64el/Packages.gz
+ d41d8cd98f00b204e9800998ecf8427e                0 main/debian-installer/binary-ppc64el/Packages
+ 05a2a1d284b1f093d602cff1b16f23dd               64 main/debian-installer/binary-s390x/Packages.xz
+ e62ff0123a74adfc6903d59a449cbdb0               40 main/debian-installer/binary-s390x/Packages.gz
+ d41d8cd98f00b204e9800998ecf8427e                0 main/debian-installer/binary-s390x/Packages
+ a0aab432d8186c5d9d11449a8befb27b              158 main/dep11/Components-armhf.yml.gz
+ 3a7e6fbdd968ec8c6b2c747a9a349014              208 main/dep11/Components-s390x.yml.xz
+ 0f343b0931126a20f133d67c2b018a3b             1024 main/dep11/icons-128x128.tar
+ 8f3d669e6d97287719a4782834357d9a              208 main/dep11/Components-arm64.yml.xz
+ 31f6566d35ccd604be46ed5b1f813cdf               29 main/dep11/icons-128x128.tar.gz
+ 7a597d646b42ea2a2dec3a7993a291c1              158 main/dep11/Components-s390x.yml.gz
+ c1cfadbe7645c7fea5e6c75ba713de1a              168 main/dep11/Components-arm64.yml
+ 798d8de771e34d72a10cc71e7b2a4250              168 main/dep11/Components-armhf.yml
+ 77aaaaba2f81ff0092fc3ec35790e8aa              168 main/dep11/Components-s390x.yml
+ c4b646e18b02fc22726cca80caa08a87              208 main/dep11/Components-amd64.yml.xz
+ 0e48a5a0e5ebc242b44bdce71d8aa917              208 main/dep11/Components-ppc64el.yml.xz
+ 9798d132b173c96c0a6c0692206abcef              158 main/dep11/Components-arm64.yml.gz
+ e08dccf726016483ab00d5ce7d0ef834              168 main/dep11/Components-i386.yml
+ 003a6a2f79f21a75678d013a555aa633              208 main/dep11/Components-i386.yml.xz
+ a85afbc85f72526e4d38b45f3fc005a8              168 main/dep11/Components-ppc64el.yml
+ 0f343b0931126a20f133d67c2b018a3b             1024 main/dep11/icons-64x64.tar
+ a1542b84d8bcb1cc1c3d252ef885ff67              168 main/dep11/Components-amd64.yml
+ ca83507672aea2385c5783f5eaf6aee0              158 main/dep11/Components-ppc64el.yml.gz
+ 31f6566d35ccd604be46ed5b1f813cdf               29 main/dep11/icons-64x64.tar.gz
+ 396eb1acaadea5a9a5dd98a628446870              158 main/dep11/Components-i386.yml.gz
+ ab4e3518bbb443a9e55b18539ba8926b              158 main/dep11/Components-amd64.yml.gz
+ dfdfc4eb904ed69ac1c4b9743e1f7a08              208 main/dep11/Components-armhf.yml.xz
+ cf3295bfbe330d8d8e0bbc0ea68c7baa              573 main/i18n/Translation-en.gz
+ c47cff49f088becd324d166af1862402              664 main/i18n/Translation-en.xz
+ 22a2d9a8be641c6bf9ff9441fa44b7c9             1796 main/i18n/Translation-en
+ 2f8ffea411a9592f6bd07e1390eded26              198 main/i18n/Index
+ ce0fec3a207d11eac76c218328d08e7c              106 main/source/Release
+ 71415fd0ab21ca9ff23bb2c89e6f6699             1876 main/source/Sources
+ 142ab7142674a1450cc965dbb8e5a067              967 main/source/Sources.gz
+ af8aa8a14044f62b1a11af063381c217             1044 main/source/Sources.xz
+ e62ff0123a74adfc6903d59a449cbdb0               40 multiverse/binary-amd64/Packages.gz
+ 05a2a1d284b1f093d602cff1b16f23dd               64 multiverse/binary-amd64/Packages.xz
+ 1fcd1aee8f3a9c814f4365bb6e54682b              111 multiverse/binary-amd64/Release
+ d41d8cd98f00b204e9800998ecf8427e                0 multiverse/binary-amd64/Packages
+ e62ff0123a74adfc6903d59a449cbdb0               40 multiverse/binary-arm64/Packages.gz
+ d41d8cd98f00b204e9800998ecf8427e                0 multiverse/binary-arm64/Packages
+ 2af57c08b2d4c42cd765821ee18d4b25              111 multiverse/binary-arm64/Release
+ 05a2a1d284b1f093d602cff1b16f23dd               64 multiverse/binary-arm64/Packages.xz
+ 0e56e4d2e6c0634e8a8acc5913f3e1a0              111 multiverse/binary-armhf/Release
+ e62ff0123a74adfc6903d59a449cbdb0               40 multiverse/binary-armhf/Packages.gz
+ 05a2a1d284b1f093d602cff1b16f23dd               64 multiverse/binary-armhf/Packages.xz
+ d41d8cd98f00b204e9800998ecf8427e                0 multiverse/binary-armhf/Packages
+ e62ff0123a74adfc6903d59a449cbdb0               40 multiverse/binary-i386/Packages.gz
+ d41d8cd98f00b204e9800998ecf8427e                0 multiverse/binary-i386/Packages
+ 05a2a1d284b1f093d602cff1b16f23dd               64 multiverse/binary-i386/Packages.xz
+ 0db62d8d163d606e51eb4acfcdd206f4              110 multiverse/binary-i386/Release
+ d41d8cd98f00b204e9800998ecf8427e                0 multiverse/binary-ppc64el/Packages
+ e62ff0123a74adfc6903d59a449cbdb0               40 multiverse/binary-ppc64el/Packages.gz
+ d4252b727eb36f2fdd84b0c43d20feb4              113 multiverse/binary-ppc64el/Release
+ 05a2a1d284b1f093d602cff1b16f23dd               64 multiverse/binary-ppc64el/Packages.xz
+ d4c79e8c260b69ffd77d26ebe8dd2472              111 multiverse/binary-s390x/Release
+ d41d8cd98f00b204e9800998ecf8427e                0 multiverse/binary-s390x/Packages
+ e62ff0123a74adfc6903d59a449cbdb0               40 multiverse/binary-s390x/Packages.gz
+ 05a2a1d284b1f093d602cff1b16f23dd               64 multiverse/binary-s390x/Packages.xz
+ 05a2a1d284b1f093d602cff1b16f23dd               64 multiverse/debian-installer/binary-amd64/Packages.xz
+ d41d8cd98f00b204e9800998ecf8427e                0 multiverse/debian-installer/binary-amd64/Packages
+ e62ff0123a74adfc6903d59a449cbdb0               40 multiverse/debian-installer/binary-amd64/Packages.gz
+ d41d8cd98f00b204e9800998ecf8427e                0 multiverse/debian-installer/binary-arm64/Packages
+ 05a2a1d284b1f093d602cff1b16f23dd               64 multiverse/debian-installer/binary-arm64/Packages.xz
+ e62ff0123a74adfc6903d59a449cbdb0               40 multiverse/debian-installer/binary-arm64/Packages.gz
+ d41d8cd98f00b204e9800998ecf8427e                0 multiverse/debian-installer/binary-armhf/Packages
+ e62ff0123a74adfc6903d59a449cbdb0               40 multiverse/debian-installer/binary-armhf/Packages.gz
+ 05a2a1d284b1f093d602cff1b16f23dd               64 multiverse/debian-installer/binary-armhf/Packages.xz
+ 05a2a1d284b1f093d602cff1b16f23dd               64 multiverse/debian-installer/binary-i386/Packages.xz
+ e62ff0123a74adfc6903d59a449cbdb0               40 multiverse/debian-installer/binary-i386/Packages.gz
+ d41d8cd98f00b204e9800998ecf8427e                0 multiverse/debian-installer/binary-i386/Packages
+ d41d8cd98f00b204e9800998ecf8427e                0 multiverse/debian-installer/binary-ppc64el/Packages
+ e62ff0123a74adfc6903d59a449cbdb0               40 multiverse/debian-installer/binary-ppc64el/Packages.gz
+ 05a2a1d284b1f093d602cff1b16f23dd               64 multiverse/debian-installer/binary-ppc64el/Packages.xz
+ d41d8cd98f00b204e9800998ecf8427e                0 multiverse/debian-installer/binary-s390x/Packages
+ e62ff0123a74adfc6903d59a449cbdb0               40 multiverse/debian-installer/binary-s390x/Packages.gz
+ 05a2a1d284b1f093d602cff1b16f23dd               64 multiverse/debian-installer/binary-s390x/Packages.xz
+ 584fb3674b752d02cc959f6efdc074f9              162 multiverse/dep11/Components-armhf.yml.gz
+ 31f6566d35ccd604be46ed5b1f813cdf               29 multiverse/dep11/icons-64x64.tar.gz
+ 31d258e8922bc389ccb51573a4f513de              212 multiverse/dep11/Components-armhf.yml.xz
+ ab69644786b755cb68f5abb3fa0ddfad              174 multiverse/dep11/Components-i386.yml
+ b393846b29c0e2b55201adcdf983d4eb              162 multiverse/dep11/Components-s390x.yml.gz
+ 31f6566d35ccd604be46ed5b1f813cdf               29 multiverse/dep11/icons-128x128.tar.gz
+ 02df050016322d5600d868ec5939a20a              212 multiverse/dep11/Components-amd64.yml.xz
+ ada36c068d3ad5466b957bc897207c5f              174 multiverse/dep11/Components-armhf.yml
+ 2321420f2692140b7acb1e9a9b545c4b              174 multiverse/dep11/Components-arm64.yml
+ 0f343b0931126a20f133d67c2b018a3b             1024 multiverse/dep11/icons-128x128.tar
+ d11adac2989744be995cf0247ddc9f67              162 multiverse/dep11/Components-arm64.yml.gz
+ 0167579f4ba854e56d68e6a81f5da470              212 multiverse/dep11/Components-s390x.yml.xz
+ 7aa8cad949738cab99cac1c9fd512fcd              162 multiverse/dep11/Components-i386.yml.gz
+ 6578539354754e3c69d8259098b6f55b              161 multiverse/dep11/Components-ppc64el.yml.gz
+ 47d125e3236cf660a502f47b4840f760              212 multiverse/dep11/Components-ppc64el.yml.xz
+ 698324bee39a8964f5e547c1b0229392              162 multiverse/dep11/Components-amd64.yml.gz
+ 41d87e04c29b6eece2cc647ae9667456              212 multiverse/dep11/Components-i386.yml.xz
+ 0f343b0931126a20f133d67c2b018a3b             1024 multiverse/dep11/icons-64x64.tar
+ 9874f61a9c7f4ab9580a96fb6de958c4              174 multiverse/dep11/Components-ppc64el.yml
+ f69d515eac9fe9658f829778cae24ccc              174 multiverse/dep11/Components-amd64.yml
+ e276b8137653688259bbd796484aa156              212 multiverse/dep11/Components-arm64.yml.xz
+ 70eb4eef84c29a7271e99a4c6a019694              174 multiverse/dep11/Components-s390x.yml
+ e62ff0123a74adfc6903d59a449cbdb0               40 multiverse/i18n/Translation-en.gz
+ d41d8cd98f00b204e9800998ecf8427e                0 multiverse/i18n/Translation-en
+ 05a2a1d284b1f093d602cff1b16f23dd               64 multiverse/i18n/Translation-en.xz
+ 83f113e5a6e4d07ca337fc40833470ee              192 multiverse/i18n/Index
+ e62ff0123a74adfc6903d59a449cbdb0               40 multiverse/source/Sources.gz
+ 05a2a1d284b1f093d602cff1b16f23dd               64 multiverse/source/Sources.xz
+ d41d8cd98f00b204e9800998ecf8427e                0 multiverse/source/Sources
+ 554a4c6e9392e6e812dba758ad53bcbb              112 multiverse/source/Release
+ d41d8cd98f00b204e9800998ecf8427e                0 restricted/binary-amd64/Packages
+ e62ff0123a74adfc6903d59a449cbdb0               40 restricted/binary-amd64/Packages.gz
+ 10e5e27123e95c3c45a20aa341387ab6              111 restricted/binary-amd64/Release
+ 05a2a1d284b1f093d602cff1b16f23dd               64 restricted/binary-amd64/Packages.xz
+ c86ed65c8ef4a60ce296f18aebf05525              111 restricted/binary-arm64/Release
+ 05a2a1d284b1f093d602cff1b16f23dd               64 restricted/binary-arm64/Packages.xz
+ e62ff0123a74adfc6903d59a449cbdb0               40 restricted/binary-arm64/Packages.gz
+ d41d8cd98f00b204e9800998ecf8427e                0 restricted/binary-arm64/Packages
+ e62ff0123a74adfc6903d59a449cbdb0               40 restricted/binary-armhf/Packages.gz
+ 05a2a1d284b1f093d602cff1b16f23dd               64 restricted/binary-armhf/Packages.xz
+ 845c129c72d9d9e3524e261267816153              111 restricted/binary-armhf/Release
+ d41d8cd98f00b204e9800998ecf8427e                0 restricted/binary-armhf/Packages
+ e62ff0123a74adfc6903d59a449cbdb0               40 restricted/binary-i386/Packages.gz
+ 05a2a1d284b1f093d602cff1b16f23dd               64 restricted/binary-i386/Packages.xz
+ d41d8cd98f00b204e9800998ecf8427e                0 restricted/binary-i386/Packages
+ 636a6f5155392ba6711b71075bfc2758              110 restricted/binary-i386/Release
+ e62ff0123a74adfc6903d59a449cbdb0               40 restricted/binary-ppc64el/Packages.gz
+ d41d8cd98f00b204e9800998ecf8427e                0 restricted/binary-ppc64el/Packages
+ 05a2a1d284b1f093d602cff1b16f23dd               64 restricted/binary-ppc64el/Packages.xz
+ 497e453ae42f8a036b2904360496d5a8              113 restricted/binary-ppc64el/Release
+ e62ff0123a74adfc6903d59a449cbdb0               40 restricted/binary-s390x/Packages.gz
+ b651a1cc5f5a3198586679e8c4f83c19              111 restricted/binary-s390x/Release
+ d41d8cd98f00b204e9800998ecf8427e                0 restricted/binary-s390x/Packages
+ 05a2a1d284b1f093d602cff1b16f23dd               64 restricted/binary-s390x/Packages.xz
+ 05a2a1d284b1f093d602cff1b16f23dd               64 restricted/debian-installer/binary-amd64/Packages.xz
+ d41d8cd98f00b204e9800998ecf8427e                0 restricted/debian-installer/binary-amd64/Packages
+ e62ff0123a74adfc6903d59a449cbdb0               40 restricted/debian-installer/binary-amd64/Packages.gz
+ e62ff0123a74adfc6903d59a449cbdb0               40 restricted/debian-installer/binary-arm64/Packages.gz
+ 05a2a1d284b1f093d602cff1b16f23dd               64 restricted/debian-installer/binary-arm64/Packages.xz
+ d41d8cd98f00b204e9800998ecf8427e                0 restricted/debian-installer/binary-arm64/Packages
+ e62ff0123a74adfc6903d59a449cbdb0               40 restricted/debian-installer/binary-armhf/Packages.gz
+ d41d8cd98f00b204e9800998ecf8427e                0 restricted/debian-installer/binary-armhf/Packages
+ 05a2a1d284b1f093d602cff1b16f23dd               64 restricted/debian-installer/binary-armhf/Packages.xz
+ 05a2a1d284b1f093d602cff1b16f23dd               64 restricted/debian-installer/binary-i386/Packages.xz
+ d41d8cd98f00b204e9800998ecf8427e                0 restricted/debian-installer/binary-i386/Packages
+ e62ff0123a74adfc6903d59a449cbdb0               40 restricted/debian-installer/binary-i386/Packages.gz
+ 05a2a1d284b1f093d602cff1b16f23dd               64 restricted/debian-installer/binary-ppc64el/Packages.xz
+ d41d8cd98f00b204e9800998ecf8427e                0 restricted/debian-installer/binary-ppc64el/Packages
+ e62ff0123a74adfc6903d59a449cbdb0               40 restricted/debian-installer/binary-ppc64el/Packages.gz
+ 05a2a1d284b1f093d602cff1b16f23dd               64 restricted/debian-installer/binary-s390x/Packages.xz
+ e62ff0123a74adfc6903d59a449cbdb0               40 restricted/debian-installer/binary-s390x/Packages.gz
+ d41d8cd98f00b204e9800998ecf8427e                0 restricted/debian-installer/binary-s390x/Packages
+ bad03d720fdac04bd17cd69d5a2271c9              187 restricted/dep11/Components-arm64.yml
+ d2455c558208496a6e6709a1c6f8318e              194 restricted/dep11/Components-amd64.yml.gz
+ bad03d720fdac04bd17cd69d5a2271c9              187 restricted/dep11/Components-armhf.yml
+ e46ce71b407a63f2d5c763c016a8ec0d              196 restricted/dep11/Components-ppc64el.yml.gz
+ 3e27e5fd29fa7daf2fff0bc91b3ffd6b              194 restricted/dep11/Components-s390x.yml.gz
+ bad03d720fdac04bd17cd69d5a2271c9              187 restricted/dep11/Components-s390x.yml
+ bad03d720fdac04bd17cd69d5a2271c9              187 restricted/dep11/Components-amd64.yml
+ bad03d720fdac04bd17cd69d5a2271c9              187 restricted/dep11/Components-ppc64el.yml
+ a060ef1f29ca438a37ca8dd733b695ab              193 restricted/dep11/Components-i386.yml.gz
+ 5c388d97c88874613e0e461d9cc7e2fd              194 restricted/dep11/Components-arm64.yml.gz
+ 4aed200b6238b58b4e6a695f76bf7c9a              194 restricted/dep11/Components-armhf.yml.gz
+ bad03d720fdac04bd17cd69d5a2271c9              187 restricted/dep11/Components-i386.yml
+ 83f113e5a6e4d07ca337fc40833470ee              192 restricted/i18n/Index
+ d41d8cd98f00b204e9800998ecf8427e                0 restricted/i18n/Translation-en
+ e62ff0123a74adfc6903d59a449cbdb0               40 restricted/i18n/Translation-en.gz
+ 05a2a1d284b1f093d602cff1b16f23dd               64 restricted/i18n/Translation-en.xz
+ 973ef79d4b2abe95c3e7aad519b627e1              112 restricted/source/Release
+ d41d8cd98f00b204e9800998ecf8427e                0 restricted/source/Sources
+ e62ff0123a74adfc6903d59a449cbdb0               40 restricted/source/Sources.gz
+ 05a2a1d284b1f093d602cff1b16f23dd               64 restricted/source/Sources.xz
+ 2837483c87af35cdd433c0a168099c0f            11754 universe/binary-amd64/Packages
+ f2be8e269166d734bb962038b25085ce             2960 universe/binary-amd64/Packages.xz
+ 1b965e67b99e08cf6215b8d5bd82b63d              109 universe/binary-amd64/Release
+ 3b467f54c2c78d4713b01af40d893de8             3089 universe/binary-amd64/Packages.gz
+ 22afd4616c00d0b2fdb5aa69f51b17e5             2724 universe/binary-arm64/Packages.xz
+ ed686c5eb6abbab51ce85efea67b4af6             2828 universe/binary-arm64/Packages.gz
+ 1aff15d1bc50506f0bbaf135e1a2a442              109 universe/binary-arm64/Release
+ d252f9fd7753e5dbec7a2521a7a37b7a            10942 universe/binary-arm64/Packages
+ dc5bbc5adfb8917064765af3ff776b63             3094 universe/binary-armhf/Packages.gz
+ 903fb33a2d72c4f09ae4cb4ff9b58337              109 universe/binary-armhf/Release
+ 8dc5688cd9fcbd4d4e675591b2a1426c             2980 universe/binary-armhf/Packages.xz
+ 5f168814c93eb57079c1b7811de2753a            11773 universe/binary-armhf/Packages
+ 73665bef015198247a2750bc921f15c6              108 universe/binary-i386/Release
+ d943ce4290c9bbe09363c7d7e4428d97            11743 universe/binary-i386/Packages
+ ee68e782af5c39f27b64815c1c97e873             2964 universe/binary-i386/Packages.xz
+ 8fb28e49361762f900b81992580ec7fe             3084 universe/binary-i386/Packages.gz
+ 675443e99622651a74e06c771c402388             2826 universe/binary-ppc64el/Packages.gz
+ 47edfc00072f136f1df194dee948b7b5             2724 universe/binary-ppc64el/Packages.xz
+ 76093a7733c185be60ed4c397cf6103a              111 universe/binary-ppc64el/Release
+ 78b86c8ceccbb789a7a38d08779afdbf            10959 universe/binary-ppc64el/Packages
+ 20429c34c1dc50d279e3761cee956c18            10941 universe/binary-s390x/Packages
+ 56e6d15e090aaaf0e42b50432db11cc2              109 universe/binary-s390x/Release
+ 53e092365423ccdf08f23d6776e7581f             2822 universe/binary-s390x/Packages.gz
+ bce34fa254cb1e4717e7b1704415846e             2724 universe/binary-s390x/Packages.xz
+ d41d8cd98f00b204e9800998ecf8427e                0 universe/debian-installer/binary-amd64/Packages
+ e62ff0123a74adfc6903d59a449cbdb0               40 universe/debian-installer/binary-amd64/Packages.gz
+ 05a2a1d284b1f093d602cff1b16f23dd               64 universe/debian-installer/binary-amd64/Packages.xz
+ 05a2a1d284b1f093d602cff1b16f23dd               64 universe/debian-installer/binary-arm64/Packages.xz
+ e62ff0123a74adfc6903d59a449cbdb0               40 universe/debian-installer/binary-arm64/Packages.gz
+ d41d8cd98f00b204e9800998ecf8427e                0 universe/debian-installer/binary-arm64/Packages
+ d41d8cd98f00b204e9800998ecf8427e                0 universe/debian-installer/binary-armhf/Packages
+ e62ff0123a74adfc6903d59a449cbdb0               40 universe/debian-installer/binary-armhf/Packages.gz
+ 05a2a1d284b1f093d602cff1b16f23dd               64 universe/debian-installer/binary-armhf/Packages.xz
+ 05a2a1d284b1f093d602cff1b16f23dd               64 universe/debian-installer/binary-i386/Packages.xz
+ e62ff0123a74adfc6903d59a449cbdb0               40 universe/debian-installer/binary-i386/Packages.gz
+ d41d8cd98f00b204e9800998ecf8427e                0 universe/debian-installer/binary-i386/Packages
+ d41d8cd98f00b204e9800998ecf8427e                0 universe/debian-installer/binary-ppc64el/Packages
+ e62ff0123a74adfc6903d59a449cbdb0               40 universe/debian-installer/binary-ppc64el/Packages.gz
+ 05a2a1d284b1f093d602cff1b16f23dd               64 universe/debian-installer/binary-ppc64el/Packages.xz
+ e62ff0123a74adfc6903d59a449cbdb0               40 universe/debian-installer/binary-s390x/Packages.gz
+ 05a2a1d284b1f093d602cff1b16f23dd               64 universe/debian-installer/binary-s390x/Packages.xz
+ d41d8cd98f00b204e9800998ecf8427e                0 universe/debian-installer/binary-s390x/Packages
+ eb1efdb55923b68d860ae4e9349333ac             7168 universe/dep11/icons-128x128.tar
+ acf9d8914d8a3fab1c8df3aab3a58fef             4672 universe/dep11/Components-ppc64el.yml.xz
+ 62011d6baed50d6fdfc25ed9e36e7435             4672 universe/dep11/Components-s390x.yml.xz
+ e8e17527bdbd753f9f64d3d1b5436923             4672 universe/dep11/Components-armhf.yml.xz
+ ce2c0748b4d039defddc1f63a44cb02d             2716 universe/dep11/icons-64x64.tar.gz
+ e5795d67f0b688d35600c2870dd52107            13072 universe/dep11/Components-i386.yml
+ fc44784985f0c75751673de16a352bdb             4943 universe/dep11/Components-armhf.yml.gz
+ dcae3a4ff78b2320ccd059b3d8b267ca             4942 universe/dep11/Components-ppc64el.yml.gz
+ 5b3b066ef17b2dc9f547cb254bc4ebc7             5519 universe/dep11/icons-128x128.tar.gz
+ 50980197bf7bdfec2f62b4fc38a94dfd             4943 universe/dep11/Components-s390x.yml.gz
+ efa595ce89657eeacb7d0b3da72faebe             4672 universe/dep11/Components-amd64.yml.xz
+ d46b9d0982e810b2a72b663138f3f49e             4943 universe/dep11/Components-i386.yml.gz
+ 974cc464ac36c12a2530058e13b7a52e            13072 universe/dep11/Components-arm64.yml
+ 6c2ced9545db78b85437dd9b7a1c73cb             4672 universe/dep11/Components-arm64.yml.xz
+ 8e3fc830e4170b80b0391aa938d13438             4943 universe/dep11/Components-arm64.yml.gz
+ 5c7b2242aed8b25c07d26e3920f2bec0            13072 universe/dep11/Components-s390x.yml
+ fee8f48a75fb8603cd602a74e15b7e0d             4096 universe/dep11/icons-64x64.tar
+ b6ee79dca03aea47759b538496d93527            13072 universe/dep11/Components-ppc64el.yml
+ 1888deb7d114f707275ffede99ded2bb             4672 universe/dep11/Components-i386.yml.xz
+ 46dda380bb2083582f5f47da209e79e0            13072 universe/dep11/Components-armhf.yml
+ 8abc778bd7d4a2437bdb8c9c7a178687             4942 universe/dep11/Components-amd64.yml.gz
+ 869c36b104e75f2ba3c02adc5bccc214            13072 universe/dep11/Components-amd64.yml
+ a43b0a0564e5d5d43bbb49c1a7b8f6df             3033 universe/i18n/Translation-en
+ ec8c8f7752ed2dc12e99d86aab7273e8             1247 universe/i18n/Translation-en.gz
+ f0feb3a3360bc2f44b21c28997dd379d              198 universe/i18n/Index
+ 3756a414fe5874468b9163892fdf5e67             1344 universe/i18n/Translation-en.xz
+ c05964445b545b585056fdfd3327bb97             5921 universe/source/Sources
+ 2e866cce9fd7876e305cd44ae30bbfd9             2308 universe/source/Sources.xz
+ 980dfe94e8ae1a790b3be1ca0c8da4bc             2319 universe/source/Sources.gz
+ 1e5fa9a5c512eccb458e4f6c98fe53f5              110 universe/source/Release
+SHA1:
+ bb78360f0eef9ab6ad48bf1630dfe86fbc72587a             5454 Contents-armhf.gz
+ 518bcd4c05f9a5b4d002ef642689ccc7b82f8a19            67905 Contents-armhf
+ 8776ace46f2382b592663deea13094049b5b43d1            67723 Contents-ppc64el
+ 0036731ca100e7858ec20e271299863df235b3d8             5430 Contents-ppc64el.gz
+ a24dd6cc1b4aa4148cecfd4b89f5b4698443848e            67720 Contents-arm64
+ 9bf8893a129af63784d8771004ceba18f3a2e3d0            67902 Contents-amd64
+ 76f40571a35c243504224f464d5ef317c20585ea             5427 Contents-arm64.gz
+ d87bae9fc0aa95c89f6639436d235b5ca78a2284             5450 Contents-amd64.gz
+ 4e18b58b893f58e8c42a59a47c0fb28926efd0bb            67718 Contents-s390x
+ 1a818906b4d34f31e62bda09fdd8bf499a6ae213            67900 Contents-i386
+ 9199bc395a758ede142b435bce03d797d5466a9b             5426 Contents-s390x.gz
+ 89d7f6136b383c40bd5132dacaeceac2ed4ef169             5453 Contents-i386.gz
+ d82cdf411db981be7a49b98899187d24c8c6242d             4194 main/binary-amd64/Packages
+ 6b7d59e05b5da53693de242a64d17c01d338c44a              105 main/binary-amd64/Release
+ 6e60a755fe30874415a251313cedd6fd2b639cc9             1442 main/binary-amd64/Packages.gz
+ b0d1927ffb3838ffb11c8c29ce1e9bf1639c48e8             1488 main/binary-amd64/Packages.xz
+ 078843702fbc24fe8bd500192ba380df47c00cb9              105 main/binary-arm64/Release
+ 683015193ee1bae6b08023765b324f0f3d0fd7e9             4195 main/binary-arm64/Packages
+ fa81bc247be061ffa84a3ddd965feb613b83a042             1484 main/binary-arm64/Packages.xz
+ a62c56484c73ced27f6659d7836e325614abd0d6             1446 main/binary-arm64/Packages.gz
+ 27e7d86b66f3d323064f70f8fb310f95d3eb23f2              105 main/binary-armhf/Release
+ f727ccf74ac2cb6d5ae97538647e413493f0e7bf             4192 main/binary-armhf/Packages
+ 0d2dd83ceae54cc1c2eab8d3760d8246913f8855             1488 main/binary-armhf/Packages.xz
+ ec9a655e47d2239210febd85f041544048ddbb01             1440 main/binary-armhf/Packages.gz
+ 9aeed55aecbca095a4b60957c509cd240fd30c1f             1484 main/binary-i386/Packages.xz
+ 5c17c24be70d39636c596faba1c731d1f64312c0              104 main/binary-i386/Release
+ 037299745d0f9e8f456aa8dfb68912e8a843f663             1443 main/binary-i386/Packages.gz
+ ff38f0d1074386498bbc8345966bf77c7d9d70a9             4186 main/binary-i386/Packages
+ d6f250f334b2b00005064bb37b91be099a6df516             1488 main/binary-ppc64el/Packages.xz
+ fb481a68e7dc2202ed87af347ff76ab69a634e81              107 main/binary-ppc64el/Release
+ 23f2244cfa8da1b875665b2902c21698b7258aad             1446 main/binary-ppc64el/Packages.gz
+ 29afd411bad3f96e74df62c835411407b7873c8c             4208 main/binary-ppc64el/Packages
+ f03d77e5521c0dcac8e396cf8df86ee549ab7f8d              105 main/binary-s390x/Release
+ 01ca14038afd87eaf20a983d533eb8cea99e434b             1446 main/binary-s390x/Packages.gz
+ 41548cac3f6baef179b96790d7e874f51299a414             4194 main/binary-s390x/Packages
+ c6c25bc80e45ac03fc5471e0b1124aaeedcd5e7c             1492 main/binary-s390x/Packages.xz
+ e3f4c61a216c2c9613cd3bdd1420dde095b296b3               40 main/debian-installer/binary-amd64/Packages.gz
+ da39a3ee5e6b4b0d3255bfef95601890afd80709                0 main/debian-installer/binary-amd64/Packages
+ 8f7b953c891feb6c6ff36727888b9fae846b49d5               64 main/debian-installer/binary-amd64/Packages.xz
+ da39a3ee5e6b4b0d3255bfef95601890afd80709                0 main/debian-installer/binary-arm64/Packages
+ e3f4c61a216c2c9613cd3bdd1420dde095b296b3               40 main/debian-installer/binary-arm64/Packages.gz
+ 8f7b953c891feb6c6ff36727888b9fae846b49d5               64 main/debian-installer/binary-arm64/Packages.xz
+ e3f4c61a216c2c9613cd3bdd1420dde095b296b3               40 main/debian-installer/binary-armhf/Packages.gz
+ 8f7b953c891feb6c6ff36727888b9fae846b49d5               64 main/debian-installer/binary-armhf/Packages.xz
+ da39a3ee5e6b4b0d3255bfef95601890afd80709                0 main/debian-installer/binary-armhf/Packages
+ da39a3ee5e6b4b0d3255bfef95601890afd80709                0 main/debian-installer/binary-i386/Packages
+ e3f4c61a216c2c9613cd3bdd1420dde095b296b3               40 main/debian-installer/binary-i386/Packages.gz
+ 8f7b953c891feb6c6ff36727888b9fae846b49d5               64 main/debian-installer/binary-i386/Packages.xz
+ 8f7b953c891feb6c6ff36727888b9fae846b49d5               64 main/debian-installer/binary-ppc64el/Packages.xz
+ e3f4c61a216c2c9613cd3bdd1420dde095b296b3               40 main/debian-installer/binary-ppc64el/Packages.gz
+ da39a3ee5e6b4b0d3255bfef95601890afd80709                0 main/debian-installer/binary-ppc64el/Packages
+ 8f7b953c891feb6c6ff36727888b9fae846b49d5               64 main/debian-installer/binary-s390x/Packages.xz
+ e3f4c61a216c2c9613cd3bdd1420dde095b296b3               40 main/debian-installer/binary-s390x/Packages.gz
+ da39a3ee5e6b4b0d3255bfef95601890afd80709                0 main/debian-installer/binary-s390x/Packages
+ c7e339aaf281c35196d148e78540819db9c18e3a              158 main/dep11/Components-armhf.yml.gz
+ 0da16df6f171a01ddd8329096aa5206871b17ccc              208 main/dep11/Components-s390x.yml.xz
+ 60cacbf3d72e1e7834203da608037b1bf83b40e8             1024 main/dep11/icons-128x128.tar
+ 02833429a32ee0d36f1dae6ed1de73a84e0f9bc4              208 main/dep11/Components-arm64.yml.xz
+ aa27f39a547726f9f7afd043711756ae57a5feb8               29 main/dep11/icons-128x128.tar.gz
+ e0eafa5c3cc01abdf98034eaf6d9d38a46447d61              158 main/dep11/Components-s390x.yml.gz
+ fce7e18940d0e35320abae2de3d9fd73996b98ad              168 main/dep11/Components-arm64.yml
+ 64e0477fc759b271ddbed7bdd77f2c934a98c422              168 main/dep11/Components-armhf.yml
+ 53829c2ca31e47690fa9950f2b5c47090e993535              168 main/dep11/Components-s390x.yml
+ ec5732e4566df870eb59937cde53768b65886d50              208 main/dep11/Components-amd64.yml.xz
+ f73f0b38a76040be7cf1679c853dc64ad0b32fe1              208 main/dep11/Components-ppc64el.yml.xz
+ 833406bd3982aad5ce4e67002fe21108575cfcb8              158 main/dep11/Components-arm64.yml.gz
+ 602b9efef67fca99c449d848ef0d0162921e6d0c              168 main/dep11/Components-i386.yml
+ e92d2a9c999ff0c2986c49c923509271ac8e1165              208 main/dep11/Components-i386.yml.xz
+ 1cc46c33aa4b8e07fb57b198f57c07ea78c33737              168 main/dep11/Components-ppc64el.yml
+ 60cacbf3d72e1e7834203da608037b1bf83b40e8             1024 main/dep11/icons-64x64.tar
+ 5f1e71b16dea5cf42bea1ad5bccd5d7ca1687484              168 main/dep11/Components-amd64.yml
+ 3d6cae7cbcbb4bf9fb6475c541e7c8b7a5919f16              158 main/dep11/Components-ppc64el.yml.gz
+ aa27f39a547726f9f7afd043711756ae57a5feb8               29 main/dep11/icons-64x64.tar.gz
+ f2d7cc626a314fa0c698929c49da6b8b5eb35a73              158 main/dep11/Components-i386.yml.gz
+ 7a9ffa0a676cfcdae8fcea2c81d64f19b12ab264              158 main/dep11/Components-amd64.yml.gz
+ 2a925512a0d979900546f3a01406b7099c794553              208 main/dep11/Components-armhf.yml.xz
+ 7317a7bda948822a85487123d3374dd927545d00              573 main/i18n/Translation-en.gz
+ 08ca74526d6fe973060d8859c2ba0e93142dc127              664 main/i18n/Translation-en.xz
+ a0489a2f0626ed51845c8ea2472c4d86c41299c8             1796 main/i18n/Translation-en
+ 5ab1dcf61f852342a293acef1ec99789cfcac049              198 main/i18n/Index
+ 024027641995411026d8302f41d3e152c5f2448d              106 main/source/Release
+ 19cb1172f3ffad37c774769941ba6babafe9d900             1876 main/source/Sources
+ 4183e59379b04fdbb7f3a186df4eff57a15c77b1              967 main/source/Sources.gz
+ bdc814a2a636d21a4298a574099c175d3c36332d             1044 main/source/Sources.xz
+ e3f4c61a216c2c9613cd3bdd1420dde095b296b3               40 multiverse/binary-amd64/Packages.gz
+ 8f7b953c891feb6c6ff36727888b9fae846b49d5               64 multiverse/binary-amd64/Packages.xz
+ 7d90059d92dfd0b252c0a0aa90397f5e82f8adaf              111 multiverse/binary-amd64/Release
+ da39a3ee5e6b4b0d3255bfef95601890afd80709                0 multiverse/binary-amd64/Packages
+ e3f4c61a216c2c9613cd3bdd1420dde095b296b3               40 multiverse/binary-arm64/Packages.gz
+ da39a3ee5e6b4b0d3255bfef95601890afd80709                0 multiverse/binary-arm64/Packages
+ 1c8c8d0a6fa6ab9db651e8eee105f645371b0267              111 multiverse/binary-arm64/Release
+ 8f7b953c891feb6c6ff36727888b9fae846b49d5               64 multiverse/binary-arm64/Packages.xz
+ 9ce32e4c28f479640b10d2c77a9a6d296994edf2              111 multiverse/binary-armhf/Release
+ e3f4c61a216c2c9613cd3bdd1420dde095b296b3               40 multiverse/binary-armhf/Packages.gz
+ 8f7b953c891feb6c6ff36727888b9fae846b49d5               64 multiverse/binary-armhf/Packages.xz
+ da39a3ee5e6b4b0d3255bfef95601890afd80709                0 multiverse/binary-armhf/Packages
+ e3f4c61a216c2c9613cd3bdd1420dde095b296b3               40 multiverse/binary-i386/Packages.gz
+ da39a3ee5e6b4b0d3255bfef95601890afd80709                0 multiverse/binary-i386/Packages
+ 8f7b953c891feb6c6ff36727888b9fae846b49d5               64 multiverse/binary-i386/Packages.xz
+ 3108516da9aeaae061786ef27633e154ece5eabf              110 multiverse/binary-i386/Release
+ da39a3ee5e6b4b0d3255bfef95601890afd80709                0 multiverse/binary-ppc64el/Packages
+ e3f4c61a216c2c9613cd3bdd1420dde095b296b3               40 multiverse/binary-ppc64el/Packages.gz
+ 71989ce3bac03fb07fe22fc44eaef26231b19120              113 multiverse/binary-ppc64el/Release
+ 8f7b953c891feb6c6ff36727888b9fae846b49d5               64 multiverse/binary-ppc64el/Packages.xz
+ 063828d6a707e6ffd6327b7d3d6dc44af1dfaf0a              111 multiverse/binary-s390x/Release
+ da39a3ee5e6b4b0d3255bfef95601890afd80709                0 multiverse/binary-s390x/Packages
+ e3f4c61a216c2c9613cd3bdd1420dde095b296b3               40 multiverse/binary-s390x/Packages.gz
+ 8f7b953c891feb6c6ff36727888b9fae846b49d5               64 multiverse/binary-s390x/Packages.xz
+ 8f7b953c891feb6c6ff36727888b9fae846b49d5               64 multiverse/debian-installer/binary-amd64/Packages.xz
+ da39a3ee5e6b4b0d3255bfef95601890afd80709                0 multiverse/debian-installer/binary-amd64/Packages
+ e3f4c61a216c2c9613cd3bdd1420dde095b296b3               40 multiverse/debian-installer/binary-amd64/Packages.gz
+ da39a3ee5e6b4b0d3255bfef95601890afd80709                0 multiverse/debian-installer/binary-arm64/Packages
+ 8f7b953c891feb6c6ff36727888b9fae846b49d5               64 multiverse/debian-installer/binary-arm64/Packages.xz
+ e3f4c61a216c2c9613cd3bdd1420dde095b296b3               40 multiverse/debian-installer/binary-arm64/Packages.gz
+ da39a3ee5e6b4b0d3255bfef95601890afd80709                0 multiverse/debian-installer/binary-armhf/Packages
+ e3f4c61a216c2c9613cd3bdd1420dde095b296b3               40 multiverse/debian-installer/binary-armhf/Packages.gz
+ 8f7b953c891feb6c6ff36727888b9fae846b49d5               64 multiverse/debian-installer/binary-armhf/Packages.xz
+ 8f7b953c891feb6c6ff36727888b9fae846b49d5               64 multiverse/debian-installer/binary-i386/Packages.xz
+ e3f4c61a216c2c9613cd3bdd1420dde095b296b3               40 multiverse/debian-installer/binary-i386/Packages.gz
+ da39a3ee5e6b4b0d3255bfef95601890afd80709                0 multiverse/debian-installer/binary-i386/Packages
+ da39a3ee5e6b4b0d3255bfef95601890afd80709                0 multiverse/debian-installer/binary-ppc64el/Packages
+ e3f4c61a216c2c9613cd3bdd1420dde095b296b3               40 multiverse/debian-installer/binary-ppc64el/Packages.gz
+ 8f7b953c891feb6c6ff36727888b9fae846b49d5               64 multiverse/debian-installer/binary-ppc64el/Packages.xz
+ da39a3ee5e6b4b0d3255bfef95601890afd80709                0 multiverse/debian-installer/binary-s390x/Packages
+ e3f4c61a216c2c9613cd3bdd1420dde095b296b3               40 multiverse/debian-installer/binary-s390x/Packages.gz
+ 8f7b953c891feb6c6ff36727888b9fae846b49d5               64 multiverse/debian-installer/binary-s390x/Packages.xz
+ 5fe2b2dd85262946e234fedfd2614409adc07e52              162 multiverse/dep11/Components-armhf.yml.gz
+ aa27f39a547726f9f7afd043711756ae57a5feb8               29 multiverse/dep11/icons-64x64.tar.gz
+ 89e7d62b803d2d229817d0e02d2932ff111ccf68              212 multiverse/dep11/Components-armhf.yml.xz
+ 7a9ab66c27e0c6a285d275744b40da7209d418dc              174 multiverse/dep11/Components-i386.yml
+ e4b97da3473949adf65c54a9bbb907f5b3730da0              162 multiverse/dep11/Components-s390x.yml.gz
+ aa27f39a547726f9f7afd043711756ae57a5feb8               29 multiverse/dep11/icons-128x128.tar.gz
+ 8b3649ee39842f09d45c42331a5ab9ea6466805b              212 multiverse/dep11/Components-amd64.yml.xz
+ 637e7e4312167c62eabd7dba7f244aa846f3b6ee              174 multiverse/dep11/Components-armhf.yml
+ 74ab04c267d9914a68fda2a5d88f6fd1986329e2              174 multiverse/dep11/Components-arm64.yml
+ 60cacbf3d72e1e7834203da608037b1bf83b40e8             1024 multiverse/dep11/icons-128x128.tar
+ 93178f0e32ce2b09a3afaa95029cb3dff6a4a06b              162 multiverse/dep11/Components-arm64.yml.gz
+ af845800eff00b4d910c2eaeb2cde5e6590a629d              212 multiverse/dep11/Components-s390x.yml.xz
+ 1e58997e8b64e057e70cf27152091f8d4b75e51e              162 multiverse/dep11/Components-i386.yml.gz
+ 611dd2c66948aeb65de45edceef7ec93d1def490              161 multiverse/dep11/Components-ppc64el.yml.gz
+ ac26495c929a9f6b086b3be1260090329deb16bd              212 multiverse/dep11/Components-ppc64el.yml.xz
+ a9e3a0ddad5f03df6cc33ac1bcede4b05648b30c              162 multiverse/dep11/Components-amd64.yml.gz
+ 8fc41ce6df52768625108249d46c741a607c93ba              212 multiverse/dep11/Components-i386.yml.xz
+ 60cacbf3d72e1e7834203da608037b1bf83b40e8             1024 multiverse/dep11/icons-64x64.tar
+ 455b8e9f2e8c5aae7bb019af21f501fc1177a2c3              174 multiverse/dep11/Components-ppc64el.yml
+ 5ec2121737af2b9a2bd0331352ba9bc57f292e95              174 multiverse/dep11/Components-amd64.yml
+ 7e2a700d0a8bb7458952ed3f70b1edbd6ded081e              212 multiverse/dep11/Components-arm64.yml.xz
+ 7f0f289de2648e938200c0cc38745b1f8781e77f              174 multiverse/dep11/Components-s390x.yml
+ e3f4c61a216c2c9613cd3bdd1420dde095b296b3               40 multiverse/i18n/Translation-en.gz
+ da39a3ee5e6b4b0d3255bfef95601890afd80709                0 multiverse/i18n/Translation-en
+ 8f7b953c891feb6c6ff36727888b9fae846b49d5               64 multiverse/i18n/Translation-en.xz
+ 1d57840eb63860f364ad5d68178069658a9dba9a              192 multiverse/i18n/Index
+ e3f4c61a216c2c9613cd3bdd1420dde095b296b3               40 multiverse/source/Sources.gz
+ 8f7b953c891feb6c6ff36727888b9fae846b49d5               64 multiverse/source/Sources.xz
+ da39a3ee5e6b4b0d3255bfef95601890afd80709                0 multiverse/source/Sources
+ 3ed368b92eb7aa776623f7353b50784e3611cf6c              112 multiverse/source/Release
+ da39a3ee5e6b4b0d3255bfef95601890afd80709                0 restricted/binary-amd64/Packages
+ e3f4c61a216c2c9613cd3bdd1420dde095b296b3               40 restricted/binary-amd64/Packages.gz
+ c577040f1d899ce2519426e51c4ddf50a30c942b              111 restricted/binary-amd64/Release
+ 8f7b953c891feb6c6ff36727888b9fae846b49d5               64 restricted/binary-amd64/Packages.xz
+ ae3baa30d5423351cdc16707ec63573fe6ddd797              111 restricted/binary-arm64/Release
+ 8f7b953c891feb6c6ff36727888b9fae846b49d5               64 restricted/binary-arm64/Packages.xz
+ e3f4c61a216c2c9613cd3bdd1420dde095b296b3               40 restricted/binary-arm64/Packages.gz
+ da39a3ee5e6b4b0d3255bfef95601890afd80709                0 restricted/binary-arm64/Packages
+ e3f4c61a216c2c9613cd3bdd1420dde095b296b3               40 restricted/binary-armhf/Packages.gz
+ 8f7b953c891feb6c6ff36727888b9fae846b49d5               64 restricted/binary-armhf/Packages.xz
+ 566fa04b9b889c420b082a15d93a990a2928ce01              111 restricted/binary-armhf/Release
+ da39a3ee5e6b4b0d3255bfef95601890afd80709                0 restricted/binary-armhf/Packages
+ e3f4c61a216c2c9613cd3bdd1420dde095b296b3               40 restricted/binary-i386/Packages.gz
+ 8f7b953c891feb6c6ff36727888b9fae846b49d5               64 restricted/binary-i386/Packages.xz
+ da39a3ee5e6b4b0d3255bfef95601890afd80709                0 restricted/binary-i386/Packages
+ c9d1160eb616d2030789aff6a71ca3795a4a3159              110 restricted/binary-i386/Release
+ e3f4c61a216c2c9613cd3bdd1420dde095b296b3               40 restricted/binary-ppc64el/Packages.gz
+ da39a3ee5e6b4b0d3255bfef95601890afd80709                0 restricted/binary-ppc64el/Packages
+ 8f7b953c891feb6c6ff36727888b9fae846b49d5               64 restricted/binary-ppc64el/Packages.xz
+ 6b49d8a7a9b3e1be1472b507f520e7b2828717e6              113 restricted/binary-ppc64el/Release
+ e3f4c61a216c2c9613cd3bdd1420dde095b296b3               40 restricted/binary-s390x/Packages.gz
+ cf52c6d44835b294b9490441df381a146196bf0a              111 restricted/binary-s390x/Release
+ da39a3ee5e6b4b0d3255bfef95601890afd80709                0 restricted/binary-s390x/Packages
+ 8f7b953c891feb6c6ff36727888b9fae846b49d5               64 restricted/binary-s390x/Packages.xz
+ 8f7b953c891feb6c6ff36727888b9fae846b49d5               64 restricted/debian-installer/binary-amd64/Packages.xz
+ da39a3ee5e6b4b0d3255bfef95601890afd80709                0 restricted/debian-installer/binary-amd64/Packages
+ e3f4c61a216c2c9613cd3bdd1420dde095b296b3               40 restricted/debian-installer/binary-amd64/Packages.gz
+ e3f4c61a216c2c9613cd3bdd1420dde095b296b3               40 restricted/debian-installer/binary-arm64/Packages.gz
+ 8f7b953c891feb6c6ff36727888b9fae846b49d5               64 restricted/debian-installer/binary-arm64/Packages.xz
+ da39a3ee5e6b4b0d3255bfef95601890afd80709                0 restricted/debian-installer/binary-arm64/Packages
+ e3f4c61a216c2c9613cd3bdd1420dde095b296b3               40 restricted/debian-installer/binary-armhf/Packages.gz
+ da39a3ee5e6b4b0d3255bfef95601890afd80709                0 restricted/debian-installer/binary-armhf/Packages
+ 8f7b953c891feb6c6ff36727888b9fae846b49d5               64 restricted/debian-installer/binary-armhf/Packages.xz
+ 8f7b953c891feb6c6ff36727888b9fae846b49d5               64 restricted/debian-installer/binary-i386/Packages.xz
+ da39a3ee5e6b4b0d3255bfef95601890afd80709                0 restricted/debian-installer/binary-i386/Packages
+ e3f4c61a216c2c9613cd3bdd1420dde095b296b3               40 restricted/debian-installer/binary-i386/Packages.gz
+ 8f7b953c891feb6c6ff36727888b9fae846b49d5               64 restricted/debian-installer/binary-ppc64el/Packages.xz
+ da39a3ee5e6b4b0d3255bfef95601890afd80709                0 restricted/debian-installer/binary-ppc64el/Packages
+ e3f4c61a216c2c9613cd3bdd1420dde095b296b3               40 restricted/debian-installer/binary-ppc64el/Packages.gz
+ 8f7b953c891feb6c6ff36727888b9fae846b49d5               64 restricted/debian-installer/binary-s390x/Packages.xz
+ e3f4c61a216c2c9613cd3bdd1420dde095b296b3               40 restricted/debian-installer/binary-s390x/Packages.gz
+ da39a3ee5e6b4b0d3255bfef95601890afd80709                0 restricted/debian-installer/binary-s390x/Packages
+ 15faf41a5b6904e611fc82acae0c509783af8143              187 restricted/dep11/Components-arm64.yml
+ abc28b208161affc29372d5fd21ef54e42b57b96              194 restricted/dep11/Components-amd64.yml.gz
+ 15faf41a5b6904e611fc82acae0c509783af8143              187 restricted/dep11/Components-armhf.yml
+ 8c5275457a17d4caf1b86d178f506319edf822f0              196 restricted/dep11/Components-ppc64el.yml.gz
+ 6d0ae753c77fdcbf0f429b261694260714398143              194 restricted/dep11/Components-s390x.yml.gz
+ 15faf41a5b6904e611fc82acae0c509783af8143              187 restricted/dep11/Components-s390x.yml
+ 15faf41a5b6904e611fc82acae0c509783af8143              187 restricted/dep11/Components-amd64.yml
+ 15faf41a5b6904e611fc82acae0c509783af8143              187 restricted/dep11/Components-ppc64el.yml
+ fac9c79c956ce112aa5b0e598e0aa9b1950330c5              193 restricted/dep11/Components-i386.yml.gz
+ 0d78eeb8fc1b991dfb012635038518f46aea3bf0              194 restricted/dep11/Components-arm64.yml.gz
+ 265c3e17f4b5cde13f4bf7c5d29c2b84c9cb7ed4              194 restricted/dep11/Components-armhf.yml.gz
+ 15faf41a5b6904e611fc82acae0c509783af8143              187 restricted/dep11/Components-i386.yml
+ 1d57840eb63860f364ad5d68178069658a9dba9a              192 restricted/i18n/Index
+ da39a3ee5e6b4b0d3255bfef95601890afd80709                0 restricted/i18n/Translation-en
+ e3f4c61a216c2c9613cd3bdd1420dde095b296b3               40 restricted/i18n/Translation-en.gz
+ 8f7b953c891feb6c6ff36727888b9fae846b49d5               64 restricted/i18n/Translation-en.xz
+ b8e322d8cb6591e7bdfc73e61e3468072af9026d              112 restricted/source/Release
+ da39a3ee5e6b4b0d3255bfef95601890afd80709                0 restricted/source/Sources
+ e3f4c61a216c2c9613cd3bdd1420dde095b296b3               40 restricted/source/Sources.gz
+ 8f7b953c891feb6c6ff36727888b9fae846b49d5               64 restricted/source/Sources.xz
+ a35e9128a032642759ff7a6d64fe740bc89a6f2d            11754 universe/binary-amd64/Packages
+ 6dff3087cccbd43fbd5505935ea887440dbba047             2960 universe/binary-amd64/Packages.xz
+ f975e65f5be8f686e9257a34288a9a1d8d7c0e28              109 universe/binary-amd64/Release
+ e5b12829841bddaeafb61f4e2a07593ec95567c7             3089 universe/binary-amd64/Packages.gz
+ 282cb0ee0675da7f2b54593c09b6f0a7f61c13c0             2724 universe/binary-arm64/Packages.xz
+ f9e64326e87ba52b86bc08e70131344e8ec41596             2828 universe/binary-arm64/Packages.gz
+ acae91b7cd74beb7d00a4625ee695a8e7203768c              109 universe/binary-arm64/Release
+ 1c1dfe6d4ab60e0b2c57b179218118188695b051            10942 universe/binary-arm64/Packages
+ b3d677f48bd598f81ef23c5669b1bd15cd3415b4             3094 universe/binary-armhf/Packages.gz
+ b8660a36fe793aafdcee62d2d2e7fb67bfb0108a              109 universe/binary-armhf/Release
+ 0e5485a07bd205fc8fe52dcf7db9f3cec91b8ab9             2980 universe/binary-armhf/Packages.xz
+ 3683af4b708c4f51ee832938ad723287ff4b116c            11773 universe/binary-armhf/Packages
+ ca6375f69531287897700fb98f8becb9b7dc1438              108 universe/binary-i386/Release
+ f8fdf4e620e16f7e48897c66240351156f288c92            11743 universe/binary-i386/Packages
+ adba32ab907f048467b452488e978a3e84f561c3             2964 universe/binary-i386/Packages.xz
+ eda8adab7c494b59c532dd6cf9eda1f696352fc3             3084 universe/binary-i386/Packages.gz
+ 812b7873780a10933b5bb271b192630306fd94ab             2826 universe/binary-ppc64el/Packages.gz
+ dc09f3cd25cca0b3a4004363556a79f8082daf1a             2724 universe/binary-ppc64el/Packages.xz
+ 04ddd736d47dfd0c126979ca59efacc2d2413c55              111 universe/binary-ppc64el/Release
+ 27cfceebbed763b5f8391977fef84598318ce2c7            10959 universe/binary-ppc64el/Packages
+ a33590e8c43d63372b274f82719438a9569f7cfb            10941 universe/binary-s390x/Packages
+ 267fdef502af21f450b666f1eb6a4b59ca9739c3              109 universe/binary-s390x/Release
+ 86b559eeaabd1d350ac26fe49d4ef735e73be6e1             2822 universe/binary-s390x/Packages.gz
+ 8c4c41e3148b3c758a16db909a3946df56a1be3c             2724 universe/binary-s390x/Packages.xz
+ da39a3ee5e6b4b0d3255bfef95601890afd80709                0 universe/debian-installer/binary-amd64/Packages
+ e3f4c61a216c2c9613cd3bdd1420dde095b296b3               40 universe/debian-installer/binary-amd64/Packages.gz
+ 8f7b953c891feb6c6ff36727888b9fae846b49d5               64 universe/debian-installer/binary-amd64/Packages.xz
+ 8f7b953c891feb6c6ff36727888b9fae846b49d5               64 universe/debian-installer/binary-arm64/Packages.xz
+ e3f4c61a216c2c9613cd3bdd1420dde095b296b3               40 universe/debian-installer/binary-arm64/Packages.gz
+ da39a3ee5e6b4b0d3255bfef95601890afd80709                0 universe/debian-installer/binary-arm64/Packages
+ da39a3ee5e6b4b0d3255bfef95601890afd80709                0 universe/debian-installer/binary-armhf/Packages
+ e3f4c61a216c2c9613cd3bdd1420dde095b296b3               40 universe/debian-installer/binary-armhf/Packages.gz
+ 8f7b953c891feb6c6ff36727888b9fae846b49d5               64 universe/debian-installer/binary-armhf/Packages.xz
+ 8f7b953c891feb6c6ff36727888b9fae846b49d5               64 universe/debian-installer/binary-i386/Packages.xz
+ e3f4c61a216c2c9613cd3bdd1420dde095b296b3               40 universe/debian-installer/binary-i386/Packages.gz
+ da39a3ee5e6b4b0d3255bfef95601890afd80709                0 universe/debian-installer/binary-i386/Packages
+ da39a3ee5e6b4b0d3255bfef95601890afd80709                0 universe/debian-installer/binary-ppc64el/Packages
+ e3f4c61a216c2c9613cd3bdd1420dde095b296b3               40 universe/debian-installer/binary-ppc64el/Packages.gz
+ 8f7b953c891feb6c6ff36727888b9fae846b49d5               64 universe/debian-installer/binary-ppc64el/Packages.xz
+ e3f4c61a216c2c9613cd3bdd1420dde095b296b3               40 universe/debian-installer/binary-s390x/Packages.gz
+ 8f7b953c891feb6c6ff36727888b9fae846b49d5               64 universe/debian-installer/binary-s390x/Packages.xz
+ da39a3ee5e6b4b0d3255bfef95601890afd80709                0 universe/debian-installer/binary-s390x/Packages
+ 19a5fabac2c7fbb2b654d33d756981d94075ddc1             7168 universe/dep11/icons-128x128.tar
+ c4c048ae74ad61607c79b1002018563ac6717927             4672 universe/dep11/Components-ppc64el.yml.xz
+ d5021b31a5011fc0050b2ce9b29dc963d714fafd             4672 universe/dep11/Components-s390x.yml.xz
+ 00b0970fb9d86fc90a43cd6f886b7dd663a412d4             4672 universe/dep11/Components-armhf.yml.xz
+ 075c903fd50f851de395540bd5c09270ce5f1043             2716 universe/dep11/icons-64x64.tar.gz
+ 0a32507076d059a02e6e129a41da8411db6e22f9            13072 universe/dep11/Components-i386.yml
+ 3384afc3c1d731fd15b6bf3aa6f944fe9362e1cb             4943 universe/dep11/Components-armhf.yml.gz
+ 457b45b311e41f201fcaae736e667bbf668fec2d             4942 universe/dep11/Components-ppc64el.yml.gz
+ b2d572f4f5f5718812890ec7252c46e9655665a7             5519 universe/dep11/icons-128x128.tar.gz
+ 807f9e5fb3be89feea547163e7bace51c31b5d99             4943 universe/dep11/Components-s390x.yml.gz
+ 0e5a16ad61c75bdde9cb39f861e8db7844571158             4672 universe/dep11/Components-amd64.yml.xz
+ 39af54dfb39d2d9f79505dd3729ee4896469a590             4943 universe/dep11/Components-i386.yml.gz
+ e840d308eb3c340635939941c54a3357e0efc230            13072 universe/dep11/Components-arm64.yml
+ 1b5a1c8e81b69324100829c47b010e714a2de4ae             4672 universe/dep11/Components-arm64.yml.xz
+ 353a95dddb745697b4a325e8cedaeb74e119f352             4943 universe/dep11/Components-arm64.yml.gz
+ cfd3f7147ad1e46c0d7dbbbad2fe298d6a20676b            13072 universe/dep11/Components-s390x.yml
+ 1dbedad9a7b6a8b0f34fcd07b4d4426f750c4140             4096 universe/dep11/icons-64x64.tar
+ 6c3294a8a5f6bc20b8719a738a8bf1db453229fe            13072 universe/dep11/Components-ppc64el.yml
+ 639ed3300fecf40af499b0677df1a2e6b0e7a7de             4672 universe/dep11/Components-i386.yml.xz
+ 0c10878aa83a5498606763c8cfaf8fa5fca29d70            13072 universe/dep11/Components-armhf.yml
+ 5fbb4e0b962e9023380173f5fa494970e8fb6f3e             4942 universe/dep11/Components-amd64.yml.gz
+ 7b6c9167b402b7b6e608039e2fe89f0a0168ac28            13072 universe/dep11/Components-amd64.yml
+ 168cf650bc9787e90066692aca02d2956333c8c2             3033 universe/i18n/Translation-en
+ 034fa84e2f628a7b09f048f7c76d4c08df89bc7a             1247 universe/i18n/Translation-en.gz
+ 8533566c4dfec3245522e80f5c9f306439e4fea5              198 universe/i18n/Index
+ 6024d65360c71247149e6b0fd16932140b52bf1b             1344 universe/i18n/Translation-en.xz
+ 68b42a4b47151e7c7c60964508c4e325264b4b3b             5921 universe/source/Sources
+ 816721ce1f603e82864c58248e774aa2e3593597             2308 universe/source/Sources.xz
+ fe4cc3e8fe7734172749f2cdf4193e0a96cf0720             2319 universe/source/Sources.gz
+ fbf0f501d5e8bf4ad04f6043ead324a36bb89b33              110 universe/source/Release
+SHA256:
+ 405959ed5be8d5ac583d4e0c3b92279fb9c874a18c6dcef2a4473cb3bd20f9fa             5454 Contents-armhf.gz
+ dbd71a5e2d1fd3081f3b56b6d322927b4c869973b2312ec01b62613198c5155a            67905 Contents-armhf
+ ee238b3637250688e1f9ced0d54d0f75101667e83995ef7d320c26b4e1931102            67723 Contents-ppc64el
+ b3dacf4f0d0c0e9eb7a8f15a750e9cc174bfc47d35519fda857c3b38ac7ee6e6             5430 Contents-ppc64el.gz
+ beab0ce27d594332e00be9ec2bf8e8c2bbb22db2e93e2844fed1cedb2ebf8fef            67720 Contents-arm64
+ c308eab2f58b7020e92d22a86b3d06ea7f36489c25a89996ad11390004d06acf            67902 Contents-amd64
+ 90e545f7c427c127b8bce22df631b700d4393eccaea946bf8807726215cd77a7             5427 Contents-arm64.gz
+ c28c1bef386d0ec5132a7b447368b4cca0327d62ac778407a702cd4149c8d96d             5450 Contents-amd64.gz
+ fad746327ce1a7d3f767199ebab1462f3efaf3e1c318aa0db3b504e16a519466            67718 Contents-s390x
+ e8818bd172e09b4689427f71277c0424b35e22832ba2215f2908608b765c20db            67900 Contents-i386
+ 6a8b542e6eff4ca3c79369f6f5c32c68b49bf123bef3c3677354965927730598             5426 Contents-s390x.gz
+ 6e669aab13b3ff6a5fd6cbdcc56a2a79d0b9308c28dcfa243b3edf5cfd14e8bf             5453 Contents-i386.gz
+ ebd55e8a24b38e38c4430e380cc317b55c9e8e92112973f658bebc5e686e0c32             4194 main/binary-amd64/Packages
+ 80f96830f5c25a341ef7b4101087687ab050e713f4aaa9d62abadf20cec09b9b              105 main/binary-amd64/Release
+ 49dd7109981c6257783a3a44224d236197aae5fb80f440c421a785c17c091415             1442 main/binary-amd64/Packages.gz
+ 9a8496a73c4a22618c7d5dbded9e766141855d053431ba278a02761054d20740             1488 main/binary-amd64/Packages.xz
+ 91aeaf65c00b9e00b81e4017d2360b7b1fde295250368402f1548503a04c072f              105 main/binary-arm64/Release
+ 0a7234eacf2c4a98e2e9ab7770325ae9dc8d69bc7c4583afeeecb1321910973e             4195 main/binary-arm64/Packages
+ 8d24c4edc3d48a93508222451e176a773c7b5950331cb124891803cdeeb18064             1484 main/binary-arm64/Packages.xz
+ c73b2ce2e8b0060ef6f3e57c968d813e4e20a1c656c11af007ff5e3124099222             1446 main/binary-arm64/Packages.gz
+ 6e681e910f9c7e4249a7c8af9c04b632c10d7dccf432e09a858b110d91b8f94a              105 main/binary-armhf/Release
+ 155aec5d0f43901f515c5fbb8b4bdd347c8dbff49588df56abdddc80b9fccf3f             4192 main/binary-armhf/Packages
+ b23712975ca41ef5d750652a7c8c70f67dc29ee856875d9ed2410cc48f910353             1488 main/binary-armhf/Packages.xz
+ 9f8148d99363e0f1829c53cf4734d6a516d0072a98944c14ae6ae948fbf0970d             1440 main/binary-armhf/Packages.gz
+ d38f953f4efc44571817eff67f093ab4bc8737dbba9adf69ad9df88f5df20053             1484 main/binary-i386/Packages.xz
+ defbe59ef36e4fab8ea0d0b301480c85174d4e658b3b6192376b1767b4fc9597              104 main/binary-i386/Release
+ 65cba51f3a5b09c8adf8db02268bc857a7a53001cbc1ca3e9834726b6ef52ef7             1443 main/binary-i386/Packages.gz
+ 272eb2c2112125a955c5e61d8407d502f637f6ddc5dd22fa6e5aa081646a7de0             4186 main/binary-i386/Packages
+ c965d2677075ea12b941df929650c1bf13f8bddb25a45e32fe7597b1b3a2dfae             1488 main/binary-ppc64el/Packages.xz
+ 9233410a741eef5553ec75a8330bdc053f015360a1a6ac5a806d83c2caeb8f96              107 main/binary-ppc64el/Release
+ 24bdcc20137d03088f2c8acf36211fb6e321ccfdc117efc885624be04a1201fa             1446 main/binary-ppc64el/Packages.gz
+ 2b50d4e17d3b11f76bc8870b1572197f7d33411b8e819205f6edb6a46b6db2b8             4208 main/binary-ppc64el/Packages
+ 8ef05928e33b408fce061941e46ff26817d68fd66c141963d193dbdbcfae2edb              105 main/binary-s390x/Release
+ d3cd9ca6105add34d33ed22b916134d864e94c162d3421a892ebd369cbaa5955             1446 main/binary-s390x/Packages.gz
+ 1d04ef4cfba055fb79d077b7375a41199c79f002d3c3ed90e6d2b9e4b564dd86             4194 main/binary-s390x/Packages
+ 1add89099e10029fd8373c920b3fbe5957261752408313fcaace5cadb596d6bd             1492 main/binary-s390x/Packages.xz
+ e7ab72b8f37c7c9c9f6386fb8e3dfa40bf6fe4b67876703c5927e47cb8664ce4               40 main/debian-installer/binary-amd64/Packages.gz
+ e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855                0 main/debian-installer/binary-amd64/Packages
+ 65de7e01eff8cf2f9a287153971467b1c11811213b64a38bdf673bad240436ff               64 main/debian-installer/binary-amd64/Packages.xz
+ e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855                0 main/debian-installer/binary-arm64/Packages
+ e7ab72b8f37c7c9c9f6386fb8e3dfa40bf6fe4b67876703c5927e47cb8664ce4               40 main/debian-installer/binary-arm64/Packages.gz
+ 65de7e01eff8cf2f9a287153971467b1c11811213b64a38bdf673bad240436ff               64 main/debian-installer/binary-arm64/Packages.xz
+ e7ab72b8f37c7c9c9f6386fb8e3dfa40bf6fe4b67876703c5927e47cb8664ce4               40 main/debian-installer/binary-armhf/Packages.gz
+ 65de7e01eff8cf2f9a287153971467b1c11811213b64a38bdf673bad240436ff               64 main/debian-installer/binary-armhf/Packages.xz
+ e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855                0 main/debian-installer/binary-armhf/Packages
+ e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855                0 main/debian-installer/binary-i386/Packages
+ e7ab72b8f37c7c9c9f6386fb8e3dfa40bf6fe4b67876703c5927e47cb8664ce4               40 main/debian-installer/binary-i386/Packages.gz
+ 65de7e01eff8cf2f9a287153971467b1c11811213b64a38bdf673bad240436ff               64 main/debian-installer/binary-i386/Packages.xz
+ 65de7e01eff8cf2f9a287153971467b1c11811213b64a38bdf673bad240436ff               64 main/debian-installer/binary-ppc64el/Packages.xz
+ e7ab72b8f37c7c9c9f6386fb8e3dfa40bf6fe4b67876703c5927e47cb8664ce4               40 main/debian-installer/binary-ppc64el/Packages.gz
+ e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855                0 main/debian-installer/binary-ppc64el/Packages
+ 65de7e01eff8cf2f9a287153971467b1c11811213b64a38bdf673bad240436ff               64 main/debian-installer/binary-s390x/Packages.xz
+ e7ab72b8f37c7c9c9f6386fb8e3dfa40bf6fe4b67876703c5927e47cb8664ce4               40 main/debian-installer/binary-s390x/Packages.gz
+ e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855                0 main/debian-installer/binary-s390x/Packages
+ a13b4e950d921c9605414da38e175b32f29ee34e072f6edeb923178e1c4994ea              158 main/dep11/Components-armhf.yml.gz
+ b9b08cdd8cd1a8393cfe7e35c2f10c0833ca86a3653c1cd468590804bd5840c3              208 main/dep11/Components-s390x.yml.xz
+ 5f70bf18a086007016e948b04aed3b82103a36bea41755b6cddfaf10ace3c6ef             1024 main/dep11/icons-128x128.tar
+ e2ba12f31db5d72043fb41e5c6ca64d07c689a66b116fa78feee34395361177d              208 main/dep11/Components-arm64.yml.xz
+ 7989bb311baa38ef545250282aa065d23281c46dfb8faabe4c653487bdbded5c               29 main/dep11/icons-128x128.tar.gz
+ 24a8ba610e4dd015753a7076eed6e739d40e2583d100dc4eadf5fe1264e96cc6              158 main/dep11/Components-s390x.yml.gz
+ 63da9520f6c1e046586aecad142b0aa5e344ed439b5f418927d0ef778571755b              168 main/dep11/Components-arm64.yml
+ 1c9fa5827eff6d744c327a444b5f00649efb6684850c8b51af3c06762da364ca              168 main/dep11/Components-armhf.yml
+ 60d96192bd52286ef41887b21a701586a1a4dfb47d3a346c8a7ced195b31e58e              168 main/dep11/Components-s390x.yml
+ 2d0743f16422d656c2c9aa5f4002067f26f45118fa88980ec20c1a370e76db2a              208 main/dep11/Components-amd64.yml.xz
+ e158b469cc5f7dcebdc3d08e21dac752964ef02de08c272bebf456eaf79d64d8              208 main/dep11/Components-ppc64el.yml.xz
+ 08938a76e1171382f742d8991dbb1cfec4dd840a8cde04d5ac2b54b2b90a7dce              158 main/dep11/Components-arm64.yml.gz
+ 1fd0d444f1f54ff96660a934ebb24c3bec6eda199fcdc5e2ac0c7fcf110ed9ff              168 main/dep11/Components-i386.yml
+ d890897170ef85926b11d43da857d512f413f01994c048dec5c1f52c140fe646              208 main/dep11/Components-i386.yml.xz
+ 97972cddff2035b4611f76ec06cf32f12b5b43bb8a1c76d295722a5fca42f057              168 main/dep11/Components-ppc64el.yml
+ 5f70bf18a086007016e948b04aed3b82103a36bea41755b6cddfaf10ace3c6ef             1024 main/dep11/icons-64x64.tar
+ 95bf8db609ef447966e54fd7fc498c0b71d45598e2a60e0273ebe2ccf561233c              168 main/dep11/Components-amd64.yml
+ 2b51d538d6aecfb5afaa12664e5e7f8c7ee335009e7cd43760c8fc03d641c74e              158 main/dep11/Components-ppc64el.yml.gz
+ 7989bb311baa38ef545250282aa065d23281c46dfb8faabe4c653487bdbded5c               29 main/dep11/icons-64x64.tar.gz
+ 2b236262f8daecddc145d7223093fc0e44890f9f08dd51571bb2eefd8ca5b377              158 main/dep11/Components-i386.yml.gz
+ badbe1c8dcbf7cd20b3c78f5d725c186e735978d75348e927ed616a6929bdbbd              158 main/dep11/Components-amd64.yml.gz
+ ea9f486fd4801e05672f61db3f0392c802e7a1e3e04a6eb1c69a0dfd74dc96d4              208 main/dep11/Components-armhf.yml.xz
+ 99169a834ac950e2ece06a375c6388a475c0d054955f549f5a6ac51c1499c251              573 main/i18n/Translation-en.gz
+ 7fdce06b23950ddf1d10af27155354051b8a066126dc7d20974d50391fb05911              664 main/i18n/Translation-en.xz
+ 5b663afc3337f7ab87047126c1874e181cdc5a8d0e86e2ad697741acce7c718a             1796 main/i18n/Translation-en
+ eebfbff9d279ca505ebed10bbde2fc42dd7bfbaa339ee34cc1c443141719d236              198 main/i18n/Index
+ 2f52786696d34c5608b50209b04156b507779a40e23b402f0e3c8dcd2fe6c110              106 main/source/Release
+ 55a544fdb19be61b0b5f949077ccf130832a268c9015c48dc2060d63309cf9cb             1876 main/source/Sources
+ 582b212dbcf1f87ecba70bbf7103fdfad5b39f0a88d0d1cabb16de941f745e9b              967 main/source/Sources.gz
+ 1b3cf95490b7fc1f1fb1eaa10a9aa9cf763aa8add1d383e7a76e6572f8e221cf             1044 main/source/Sources.xz
+ e7ab72b8f37c7c9c9f6386fb8e3dfa40bf6fe4b67876703c5927e47cb8664ce4               40 multiverse/binary-amd64/Packages.gz
+ 65de7e01eff8cf2f9a287153971467b1c11811213b64a38bdf673bad240436ff               64 multiverse/binary-amd64/Packages.xz
+ b51e02c9d546509c1d69a24ca262b2b667b0695efcfe4690e94e4b1325da3c29              111 multiverse/binary-amd64/Release
+ e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855                0 multiverse/binary-amd64/Packages
+ e7ab72b8f37c7c9c9f6386fb8e3dfa40bf6fe4b67876703c5927e47cb8664ce4               40 multiverse/binary-arm64/Packages.gz
+ e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855                0 multiverse/binary-arm64/Packages
+ e62dd696068d0e3e5d883b9892b518893302d36dace7d620690041b951ba467f              111 multiverse/binary-arm64/Release
+ 65de7e01eff8cf2f9a287153971467b1c11811213b64a38bdf673bad240436ff               64 multiverse/binary-arm64/Packages.xz
+ f472ca80e197fdb4ba9ce14dd82f9efcbf3304b59d0e7acdde9e7d74374c7f9c              111 multiverse/binary-armhf/Release
+ e7ab72b8f37c7c9c9f6386fb8e3dfa40bf6fe4b67876703c5927e47cb8664ce4               40 multiverse/binary-armhf/Packages.gz
+ 65de7e01eff8cf2f9a287153971467b1c11811213b64a38bdf673bad240436ff               64 multiverse/binary-armhf/Packages.xz
+ e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855                0 multiverse/binary-armhf/Packages
+ e7ab72b8f37c7c9c9f6386fb8e3dfa40bf6fe4b67876703c5927e47cb8664ce4               40 multiverse/binary-i386/Packages.gz
+ e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855                0 multiverse/binary-i386/Packages
+ 65de7e01eff8cf2f9a287153971467b1c11811213b64a38bdf673bad240436ff               64 multiverse/binary-i386/Packages.xz
+ c6e0236b16cf33ddf979ec89ad9a8aad477eba22407c90d6a31324922c09093a              110 multiverse/binary-i386/Release
+ e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855                0 multiverse/binary-ppc64el/Packages
+ e7ab72b8f37c7c9c9f6386fb8e3dfa40bf6fe4b67876703c5927e47cb8664ce4               40 multiverse/binary-ppc64el/Packages.gz
+ e7bc196c576cd55f36b80db282bb8d8588bc7c37c14b1a69b360c07e687f630b              113 multiverse/binary-ppc64el/Release
+ 65de7e01eff8cf2f9a287153971467b1c11811213b64a38bdf673bad240436ff               64 multiverse/binary-ppc64el/Packages.xz
+ 7febb6873ac42c95c1569d3a0c1eaaca8e5f4f7b216da9021fd33053a7c6c61c              111 multiverse/binary-s390x/Release
+ e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855                0 multiverse/binary-s390x/Packages
+ e7ab72b8f37c7c9c9f6386fb8e3dfa40bf6fe4b67876703c5927e47cb8664ce4               40 multiverse/binary-s390x/Packages.gz
+ 65de7e01eff8cf2f9a287153971467b1c11811213b64a38bdf673bad240436ff               64 multiverse/binary-s390x/Packages.xz
+ 65de7e01eff8cf2f9a287153971467b1c11811213b64a38bdf673bad240436ff               64 multiverse/debian-installer/binary-amd64/Packages.xz
+ e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855                0 multiverse/debian-installer/binary-amd64/Packages
+ e7ab72b8f37c7c9c9f6386fb8e3dfa40bf6fe4b67876703c5927e47cb8664ce4               40 multiverse/debian-installer/binary-amd64/Packages.gz
+ e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855                0 multiverse/debian-installer/binary-arm64/Packages
+ 65de7e01eff8cf2f9a287153971467b1c11811213b64a38bdf673bad240436ff               64 multiverse/debian-installer/binary-arm64/Packages.xz
+ e7ab72b8f37c7c9c9f6386fb8e3dfa40bf6fe4b67876703c5927e47cb8664ce4               40 multiverse/debian-installer/binary-arm64/Packages.gz
+ e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855                0 multiverse/debian-installer/binary-armhf/Packages
+ e7ab72b8f37c7c9c9f6386fb8e3dfa40bf6fe4b67876703c5927e47cb8664ce4               40 multiverse/debian-installer/binary-armhf/Packages.gz
+ 65de7e01eff8cf2f9a287153971467b1c11811213b64a38bdf673bad240436ff               64 multiverse/debian-installer/binary-armhf/Packages.xz
+ 65de7e01eff8cf2f9a287153971467b1c11811213b64a38bdf673bad240436ff               64 multiverse/debian-installer/binary-i386/Packages.xz
+ e7ab72b8f37c7c9c9f6386fb8e3dfa40bf6fe4b67876703c5927e47cb8664ce4               40 multiverse/debian-installer/binary-i386/Packages.gz
+ e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855                0 multiverse/debian-installer/binary-i386/Packages
+ e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855                0 multiverse/debian-installer/binary-ppc64el/Packages
+ e7ab72b8f37c7c9c9f6386fb8e3dfa40bf6fe4b67876703c5927e47cb8664ce4               40 multiverse/debian-installer/binary-ppc64el/Packages.gz
+ 65de7e01eff8cf2f9a287153971467b1c11811213b64a38bdf673bad240436ff               64 multiverse/debian-installer/binary-ppc64el/Packages.xz
+ e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855                0 multiverse/debian-installer/binary-s390x/Packages
+ e7ab72b8f37c7c9c9f6386fb8e3dfa40bf6fe4b67876703c5927e47cb8664ce4               40 multiverse/debian-installer/binary-s390x/Packages.gz
+ 65de7e01eff8cf2f9a287153971467b1c11811213b64a38bdf673bad240436ff               64 multiverse/debian-installer/binary-s390x/Packages.xz
+ 895844c7948247d801435f5e9bc410d7d34e816b09f6901506dcd66568d78934              162 multiverse/dep11/Components-armhf.yml.gz
+ 7989bb311baa38ef545250282aa065d23281c46dfb8faabe4c653487bdbded5c               29 multiverse/dep11/icons-64x64.tar.gz
+ 7e63b11bfd0c811cf1691422b0be48abd24f04a962d7b3d28ace51cace140714              212 multiverse/dep11/Components-armhf.yml.xz
+ 52a097313272e94a1a4a51dd571f36adb54a75e1865eb95dc0fcad2154677280              174 multiverse/dep11/Components-i386.yml
+ 6c494b963cacb457667a6b7a693de8da531d9064e1301b9ec86b6c2a693ec76c              162 multiverse/dep11/Components-s390x.yml.gz
+ 7989bb311baa38ef545250282aa065d23281c46dfb8faabe4c653487bdbded5c               29 multiverse/dep11/icons-128x128.tar.gz
+ ac4d33fe8b9be7d22088929a7a0d85899c3384ca9a49fc56dbdc598492de2fc5              212 multiverse/dep11/Components-amd64.yml.xz
+ d53d98c825278adaca104630808644ef781e4089b169e393a8d94fe703d77fb0              174 multiverse/dep11/Components-armhf.yml
+ c31eec18c82af065e889cf1901ccce8c226d41c459b7325590c014455fc8ae55              174 multiverse/dep11/Components-arm64.yml
+ 5f70bf18a086007016e948b04aed3b82103a36bea41755b6cddfaf10ace3c6ef             1024 multiverse/dep11/icons-128x128.tar
+ ecc0dbaaca06a1819dd641429de5651ee50a715a9860dddb0f36be8d743c5738              162 multiverse/dep11/Components-arm64.yml.gz
+ 53339a6e1dd5f172f56c86837f478df84695a3d85a8a543bbdfd4ad6fa9605d0              212 multiverse/dep11/Components-s390x.yml.xz
+ 4da734e6f7db9bbe06f429c8504c257841c81510ef3249255b30b8ae11228da7              162 multiverse/dep11/Components-i386.yml.gz
+ de9c5dcc4846e5e9e69a81918fabf0b41a0bdf7cd02ea7d8c15525d3daabad3f              161 multiverse/dep11/Components-ppc64el.yml.gz
+ 29bd8930fffe73f9d2e403222e7a01b0a8d1098150903b91fdb288112d8970d1              212 multiverse/dep11/Components-ppc64el.yml.xz
+ 2988075b84112e3999b5dc7a78b80dc6f8bc3179902423ea959f643913839dc2              162 multiverse/dep11/Components-amd64.yml.gz
+ d631232aba938da45e15673e35403f1f42c19d829386c9eebec85b828b7fc29e              212 multiverse/dep11/Components-i386.yml.xz
+ 5f70bf18a086007016e948b04aed3b82103a36bea41755b6cddfaf10ace3c6ef             1024 multiverse/dep11/icons-64x64.tar
+ ee8ac8434d633b78a5f2902d81de655ac4d32a773df9af763af969005130e47d              174 multiverse/dep11/Components-ppc64el.yml
+ 3d3f31afd8614bdb8f2c4a9b02f61cd0dba9c3aced9d4253e1a4570e48553791              174 multiverse/dep11/Components-amd64.yml
+ 45a3c452da49d22c1349fbe43657a4c0ba324d553036875f99e25e46d19a4edf              212 multiverse/dep11/Components-arm64.yml.xz
+ caed909640dcbff0c1ad98bb83390df6041f54a91afe2d8fd3004c891c448415              174 multiverse/dep11/Components-s390x.yml
+ e7ab72b8f37c7c9c9f6386fb8e3dfa40bf6fe4b67876703c5927e47cb8664ce4               40 multiverse/i18n/Translation-en.gz
+ e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855                0 multiverse/i18n/Translation-en
+ 65de7e01eff8cf2f9a287153971467b1c11811213b64a38bdf673bad240436ff               64 multiverse/i18n/Translation-en.xz
+ aea852a7918a6c61c359cd57114f60ca95551f449f06cb1c9f296b8326b78101              192 multiverse/i18n/Index
+ e7ab72b8f37c7c9c9f6386fb8e3dfa40bf6fe4b67876703c5927e47cb8664ce4               40 multiverse/source/Sources.gz
+ 65de7e01eff8cf2f9a287153971467b1c11811213b64a38bdf673bad240436ff               64 multiverse/source/Sources.xz
+ e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855                0 multiverse/source/Sources
+ 23f1efd3074e171f02539e1c616eaa0aa1bb4fa40f498c5ac4286ab6f65d1fb9              112 multiverse/source/Release
+ e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855                0 restricted/binary-amd64/Packages
+ e7ab72b8f37c7c9c9f6386fb8e3dfa40bf6fe4b67876703c5927e47cb8664ce4               40 restricted/binary-amd64/Packages.gz
+ 1918e88d020f198d8ba90a385cc16f60b8fbf718178e8d840c215241a9315d16              111 restricted/binary-amd64/Release
+ 65de7e01eff8cf2f9a287153971467b1c11811213b64a38bdf673bad240436ff               64 restricted/binary-amd64/Packages.xz
+ 5c73535b66480004a36b4a92715330026c8b1744fe1163c4d02a2f4578b8b4a6              111 restricted/binary-arm64/Release
+ 65de7e01eff8cf2f9a287153971467b1c11811213b64a38bdf673bad240436ff               64 restricted/binary-arm64/Packages.xz
+ e7ab72b8f37c7c9c9f6386fb8e3dfa40bf6fe4b67876703c5927e47cb8664ce4               40 restricted/binary-arm64/Packages.gz
+ e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855                0 restricted/binary-arm64/Packages
+ e7ab72b8f37c7c9c9f6386fb8e3dfa40bf6fe4b67876703c5927e47cb8664ce4               40 restricted/binary-armhf/Packages.gz
+ 65de7e01eff8cf2f9a287153971467b1c11811213b64a38bdf673bad240436ff               64 restricted/binary-armhf/Packages.xz
+ 10391f75bf6f83a8d9fdfa9b819873868e563c5edaa1cee49cf8e45adfa59525              111 restricted/binary-armhf/Release
+ e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855                0 restricted/binary-armhf/Packages
+ e7ab72b8f37c7c9c9f6386fb8e3dfa40bf6fe4b67876703c5927e47cb8664ce4               40 restricted/binary-i386/Packages.gz
+ 65de7e01eff8cf2f9a287153971467b1c11811213b64a38bdf673bad240436ff               64 restricted/binary-i386/Packages.xz
+ e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855                0 restricted/binary-i386/Packages
+ 98dc056451dc1d194ee3a12dc21cedc65c04a103ce8eee5924be973a877c68fe              110 restricted/binary-i386/Release
+ e7ab72b8f37c7c9c9f6386fb8e3dfa40bf6fe4b67876703c5927e47cb8664ce4               40 restricted/binary-ppc64el/Packages.gz
+ e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855                0 restricted/binary-ppc64el/Packages
+ 65de7e01eff8cf2f9a287153971467b1c11811213b64a38bdf673bad240436ff               64 restricted/binary-ppc64el/Packages.xz
+ f1878f1ecbba2746a882814d8599f824e3da1f814768e2aac5e65cac5abdf400              113 restricted/binary-ppc64el/Release
+ e7ab72b8f37c7c9c9f6386fb8e3dfa40bf6fe4b67876703c5927e47cb8664ce4               40 restricted/binary-s390x/Packages.gz
+ d5bfe04fa4c2c2f68abbbcdf715746e53d087b8e71bef14400b6e93f5b66fe4b              111 restricted/binary-s390x/Release
+ e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855                0 restricted/binary-s390x/Packages
+ 65de7e01eff8cf2f9a287153971467b1c11811213b64a38bdf673bad240436ff               64 restricted/binary-s390x/Packages.xz
+ 65de7e01eff8cf2f9a287153971467b1c11811213b64a38bdf673bad240436ff               64 restricted/debian-installer/binary-amd64/Packages.xz
+ e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855                0 restricted/debian-installer/binary-amd64/Packages
+ e7ab72b8f37c7c9c9f6386fb8e3dfa40bf6fe4b67876703c5927e47cb8664ce4               40 restricted/debian-installer/binary-amd64/Packages.gz
+ e7ab72b8f37c7c9c9f6386fb8e3dfa40bf6fe4b67876703c5927e47cb8664ce4               40 restricted/debian-installer/binary-arm64/Packages.gz
+ 65de7e01eff8cf2f9a287153971467b1c11811213b64a38bdf673bad240436ff               64 restricted/debian-installer/binary-arm64/Packages.xz
+ e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855                0 restricted/debian-installer/binary-arm64/Packages
+ e7ab72b8f37c7c9c9f6386fb8e3dfa40bf6fe4b67876703c5927e47cb8664ce4               40 restricted/debian-installer/binary-armhf/Packages.gz
+ e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855                0 restricted/debian-installer/binary-armhf/Packages
+ 65de7e01eff8cf2f9a287153971467b1c11811213b64a38bdf673bad240436ff               64 restricted/debian-installer/binary-armhf/Packages.xz
+ 65de7e01eff8cf2f9a287153971467b1c11811213b64a38bdf673bad240436ff               64 restricted/debian-installer/binary-i386/Packages.xz
+ e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855                0 restricted/debian-installer/binary-i386/Packages
+ e7ab72b8f37c7c9c9f6386fb8e3dfa40bf6fe4b67876703c5927e47cb8664ce4               40 restricted/debian-installer/binary-i386/Packages.gz
+ 65de7e01eff8cf2f9a287153971467b1c11811213b64a38bdf673bad240436ff               64 restricted/debian-installer/binary-ppc64el/Packages.xz
+ e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855                0 restricted/debian-installer/binary-ppc64el/Packages
+ e7ab72b8f37c7c9c9f6386fb8e3dfa40bf6fe4b67876703c5927e47cb8664ce4               40 restricted/debian-installer/binary-ppc64el/Packages.gz
+ 65de7e01eff8cf2f9a287153971467b1c11811213b64a38bdf673bad240436ff               64 restricted/debian-installer/binary-s390x/Packages.xz
+ e7ab72b8f37c7c9c9f6386fb8e3dfa40bf6fe4b67876703c5927e47cb8664ce4               40 restricted/debian-installer/binary-s390x/Packages.gz
+ e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855                0 restricted/debian-installer/binary-s390x/Packages
+ e268ff295167456f25837c9ad84d7d3e746039aca7961bee4a7d9f2df26d1058              187 restricted/dep11/Components-arm64.yml
+ 7d63ed85e7934d0b7c83e636a9371ecfcb8b1fd4d997691f2aa101520bd6e492              194 restricted/dep11/Components-amd64.yml.gz
+ e268ff295167456f25837c9ad84d7d3e746039aca7961bee4a7d9f2df26d1058              187 restricted/dep11/Components-armhf.yml
+ c390b1a97d2fb77abd09b431d9f03a2693012ad09dbf491c217942834f43962b              196 restricted/dep11/Components-ppc64el.yml.gz
+ 41c5102a164e30fb358987df6e1af03409b03cd8a29b334199f51b156aa76f3b              194 restricted/dep11/Components-s390x.yml.gz
+ e268ff295167456f25837c9ad84d7d3e746039aca7961bee4a7d9f2df26d1058              187 restricted/dep11/Components-s390x.yml
+ e268ff295167456f25837c9ad84d7d3e746039aca7961bee4a7d9f2df26d1058              187 restricted/dep11/Components-amd64.yml
+ e268ff295167456f25837c9ad84d7d3e746039aca7961bee4a7d9f2df26d1058              187 restricted/dep11/Components-ppc64el.yml
+ 1e7a6a9d120c03066f6ea21bc1a78f3427fc629ba4b747db4da704c7de30f680              193 restricted/dep11/Components-i386.yml.gz
+ 51870c69c40c4844c30258a75f4ef0ee659cd7e5c0beee886dafe4f3098b8483              194 restricted/dep11/Components-arm64.yml.gz
+ 004cb3edb8f5cf6fd44d430eeba75bfa26353d2e952d381d3254b6b37bab7e79              194 restricted/dep11/Components-armhf.yml.gz
+ e268ff295167456f25837c9ad84d7d3e746039aca7961bee4a7d9f2df26d1058              187 restricted/dep11/Components-i386.yml
+ aea852a7918a6c61c359cd57114f60ca95551f449f06cb1c9f296b8326b78101              192 restricted/i18n/Index
+ e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855                0 restricted/i18n/Translation-en
+ e7ab72b8f37c7c9c9f6386fb8e3dfa40bf6fe4b67876703c5927e47cb8664ce4               40 restricted/i18n/Translation-en.gz
+ 65de7e01eff8cf2f9a287153971467b1c11811213b64a38bdf673bad240436ff               64 restricted/i18n/Translation-en.xz
+ d7cac37c0f1424af1aef509bcb378f74cfce0cf1b262b21abc75cc9ad93e80f0              112 restricted/source/Release
+ e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855                0 restricted/source/Sources
+ e7ab72b8f37c7c9c9f6386fb8e3dfa40bf6fe4b67876703c5927e47cb8664ce4               40 restricted/source/Sources.gz
+ 65de7e01eff8cf2f9a287153971467b1c11811213b64a38bdf673bad240436ff               64 restricted/source/Sources.xz
+ 7844899f5f7fc9fbc7ff451de969b4dce9bf67c7ec565653f64015e2c22a2e8f            11754 universe/binary-amd64/Packages
+ f40d12c837f4d6b05615f4e56a5dada95b3b40aa0d5f7e358f2190b0998b5137             2960 universe/binary-amd64/Packages.xz
+ 2b397e55a856298005603c234c2d78b8a4e023e64cedc9003d1f6ec42dbc8ced              109 universe/binary-amd64/Release
+ 6eaeb4440825dcfceb11bb1df76c51cf4e9fab4db9534bb5b8a1b573acd8e318             3089 universe/binary-amd64/Packages.gz
+ 007d994119119212b85054842eb63d457b15cb9da0ad5132b2356ca898f423e7             2724 universe/binary-arm64/Packages.xz
+ d4780e3928af2bdb7418f7e1af6fb5ec93e1f2cabe2ee6b0824caafccfeb6e23             2828 universe/binary-arm64/Packages.gz
+ 50782ad994716a5dcd2f4f2676504a2fff5f4aeeeb1526f15bdb8c7ec0145633              109 universe/binary-arm64/Release
+ 0785ea84ba4058c63868bdf618bae87df6e901e737adda0fca73b29c2abd13d6            10942 universe/binary-arm64/Packages
+ 103b9c3030cdf3ab0d7599fe08fda3347e2d2250d59d91345b557c8a32d0f743             3094 universe/binary-armhf/Packages.gz
+ 283de5e6116b69fe7ad434dd48d7bce6a95b1bb45d4f67ad994479a1bd98a976              109 universe/binary-armhf/Release
+ d3e0c4262c96740b36bb1db62e40dd5ce4cd24b7b7d807763aca31297452042c             2980 universe/binary-armhf/Packages.xz
+ e8390e9120fd8392329749034d75de02138370c3afdfea8e6c10c8573696634d            11773 universe/binary-armhf/Packages
+ 42222babdca18b172a05654b97477c582172e511f82b3e7125198a413add2022              108 universe/binary-i386/Release
+ 3734e140ecbd5fde7e8472f6d622bcb6c233e3c13952a5ecbea7438cc0382cfd            11743 universe/binary-i386/Packages
+ 9307994bd020ecb902960b7ae98ae7ac2a43b4b0998e6c1152523bbaf967d0b4             2964 universe/binary-i386/Packages.xz
+ 4e66edc5c3a7df163efac4cff0166c1a0423dcf9e2a6c48ef6409ddc4296e554             3084 universe/binary-i386/Packages.gz
+ 00cf08cb8008ff5188d345cd976d85e5e501814b3e61e947976a466b3f49622b             2826 universe/binary-ppc64el/Packages.gz
+ dc191968144cce7880d6de3d67d5084386bc0567116ada1e974340099e32b467             2724 universe/binary-ppc64el/Packages.xz
+ 00679266d962329de506df9c6250e0ecbe2b6b191ea202dc5fa0aa5c9b9f48a0              111 universe/binary-ppc64el/Release
+ ba7027dfe054f49803e8584b1498b77a278823586a919438ee4bdf1348f57858            10959 universe/binary-ppc64el/Packages
+ 89b88b5e0efb346c0d82a4c88f7971fac6646a5e3e74537b70bf666bbb628b9a            10941 universe/binary-s390x/Packages
+ 16ae496377cd61c932df1f4daae73b1a537c078556bd4474db3d0ba82687c54b              109 universe/binary-s390x/Release
+ fdcc52e872798cd87d6ff59c7186415614f3ca5504ee15cdee5c98f7d92c48ef             2822 universe/binary-s390x/Packages.gz
+ c6565d388c430008dd9c2d4290be4e877d48833a453230cd4c49305c21d53263             2724 universe/binary-s390x/Packages.xz
+ e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855                0 universe/debian-installer/binary-amd64/Packages
+ e7ab72b8f37c7c9c9f6386fb8e3dfa40bf6fe4b67876703c5927e47cb8664ce4               40 universe/debian-installer/binary-amd64/Packages.gz
+ 65de7e01eff8cf2f9a287153971467b1c11811213b64a38bdf673bad240436ff               64 universe/debian-installer/binary-amd64/Packages.xz
+ 65de7e01eff8cf2f9a287153971467b1c11811213b64a38bdf673bad240436ff               64 universe/debian-installer/binary-arm64/Packages.xz
+ e7ab72b8f37c7c9c9f6386fb8e3dfa40bf6fe4b67876703c5927e47cb8664ce4               40 universe/debian-installer/binary-arm64/Packages.gz
+ e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855                0 universe/debian-installer/binary-arm64/Packages
+ e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855                0 universe/debian-installer/binary-armhf/Packages
+ e7ab72b8f37c7c9c9f6386fb8e3dfa40bf6fe4b67876703c5927e47cb8664ce4               40 universe/debian-installer/binary-armhf/Packages.gz
+ 65de7e01eff8cf2f9a287153971467b1c11811213b64a38bdf673bad240436ff               64 universe/debian-installer/binary-armhf/Packages.xz
+ 65de7e01eff8cf2f9a287153971467b1c11811213b64a38bdf673bad240436ff               64 universe/debian-installer/binary-i386/Packages.xz
+ e7ab72b8f37c7c9c9f6386fb8e3dfa40bf6fe4b67876703c5927e47cb8664ce4               40 universe/debian-installer/binary-i386/Packages.gz
+ e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855                0 universe/debian-installer/binary-i386/Packages
+ e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855                0 universe/debian-installer/binary-ppc64el/Packages
+ e7ab72b8f37c7c9c9f6386fb8e3dfa40bf6fe4b67876703c5927e47cb8664ce4               40 universe/debian-installer/binary-ppc64el/Packages.gz
+ 65de7e01eff8cf2f9a287153971467b1c11811213b64a38bdf673bad240436ff               64 universe/debian-installer/binary-ppc64el/Packages.xz
+ e7ab72b8f37c7c9c9f6386fb8e3dfa40bf6fe4b67876703c5927e47cb8664ce4               40 universe/debian-installer/binary-s390x/Packages.gz
+ 65de7e01eff8cf2f9a287153971467b1c11811213b64a38bdf673bad240436ff               64 universe/debian-installer/binary-s390x/Packages.xz
+ e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855                0 universe/debian-installer/binary-s390x/Packages
+ 225177e78c5a56b9b1d5e176a64b8bcfce6b745bf5a9bb89f464b0710a91122c             7168 universe/dep11/icons-128x128.tar
+ 298c83f3ff0c9fe50fa0ba65f14cb1c0e5240ea6610420796e1116d6be7f8fe3             4672 universe/dep11/Components-ppc64el.yml.xz
+ 8f6fdfb5b36133d57fe97d0aa8316ef42e418c3ac3b7538d10b4180b4bfbb56f             4672 universe/dep11/Components-s390x.yml.xz
+ f576fc0b220f5c4e9d60782823ab84c5f8ba885e06adb0098431bd715113d3ad             4672 universe/dep11/Components-armhf.yml.xz
+ 34f1a4da8fba35a1e23231975441d3e36b65ac270062596161a4f3a7f7d40441             2716 universe/dep11/icons-64x64.tar.gz
+ d98ab0d2efd90051e4ede8fbca4ccd4c34f7655126495e054e116bf6098108c4            13072 universe/dep11/Components-i386.yml
+ 1e63cf788995ca7282fe9d60c985c96c241c414a538f906421d582434473e291             4943 universe/dep11/Components-armhf.yml.gz
+ f6e6654de2b0b6707a54431e912ca06f265ce02cbda2249120426e734fe9f2b9             4942 universe/dep11/Components-ppc64el.yml.gz
+ 90ca929f8a34cc697669dbf2ab58a87986c8404b2d1d3476cfa93f3113cd5847             5519 universe/dep11/icons-128x128.tar.gz
+ 74e544ffd5546899432dc74669616e421fcab21bf1c229427c49c98791545689             4943 universe/dep11/Components-s390x.yml.gz
+ 4f29f27e5a3ec61d390df7a7dd170623be24d269c94019e04e1090f524a98b43             4672 universe/dep11/Components-amd64.yml.xz
+ 1d8f12864770b973847f8a5f3979fc55a3ae48572d0ea4a5e29aa4fcd0c583a6             4943 universe/dep11/Components-i386.yml.gz
+ 8952c5a3d3ccb1d5ff984943f21267cbeb1d13db5fee59444d9d64477188098e            13072 universe/dep11/Components-arm64.yml
+ 84a4e552f5314b9eb6917a0f340565e69d9a5bcf322b63efa863361ffb44554e             4672 universe/dep11/Components-arm64.yml.xz
+ 2ca3b286a9bde1a8ca43848a2bbfc397dbc2e2a92a16affcf0ee2e19f1efa708             4943 universe/dep11/Components-arm64.yml.gz
+ 3b53008e7bfa1c3ffd5114eeeee502f3997ea5ca45f8272fbed216607d04309c            13072 universe/dep11/Components-s390x.yml
+ 7086aee653f47751e0bd56a4760991a2ad0db9ce146d5da4ef933619801c3647             4096 universe/dep11/icons-64x64.tar
+ 6f010a54bd88d2ea0c0299cffe95f53d9dd7df99a5e21758631d1042b936159d            13072 universe/dep11/Components-ppc64el.yml
+ d1ea58c985f3732a92399d602b7d673be6cab24966db0b530bf764dc8e689e96             4672 universe/dep11/Components-i386.yml.xz
+ 3cd17c5f18bb9732b9ad26204e6d84e95920bd5838436000ab6402bcdf6de905            13072 universe/dep11/Components-armhf.yml
+ ba32be32820dd5ed15d0778ec105573f5af79fa73acfae1d8dcaf5e737d0b33d             4942 universe/dep11/Components-amd64.yml.gz
+ 93d0c1cd88f10b1a67cd4ed0a700b85ca87a839fd86d1c17f8df452ca12fc6a8            13072 universe/dep11/Components-amd64.yml
+ 0356e10161219ab39225189f959ea2720d26462a319362e79be8f64d6359c173             3033 universe/i18n/Translation-en
+ 68d2ea53458fd5a3309b9e31f9f004e37ebc7d798110b3d85c69b85db320b175             1247 universe/i18n/Translation-en.gz
+ 7666c30e263dea16e280dafe4f87893b1ae668a3c589ad4a59d88bd580d50ed7              198 universe/i18n/Index
+ 714dc0f06fe83a5382feaf5d18f191de1358ff0249ba866827de0e98f4daeda7             1344 universe/i18n/Translation-en.xz
+ ed1d14441fcf08319f5326fb8eac941bdf9f55b1579fc7843f62ec33bd4a7293             5921 universe/source/Sources
+ 73d3ec6cece3f0946e4d0f2aeab137cefafa9fe99422279e5273564e34e7df41             2308 universe/source/Sources.xz
+ 0abba203dbfe17dffb6f79971f6fbc4165b7e197b7f36a6f4dc76f9ae36ce4e7             2319 universe/source/Sources.gz
+ 4b91834a05d8c82413c777a7f0e61a1bd9bb60eae9ed9aec5e181c6aa9750d57              110 universe/source/Release
+Acquire-By-Hash: yes
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
+
+iQIcBAEBCgAGBQJZbAT5AAoJEDtP5qzAsh8yCNwQAItUdQNA2CK1Lpbkeriy+/Ao
+NsJ2ReNThgOJQmQjrEE1LKIGp22WUHcttb4Xs/awL1iOBYYuXgIA7O7m4AJM5KQG
+Zot4nFhVT3J33jToCEDBLi39t4re95ZJEYHI1uIgUOj9Um/RcfpnSnWqrFndbR7N
+FR/H/L8ScEhUqU3woxChZdawwZJ7EnTfjuBIKSuSwa6SP8tCq9jX/IyCfdASR8zi
+AzSJVZCyum+pHoZhvXN3nP3AzidV9khxQlfoLgfcOqhg1038dJaM28SAVfxXJKYs
+vjI6j/vewcaO/kPMM0Se+IoPbzdhJFvyAhjcF107sS5nUBNdQFg15KVI2ItjfvHd
+u5Y/QQBJTj04x8hXHttzDRCUagHVtZDp/TLNd8pSDPAByMPtXI7ojx15iPjYhMAd
+FHY3IUY3ozhV1RJn8Vhjkh9a0ssty22+aTCOkfTm0K1msSERGQXPY2JVnOLwfHHc
+TWU9KCrZA30+P+pe9Oc4XkB0G01MkBl+MtAnCUZ8H/IiT9JoFDDWqi5e1Sdzw4Wx
+DY/s+Iqdn8i31gebK728UUuonShOp1IEmJZtGKr2cT5xrsoTeITkfuARlcyL5y9I
+xK8x279i5I8eDjyZsFbg4uQzPgsNmJTqg+0qtTm2WQMFoUDZilkcVhNQvr+V5NWw
+OyxFJlgQuUJLtErWTNN5
+=nMwi
+-----END PGP SIGNATURE-----
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              ent>
+  <component type="firmware">
+    <id>com.dell.uefif952fe9e.firmware</id>
+    <name>Latitude 3380 System Update</name>
+    <summary>Firmware for the Dell Latitude 3380</summary>
+    <developer_name>Dell Inc.</developer_name>
+    <description><p>Updating the system firmware improves performance.</p></description>
+    <project_license>proprietary</project_license>
+    <url type="homepage">http://support.dell.com/</url>
+    <releases>
+      <release timestamp="1495689026" version="65794">
+        <location>https://secure-lvfs.rhcloud.com/downloads/10c9978567b7e4b6fd56c54110f6938a56de1b94-firmware.cab</location>
+        <checksum type="sha1" filename="10c9978567b7e4b6fd56c54110f6938a56de1b94-firmware.cab" target="container">1e3106de0d5258cb138155d18eba6de39e6eaace</checksum>
+        <checksum type="sha1" filename="firmware.bin" target="content">33930dfd6f03711b03c234b63fa255d62b8c546a</checksum>
+        <size type="installed">6623205</size>
+        <size type="download">6337894</size>
+      </release>
+      <release timestamp="1490780735" version="65543">
+        <location>https://secure-lvfs.rhcloud.com/downloads/12d80c3783c15694628c257a0eeb64d1a4b112e4-firmware.cab</location>
+        <checksum type="sha1" filename="12d80c3783c15694628c257a0eeb64d1a4b112e4-firmware.cab" target="container">42104b670c9fff6cfca6cd6f68eccc6469717593</checksum>
+        <checksum type="sha1" filename="firmware.bin" target="content">c650d20e0929acaf2701b4f0742ffd7a76edc933</checksum>
+        <size type="installed">6620069</size>
+        <size type="download">6334339</size>
+      </release>
+      <release timestamp="1483927190" version="65538">
+        <location>https://secure-lvfs.rhcloud.com/downloads/fd7d375b1fe71cdcb887def0489b83c8f1943d8b-firmware.cab</location>
+        <checksum type="sha1" filename="fd7d375b1fe71cdcb887def0489b83c8f1943d8b-firmware.cab" target="container">8bb954a400932b255610dcce70a6cbd32153602d</checksum>
+        <checksum type="sha1" filename="firmware.bin" target="content">a3155140149ca3d26f8201712873f25dda27a1e1</checksum>
+        <size type="installed">6570734</size>
+        <size type="download">6285072</size>
+      </release>
+    </releases>
+    <provides>
+      <firmware type="flashed">f952fe9e-b7c7-4022-bf83-f2307b97e17d</firmware>
+    </provides>
+  </component>
+  <component type="firmware">
+    <id>com.hughski.ColorHug.firmware</id>
+    <name>ColorHug</name>
+    <summary>Firmware for the Hughski ColorHug Colorimeter</summary>
+    <developer_name>Hughski Limited</developer_name>
+    <description><p>Updating the firmware on your ColorHug device improves performance and adds new features.</p></description>
+    <project_license>GPL-2.0+</project_license>
+    <url type="homepage">http://www.hughski.com/</url>
+    <releases>
+      <release timestamp="1480683870" urgency="low" version="1.2.6">
+        <location>https://secure-lvfs.rhcloud.com/downloads/aa1b94b36c91929fbf75551b8a376d7292f8c51c-hughski-colorhug-1.2.6.cab</location>
+        <checksum type="sha1" filename="aa1b94b36c91929fbf75551b8a376d7292f8c51c-hughski-colorhug-1.2.6.cab" target="container">570a4259af0c7670f3883e84d2f4e6ff7de572c2</checksum>
+        <checksum type="sha1" filename="firmware.bin" target="content">111784ffadfd5dd43f05655b266b5142230195b6</checksum>
+        <description><p>This release fixes prevents the firmware returning an error when the remote SHA1 hash was never sent.</p></description>
+        <size type="installed">16384</size>
+        <size type="download">18054</size>
+      </release>
+      <release timestamp="1452082463" urgency="low" version="1.2.5">
+        <location>https://secure-lvfs.rhcloud.com/downloads/9a4e77009da7d3b5f15a1388afeb9e5d41a5a8ae-hughski-colorhug2-1.2.5.cab</location>
+        <checksum type="sha1" filename="9a4e77009da7d3b5f15a1388afeb9e5d41a5a8ae-hughski-colorhug2-1.2.5.cab" target="container">3831532bc94e6385807372a5485a8cbf6b024eeb</checksum>
+        <checksum type="sha1" filename="firmware.bin" target="content">71a538f9b9e9b4a649be0e4b4d492ff4b53de7ac</checksum>
+        <description><p>This release fixes the firmware package to work with new versions of fwupd.</p></description>
+        <size type="installed">16384</size>
+        <size type="download">17779</size>
+      </release>
+      <release timestamp="1438454314" version="1.2.4">
+        <location>https://secure-lvfs.rhcloud.com/downloads/27e234cfcac2ed3ecdae195c67ba99ffd4435e04-hughski-colorhug-1.2.4.cab</location>
+        <checksum type="sha1" filename="27e234cfcac2ed3ecdae195c67ba99ffd4435e04-hughski-colorhug-1.2.4.cab" target="container">dfcb6be14e51f9c953e379117477f56cc4121839</checksum>
+        <checksum type="sha1" filename="firmware.bin" target="content">a9ba7b28fbce61326b98e08703d5be493b251e66</checksum>
+        <description><p>This release adds support for verifying the firmware contents using fwupd.</p></description>
+        <size type="installed">16384</size>
+        <size type="download">18061</size>
+      </release>
+    </releases>
+    <provides>
+      <firmware type="flashed">40338ceb-b966-4eae-adae-9c32edfcc484</firmware>
+    </provides>
+  </component>
+  <component type="firmware">
+    <id>com.hughski.ColorHug2.firmware</id>
+    <name>ColorHug2</name>
+    <summary>Firmware for the Hughski ColorHug2 Colorimeter</summary>
+    <developer_name>Hughski Limited</developer_name>
+    <description><p>Updating the firmware on your ColorHug2 device improves performance and adds new features.</p></description>
+    <project_license>GPL-2.0+</project_license>
+    <url type="homepage">http://www.hughski.com/</url>
+    <releases>
+      <release timestamp="1482901200" urgency="medium" version="2.0.7">
+        <location>https://secure-lvfs.rhcloud.com/downloads/0a29848de74d26348bc5a6e24fc9f03778eddf0e-hughski-colorhug2-2.0.7.cab</location>
+        <checksum type="sha1" filename="0a29848de74d26348bc5a6e24fc9f03778eddf0e-hughski-colorhug2-2.0.7.cab" target="container">490be5c0b13ca4a3f169bf8bc682ba127b8f7b96</checksum>
+        <checksum type="sha1" filename="firmware.bin" target="content">658851e6f27c4d87de19cd66b97b610d100efe09</checksum>
+        <description><p>This release fixes prevents the firmware returning an error when the remote SHA1 hash was never sent.</p></description>
+        <size type="installed">16384</size>
+        <size type="download">19592</size>
+      </release>
+      <release timestamp="1450792062" urgency="medium" version="2.0.6">
+        <location>https://secure-lvfs.rhcloud.com/downloads/170f2c19f17b7819644d3fcc7617621cc3350a04-hughski-colorhug2-2.0.6.cab</location>
+        <checksum type="sha1" filename="170f2c19f17b7819644d3fcc7617621cc3350a04-hughski-colorhug2-2.0.6.cab" target="container">03c9c14db1894a00035ececcfae192865a710e52</checksum>
+        <checksum type="sha1" filename="firmware.bin" target="content">f038b5ca40e6d7c1c0299a9e1dcc129d5f6371b6</checksum>
+        <description><p>This stable release fixes the following problems:</p><ul><li>Fix the swapped LEDs on the second half of batch 16</li><li>Fix the firmware upgrade process using new versions of fwupd</li></ul></description>
+        <size type="installed">16384</size>
+        <size type="download">19264</size>
+      </release>
+      <release timestamp="1444059405" version="2.0.5">
+        <location>https://secure-lvfs.rhcloud.com/downloads/f7dd4ab29fa610438571b8b62b26b0b0e57bb35b-hughski-colorhug2-2.0.5.cab</location>
+        <checksum type="sha1" filename="f7dd4ab29fa610438571b8b62b26b0b0e57bb35b-hughski-colorhug2-2.0.5.cab" target="container">4ee9dfa38df3b810f739d8a19d13da1b3175fb87</checksum>
+        <checksum type="sha1" filename="firmware.bin" target="content">ae76c6b704b60f9d1d88dc2c8ec8a62d7b2331dc</checksum>
+        <description><p>This stable release fixes the following problems:</p><ul><li>Fix the swapped LEDs on batch 16</li><li>Make the self test more sensitive to detect floating pins</li></ul></description>
+        <size type="installed">16384</size>
+        <size type="download">19062</size>
+      </release>
+    </releases>
+    <provides>
+      <firmware type="flashed">2082b5e0-7a64-478a-b1b2-e3404fab6dad</firmware>
+    </provides>
+  </component>
+  <component type="firmware">
+    <id>com.hughski.ColorHugALS.firmware</id>
+    <name>ColorHugALS</name>
+    <summary>Firmware for the Hughski ColorHug Ambient Light Sensor</summary>
+    <developer_name>Hughski Limited</developer_name>
+    <description><p>Updating the firmware on your ColorHugALS device improves performance and adds new features.</p></description>
+    <project_license>GPL-2.0+</project_license>
+    <url type="homepage">http://www.hughski.com/</url>
+    <releases>
+      <release timestamp="1453802420" urgency="low" version="4.0.3">
+        <location>https://secure-lvfs.rhcloud.com/downloads/8dbdd54c712b33f72d866ce3b23b3ceed3ad494d-hughski-colorhug-als-4.0.3.cab</location>
+        <checksum type="sha1" filename="8dbdd54c712b33f72d866ce3b23b3ceed3ad494d-hughski-colorhug-als-4.0.3.cab" target="container">36a03724418f41a8035478d29c25d7a4e6433bad</checksum>
+        <checksum type="sha1" filename="firmware.bin" target="content">f4b17f60530ed182561ae4954e6ad1b904d83e4f</checksum>
+        <description><p>Remove the invalid .inf file from the release tarball. No code or behaviour changes.</p></description>
+        <size type="installed">8192</size>
+        <size type="download">9829</size>
+      </release>
+      <release timestamp="1442321232" version="4.0.2">
+        <location>https://secure-lvfs.rhcloud.com/downloads/73ac1aa98130e532c727308cc6560783b10ca3a9-hughski-colorhug-als-4.0.2.cab</location>
+        <checksum type="sha1" filename="73ac1aa98130e532c727308cc6560783b10ca3a9-hughski-colorhug-als-4.0.2.cab" target="container">169624c773888d78cd074ecc82ed82fef15577cc</checksum>
+        <checksum type="sha1" filename="firmware.bin" target="content">0d8a2c1d73c344a8e754cf7949761671

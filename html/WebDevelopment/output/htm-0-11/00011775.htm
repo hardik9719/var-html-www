@@ -1,0 +1,104 @@
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, user-scalable=no">
+
+<script>
+function notifyDidFinishLoading() {}
+</script>
+<style>/* Copyright (c) 2012 The Chromium Authors. All rights reserved.
+ * Use of this source code is governed by a BSD-style license that can be
+ * found in the LICENSE file. */
+
+html, body {
+  -webkit-user-select: none;
+  font-family: sans-serif;
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  text-align: center;
+  width: 100%;
+}
+
+h1 {
+  font-size: 10pt;
+  font-weight: normal;
+  padding: 0pt 10pt;
+
+}
+
+#outer:hover h1, #outer:hover #close {
+  visibility: visible;
+}
+
+p {
+  font-size: 8pt;
+  padding: 0pt 14pt;
+}
+
+#outer {
+  align-items: center;
+  border: 1px black solid;
+  box-sizing: border-box;
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  position: absolute;
+  width: 100%;
+}
+
+#close {
+  background-image: -webkit-image-set(
+      url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAQAAAC1+jfqAAAAiElEQVR42r2RsQrDMAxEBRdl8SDcX8lQPGg1GBI6lvz/h7QyRRXV0qUULwfvwZ1tenw5PxToRPWMC52eA9+WDnlh3HFQ/xBQl86NFYJqeGflkiogrOvVlIFhqURFVho3x1moGAa3deMs+LS30CAhBN5nNxeT5hbJ1zwmji2k+aF6NENIPf/hs54f0sZFUVAMigAAAABJRU5ErkJggg==) 1x,
+      url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAQAAADZc7J/AAAA9UlEQVR4Xu3UsWrCUByH0fMEouiuhrg4xohToJVGH0CHLBncEwfx/VvIFHLJBWmHDvKbv7PcP9f3L/fXwBsApZSRpUpEgbOnxwiReng6x4AvjdrNXRLkibubWqMcB9Yujk7qjhjmtZOji/U4wELuoBwQXa50kFsQA5jK+kQ/l5kSA4ZEK5Fo+3kcCIlGM8ijQEhUqkEeBUKiUPTyl4C5vZ1cbmdv/iqwclXY6aZwtXoFSLQqhVwmkytUWglxAMG7T0yCu4gD0v7ZBKeVxoEwFxIxYBPmIWEzDnyEeUj4HAfYdvmMcGYdsSUGsOzlIbHEv/uV38APrreiBRBIs3QAAAAASUVORK5CYII=) 2x);
+  background-position: right top;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  height: 14px;
+  position: absolute;
+  right: 3px;
+  top: 3px;
+
+  width: 14px;
+}
+
+#close[data-plugin-type='document'] {
+  display: none;
+}
+
+#close:hover {
+  background-image: -webkit-image-set(
+      url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAQAAAC1+jfqAAAAqUlEQVR4XqWRMQqEMBBF/1E8Ra6x6V3FRnS9QbCxtJg6Z7CzE9lTiIXXyUb3C8EULixDIMM8Zt4kcDfxM5A45U+cgeXnC1tREgkzAgob3hiq3CUHvGLG4FTQoSgxQGDrzN8WTLBGnx2IVDksen9GH7Z9hA5E6uxABMJyCHDMCEGHzugLQPPlBCBNGq+5YtpnGw1Bv+te15ypljTpVzdak5Opy+z+qf//zQ+Lg+07ay5KsgAAAABJRU5ErkJggg==) 1x,
+      url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAQAAADZc7J/AAAB4UlEQVR42u2VsWoCQRBAh+MUFP0C1V9QD4NEOxs9xBQHQVCwSJFWVBAtBNXCxk6wTkBJYUTwEwQLC61E8QP0NzZzt5g5726DkC7EYWHZ8T3WndkV2C/jLwn4hwVYBIdLn9vkLp79QcBCTDMiy3w2gQ9XeTYkEHA8vqj2rworXu3HF1YFfSWgp5QFnKVLvYvzDEKEZ5hW70oXOCtcEbQLIkx7+IQtfMBSOjU6XEF4oyOdYInZbXyOuajjDlpNeQgleIUJKUz4BDMledhqOu/AzVSmzZ49CUjCC0yvim98iqtJT2L2jKsqczsdok9XrHNexaww415lnTNwn6CM/KxJIR8bnUZHPhLO6yMoIyk2pNjLewFuE5AiY1KMMQx8Q7hQYFek4AkjxXFe1rsF84I/BTFQMGL+1Lxwl4DwdtM1gjwKohgxyLtG7SYpxALqugOMcfOKN+bFXeBsLB1uulNcRqq7/tt36k41zoL6QlxGjtd6lrahiqCi1iOFYyvXuxY8yzK33VnvUivbLlOlj/jktm0s3YnXrNIXXufHNxuOGasi8S68zkwrlnV8ZcJJsTIUxbLgQcFZWE8N0gau2p40VVcM0gYeFpSRK6445UhBuKiRgiyKw+34rLt59nb1/7+RwReVkaFtqvNBuwAAAABJRU5ErkJggg==) 2x);
+}
+
+#close:active {
+  background-image: -webkit-image-set(
+      url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAQAAAC1+jfqAAAAQklEQVR4AWP4TwBSTQGDHcMZIIYAKA9VwRkwtINJgyCaCTAlCBaKAoQ+hFmoCqBKENKkK8C0gpAjCXuTyICiQ2QBAPSwyG3ByZlCAAAAAElFTkSuQmCC) 1x,
+      url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAQAAADZc7J/AAAA/ElEQVR4Xu3UsWrCUBiG4efGlIBoIMFbcnYolYJ3pg4iKGrGYFTRwaUFhYAekiDt0EG++X2W83N8/3J/DbwBMJJSsdQItcDY1VlCOImzq3Ed8OmicHASB3ns5KBw8VUNpDJrW7uAiJ3sbK1l0mqArpmFTUlQ5jYWZrrUAUSmT0SZm4qoA56JvVhs/5g3A7RLolA85A1ASOTye65NMxASK6syfxGITMzvMxG9CvRkliWwlOm9AsSOcitzU1NzK7mjuBkQvHtLK7iLBiB5PhttJSGpB8I8vM6kDuiHeUjoVwMfYR4SRtUAw1veIZzOjRhSBzCoyKFjgH/3K7+BHzg+Cgw0eSW3AAAAAElFTkSuQmCC) 2x);
+}
+</style>
+<style>
+body {
+  background-color: rgb(187, 187, 187);
+}
+
+#plugin_icon {
+  opacity: .6;
+}
+</style>
+</head>
+
+<body id="t" onload="notifyDidFinishLoading();">
+<div i18n-values="title:name" id="outer">
+  <div id="inner">
+
+<img id="plugin_icon" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAkCAQAAABLCVATAAADaklEQVR4Xn2Wz2tcVRTHP/e+O28mMxONJKlF4kIkP4luXFgQuuxCBaG41IWrLupOXLur+Ae4cmV3LiS6qujSLgq2CIKQUqS2YnWsRkzGSTIz7zyHw+EdchnkcOd+7+OeT84578tMwmetO1fkar1RRNAgUJuqbeEn/0RUcdS6UX7w0X54/93qw4V+m0IReBiizhAYpG52kfrO86+F9/YXNnukHOTpc5SHgpiOu1cT623FBELeGvgTXfppOAjN3dCKm7GIkWiY4LsBnqBPpGqAgN/zCDMMBsCWX+pwibd5hzdZZmLNOsxDm8VAzIkt1hX5NLucqgrZm3RlIC/XscKTNlAQpvncMitAnEM33D4nqgbcosBSPT3DRTJ3+Cx+4UfV3/CQniMQQ5g2WMJkoGKHNodUCBDpsYEQ2KGmJBKIFPT4nYckB9ueaPxRscamWczco3qXLcR9wx4ndBsziqFSjaOCAWLm4kj0xhhSMVFli4opyYuLlJ7s+/xTE6IgcVBthUuW6goHZDiA5IeCAnFEhkKVxxQh+pnoqSeMCEw4Uvt5kEHPc8IyF3iJ5De1NYSAMOYvOtxgwBqv0wcE5rR4gcQGq9Sc5wt7bq2JtfYtI0Ys8mCmLhFg7qw6XKRStUHJiMJmpC8vglqypAOU/MwRiw7KYGKqxZSKqE/iTKrQAwGxv5oU4ZbzGHCTf1QNOTXbQhJ/gbxKjy85IPECHQSQ3EFUfM0+93iZgluM6LuzDUTJOXpc5jcWeDb3DjQrsMhj9tTdPcAq8mtjjunyFEtN8ohfOWaVZR88Qd2WKK15a5zoRY8ZmRaNIZ/yCZ/P1u0zY+9TASjcq04YMzBhqAAUBXf5iWcITGdql3aTtpIZVnxGYvSxj1VPXUB0EtHnxBoT6iwgeXEwQfwC69xmROAcr5DwESxa3XLGW9G9AgPGVKahzzb/UvEcq81PwCl/MyDMrUgxQeMH7tNniQW6nPKAe5TU3KUFjPmTRxyofUsFeFVQqyENBHDAYyodJhR0CFrnfaYECgvAjdogEwZCVySQaJ8ZeqAL874rsy+2ofT1ev5fkSdmihwF0jpOra/kskTHkGMckkG9Gg7Xvw9XtifXOy/GEgCr7H/ryepFOFy5fu1agI9XH71RbRWRrDmHOhrfLYrx9ndv3Wz98R+P7LgG2uyMvgAAAABJRU5ErkJggg==">
+    <h1 id="message" i18n-content="message"></h1>
+  </div>
+  <div id="close" i18n-values="title:hide;data-plugin-type:pluginType"
+      onclick="plugin.hide();">
+  </div>
+</div>
+</body>
+</html>

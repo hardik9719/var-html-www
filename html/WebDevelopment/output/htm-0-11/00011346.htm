@@ -1,0 +1,70 @@
+<html><head><meta encoding="euc-jp"></head><body>Sacr\N{LATIN SMALL LETTER E WITH ACUTE} bleu!</body>'
+        soup = self.soup(markup)
+        self.assertEqual('Sacr\xe9 bleu!', soup.body.string)
+
+    def test_soupstrainer(self):
+        """Parsers should be able to work with SoupStrainers."""
+        strainer = SoupStrainer("b")
+        soup = self.soup("A <b>bold</b> <meta/> <i>statement</i>",
+                         parse_only=strainer)
+        self.assertEqual(soup.decode(), "<b>bold</b>")
+
+    def test_single_quote_attribute_values_become_double_quotes(self):
+        self.assertSoupEquals("<foo attr='bar'></foo>",
+                              '<foo attr="bar"></foo>')
+
+    def test_attribute_values_with_nested_quotes_are_left_alone(self):
+        text = """<foo attr='bar "brawls" happen'>a</foo>"""
+        self.assertSoupEquals(text)
+
+    def test_attribute_values_with_double_nested_quotes_get_quoted(self):
+        text = """<foo attr='bar "brawls" happen'>a</foo>"""
+        soup = self.soup(text)
+        soup.foo['attr'] = 'Brawls happen at "Bob\'s Bar"'
+        self.assertSoupEquals(
+            soup.foo.decode(),
+            """<foo attr="Brawls happen at &quot;Bob\'s Bar&quot;">a</foo>""")
+
+    def test_ampersand_in_attribute_value_gets_escaped(self):
+        self.assertSoupEquals('<this is="really messed up & stuff"></this>',
+                              '<this is="really messed up &amp; stuff"></this>')
+
+        self.assertSoupEquals(
+            '<a href="http://example.org?a=1&b=2;3">foo</a>',
+            '<a href="http://example.org?a=1&amp;b=2;3">foo</a>')
+
+    def test_escaped_ampersand_in_attribute_value_is_left_alone(self):
+        self.assertSoupEquals('<a href="http://example.org?a=1&amp;b=2;3"></a>')
+
+    def test_entities_in_strings_converted_during_parsing(self):
+        # Both XML and HTML entities are converted to Unicode characters
+        # during parsing.
+        text = "<p>&lt;&lt;sacr&eacute;&#32;bleu!&gt;&gt;</p>"
+        expected = "<p>&lt;&lt;sacr\N{LATIN SMALL LETTER E WITH ACUTE} bleu!&gt;&gt;</p>"
+        self.assertSoupEquals(text, expected)
+
+    def test_smart_quotes_converted_on_the_way_in(self):
+        # Microsoft smart quotes are converted to Unicode characters during
+        # parsing.
+        quote = b"<p>\x91Foo\x92</p>"
+        soup = self.soup(quote)
+        self.assertEqual(
+            soup.p.string,
+            "\N{LEFT SINGLE QUOTATION MARK}Foo\N{RIGHT SINGLE QUOTATION MARK}")
+
+    def test_non_breaking_spaces_converted_on_the_way_in(self):
+        soup = self.soup("<a>&nbsp;&nbsp;</a>")
+        self.assertEqual(soup.a.string, "\N{NO-BREAK SPACE}" * 2)
+
+    def test_entities_converted_on_the_way_out(self):
+        text = "<p>&lt;&lt;sacr&eacute;&#32;bleu!&gt;&gt;</p>"
+        expected = "<p>&lt;&lt;sacr\N{LATIN SMALL LETTER E WITH ACUTE} bleu!&gt;&gt;</p>".encode("utf-8")
+        soup = self.soup(text)
+        self.assertEqual(soup.p.encode("utf-8"), expected)
+
+    def test_real_iso_latin_document(self):
+        # Smoke test of interrelated functionality, using an
+        # easy-to-understand document.
+
+        # Here it is in Unicode. Note that it claims to be in ISO-Latin-1.
+        unicode_html = '<html><head><meta content="text/html; charset=ISO-Latin-1" http-equiv="Content-type"/></head><body><p>Sacr\N{LATIN SMALL LETTER E WITH ACUTE} bleu!</p></body></html>

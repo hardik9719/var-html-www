@@ -1,0 +1,41 @@
+<html><h1 class="refsect1">VSIZE</h1>
+<p><code>VSIZE</code> returns the number of bytes in the internal representation of an expression. It returns null for a null expression.</p>
+<p class="titleinrefsubsect"><a id="sthref742" name="sthref742"></a>Return Value</p>
+<pre xml:space="preserve" class="oac_no_warn">NUMBER
+</pre>
+<p class="titleinrefsubsect"><a id="sthref743" name="sthref743"></a>Syntax</p>
+<pre xml:space="preserve" class="oac_no_warn"><span class="bold">VSIZE </span>(expr)
+</pre>
+<p class="titleinrefsubsect"><a id="sthref744" name="sthref744"></a>Arguments</p>
+<p><code>expr</code> can be an expression of any data type.</p>
+<p class="titleinrefsubsect"><a id="sthref745" name="sthref745"></a>Example</p>
+<p><code>VSIZE('Sound of thunder')</code> returns the value <code>16</code>.</p>
+<p><code>VSIZE(CHANNEL.LONG_DESCRIPTION)</code> returns the following values:</p>
+<div class="inftblinformal">
+<table class="Informal" summary="VSIZE example output" dir="ltr" border="1" width="100%" frame="hsides" rules="groups" cellpadding="3" cellspacing="0">
+<col width="*" />
+<col width="50%" />
+<thead>
+<tr align="left" valign="top">
+<th align="left" valign="bottom" id="r1c1-t6">Channel</th>
+<th align="left" valign="bottom" id="r1c2-t6">VSIZE</th>
+</tr>
+</thead>
+<tbody>
+<tr align="left" valign="top">
+<td align="left" id="r2c1-t6" headers="r1c1-t6">Catalog</td>
+<td align="left" headers="r2c1-t6 r1c2-t6">7</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r3c1-t6" headers="r1c1-t6">Direct Sales</td>
+<td align="left" headers="r3c1-t6 r1c2-t6">12</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r4c1-t6" headers="r1c1-t6">Internet</td>
+<td align="left" headers="r4c1-t6 r1c2-t6">8</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="inftblinformal" --></div>
+</html>

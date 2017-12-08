@@ -1,0 +1,139 @@
+<html><h1 class="refsect1">CAST</h1>
+<p><code>CAST</code> converts values from one data type to another.</p>
+<p class="titleinrefsubsect"><a id="sthref365" name="sthref365"></a>Return Value</p>
+<p>The data type specified by <code>type_name</code>.</p>
+<p class="titleinrefsubsect"><a id="sthref366" name="sthref366"></a>Syntax</p>
+<pre xml:space="preserve" class="oac_no_warn"><span class="bold">CAST</span>(expr <span class="bold">AS</span> type_name)
+</pre>
+<p class="titleinrefsubsect"><a id="sthref367" name="sthref367"></a>Arguments</p>
+<p><code>expr</code> can be an expression in one of the data types.</p>
+<p><code>type_name</code> is one of the data types listed in <a href="syntax.htm#CEGFHFIG">Table 1-2, "Dimensional Data Types"</a>.</p>
+<p><a href="#BABCJBHB">Table 3-1</a> shows which data types can be cast into which other built-in data types. <code>NUMBER</code> includes <code>NUMBER</code>, <code>DECIMAL</code>, and <code>INTEGER</code>. <code>DATETIME</code> includes <code>DATE</code>, <code>TIMESTAMP</code>, <code>TIMESTAMP WITH TIMEZONE</code>, and <code>TIMESTAMP WITH LOCAL TIMEZONE</code>. <code>INTERVAL</code> includes <code>INTERVAL DAY TO SECOND</code> and <code>INTERVAL YEAR TO MONTH</code>.</p>
+<div class="tblformalwide">
+<p class="titleintable"><a id="OLAXS403" name="OLAXS403"></a><a id="sthref368" name="sthref368"></a><a id="BABCJBHB" name="BABCJBHB"></a>Table 3-1 Compatible Data Types</p>
+<table class="FormalWide" title="Compatible Data Types" summary="Compatible data types for CAST" dir="ltr" border="1" width="100%" frame="hsides" rules="groups" cellpadding="3" cellspacing="0">
+<col width="*" />
+<col width="20%" />
+<col width="13%" />
+<col width="14%" />
+<col width="15%" />
+<col width="18%" />
+<thead>
+<tr align="left" valign="top">
+<th align="left" valign="bottom" id="r1c1-t2">From</th>
+<th align="left" valign="bottom" id="r1c2-t2">To BINARY_FLOAT, BINARY_DOUBLE</th>
+<th align="left" valign="bottom" id="r1c3-t2">To CHAR, VARCHAR2</th>
+<th align="left" valign="bottom" id="r1c4-t2">To NUMBER</th>
+<th align="left" valign="bottom" id="r1c5-t2">To DATETIME, INTERVAL</th>
+<th align="left" valign="bottom" id="r1c6-t2">To NCHAR, NVARCHAR2</th>
+</tr>
+</thead>
+<tbody>
+<tr align="left" valign="top">
+<td align="left" id="r2c1-t2" headers="r1c1-t2">
+<p><span class="bold">BINARY_FLOAT, BINARY_DOUBLE</span></p>
+</td>
+<td align="left" headers="r2c1-t2 r1c2-t2">
+<p>yes</p>
+</td>
+<td align="left" headers="r2c1-t2 r1c3-t2">
+<p>yes</p>
+</td>
+<td align="left" headers="r2c1-t2 r1c4-t2">
+<p>yes</p>
+</td>
+<td align="left" headers="r2c1-t2 r1c5-t2">
+<p>no</p>
+</td>
+<td align="left" headers="r2c1-t2 r1c6-t2">
+<p>yes</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r3c1-t2" headers="r1c1-t2">
+<p><span class="bold">CHAR, VARCHAR2</span></p>
+</td>
+<td align="left" headers="r3c1-t2 r1c2-t2">
+<p>yes</p>
+</td>
+<td align="left" headers="r3c1-t2 r1c3-t2">
+<p>yes</p>
+</td>
+<td align="left" headers="r3c1-t2 r1c4-t2">
+<p>yes</p>
+</td>
+<td align="left" headers="r3c1-t2 r1c5-t2">
+<p>yes</p>
+</td>
+<td align="left" headers="r3c1-t2 r1c6-t2">
+<p>no</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r4c1-t2" headers="r1c1-t2">
+<p><span class="bold">NUMBER</span></p>
+</td>
+<td align="left" headers="r4c1-t2 r1c2-t2">
+<p>yes</p>
+</td>
+<td align="left" headers="r4c1-t2 r1c3-t2">
+<p>yes</p>
+</td>
+<td align="left" headers="r4c1-t2 r1c4-t2">
+<p>yes</p>
+</td>
+<td align="left" headers="r4c1-t2 r1c5-t2">
+<p>no</p>
+</td>
+<td align="left" headers="r4c1-t2 r1c6-t2">
+<p>yes</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r5c1-t2" headers="r1c1-t2">
+<p><span class="bold">DATETIME, INTERVAL</span></p>
+</td>
+<td align="left" headers="r5c1-t2 r1c2-t2">
+<p>no</p>
+</td>
+<td align="left" headers="r5c1-t2 r1c3-t2">
+<p>yes</p>
+</td>
+<td align="left" headers="r5c1-t2 r1c4-t2">
+<p>no</p>
+</td>
+<td align="left" headers="r5c1-t2 r1c5-t2">
+<p>yes</p>
+</td>
+<td align="left" headers="r5c1-t2 r1c6-t2">
+<p>yes</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r6c1-t2" headers="r1c1-t2">
+<p><span class="bold">NCHAR, NVARCHAR2</span></p>
+</td>
+<td align="left" headers="r6c1-t2 r1c2-t2">
+<p>yes</p>
+</td>
+<td align="left" headers="r6c1-t2 r1c3-t2">
+<p>no</p>
+</td>
+<td align="left" headers="r6c1-t2 r1c4-t2">
+<p>yes</p>
+</td>
+<td align="left" headers="r6c1-t2 r1c5-t2">
+<p>no</p>
+</td>
+<td align="left" headers="r6c1-t2 r1c6-t2">
+<p>yes</p>
+</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="tblformalwide" -->
+<p class="titleinrefsubsect"><a id="sthref369" name="sthref369"></a>Example</p>
+<p><code>CAST('123.4567' AS NUMBER(10,2))</code> returns the value <code>123.46</code>.</p>
+</div>
+</html>

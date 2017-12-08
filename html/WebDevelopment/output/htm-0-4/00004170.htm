@@ -1,0 +1,39 @@
+<html><h1 class="refsect1">SUBSTR</h1>
+<p><code>SUBSTR</code> returns a portion of string, beginning at a specified character position and extending a specified number of characters.</p>
+<ul>
+<li>
+<p><code>SUBSTR</code> calculates lengths using characters as defined by the input character set.</p>
+</li>
+<li>
+<p><code>SUBSTRB</code> uses bytes instead of characters.</p>
+</li>
+<li>
+<p><code>SUBSTRC</code> uses Unicode complete characters.</p>
+</li>
+</ul>
+<p class="titleinrefsubsect"><a id="sthref629" name="sthref629"></a>Return Value</p>
+<pre xml:space="preserve" class="oac_no_warn">CHAR | NCHAR | VARCHAR2 | NVARCHAR2
+</pre>
+<p class="titleinrefsubsect"><a id="sthref630" name="sthref630"></a>Syntax</p>
+<pre xml:space="preserve" class="oac_no_warn">{ <span class="bold">SUBSTR</span> | <span class="bold">SUBSTRB</span> | <span class="bold">SUBSTRC</span> }(char, position [, substring_length ])
+</pre>
+<p class="titleinrefsubsect"><a id="sthref631" name="sthref631"></a>Arguments</p>
+<p><code>char</code> is a text expression that provides the base string from which the substring is derived.</p>
+<p><code>position</code> identifies the first character of the substring:</p>
+<ul>
+<li>
+<p>When <code>position</code> is positive, then the function counts from the beginning of <code>char</code> to find the first character.</p>
+</li>
+<li>
+<p>When <code>position</code> is negative, then the function counts backward from the end of <code>char</code>.</p>
+</li>
+<li>
+<p>When <code>position</code> is 0 (zero), then the first character is the beginning of the substring.</p>
+</li>
+</ul>
+<p><code>substring_length</code> is the number of characters in the returned string. By default, the function returns all characters to the end of the base string. If you specify a value less than 1, then the function returns a null.</p>
+<p class="titleinrefsubsect"><a id="sthref632" name="sthref632"></a>Examples</p>
+<p><code>SUBSTR('firefly', 1, 4)</code> returns the substring <code>fire</code>.</p>
+<p><code>SUBSTR('firefly', -3, 3)</code> returns the substring <code>fly</code>.</p>
+</div>
+</html>

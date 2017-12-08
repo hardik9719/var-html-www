@@ -1,0 +1,615 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
+
+Origin: LP-PPA-webupd8team-java
+Label: Oracle Java (JDK) 8 / 9 Installer PPA
+Suite: zesty
+Version: 17.04
+Codename: zesty
+Date: Mon, 26 Jun 2017 12:20:07 UTC
+Architectures: amd64 arm64 armhf i386 ppc64el s390x
+Components: main
+Description: Ubuntu Zesty 17.04
+MD5Sum:
+ cb76dc7251f586226b0053089076ed20              143 main/binary-amd64/Release
+ 848a88bd3d86f601cb287de099475dfc             2592 main/binary-amd64/Packages.xz
+ d7eec547cd044edeb40d7a517945777a             2777 main/binary-amd64/Packages.gz
+ 47fcd0ba87c184f6bf4ed3d0cc47c49a            16062 main/binary-amd64/Packages
+ fe84fd1d2552a6989a07b18ee5afd8dc              143 main/binary-arm64/Release
+ 848a88bd3d86f601cb287de099475dfc             2592 main/binary-arm64/Packages.xz
+ 47fcd0ba87c184f6bf4ed3d0cc47c49a            16062 main/binary-arm64/Packages
+ d7eec547cd044edeb40d7a517945777a             2777 main/binary-arm64/Packages.gz
+ d7eec547cd044edeb40d7a517945777a             2777 main/binary-armhf/Packages.gz
+ c8164a0e1d20a0f0ee6ba45db8cd05ce              143 main/binary-armhf/Release
+ 47fcd0ba87c184f6bf4ed3d0cc47c49a            16062 main/binary-armhf/Packages
+ 848a88bd3d86f601cb287de099475dfc             2592 main/binary-armhf/Packages.xz
+ 09641eb107ba3313080487fab73a2f78              142 main/binary-i386/Release
+ 848a88bd3d86f601cb287de099475dfc             2592 main/binary-i386/Packages.xz
+ 47fcd0ba87c184f6bf4ed3d0cc47c49a            16062 main/binary-i386/Packages
+ d7eec547cd044edeb40d7a517945777a             2777 main/binary-i386/Packages.gz
+ 47fcd0ba87c184f6bf4ed3d0cc47c49a            16062 main/binary-ppc64el/Packages
+ 848a88bd3d86f601cb287de099475dfc             2592 main/binary-ppc64el/Packages.xz
+ 8a549fcd8f5ba2ede40a6ffc5576eee1              145 main/binary-ppc64el/Release
+ d7eec547cd044edeb40d7a517945777a             2777 main/binary-ppc64el/Packages.gz
+ 47fcd0ba87c184f6bf4ed3d0cc47c49a            16062 main/binary-s390x/Packages
+ d7eec547cd044edeb40d7a517945777a             2777 main/binary-s390x/Packages.gz
+ 859af3fd353b374159db6a2454e4e7cd              143 main/binary-s390x/Release
+ 848a88bd3d86f601cb287de099475dfc             2592 main/binary-s390x/Packages.xz
+ fa9ac5a217b5547bc7dd4e6e894fe135               20 main/debian-installer/binary-amd64/Packages.gz
+ 8dc5aea5b03dff8595f096f9e368e888               32 main/debian-installer/binary-amd64/Packages.xz
+ d41d8cd98f00b204e9800998ecf8427e                0 main/debian-installer/binary-amd64/Packages
+ d41d8cd98f00b204e9800998ecf8427e                0 main/debian-installer/binary-arm64/Packages
+ fa9ac5a217b5547bc7dd4e6e894fe135               20 main/debian-installer/binary-arm64/Packages.gz
+ 8dc5aea5b03dff8595f096f9e368e888               32 main/debian-installer/binary-arm64/Packages.xz
+ fa9ac5a217b5547bc7dd4e6e894fe135               20 main/debian-installer/binary-armhf/Packages.gz
+ d41d8cd98f00b204e9800998ecf8427e                0 main/debian-installer/binary-armhf/Packages
+ 8dc5aea5b03dff8595f096f9e368e888               32 main/debian-installer/binary-armhf/Packages.xz
+ fa9ac5a217b5547bc7dd4e6e894fe135               20 main/debian-installer/binary-i386/Packages.gz
+ 8dc5aea5b03dff8595f096f9e368e888               32 main/debian-installer/binary-i386/Packages.xz
+ d41d8cd98f00b204e9800998ecf8427e                0 main/debian-installer/binary-i386/Packages
+ d41d8cd98f00b204e9800998ecf8427e                0 main/debian-installer/binary-ppc64el/Packages
+ 8dc5aea5b03dff8595f096f9e368e888               32 main/debian-installer/binary-ppc64el/Packages.xz
+ fa9ac5a217b5547bc7dd4e6e894fe135               20 main/debian-installer/binary-ppc64el/Packages.gz
+ 8dc5aea5b03dff8595f096f9e368e888               32 main/debian-installer/binary-s390x/Packages.xz
+ d41d8cd98f00b204e9800998ecf8427e                0 main/debian-installer/binary-s390x/Packages
+ fa9ac5a217b5547bc7dd4e6e894fe135               20 main/debian-installer/binary-s390x/Packages.gz
+ 18300f12636e6c95d7433005d45a500a             1161 main/i18n/Translation-en.gz
+ 68ec22a49711f23bb1cdee1110c29d38             1200 main/i18n/Translation-en.xz
+ c3da568e70118aa627c8ee61dc69b882             5242 main/i18n/Translation-en
+ 4c6bd13520a009d2ee05a2d042dba52e              198 main/i18n/Index
+ 9ade438a862d4e5d1fea5594bda44002             3915 main/source/Sources
+ 894bb122aa8d52b056e641d5bc2ad8f3              144 main/source/Release
+ 8928c9e700c5fc5ae157768ca56ef648             1156 main/source/Sources.xz
+ bd9feff86e4178ddf664e899ee714f5d             1127 main/source/Sources.gz
+SHA1:
+ d7d44114e03a12992656854f5654f5e704861b2a              143 main/binary-amd64/Release
+ b91718340ec428979052c610628d3463cec99def             2592 main/binary-amd64/Packages.xz
+ e8359c6a9a4e21eb00d3a95500a9ee9c3352cd22             2777 main/binary-amd64/Packages.gz
+ b29de0d4e07999f700abfa7fd8cec0520486517b            16062 main/binary-amd64/Packages
+ f6c364951f3f0ae4fd3fabd7de3d0bad5edf9a70              143 main/binary-arm64/Release
+ b91718340ec428979052c610628d3463cec99def             2592 main/binary-arm64/Packages.xz
+ b29de0d4e07999f700abfa7fd8cec0520486517b            16062 main/binary-arm64/Packages
+ e8359c6a9a4e21eb00d3a95500a9ee9c3352cd22             2777 main/binary-arm64/Packages.gz
+ e8359c6a9a4e21eb00d3a95500a9ee9c3352cd22             2777 main/binary-armhf/Packages.gz
+ e4b2037ef9ef459f8168a053352bd045052ca315              143 main/binary-armhf/Release
+ b29de0d4e07999f700abfa7fd8cec0520486517b            16062 main/binary-armhf/Packages
+ b91718340ec428979052c610628d3463cec99def             2592 main/binary-armhf/Packages.xz
+ 43b0d44b99f5c418668c7d9f026590d2f2a6f788              142 main/binary-i386/Release
+ b91718340ec428979052c610628d3463cec99def             2592 main/binary-i386/Packages.xz
+ b29de0d4e07999f700abfa7fd8cec0520486517b            16062 main/binary-i386/Packages
+ e8359c6a9a4e21eb00d3a95500a9ee9c3352cd22             2777 main/binary-i386/Packages.gz
+ b29de0d4e07999f700abfa7fd8cec0520486517b            16062 main/binary-ppc64el/Packages
+ b91718340ec428979052c610628d3463cec99def             2592 main/binary-ppc64el/Packages.xz
+ 1ec53ae0847e4f1b85c1a25f48c590f91d7dd619              145 main/binary-ppc64el/Release
+ e8359c6a9a4e21eb00d3a95500a9ee9c3352cd22             2777 main/binary-ppc64el/Packages.gz
+ b29de0d4e07999f700abfa7fd8cec0520486517b            16062 main/binary-s390x/Packages
+ e8359c6a9a4e21eb00d3a95500a9ee9c3352cd22             2777 main/binary-s390x/Packages.gz
+ 39085ce18ceeb22ff9748ffb81f405f105236015              143 main/binary-s390x/Release
+ b91718340ec428979052c610628d3463cec99def             2592 main/binary-s390x/Packages.xz
+ 89892054d65b8b0dd6a081b33a97b6f2bd1fa267               20 main/debian-installer/binary-amd64/Packages.gz
+ 9746882f4236fa1c3a8f86be2f1d9c46680c0b10               32 main/debian-installer/binary-amd64/Packages.xz
+ da39a3ee5e6b4b0d3255bfef95601890afd80709                0 main/debian-installer/binary-amd64/Packages
+ da39a3ee5e6b4b0d3255bfef95601890afd80709                0 main/debian-installer/binary-arm64/Packages
+ 89892054d65b8b0dd6a081b33a97b6f2bd1fa267               20 main/debian-installer/binary-arm64/Packages.gz
+ 9746882f4236fa1c3a8f86be2f1d9c46680c0b10               32 main/debian-installer/binary-arm64/Packages.xz
+ 89892054d65b8b0dd6a081b33a97b6f2bd1fa267               20 main/debian-installer/binary-armhf/Packages.gz
+ da39a3ee5e6b4b0d3255bfef95601890afd80709                0 main/debian-installer/binary-armhf/Packages
+ 9746882f4236fa1c3a8f86be2f1d9c46680c0b10               32 main/debian-installer/binary-armhf/Packages.xz
+ 89892054d65b8b0dd6a081b33a97b6f2bd1fa267               20 main/debian-installer/binary-i386/Packages.gz
+ 9746882f4236fa1c3a8f86be2f1d9c46680c0b10               32 main/debian-installer/binary-i386/Packages.xz
+ da39a3ee5e6b4b0d3255bfef95601890afd80709                0 main/debian-installer/binary-i386/Packages
+ da39a3ee5e6b4b0d3255bfef95601890afd80709                0 main/debian-installer/binary-ppc64el/Packages
+ 9746882f4236fa1c3a8f86be2f1d9c46680c0b10               32 main/debian-installer/binary-ppc64el/Packages.xz
+ 89892054d65b8b0dd6a081b33a97b6f2bd1fa267               20 main/debian-installer/binary-ppc64el/Packages.gz
+ 9746882f4236fa1c3a8f86be2f1d9c46680c0b10               32 main/debian-installer/binary-s390x/Packages.xz
+ da39a3ee5e6b4b0d3255bfef95601890afd80709                0 main/debian-installer/binary-s390x/Packages
+ 89892054d65b8b0dd6a081b33a97b6f2bd1fa267               20 main/debian-installer/binary-s390x/Packages.gz
+ 6519ce8c8b277bc92961186214ebbbad888dcc6f             1161 main/i18n/Translation-en.gz
+ 0441235d3462363001c4dd969c9a87d1a1949193             1200 main/i18n/Translation-en.xz
+ d565d0c08d532c1ede1e3b4f0ab78fd413230bfc             5242 main/i18n/Translation-en
+ 02dfe5f9fe34e432161103774edd9aea18524f45              198 main/i18n/Index
+ 7e2de414d3b13b116861c175b542afb9539daf4b             3915 main/source/Sources
+ f90d25f877f784b788ced255b2b8217ff4802bbe              144 main/source/Release
+ 5b5fae9583c15d18a033bedbf476a43adcf09faa             1156 main/source/Sources.xz
+ e3d6a0b3aa5443698bafe103b019273585ed4c76             1127 main/source/Sources.gz
+SHA256:
+ dd1c6b943d6307b04ccb02b119316db19a1e4716f82fa6dca89439439a5de7b2              143 main/binary-amd64/Release
+ 7fdf8e17caf49da4a24bac2a2d8013b24e17f467e735fb7814ab40ef47e996b2             2592 main/binary-amd64/Packages.xz
+ 14e763b509126664fa1407657f518dad1fbcba6293425746bfc8a771b084c1fa             2777 main/binary-amd64/Packages.gz
+ 2a2caea61b30ef23d59759390b4647cdc3b3cb1a7c10bca1a3d612bfe7b9b10e            16062 main/binary-amd64/Packages
+ d1baf2270266c0d337f3dab85d16e8ca48e86272ff35827f4513a5a71bdfbe9f              143 main/binary-arm64/Release
+ 7fdf8e17caf49da4a24bac2a2d8013b24e17f467e735fb7814ab40ef47e996b2             2592 main/binary-arm64/Packages.xz
+ 2a2caea61b30ef23d59759390b4647cdc3b3cb1a7c10bca1a3d612bfe7b9b10e            16062 main/binary-arm64/Packages
+ 14e763b509126664fa1407657f518dad1fbcba6293425746bfc8a771b084c1fa             2777 main/binary-arm64/Packages.gz
+ 14e763b509126664fa1407657f518dad1fbcba6293425746bfc8a771b084c1fa             2777 main/binary-armhf/Packages.gz
+ 7d28f2d45da056a1a549946022d74932e533d0fdf17d84b20ef4c66a4595a249              143 main/binary-armhf/Release
+ 2a2caea61b30ef23d59759390b4647cdc3b3cb1a7c10bca1a3d612bfe7b9b10e            16062 main/binary-armhf/Packages
+ 7fdf8e17caf49da4a24bac2a2d8013b24e17f467e735fb7814ab40ef47e996b2             2592 main/binary-armhf/Packages.xz
+ bcaa1a5813d25a74cfd2d736f92f014889f78927b4774f05432e6f02e27fc20f              142 main/binary-i386/Release
+ 7fdf8e17caf49da4a24bac2a2d8013b24e17f467e735fb7814ab40ef47e996b2             2592 main/binary-i386/Packages.xz
+ 2a2caea61b30ef23d59759390b4647cdc3b3cb1a7c10bca1a3d612bfe7b9b10e            16062 main/binary-i386/Packages
+ 14e763b509126664fa1407657f518dad1fbcba6293425746bfc8a771b084c1fa             2777 main/binary-i386/Packages.gz
+ 2a2caea61b30ef23d59759390b4647cdc3b3cb1a7c10bca1a3d612bfe7b9b10e            16062 main/binary-ppc64el/Packages
+ 7fdf8e17caf49da4a24bac2a2d8013b24e17f467e735fb7814ab40ef47e996b2             2592 main/binary-ppc64el/Packages.xz
+ 4765c03ad30f96deff4916b23fae3a0ff8aa78af4b0c475cd0b51c1b0ed86625              145 main/binary-ppc64el/Release
+ 14e763b509126664fa1407657f518dad1fbcba6293425746bfc8a771b084c1fa             2777 main/binary-ppc64el/Packages.gz
+ 2a2caea61b30ef23d59759390b4647cdc3b3cb1a7c10bca1a3d612bfe7b9b10e            16062 main/binary-s390x/Packages
+ 14e763b509126664fa1407657f518dad1fbcba6293425746bfc8a771b084c1fa             2777 main/binary-s390x/Packages.gz
+ 3c89cd54addf511d00da897d1d8789db6cecda09220d286bdcf893e951a33bb7              143 main/binary-s390x/Release
+ 7fdf8e17caf49da4a24bac2a2d8013b24e17f467e735fb7814ab40ef47e996b2             2592 main/binary-s390x/Packages.xz
+ 9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64               20 main/debian-installer/binary-amd64/Packages.gz
+ 0040f94d11d0039505328a90b2ff48968db873e9e7967307631bf40ef5679275               32 main/debian-installer/binary-amd64/Packages.xz
+ e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855                0 main/debian-installer/binary-amd64/Packages
+ e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855                0 main/debian-installer/binary-arm64/Packages
+ 9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64               20 main/debian-installer/binary-arm64/Packages.gz
+ 0040f94d11d0039505328a90b2ff48968db873e9e7967307631bf40ef5679275               32 main/debian-installer/binary-arm64/Packages.xz
+ 9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64               20 main/debian-installer/binary-armhf/Packages.gz
+ e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855                0 main/debian-installer/binary-armhf/Packages
+ 0040f94d11d0039505328a90b2ff48968db873e9e7967307631bf40ef5679275               32 main/debian-installer/binary-armhf/Packages.xz
+ 9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64               20 main/debian-installer/binary-i386/Packages.gz
+ 0040f94d11d0039505328a90b2ff48968db873e9e7967307631bf40ef5679275               32 main/debian-installer/binary-i386/Packages.xz
+ e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855                0 main/debian-installer/binary-i386/Packages
+ e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855                0 main/debian-installer/binary-ppc64el/Packages
+ 0040f94d11d0039505328a90b2ff48968db873e9e7967307631bf40ef5679275               32 main/debian-installer/binary-ppc64el/Packages.xz
+ 9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64               20 main/debian-installer/binary-ppc64el/Packages.gz
+ 0040f94d11d0039505328a90b2ff48968db873e9e7967307631bf40ef5679275               32 main/debian-installer/binary-s390x/Packages.xz
+ e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855                0 main/debian-installer/binary-s390x/Packages
+ 9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64               20 main/debian-installer/binary-s390x/Packages.gz
+ bd4b663892cf900dedf41ce1a87936aa5a955a35abd9ef595e3d7133439aa47b             1161 main/i18n/Translation-en.gz
+ 2efd4a3d230436572db701d4ee8ee87de3edfda6ba10defeaa751392acfacaa2             1200 main/i18n/Translation-en.xz
+ 851a469d3199a94953937ad9ffdddb8b96b9ce7fd7abc1c0862469e5f47808bb             5242 main/i18n/Translation-en
+ 64ba940e06ace5f9d21568d4f552a1491d11876c6a6c281227a77d744d263be9              198 main/i18n/Index
+ fbfef64c2cc186ab3fbb7268bcebad170e70a0276cd8957608b64a08f3633aab             3915 main/source/Sources
+ f5f6295c7d7f4a4d5d6664e3b566eb49a462c77771b4b8baaa2b26854d08ac98              144 main/source/Release
+ 42dd22ec7bc5c6bc6130b4ab142426eee41c32f3f576246204c7f5e4999725c4             1156 main/source/Sources.xz
+ 09f222336dcefec19945341fcba33acd6315c3607ae37302e5ca74cca2952158             1127 main/source/Sources.gz
+Acquire-By-Hash: yes
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
+
+iJwEAQEKAAYFAllQ+/gACgkQwlGCSO6hSIbLrQP9GoNujgqkTtwWqnJ7uBxkb7KN
+B7NkB1QI21rcBw41t8vt0sAebj1Vk8KIPcVAFzxbdT11LKiHmuuyBe+aUQXtdDwS
+59PGk7RmdyF83sOY2lOcio1NTbfoAdDusRtIMrn5vn0bbOKiEdAx2xQwQ5x0V06E
+dGNqJQX7QS0sf9A2tr0=
+=rm9m
+-----END PGP SIGNATURE-----
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    ı7zXZ  æÖ´F !   t/å£à>½	Ş] (HfÛÚ0…şëâŸ6ûØà¥Hk²>cß…\Cßeœ¦Ó†x„çÜß•‘ J{—İ}úÌÆl}±¤áÈšßÑˆ½?ÒrIçCó=6L]ÎP³¡"9“_(0Øì‹#î	Ê¸Ò9û‚ıG×	G¤8¸k» ›ÏÉÉ4TPÆ„˜ƒsµ1ïÓ‰Ñ†·Ô4Ôsz¢ş ñ©ê«òòF	4KfD5’¾f±ÃÔHXÕ¶ISÇl‘?wÈ.¡‰4ñEÿHIKoò˜O¶HÅ]…t2¥ÃFğêA>z&9Íœ“£™âxü®M5äÈˆ²2o—GO§èYµ|âà9°ıšªIPŠ‰>¾¸Ò…ßÎgÉƒá+Š¦NS@·æO»NuZ¡ÔÁŞv¼µ˜›œÇHš ålˆ`‘‰:²P;™¸Ù„¸±’Ï/=¯Ñ…¾G7]åï7}ğûéŸv5D¿ÛûtÍB†GßğœflK‡eoşÇÄW¾¶PåoÿÎLpg›çí˜XWñ¶°H™¿H¬åƒ§_=š_G†õ—È.¶ÕâE°T2Ñ%]÷U“úÕ*Ã¦P¬[jŞiÅÕå]ÀjÇ¾¹WÈ¸àõà°Š°00¼¸iı/E“Úç…Rã×©Ü_üZ­ 2•Î±>Z›½
+0-lÃP¿/2w¤/ómi ˜È$‹La0™Èİ}óŠ«–·:¤Ğo¼óT&7ãìÆygjvÖK–àÄÌczZ†Ë ‚Í©÷âåšÇ¦ZÙ
+ämøÄİ{CaõØ‹–ã…p€(`VCQ•$f¹¯!¸6Mî8OÛt&¹ƒB´ôlÉåèvn‘FèÓz¾†)a‡ºe¢häUÍÍüÎî^bˆöup‚§c˜aºcıÌüët½K;Šc×Öó-dÖŒtîMµ²¥™;*×hã§?[ıÍãª:Ç>y™Èo;£„ä(–n$$°tº3‘[­
+8àÉhn,õÑâßÄ,cwRšk“j³:SÑ…/sx“ÀZ™22ĞYg­¬P@KÇ4Ë>5A$…°°Tó:TË#9ı¨Ç!\¿#bŠÒ@Tà‰>˜¤wH3d`šrb½<ÙVÁ×``îú;î“ÏÆ§JÁQö
+Â!Ùö%òŠ=ôølÏ&°Àù"ø]5˜N\®À”A¼yPV°Ø"C^êä·×àZUG’pEG] ÏZ…'ì‚wÒÊ;¡ »•pi~³úígãŒî^È›cÊ„ëBâ;ğ¥`*˜oÁ}	^—·×gQ.½2ËN3*ä)È¯Ö]6 /·5pJ)wK¦ÉjfÖÉå:¬gÄö²$tq\›·\>×ÜÙ¥W[PCµæ˜ÃµËŒ´fq‹½Å‘wÁªõ(î	jšdVµ“•=ƒ¦²åì9‰Ö”½>d{œ	–0^P0Rfˆ“ƒ¹l/14nŠ±ËvlußÁÒH¢J´UAuß7|Ï:‡õÀ8:Z¹ïÀ"Æ­—»2€‰…†>À†³ Z!‹;.ë±Ùx¼-47ØŠ¤ãêÀ[`”>Í›té>!ÉÜ+CA×Ïâ»A˜{~Šd]¨ê	T½\8J­1zLÖ¼pOuTNy$2|föÿ4°Oö~=n],¤Sä_%SŠY0`®I”C¯ôãå¨İ­ñ?ù{Œ©˜§/Sò®Æ˜9 Ïïu¬ŞY¹²¥†¼ˆæØ×¦6¦öQ(ØÖÒÕÏ÷¨È9ø¢ãŠeµ!.+Ø(Â‡Ï©ºœËmÍ›­‘¥İ{Ipi>öy
+1|SVğ?'ß9/¨ÑwÌèùÔk…Bé(Ó¹À€BoháI×r@ª>ËŒkyM½Rõ/f•®yeyHÉ‘cƒŞÑ;4©,İÌ=2ù3)7,ñ™‘:‡›–3êçŞÒ„–¨ÜûÖ‰º¹6,pr’Ôx¸¶¼÷R!uêºîûÙk½É‰¥nwß˜Ëz Êÿ­zû½° ûè¨ï>àlÉH Q§aÊ<¿5ÎÊÎ8OÈğÛoòˆûPip
+~c§ŞïÇ6r»ª‹¢qğl4!d¨Ì2mjS»dİ¥´¼ Îm0g\`í{$4à6ÆfÉœÈÌ¾Ü€É«~#¼èÅhJ_z©Ñ:Ê'¹ÑÒ¸îd©ê¦ õiç¬dèWğ"[hÍş™[’lú†^~k¼4|™Ï=“ôºŠ•B¯ËëOsVáç3´´?0pqÙ
+“Ö^ÛA'‘d!4ÿ!ôœĞ÷À'$áÉ;äœ£«üDCs(\¬±j+<Ç]õ¶ìØ`Å,²ç†öÜéSh8pBÂOŒ(ï—±œ²‚¨õ(Rg‹ ò;([ï+Sw²osı™ü0İiÀà4mcå¥)28~gÃ./=Ëù+ÕSQŸÄJ8igÁğà’œ[ÔLä4ºÚ;RËÒòú¾ƒòÅ‘œ1XÃú½ß¢’Œ°@µHÛËn¨–Ò2™Íúáª›Ïé]oi	ÌE	ïiöö0ä=g¥ŞóéÇÈ¶D¦muAjîòù¤â Wê±í¶,üÅ•Ã÷“q ï	ä:ÕÂŸäm­Òé+ålTáªõóhkY»VW!Ù-VSìLKoÛç™´ÁOË¥|±,mW„÷Ï”O~‚sú›®ÚÅƒ
+•>òËWòwLcí§·N~ğAªì’?ë¢©–‡êŞîõVDQ„`Ã²¥àe«¸³)ƒ,îu22Q„W™S˜:nÛ}ñ]‚y1±^Bşö¿ú
+	ù_€‰Jl"[ùØ¨,!¿>ÑV‘õìájgŒÿ9?<ƒz\ø(Ô-Í±µsHìµş˜Ï˜ŠvùMÚ*ÉîÍè D¶". ù\?>zK èø±ñX?lÇ‘ñK­@y¦ï"bÕÀ†KZ·¿®,«ÎJIş¦W¼Ö”êQuşsÆ´ğŸ¶Ü+-É2Asísİ9)±9·ø¬Ì—Ò?ı|à( .0°s’3‡rVôA7U#BÅ¡\Ã&Sohnm£Â´ÇÆ¨&ìƒx½ë·n‡†¥à—«„Dş—]üã®ëÀâ!˜TC©Q¼ê¸ ¡3WQwò»óÁ`Ê”GÔÉÛ”óR²I?û³÷€¥…á2ÜÑ‘Ò€nğÀŠjz‡\$àÖÿ¨÷SÒí"
+!DÛ]r`/=«xù^­QqÅÈGİ’ 4WüG0’§£:kÈè{Ø/T‘k0Œ.O:}¯a2Ö Ökj¯/èe	ÑµTZÛã   °¹­_ˆ¥ë ú¾}  ZÁ˜ñ±Ägû    YZ                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                # vim:syntax=apparmor
+# Author: Jamie Strandboge <jamie@canonical.com>
+
+# Declare an apparmor variable to help with overrides
+@{MOZ_LIBDIR}=/usr/lib/firefox
+
+#include <tunables/global>
+
+# We want to confine the binaries that match:
+#  /usr/lib/firefox/firefox
+#  /usr/lib/firefox/firefox
+# but not:
+#  /usr/lib/firefox/firefox.sh
+/usr/lib/firefox/firefox{,*[^s][^h]} {
+  #include <abstractions/audio>
+  #include <abstractions/cups-client>
+  #include <abstractions/dbus-strict>
+  #include <abstractions/dbus-session-strict>
+  #include <abstractions/dconf>
+  #include <abstractions/gnome>
+  #include <abstractions/ibus>
+  #include <abstractions/nameservice>
+  #include <abstractions/openssl>
+  #include <abstractions/p11-kit>
+  #include <abstractions/ubuntu-unity7-base>
+  #include <abstractions/ubuntu-unity7-launcher>
+
+  #include <abstractions/dbus-accessibility-strict>
+  dbus (send)
+       bus=session
+       peer=(name=org.a11y.Bus),
+  dbus (receive)
+       bus=session
+       interface=org.a11y.atspi**,
+  dbus (receive, send)
+       bus=accessibility,
+
+  # for networking
+  network inet stream,
+  network inet6 stream,
+  @{PROC}/[0-9]*/net/if_inet6 r,
+  @{PROC}/[0-9]*/net/ipv6_route r,
+  @{PROC}/[0-9]*/net/dev r,
+  @{PROC}/[0-9]*/net/wireless r,
+  dbus (send)
+       bus=system
+       path=/org/freedesktop/NetworkManager
+       member=state,
+  dbus (receive)
+       bus=system
+       path=/org/freedesktop/NetworkManager,
+
+  # should maybe be in abstractions
+  /etc/ r,
+  /etc/mime.types r,
+  /etc/mailcap r,
+  /etc/xdg/*buntu/applications/defaults.list    r, # for all derivatives
+  /etc/xfce4/defaults.list r,
+  /usr/share/xubuntu/applications/defaults.list r,
+  owner @{HOME}/.local/share/applications/defaults.list r,
+  owner @{HOME}/.local/share/applications/mimeapps.list r,
+  owner @{HOME}/.local/share/applications/mimeinfo.cache r,
+  owner /tmp/** m,
+  owner /var/tmp/** m,
+  owner /{,var/}run/shm/shmfd-* rw,
+  owner /{dev,run}/shm/org.chromium.* rwk,
+  /tmp/.X[0-9]*-lock r,
+  /etc/udev/udev.conf r,
+  # Doesn't seem to be required, but noisy. Maybe allow 'r' for 'b*' if needed.
+  # Possibly move to an abstraction if anything else needs it.
+  deny /run/udev/data/** r,
+  # let the shell know we launched something
+  dbus (send)
+     bus=session
+     interface=org.gtk.gio.DesktopAppInfo
+     member=Launched,
+
+  /etc/timezone r,
+  /etc/wildmidi/wildmidi.cfg r,
+
+  # firefox specific
+  /etc/firefox*/ r,
+  /etc/firefox*/** r,
+  /etc/xul-ext/** r,
+  /etc/xulrunner-2.0*/ r,
+  /etc/xulrunner-2.0*/** r,
+  /etc/gre.d/ r,
+  /etc/gre.d/* r,
+
+  # noisy
+  deny @{MOZ_LIBDIR}/** w,
+  deny /usr/lib/firefox-addons/** w,
+  deny /usr/lib/xulrunner-addons/** w,
+  deny /usr/lib/xulrunner-*/components/*.tmp w,
+  deny /.suspended r,
+  deny /boot/initrd.img* r,
+  deny /boot/vmlinuz* r,
+  deny /var/cache/fontconfig/ w,
+  deny @{HOME}/.local/share/recently-used.xbel r,
+
+  # TODO: investigate
+  deny /usr/bin/gconftool-2 x,
+
+  # These are needed when a new user starts firefox and firefox.sh is used
+  @{MOZ_LIBDIR}/** ixr,
+  /usr/bin/basename ixr,
+  /usr/bin/dirname ixr,
+  /usr/bin/pwd ixr,
+  /sbin/killall5 ixr,
+  /bin/which ixr,
+  /usr/bin/tr ixr,
+  @{PROC}/ r,
+  @{PROC}/[0-9]*/cmdline r,
+  @{PROC}/[0-9]*/mountinfo r,
+  @{PROC}/[0-9]*/stat r,
+  owner @{PROC}/[0-9]*/task/[0-9]*/stat r,
+  @{PROC}/[0-9]*/status r,
+  @{PROC}/filesystems r,
+  @{PROC}/sys/vm/overcommit_memory r,
+  /sys/devices/pci[0-9]*/**/uevent r,
+  /sys/devices/platform/**/uevent r,
+  /sys/devices/pci*/**/{busnum,idVendor,idProduct} r,
+  owner @{HOME}/.cache/thumbnails/** rw,
+
+  /etc/mtab r,
+  /etc/fstab r,
+
+  # Needed for the crash reporter
+  owner @{PROC}/[0-9]*/environ r,
+  owner @{PROC}/[0-9]*/auxv r,
+  /etc/lsb-release r,
+  /usr/bin/expr ix,
+  /sys/devices/system/cpu/ r,
+  /sys/devices/system/cpu/** r,
+
+  # about:memory
+  owner @{PROC}/[0-9]*/statm r,
+  owner @{PROC}/[0-9]*/smaps r,
+
+  # Needed for container to work in xul builds
+  /usr/lib/xulrunner-*/plugin-container ixr,
+
+  # allow access to documentation and other files the user may want to look
+  # at in /usr and /opt
+  /usr/ r,
+  /usr/** r,
+  /opt/ r,
+  /opt/** r,
+
+  # so browsing directories works
+  / r,
+  /**/ r,
+
+  # Default profile allows downloads to ~/Downloads and uploads from ~/Public
+  owner @{HOME}/ r,
+  owner @{HOME}/Public/ r,
+  owner @{HOME}/Public/* r,
+  owner @{HOME}/Downloads/ r,
+  owner @{HOME}/Downloads/* rw,
+
+  # per-user firefox configuration
+  owner @{HOME}/.{firefox,mozilla}/ rw,
+  owner @{HOME}/.{firefox,mozilla}/** rw,
+  owner @{HOME}/.{firefox,mozilla}/**/*.{db,parentlock,sqlite}* k,
+  owner @{HOME}/.{firefox,mozilla}/plugins/** rm,
+  owner @{HOME}/.{firefox,mozilla}/**/plugins/** rm,
+  owner @{HOME}/.gnome2/firefox* rwk,
+  owner @{HOME}/.cache/mozilla/{,firefox/} rw,
+  owner @{HOME}/.cache/mozilla/firefox/** rw,
+  owner @{HOME}/.cache/mozilla/firefox/**/*.sqlite k,
+  owner @{HOME}/.config/gtk-3.0/bookmarks r,
+  owner @{HOME}/.config/dconf/user w,
+  owner /{,var/}run/user/*/dconf/user w,
+  dbus (send)
+       bus=session
+       path=/org/gnome/GConf/Server
+       member=GetDefaultDatabase,
+  dbus (send)
+       bus=session
+       path=/org/gnome/GConf/Database/*
+       member={AddMatch,AddNotify,AllEntries,LookupExtended,RemoveNotify},
+
+  #
+  # Extensions
+  # /usr/share/.../extensions/... is already covered by '/usr/** r', above.
+  # Allow 'x' for downloaded extensions, but inherit policy for safety
+  owner @{HOME}/.mozilla/**/extensions/** mixr,
+
+  deny @{MOZ_LIBDIR}/update.test w,
+  deny /usr/lib/mozilla/extensions/**/ w,
+  deny /usr/lib/xulrunner-addons/extensions/**/ w,
+  deny /usr/share/mozilla/extensions/**/ w,
+  deny /usr/share/mozilla/ w,
+
+  # Miscellaneous (to be abstracted)
+  # Ideally these would use a child profile. They are all ELF executables
+  # so running with 'Ux', while not ideal, is ok because we will at least
+  # benefit from glibc's secure execute.
+  /usr/bin/mkfifo Uxr,  # investigate
+  /bin/ps Uxr,
+  /bin/uname Uxr,
+
+  /usr/bin/lsb_release Cxr -> lsb_release,
+  profile lsb_release {
+    #include <abstractions/base>
+    #include <abstractions/python>
+    /usr/bin/lsb_release r,
+    /bin/dash ixr,
+    /usr/bin/dpkg-query ixr,
+    /usr/include/python2.[4567]/pyconfig.h r,
+    /etc/lsb-release r,
+    /etc/debian_version r,
+    /var/lib/dpkg/** r,
+
+    /usr/local/lib/python3.[0-4]/dist-packages/ r,
+    /usr/bin/ r,
+    /usr/bin/python3.[0-4] r,
+
+    # file_inherit
+    deny /tmp/gtalkplugin.log w,
+  }
+
+  # Addons
+  #include <abstractions/ubuntu-browsers.d/firefox>
+
+  # Site-specific additions and overrides. See local/README for details.
+  #include <local/usr.bin.firefox>
+}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         /usr/lib/firefox/firefox
+/usr/lib/firefox/plugin-container
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     LP-PPA-ubuntu-mozilla-daily
+LP-PPA-ubuntu-mozilla-daily-firefox-aurora
+LP-PPA-mozillateam-firefox-next
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         // This file can be used to configure global preferences for Firefox
+// Example: Homepage
+//pref("browser.startup.homepage", "http://www.weebls-stuff.com/wab/");
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             GIF89a  ã    333LLLfff€€€™™™²²²ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ!ÿNETSCAPE2.0   !ù
+  ,       HÉ‰  ˜Z›gÕ†ö}áH–ŞI­l›‘” t“a ¶ëºŞ­Üùpe0È
+&“ò|.¥Q…^³Ú­Ş"'ÚN !ù
+  ,       HğÉùB ˜Z›§Õö  ö}áH–ŞI­l›‘Ô0tÓq<¶ëºŞ­Üùp…@È&“ò|.¥BáQ…^³Ú­Ş"'ÚN !ù
+  ,       HğÉù„ ˜Z›çÕöö}áH–ŞI­l›‘At <¶ëºŞ­Üùp¥PÈ&“ò|.¥ƒáQ…^³Ú­Ş"'ÚN !ù
+  ,       HğÉùÆ ˜Z›'!Õöö}áH–ŞI­l›‘TQtS<¶ëºŞ­ÜùpÅ`È  &“ò|.¥ÃáQ…^³Ú­Ş"'ÚN !ù
+  ,       HğÉù¡˜Z›g)Õöö}áH–ŞI­l›‘”at“ <¶ëºŞ­ÜùpåpÈ&“ò|.¥ àQ…^³Ú­Ş"'ÚN !ù
+  ,       HğÉùJ¡˜Z›§1Õöö}áH–ŞI­l›‘ÔqtÓ0<¶ëºŞ­Üùp È&“ò|.¥@àQ…^³Ú­Ş"'ÚN !ù
+  ,       HğÉùŒ¡˜Z›ç9Õöö}áH–ŞI­l›‘ tA<¶ëºŞ­Üùp%È&“ò|.¥àQ…^³Ú­Ş"'ÚN !ù
+  ,       HğÉùÎ¡˜Z›' Õöö}áH–ŞI­l›‘TtSQ<¶ëºŞ­ÜùpE È&“ò|.¥ÁàQ…^³Ú­Ş"'ÚN ;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       ; This file is not used. If you modify it and want the application to use
+; your modifications, move it under the browser/ subdirectory and start with
+; the "-app /path/to/browser/application.ini" argument.
+[App]
+Vendor=Mozilla
+Name=Firefox
+RemotingName=firefox
+Version=54.0
+BuildID=20170612121707
+SourceRepository=https://hg.mozilla.org/releases/mozilla-release
+SourceStamp=e832ed037a3c23004be73178e546d240e57b6ee1
+ID={ec8030f7-c20a-464f-9b0e-13a3a9e97384}
+
+[Gecko]
+MinVersion=54.0
+MaxVersion=54.0
+
+[XRE]
+EnableProfileMigrator=1
+
+[Crash Reporter]
+Enabled=1
+ServerURL=https://crash-reports.mozilla.com/submit?id={ec8030f7-c20a-464f-9b0e-13a3a9e97384}&version=54.0&buildid=20170612121707
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 ‰PNG
+
+   IHDR         óÿa  IDATxÚ¥“kHÓQ‡³«Jié¼,™ÛÿlKKğ’+¢lZvÓ4­œ%ÎKJa+›Z‰
+uVh$¶.$b¥vC3+ü¢®²²DW^*uKg‘N%Ò.èÿ×YÄHªOx8œs^ó¾ç2e¶»ïñÇ„âñ 7©şcQlİ@Ÿ¼ŞÄÊµÃll½É°§áC¾ü^·Ë?¦lÑÙe­<äÂãQRP‡€R-¤wû±¾v ’j#Ët(nê.¯8›ùí¹£Õ$AŸÒs~W™Pe*'³¸z>[Ô‡àv¥¼[Ø•½· ITÚÓsM•É5“Õ;Äk;d½©B2Ğğ·S·1ãb+l4-°ÏyïŒÛÔâS¯Mö¡Á£X&ÿ]<ƒwûŒ*ıq´§®Æ™¬8ä4`ªœƒÕàÄ—@SyÌFÿ‹i'-‚¶8Q¿‹ÀBĞ§$xšcñá ©epSTaAR9leç`³9w.‚5¢½Fl´t2Áx÷ºs.ZÕº¥X¼]91Ì‘Á:Të5Y°–ìÅ÷‘°C‡Q}AÊ~ovšúSğ,B0ñ:Š ‡fñ$HˆÒ	œSà¶é BäñpNƒ­O"ÜıdøÒ„qƒ×Z2¨fZt	Şn'x#£™$t+DĞ§ÔÄ	{Q4TÊå{èŠÑÆyh9Î½c”¬ ÊÆ•ma]2ÊN‚KÁ^ˆúÃİc=ÂÀ÷âU1C×]Ñy‚‡ª­â#A†Ÿ—CŸàãÓÀ_’hZÎn‚[‘^H^æõ_ôfæ`HcP)b›£˜U“^¢Æ“ÙöÀ›°æLÌå˜Ï¤+Æ|.ôzôíe —3x¹UÀÖ‡ğóşxÊ´Ù%;:çŞ	¾6HQÑ&‚öp‚ÎH‚Öp7V0ì~ç<uù›`:e–uº’ãÜ|™Ï«Z"`+}øl±÷ÂÏj±ëëH§¹…4fÅæŸ¿Ñ¼HáRÌéL+«5´—Pø[ŠÕïñ? ²Ôªé’”ù­    IEND®B`‚                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   ‰PNG
+
+   IHDR           szzô   tEXtSoftware Adobe ImageReadyqÉe<  	JIDATxÚÄWklÕşî¼v×^ÛÛ8ÎË!	C PAH %
+”@	 "AZP%P%Ê³€ZT‰–JHˆªj+”Pˆª­Š (A)Ò‚	”WÒ8!Á‰½Î:öz×ëİ™×½ıîìÆ„W“öO-½Ş™Ù{¾óïœsG(¥ğÿü³÷Á;Ş¬8­¦yy$ÕÅ±T+c…“¡`7o×…À.ÓÛOOøÑs¯ÎÉãÙW‹om+µ¤ûöjßQò£n—•T0è4~Bï‘l#ZLí)s$m?š¬ÕzdmOô_˜Üt¶ÑyÛ@‚şî7+kË^ôÛCS^ßX£l8tšµ-´Z,†«qø±ÄtÁ"œÙá’%Ø3mìœôå5?^=ëŸŸÀ8úËø½§öAéAıÿwJ7ï/T^zûıBßàÈ†‹S­z(D1ŠtVÉ»Ô&’µÊ@êÚcÚ²WöŒra/^}ò—÷<[~´sé1È ü®;!7Ş÷§W~°{hü]{óÆğØ$»u´¨¾—Ù„-¹¯a‘Ú‰LicÔã´1?BVªùPdªl8øúc£8ÕŞ–^qåMë_Ÿ¸öå©§V]ğS0tëÒ’W¹Ag8i=:å(d†Ô·ÌÂ÷Ûƒî®2n˜¼O§¾Œ¬e!eˆäw÷¨Æ1<iŸ˜F»’8Á¸æôìÛ·÷_v£ò~u³<ãªáõæ¢íÏÀoöÏ+ç1L³æ	d:y3Ek“0gE0¹¾“ZŒKË›dÖÙ¢fN‹i±ıi¦Éq}¤ı Ÿk5ñèõgÓO¢'[Çàğ\´çï9Ğ9¯°4½bğ‘øu,pË³)¤³Tv¢n~0×*É÷úN…ÖÀ…ã0é„ŠKÌ¤9‹ ôƒ’•r*øÅ‹{Ñ3wPÛş…UXKÎXèdóW}¢˜†Ù5qDUkgŠÔˆd3E‘A[,°àà0*ŞñE}([mxl¸¯,Z§i„Áò4¨	‹i°X	V$!	èÑ×†ğµ]èé¸p¸rÏzøUºüİG d¬è>ÉŠ•2)çFô4‘0Ğ0¯*:<‰S¦J0º{°Õ˜‡™,CAç¢ê&«.Oƒ ßG-ğÄÖ·pãùaƒpŞcÚ×ˆ£È»|œ&ãÕĞ dcU€×i¹Zû.@öœ³ñÒˆ‰-ïö ¥UEu®´˜Ô¢¶“B†L­‡·Â_äÎñ8Ğ²†‡Œˆ,æ«j¢å«¯ÄL§f ÍÈU€¦^;W@ÇÒ ãÿz·<^Æ[sk’‚«Ã©°éXÑaà¹İjÅÃ¨W+X»´ùQ*;ü€ÁT ûôÓ‚ÃÏ/¸{F„RŠ5qÔˆ6‰8q®‰Ñ¹ªëGœ»uç Îh}×…_sé¨wj
+é–¾‡Ø«!ªM#*M Ã±pçÕçAÙs!CJXLA?v¿×yóL
+âPôi LOBı‘èEPé€@E¦°·¯—]Ğ‚GÇB‰`“ HyT«$ÂÑ,¨ˆtr5¸Næ‡±á¶e ˜÷Ï£tcW©ŞröóÌ@ä©wHÿy0éÔl”Ş[
+CÛïÏt÷ãçåÕ„l#°jÆ‡ ”Œ™W7JFèÓqH1	 YÚI¿¤ßßÂ½9<ƒm<hÂš#…sf>>ÂÀR«Dı’V¼snUÓô.T8=S‚*†L—.7>@T€.C½Ö	„àb Á€äWÆ˜~O·Á¨ÿcy}~zj&’|Æ‘J¢7£Äwò!é¼«—#–µ{~ë(6eş{‡ÏÀDI ¬êÃÚ¾<|ÓÄæ]KP(ZP%€ˆ}!„%C¬YÌaUè€•µÙk )Ú5'tTzû ú5ŠäZı¯X"Ùœº0ÆÿZ®ësÃ87WÀ[n'wVpb÷4DFÂh‘¸qÅ\ğğZ3¡_Ô],_"qİ:FT+Âî) š)Ä4Â‚£+ëoPÑ9K®Ğ‚ÓBLôNœ7Éª™ĞùÑm³U¦ÀüpßAÅ&^/µã½Ù³à–}˜ìššæç2„L<á°<Ë
+áT°¶=ÿa€_;( 2S›K*¡qØA2ìÌ†5ŠuR³¡ ÷w)úBÉÆë½xAÌªºÇÂÒ%I%\±²„pÚ‚Õc *Øˆ¦lÈq~Q¼:ÿ'ï0àôgvË7.êßìùâú„:Ñ ì&]vš3õ›÷u`àPEicHµ°I2ïl£Ie×‚ŒØÖ-¯à¤:õXE£¼E€1û^uÈÄ¾©`şÇ‡óı3W©ë_ˆ£YĞÍ#}aãISÈµ+lÈ¢0n“é˜-7HJÒ²¬š]ÅÅË8'_Å„[Ğ½D@Nš üzG6vMúÔÉkkú«×p•“æĞI+°Ãq’ÒOÄ©hDºZêœ–ÿoÃÛ¥4J¾ÀWÎpÖìZ[b´Ï²{VI¹njZG/·#SpfÎ»|Ùæ=OÀ/õ÷VJØÉh:R®A0¨†a~hIãjVˆ^5@Kÿ¦…½ÂÔâ7 u7ÕÇJLƒÊgOıóK?õL¸ò¥Áég”ò=2™?Ÿ'Í€Ô~¢-–QcÃd‘©@%À^"ù\0%PˆY)ŠûÈiæ
+AÕä@àWó½à¹åı7ñò¤_Ø)‘¤ÂvlèN©ËSGh|œÍÖ|äDEAjğœAnM<BIİ²jË`ı˜ ˜çÁ'ŞÖ—¶ïsa¥˜DkÁ²ÙrÍ³	")×¦p h”*ÇŠeû&ı»oØ;t?oÕ>îï³ Ğ%æmÌu^¼!—»«+eÎÕ ìD¢É„šqôŒÆ´NNR|‡Á¶ÉVŒ»1ºêåçnİwğN}î¥M/ KVƒh5Œ“¯Õuí9Ùìº®”•Õ tô¢B÷#‡X}€Š”ó¢‘—Ç«¿ÿi~üq^¦•èK÷»asÔZM ½¶Ë7´ç.<-“Y³¬>ÛFoÊÊñ &‡Ã +åM„Ñ¡É0ŞÿnÍİº½æ¾ÆßĞ¦¯ê{9=
+Œ&Y§¦–k®i¾+ÜÚ‡7ÊM‡òÇ³÷¿ 0
+ñ¸tñp    IEND®B`‚                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        ‰PNG
+
+   IHDR   0   0   Wù‡  ÇIDATx^Õ™UyÇÏyß÷ûv¿Íf7÷M Üb‰D‰…‚bñRÛ.Õ±j-èØN«UN‹ÓÖZ¬¶2Jë•‘¢ÕQAê¥(bkå HBÈlØûw}/çœ§ß~ßé¬Û$6Ê´3¾3¿yÎf²³ÿßysæıvEUùu~¿æOÌ‹¸êÑZÿ@)zuz¶õœæTWC(	€B&Â^#ìˆDI"¹¯êÜ¿b]şb^ÔıÅ×:Ï©õ¿İ(\©ğŠó 
+Š¢AP:"Jd¥Hè‰¤VŠÌ7á¦®›óğÿ«Àõ×/Èœ~l²eOŸÈ-uë±!m„‰ mŒ "¨WT7Šw²æ—•R¢½IôƒrÄÆ>wÓÿ©Àõ›ª2ÏMcü’±Z*ÕÌ2R’6ecè‹M§FQ¼*ŞCæ=MçiX‡·¹Şò{+J,œË#ŞgÊ§°îºOœµ õ¢qõïOyıäÇWŸJx>²©vÖX£Ø¼mÿä¥Ïî—=#Uö´rFZyÁda©yOÕ+-…Ì+™Ò¡P¡@Û€
+$±`ÛLnüÙwoŞÇ×¤æ¢¥Ñ•Id¸ı¯óègŸğ+ŒÜ°¡l[î|îÏøğƒ“—ì©İ½u÷ÈÒ½Æ¯2VkĞš¨Ñ¨·˜Ì
+ŒLrRô‰Öhy¥ğ`™‡ºƒšóLµ™l“©§\Ièë/qçsuŞyë³¬Ÿó4×¬ukG6\~Û¶gmÿ—¡~%W¯ÿQQgesBßÿ7wm¾â¹_{v×=N0:U§ÚhQŸ’D¬éÙÊ-ıylğb®îı"5«mÕi
+Ç”uLZÛéĞxám3’;jÍœf«À©20PáéFÄÛo$nİÇëÄŒ¿õ³ƒnşÍ;¦¾}ê;‹g®‰©k4¯û?t™´+«ÿÁg>÷¯ËßÁT=¥^X2¯81PN¸V¾Ä{Êw`bÏ3ùJŞºïJZƒez#GÙøîa¬*y›–ó4£°şÉ:¹B£cŠ‚7¯âŞ-ŞÑà¦ß½7|1w½åïzŸúÊå_x©ùÑùÉ)üşQ	ì»zM%«³&¯é”°âù{ØØÚÍü¹M––Æ‰û-é‚„ƒ2ÕføX¸rç{9Ø?ˆ8G¦J"BÜÀ¡^É¼Ç;O©•cR‹µQÕÓ2°y‡å›ï8o>¸‹Ûr×­ş2¬~;w½ñÚhÿw?ò¶şÓOü±»óæÿUÀ9¿®ö‚ÈtøJ¿²x%[Ú	†2WZö5 Ü;±Ç9™¨°x¯¤áf’  ŠzÅxOl=¢[Š0ŞáœÇ53¶×[|à+ğÕ÷ÅÁñA(>†Vïà¼õ¯à{\ÄIµÛn0[—|+Yu°úTH&öKOP–(*@ƒ¥„g|[Y¨Ä¹ÅG5¦ A@T?Ç8OÔF¼â!2V¹s<y°ÉÍ÷lçİç¯BÃè'1É±œ}Ùjì:qáñËxğñ_( ,9Ş3¸ÔDALƒ„tßeı–Ç¸ö¤/pÇÒ×–{H£2ãi/¸ ‚€éà1¶sDEÛFÁ`:İøìŸå’3c^ï´r4ïgAÏIÌ;q	dşŠ pä[¨WÜ)êBHUP‚ AlŠšpñ¾ò­½×pWõCü´øß~ú}¼ò‘o“¤IÖ&/ˆ§ÉBÍ,qÑ&Ÿ®),i+c¼iùê½ƒE*À‚¦˜6bt¥Û)«ØáëN~©q\éAUğ…İ×nEq
+4¦# ^)Æ2¼ËÛ<‘Z^êÂi›Ü"µA"uÂ[Û¦(HmÁ×º›?>· ?‰”–ƒ$ ã ˜ˆ³­‡ˆTÿÌ¦DŞ×®z3#uÒAÚ`Si3°œ9ç¼oÉĞ[t1û6-%Éòğ}¾Ô7Z¨s]¼GM„‰¶è
+¶`Ëî&»wœ° 
+xğ)”@ÄpÊa;°ÿº—VË¥>¼”XgÂÀƒZÂñgXÈz)UbòãNæ3›ËÜº!$Bâ
+DÁ¦j-šç¨ó8çğÎvD’rïkl–QLòğÓUN8³	n•*¯…æÍ:TûŞêJÿnÎˆÄ¾Î§ôzFÃ Ä ^Ã¼ƒjøw+h1R^îhÜ¿Ÿ4ó‰‡Ö2@¬Ä®  ”HÁ‹PCšf8[ Î¢íj›u$q^÷²l{ªÎÖ]aÃê› s‘Òx;ëÒú¦â/ûßÀU³°z¾ÍÁ‡¹FÂÎ3ÓÄ^PÒ$Ñ5}\½ù\´Ü‹±DB~EÛ„]'Š#l³·yhÓ(pQB/àË/æŸ¿~šƒ6¶@#8Ô¼œ=Oì<3®²fà½¬ux+0+,(a=X:áÉ¡Tv´<H–!"]‚?EÚÂf-ğÓ–tíµ†.LƒµHìiV'X¿jW¯r¥+ 	ø	0ËØ2ÜZ|ÜÄ¸?˜%àr){«ø°qâC<ÁPÃõ	¾€‰=BVœÃY6Ø"Ë2ŒÄ ¡‚¢ø<Çg)ê=®ÕD½gÁ9ÄÙ6’·H¶ÀnãìÓæƒßŠ$»Q³Ü^ĞˆÍcC,2£&ä˜¸´~¿ÈxÖY~C=	×¦Ÿ©ø®TV‡€(®-Î¡9ÖK	y9ì~`Ö9’¶ EÄˆ·H´¦<´n#Ò -ÅôœÅ6ğ5z~>)ÓágP®K¼a„ó`££ìy\(•`îÅSõ^T"r5H¢bÚ   Åx&Ædõn`ïç‚H—²¯¢õï@¼
+_—4 ØO÷±}÷–ŸG‹CGãœ€0a”p tÅŠ&ˆ‡Á…Jÿ<Hú,—øgøVõ%¨1 ‚J§vP ‚‡*˜¢<C\ŞÍH>©SLŒ-¼”|ì1Le	’? n˜g³l|Õ&zc}æ‰E½SÔ1àÄ4$6…şAeÎ Ä½ 	üÕ±÷³p¤É‡Wá%"ì~§.èÉ8séæ÷µØ>1‡ö/Â{<&O;á™`áÜˆE¥éAzÛk—Kyñ4ËÀ[NªÌãøå£¸†l:D@Õ<âÕç®}A<3]¨Ì¸éÈ^uÌüÎÂÜ´o5;³9,ïkò†ãöpá	{)õZLÍ-“Çò®¯¯g8-a¼ëŒ&êTQÏEgqá‰û±£1rò.z†FĞ¢…÷u%üx›(Üsˆ€)EŸVÜ¼'BAÂEf¦Q¦h£¶¢\ã“+Db…¤ä‘T»?¼P|K9¥w˜«7læCw®…Rİğ® UÖ½dçœ<AºSˆÌİ8_Ç6{Q/xQŒ$h*Ã÷Xñ¹Í{ÓªÍŞ³N½ (Æ€ÄnELÚF\Fµ+ä":¨Hu†¼¡LîFö0çàÉæ|L‘"ª(2pÔó[/ûÒ4Dm9×¬aë=µÔ45¸ÑD¾»hã±Ù{lÁ:#
+ÄK°D ]±¼	¦&ÑğÁ;(RhÕ :nØ_O¸Y—ó¤™îë‘ˆQßA§ñ–+«,ëW²‘„hÀSLU°µ2¶ZB=øQƒoŞÈ§ø:ôp{³Êû­
+(£ˆ0•  Pêƒ¬IhÖµ`sÈ2Ø“÷ğ ËYHİô„5ƒkuø¬ÎòsÇÈ'ú±uC´Ä“–ğõW7àÁí3LŒÅZšâ©#
+¬şÆÖû¾`ÕV$„WEè
+ ˜u=–{¡glz¡O=5„*L¸O¸Rù@»"Ú­>¼|¶¼Åy'41ù4É°cj_3øT:ëÚşˆ-Ï÷ÊiZCÀC¥„O5Uo´¹„à¢  ÌH(@@áÜEu†NßÇ—v,d{Æ²Qœ³¨÷ Dq‚ˆ‰rùº1îÜÕÇÇ.|Ä&è8ØÑ´ÛMW3h!P‡ŸZÌeı#Ş{}àˆE&Ÿ/•õšVƒet@g– ë¦ pÊœ”Ÿ¶IñÅ¶È{ñATÕNìÏx÷©£œ³¬ÎÛWMRéó”Tiì[‹Áƒ:ğM„[œGo=ep©håW·MıBõw?“>zşª¶Ğ[CBUĞn‰ £@DÕÀ€q\µê —,Ÿ`óTÃMƒ‹*Óå,©ôÆ
+…RYäééñø:¤"¼—™kÚÁ–‰6örİŠ}DÊGıÛéÿ8sÕZ^—„8¤D§Æ±vjµ‰Û˜ĞbfÕ™µt‘PÅ@TRJsƒDJŞ0¤Uƒ ªŠæİº}¬Ìq&ÃæüèÔïl»à¨ÿBc"ŞÙæ±"×Å¨ ¡*mÃ×~F 	"¢dMl«+ã]÷Õ\PĞ\Q«¸–“‘µØâ¬\Êaèúë¯?¬Àq—ÿiı²¥óî§·¨'A”.h ˜©ˆ3k 2óë3î—
+y]ğİğ>SŠŒ6B³ÁÃãu½ğ•÷nëd=šÂ^–¾´òÄË–Hòù(&cˆ!JãQ¬DL ¼˜"³FèĞ¯Õƒ*ˆG«Øœ…<EGªzË?í½ú¶““€UUv„BãIŞµ}ç®[zÌû^Q©|¼ä¥â½‡]ôÎÚEÿCÂ³Î@€¼*¶ C‘Áøc?®}ø†İÃw0˜£¿>°ÿ?_?wğª·Í_ğç‰Yê=8IIPQ,hŞ+ÆÍ
+ß­2dfìœS¼‡zCØ4ÑËüz‹Mõê­7?z8İ£Ğ`kH¿_|êF}ãŸ,Zòë*½¯*Å"ÎFI0D‰Å¡FÈì.àP¨ÚˆÛ†çñBîxu2¦;\zûßhP„,
+üRg@‚`0˜,–Qé[Ùàü7ŸÔS^1-b"Á„à&
+13ç!¼S¡3JÓ"ïy¡QìıÆş©[¾62~/p˜ j@‹ ¡ªG%0["f ô‘…À’¶ÈÚ×÷œ»ª§çe}±)©R§r„Å+ä…jÕºñ]ÍlËO&÷İ11ù 0ŒU :`9RàÈİ(…ô…®L3`¢Eoš;°aE¹|ªƒJÅ˜xq)^6GC©÷ùÖ4ÛÜT?	šOµCïÍŠıÛótçÎ,˜k@H	Á¿ëG8Zº’¡r 'ÔaP‘\5¡²Ù9PBºã/^àP™°œ-…™	 hÀøå³_çç¿ ¢µe,ƒÀø    IEND®B`‚// Disable default browser checking.
+pref("browser.shell.checkDefaultBrowser", false);
+
+// Don't disable extensions dropped in to a system
+// location, or those owned by the application
+pref("extensions.autoDisableScopes", 3);
+
+// Don't display the one-off addon selection dialog when
+// upgrading from a version of Firefox older than 8.0
+pref("extensions.shownSelectionUI", true);
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      PK     !<6pa‡	  ‘             ¤   bootstrap.jsPK     !<UnoT  •             ¤>
+  install.rdfPK      s        PK     !<6pa‡	  ‘     bootstrap.jsµYms9şî_¡LÕî1Œãueíõİa˜ÄTl ¿\*NQb gĞ°’Æ˜ıß¯[óÂÌ€²UçK­Vëéî§[rí-Ù{»G¸1¡÷4ª½Y8bÇDğà„Ü«½d&`,8&Fúmm§ö–\M¹"^IŸ‘&¬!B9#0¦¢á=ó5Ñ!ÑSF4“3EÂ±ùã2ü›%½hp‡¼%ÜgB±*ypÈ³ïö˜Pâ‡óe¶¦wATj2âJK>Œ4‘×Sà
+ÕŒy :>‡ñ© áPS¿#T“©ÖóãZmïí„rR5Ø­æàavüP(M¾ûUŠ©cÒô« 	>¦¾ù›WI¤y€_£gr
+çÍA¹Ğê$]İèõ×½VãÊ\÷/½¾û-:Ÿ;Ñ|D5s"X'‰tßí]4šîà“û¥~ézƒ·ïµ»_¬•ÊkïÜ½è¹ıA³w=è»ŞõÅÕ Ùm¹ƒó¶wÕıØo\Ú-\ÿ¢$(«ÕÀUŒ¨¥ÒÌøq|ˆÁ$İtMHıà££wûN²7êétg×“	Ø¦¾AÙVŠ>»^QÓÑÔ„IJú~$Ñ£S&ˆ?eş7.&„ÇîÿÉ½Ü~¿¸×;³W[£†H|áBàF Zn«ŸØjFÁˆHI¦àT&*ù]¯;Ÿ:İÛNqçÃ<	&vûÛ8r%˜{×Í¦ëy ¿Ÿî»İÛ‰—ÅşZÍŞ¸(k·²éƒütnü°¨ô&›x¿á<·î™çv<×ì„ğÀk6.ıA§qéšˆÔ”s&*Ìöd“@©x(²£½ Ôı/`ä½‚Ôië5K·‚ƒtfh6·Ác6{£ Òw<’‰4.Pàóà²Ûjh»­$ªš‘Ã¤¶-É”á` ¸‰d@r£(`ªæ1ù Ìªœ{5³*°d	_ÜDi*u4·+äûÁ$³3Yˆk.Æ¡ÓõÈ@ã¶İé\Y±!’éHŠøş¼±¡àGˆ’&†ç~ë¶ÑwïîZ®×ì·{WwwÉ°»»&¦¤AO†°™
+åİİ¾…ú¦ÉB~K¿úóÈEZ0Eå4ñ(¡å21–à´ÿÅúOÚP²Â…ÚÓ°X,÷¾±åIİúêø’·Ál*|f7¹#Tû6–î³É'¶¬œ¤Š2ÜÆ/ın÷
+izpÑ…¨\6šçí[Í¼j4Œ…ÆŸFÍ3"íO‰ÍR Ái’¡ÓÌéll&-ÈSJ;¸1Imwˆûè³9úí˜Xd—°ÄÄFO§ò?s’”T‘ÕÓqáöS„J`ÁÈG§Œ£ X¢«%ªÁ²®Y’Q(~Ó±¶™9j‚qTãÉj­Q‰“‚pC¹ŠÍ¹’"HÎ€¼D¡XáÊ Ãı‰AáŒ-P#lòXñS{æ¡RÁJ¬·NT=PÉ’
+i¸$Œ‚©F+ÚBU²—:6âñšìç‰\š£=‘N˜}50“§’ú'ÄÈü&c(†«‰ ô@tÇ7¢K¶[±²ÓX´Å%IÂh‚Pyà1¹ÁSÚV2Ís&­$0sË^„&›T1ÈğSHÊ	û™ Kf²É:<Q¬õù§8.ä¦5úÂ‘<íIkil~-šË¶ ”/‡z©˜e±€¹à/Cı"Èex<Ûcwl[c:ã7G›ç€Õe’é„æ@¦{õôÿ/Ğ·D{[œ7<ã¾Qê&.à
+Ô|Ù„ö{ÿ±^7Ÿæóù<2ŸïÍç_s$ßge+Š^âîĞ3ú­kÃqÓ5TI:äñ‰ P›˜õ5>	2‚
+¸©ÌğëÏL—01ÑÓ²»ËWYí›îá‘3.¨\Æ!’*ûÂ¿&˜¦Q/K6Áô{_É)UOÙc¬úË×“ÜĞË-3Ô
+ˆ%.–pa
+o:p•AºæèöCà5¬S3	¸ÖÀH?œŠ¢¾˜Œ®ÜTĞ½é'à×ŸĞÜ‘ûİİ¢µ‰«@(9—?¥&>Ú¾¯@2Äyc×*'…e&ar(ÔËz‰Ñjíc\úÅµÏ…¿b°œH¨)kÛ/l”-T–÷y‹Ö7Kà9•
+:m'Ûİ‡\Ø–U©¬åî¦ÍV)¼nÖbçÛj2ZÏóÔHx•¢R½dBrKû\@¬øM%NO/Ì…ºşWÄ ®œa[±A6»¡Í¸Y‘BéT;«OÌ?‘'‹íĞã?c6™$ş:­=®xmãQ~xˆ|éè3:i;×ou9ú2T€AlÃ­.‹‰ÄC½bšÚÄC«Ş&R´øzákÂşŠ(äí2mxÇ¦³9ijğcÈLdU“&	#ºJ <™³³Vú“ƒŸ&ÁO
+L__!•N¤n½<c¾$-cb´P±Óßå.ÏìÑ`:3)k¸L•s÷hêû¡!ÉãPÖA*Ó±…‘F²3KŞÕë¿×w²!ƒ[„ëh“5ß/âdhú‹¨ÅÍÛh¹áf8¾dFÃ‚¡O$E—†¬ÒÇî0j,ó n@²eHŠO#Û`bzÜ_-c’.`‚ãk˜P8}¬qFEŠÄ\JX ©ªí±X2µÅ'©Œ²«04ËlÆğ
+$t$N$-Û#{»g¹ŠCG#;ÛÖpÔÏká­"S^ñs—òÛä¡%½™§ßİ5à> W×îd<á.?o”e“ê‰j­õ¦6¿=¦i+İ‹×.ÊpgÂ‘ÛîíÑáàèğ•ö-Õº¹}ÛêÂnyİWø:aU3uù®ØbJ ¶)UÍ)Fv	ÔÊz_ç£Ü'(Ä§™A—n~/HÖQNõn¸©à[F$¢VAÏ†XS>¨ô˜¶·¿«–ª¬—ıµbÿr‡³İôÇo y´
+ş…¶“µ.å'›’­iÒäÇÖmx¯ù9’øÑSiÌoŞlòb!©3ÅØå(ü7±Ò¡=(ÏÃÁE˜Âw—XÈ¼É&CI…iÊ²³Í%+<W‹)Ğã™‘À–;ë°"™Ú/Gé&Ü?z°ÔŞğß³ÒT²deÖİçÿÙ†ÕÀ¾åšzÜM°Eº[¶â  >[_^%Å¡¬şì–àŒ7‹c!9„zıÕÌ’J®>ß"šÊ/Åq<ıãpzµğ¬YÆ>ç^˜§‘…OÌ¹a³Ui4…ñÿPK     !<UnoT  •     install.rdfuS]oÔ0|Ï¯X®/€šæÚ;¥)¨¥©•*
+H<:É¦gˆíÈ^ß]Aüw'Íå¨È‹cïìwf]ìDÔ†+y>;‰’ÙEd/Â¾¬¹{eu‰p©*„k¥¸3c‹XZ#ja@Õ~s«~ñ¦apg‹†— „pÃK”aA%|ªA©ÚÇ1ëî¶Ì€T7¤ya	+ØrZ; 7}¡š7®Êwe¡dTAŒ»E"0‚5Q»ŠcÑóGJ?Ä®jìøâÂ0‚ û|u®]iÎg|»İFÛ¹GŸ,—Ë8Iã4uU‡æQÛ…ÒÍ:rèW(r§ti’,b]öÑÌñdWhJÍ[rÚ+”¥ó™Õr5d­¸4Äš&Lò¹¬)C±âUÎ¬YcÓ¢~7aÉâ>8ër×¨=íG =¶˜§>æÇ@¡9©Y›“¶èû£%lC¼ÕªDc.•hñ¢Á}ÊâA_ÀÏÓHğ¾mİD0¯Eg)àÜXtÛÎÍA·’:îwŸ Á%V “¶óÿÆ¶­ÒİŒ›Şå±kO:áÌ‡šSOò‘gü7–gÉ<©OÃ2MX¸x»¨Ãe‘`x2gs¶ÄåéülñçÀƒQ'.¿Ò¿Y^LÎ±l7Á¾î±û³§›ÆÏ®Ú»ø¼µ½Ø×ZI‚N©[$vÅˆÈ"™À|êÄ×¶b„pzã^)|ôçi<tL¬&W¹G2°aÅ—æ•3Ì?aÛ²º‚çKç«5¤”k,šÈW­[ú§Ç,vO4şPK      s                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           PK     !<bş²  ],             ¤   bootstrap.jsPK     !<ÕÌ€ğ@  ˆ             ¤Ò  install.rdfPK      s        PK     !<bş²  ],     bootstrap.js½Z{sÛÆÿ_ŸâÄqP%!ÉÛDŠÚÑƒŠ5•EY¤ó˜LF#	À¡¸ƒhVÑwïîŞ 	ÒN'g2y·{{ûøíã¸¿Çú{}gÏT_ÙOEÄX'Çìƒì›•„?òäˆ½¤İ{û;û{l<%‰²9;v)Š”Áw²œ|à¡bJ05çLñ"•LLéÃñŸ8Iv[N’8Üa{ì:y&y=úì¥à³«)X(ò¥£¹½f‹@²L(ÅRñ¤T<b‹XÍaC,‘Í4N€ÇÏ¢da11QAÿË8›+•íï§úl_³}à¹§íûx™N)9C¾¡êïì„"“Š=…I %—Gì<ì‚àÓ ¤Ïq•*NğÏò™ÀíÓÊ”êóÒác¡¼NÁ%©ÎÎÊ„ËıÛ‚OyÁ3`æi§{üD#^<Æ¿‹â]Š¿CA?Ÿè4ÏÏñú\ÆRíìïƒ±A“©(3…VÉ¹Èp–}É¤Ñİx0ß_ßF¯‡× ¡§Æ:®‚ƒGìÀÿ¶Çğıöà\*xÂÉ;°tèè¥Ã½ÆeATkkÏZ4ò°`Áş]I<¹dSQë Lı´LTÌøÇœ1OÁL=òtÕ¹X°4È–ÈDW°ÈòB€Áòx?ôŒ _›sàWàWA’ UEpÕê âÌ}£ƒ7ï®ÇW÷ƒŸnwWo7ã†Ø›”áWÿ<<bş«ûnØcÏ=º¡•ãˆ½:øÖ*¹è›Vû§…9bª(9Ğ×5ÚrÒK}ÒúA/×úfå ÚYÓ ‘tØ³™Ó‹‹áÍıİğúzøn|;¼¾:ÿ¹ÅøW Ã4;$Ài¶d?òÉà#h_Æ¢¶Ğ‡€RC+ç°XÑ¡+Sc·â.ø÷©>¤~€$‹jZæ'¨;ºK<e^#î×ƒÓÑà~xw6ŸvéBÀó¬œ±Ã¿~ıÍ«¿ÿõÉÕĞ¥2@Ê‚ñ,˜$€Qè™Èúb:Ã8H˜l'‘ÔŒÆÖƒğaÙƒ%E>v  ©ŠI‘<rÚƒS.g³#Mo=¸ Ô°½?‚“%íçA–ñ„eA
+H¹˜Çá\“®"K–€³Kôq„Yà_Ær!®œgì,Hš»ÓWğ5õk±À÷¶]“yIüÀÍ)pÄ"4Fp¬œÇ9»ŒÅGØ‰q >3
+ÿ+dè)H® ôƒ¤äš…F{º¹²¹-›AàzjSSÄ§€C…˜ú>ó¢¢LQ{]Ö1{:¾5:8$Ç$ó•bJğú ¥‘Â§ñ¬,ô5%(åC-:”ĞGg‘	5ÔWà‰Ôâ¡¥èK¸e"Bğò¥fZUNQx­YÆú ÖTY(£xJéF¡qÃ€œ^BVSäÀ¸€ÒoâÙ¿¤ )Q]¼{Ó}«º“Õ£ûc iÃƒaë²#Ş±°r{7¸¼?¾ŞïG§¹ŠN ÂáÆ¾q{?sÈm£ …ä‰|úæôÍÀY;u“npx0ºŞ÷W7İ¤H8>ÖK q*÷ƒR	 ŒV—Ã»óÁıàæôìzp±‘xIÈû962¹¸i.[™@`­s¿ÿşz@ÌêJØzÿe‹$Úpßµ"¶úæª¼åFg×Ãó]_ÆÛxLÀõ@Š6¯OG÷7Ã›ÁOƒ7·cÍt«y 	ö[8ét¦_ÔwŠDêÇyèSù0ÌÕ°l“àönx>Î‡ïnVèL=Ç¢iã5=ŒZ$ƒgŸ¡ä ıĞd#+bzö³æºÎ–:bÉ;-³Paî%£—¹ç’Ü¡°(–ˆz”"2È Z”™®£T²Ìâ3f’xİ.%1“]Ò ‡([=IM
+YS<¤¥=•j>ªæÀXšCDşPİdÎti¦S$¡‰±€â=pkhT É/Èœ
+ ½ ËêbçWp§1ä$A/§ú¼àQ!Œ‡„òjVJÒ<¼5",ÅDb™Í´`¨í„Ì*x Ñˆ8¸´‡ß3(Bi
+¢€¦÷`@ÄOÆz5VÔAEšUéª5éìÇ#¼ -\éœPÍë :3;K‘™[v&Z5 ^Ğb4Ì°J™cL%V÷œ&ë>§"ĞŞjE- …!Éí-0©é¥i•ƒ…Øfô”©Ê"Ãtóÿm•K<™1¼]IíÑ¹IÁ'¬Ş.AF}W_öè¶İc#Ô®×$†4ÛL‚]+T F#2“e®=ÑĞuˆaóF8ªo	<1ŠËì!„--ÀÚñm©ÔÊĞäÕ¶ó—¿_µTõ.®áµÃ¯Î¾KÊm”´®–4„‰å	ôĞTêq]ä:t§±äp¥¸Xé’4(–şgIæ²Ju´ŸÇfåi"qãÕº‹ $A §*±væOv56\evı*«–!#Ûö4‚uÏõóAÇÙTè4cr!´1Ùî	;p\ ÇxRÏE­Õ^-v´Dß¢Ìñ\tmTIÆ¯ÙwMÆî8€à‘>ò4W”,€C]}³†òZ’qU‘£EÁñXòÂ©#”N`6Ş´ì­sx»…üí*­!Öè€7ˆ?b\¹€ª[ÇÆÍêæú~§æVÈ`MS¸¼×ísÜîÅS-tûïîÆ“xCw)
+ÊÙâ¨¹#evöÛoÕşd¥Ğc’v<
+²&pl+\®%weØ:ò˜æØ±è¹	üü1ÉRÂq)ÇF4f:ØKP‰p‰C!¸Ÿ¿Š€6f1Ù¸ÌUFwiAOO2[Ô£Á½Áw³·í¢ñkÊÁÀ”
+õ	¤øF¬šîyM(‡âÀ›"e‚µkùáGcØ‹g€vF«z
+š¥šÍ02åJ¥€µŒåx‚="Ø.[Èö¶ “@=-F€kŒKq9Ÿßœé ÁJ¹*–4_àVÔP¦$ÓÙİ—ºs¹EºKêÚ1Ê£KğéV'z FM:œäõB±ğ¥¯Y5¾•‚#Á%öÖ˜ñX0¡q†òÛnBåØÂ(ë:°J€~uEç%ë³İEš’¨ÌSB¬zç{t–~#Æ_<mt ç÷İãmÉ¤Öjmß¸ŞCü…uüŸ¬ÉnÃ+¿ür%|‡ÃQøº9®Û€–Ûİ¿:ej‚Ÿf@gT|ÂF)Rğq‘£Ú­å¶%„¶âñ£1¶‹	9§Ñ†…æ½Ä©Óc@iì¶Ìš®¦Í(ÀÉŠ8â²0IùLrt‰ã(Dãe»¥[Íüö“6n³p°çw"“IÉëP÷şÅS=g<ãÖÿ“$Ÿ:Ú@ÔŸåë;ºe¸¸Ç4U¤ªñTwwÚÊsr-ğ¢8kŸïë	<ñé³MÇª;Õú¾áÌºs¡iÙêĞŞ±º2bÔXX j¼Ğ[‡Â	¼>0ÉŸRdüQ³bĞ0úÜ×#8ì=Ã—ÒoUTc™N+‘¾K‰œ ®~­ˆ‡àÿâã#¯'œ¢Z^BÖÕSo¶mêÖ… '©U§};ˆ¥Ta·ƒmíµ\Aøÿ
+³(Ü¨õ,¨•¬º(Q9`[êá¬«=z¨šG®¿ÅA½=«>»ÍÊt‚Ì´åÇ;DCãÓC—¦ê:•jßq¼0kCù›û»UÇèB½e ÖÛ]]\©Ã}sYÀìzxÕXì®Åª[ª×Fis©­hıßBo­uõâL(›gÕÜy´¾@Û3Êóª°µï1}zÁ„@¨òÀZ|“ó÷ëŞÓ M¥½U¹4¼tŠÒ‚K]÷4ûÚIÙÛpÔÜl¤â¥øÄÈô…æ/ºÌÜİÀŒ‰cœÇûÁ„©ëÁ²»[„ôº›zŠº Ò4;öQÈ„6ÒZŒU ÛÕ;/Ü[ææ‡L#|Ói˜ÇAæSnlvºnŠÄ©šIİƒÕšK—‹ğ\)t–¾Ágˆ×!ıL ›Èá"»¥nB-qQzæ(§7ÔøêqßYÑ©Øşj	¶¥5btF´/*Z—ï·MZc¨W»˜ã1„|ĞÉ¬õù›œ—*‹ÌÃñ^ÏTĞ({}S™ÕÇtõ•¦k*Ql¡åŸÌky>AÁiŠÀ£–÷•ã«¨¤Zïûq­2šìéôG³ÿÀ? O¡rg™s1õ».;çÇ_\d3W‡ZÂ<($¿LD *‚;<h •Şíâeó!:=Ô‹]¨sJt|1f kR¸«Ó¯Öª&»ïM æ~i_¤^UÆ¬:VÑøJŒèâ^×—å”àôØ7]"n^®á1Îµ/“¯‘,­ÎZ{ğê±‚½_Vç±ŸÉ«ó"ó;=)/ª Z›R½-y±¼²?†i%ö.„Bà¨¾ö:=ú5L„@‡  Oxx¯f¸¸išsrê¶£ì£@Ui“­Çx“´ñZ·:ÁJM)]'Çó&¨›õÉLR4çãõ;ÒDÑÎÎuW†mMQaC»aìÿÅl†oAÔ4»‡„yÖw––Œê€j—}¯ µ{1öå‚bêŞ–”&uÙdçCCÛwúŸkæëåF«@9µA³õ6c­ÏİdÏÑÉÉgØ²)uıU°Çºì'+¯EH®J¥Ÿp‚ı=×`8°…MPu²L#&Ö]ø“·FA¤h 8„f¼Xí–lƒãöšó­¨Ôóxêå+:%ù¸½ú•æˆMÏ¤9%3m¸*	ŠTZVWêëĞËÔŞ~#“múR$½á°öÏWÕ §?VIo[4„¿oÎôÃ#ŒÎş8"ÁºO$ñKH¨®23Ñ¡ŸáSPFê‰˜Ÿ]h}éWShè"i4„®v?>ÒhÈ0TGÛ1£f'— :©Ïœñ4IÌkF/qU¸×E#·ãùÌì	8	ëÊ¼ö2>¼Ü@¸ü0¯é1<â¨é;á|ıYâƒş°ïÔ?†´âNßˆû+§¹§Â5ÍgËJ¦ªöoú{İ	6÷õ@YE³ÏùMÃã:°~>£Ú	ª|ù¼ó_PK     !<ÕÌ€ğ@  ˆ     install.rdfuSao›0ı_qK¿M5’®MDé¦v‘&5RµN“öÑÀÑxÂ6²&İ´ÿ>c(UËÈİ{÷|ï™äæ(+xFc…V×óEÍoÒYò1ø¶ucr„[] lµ‘àj¶É~bN@h@h¤]ú?;ıKT‡‡&«D> ÷"Geñˆƒ(€/%pÈuı2°îáÀ-(MPKFdaA{¶TŠÊMù¡È¹î¡8Á¨Ş„¡ìômB75tza Œ¥³Ù,ùz··®²×ó~8‚ÃÒ£ëõ:Œâ0™)Jf_ñ#SölŞŠCGÜ œpÇrq­B”-ûlîô ’;´¹59ogº¡ëycÔ¦gm„²Ä«ŠI®D‰–«UJPnD‘â"²FW•£}é$a× }xé"¸ˆ|óµ0 è¥Æ4ö=ÿ:42­É¹Íë”Lƒp*(ÙT$j£s´öVËš“È*<QşÓŸuüUâæ		>Õµ»ÜÛÑ¦Úf/Ñ‡Ù[á¤Ï;ÃİÏç/…²‘ÀU’ı»mêZ›öŠôËÚ.äac/8ÒKû™ãHÒA§wü7æWÑ2*/YGœ­>¬J¶Î"d‹%_ò5®/—W«?“ „úŞÛ~±
+ºFµ)–GØ÷öT{=iøæ¨]‚oW;½5Z|vNíø'>±Eq‰é®‹õy³ıÉÙØ_4¯àQ§âqn¿Ş­0Xê#ÈÉĞ95?®˜®ñÏ^Iè¾ÊtöPK      s                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       ‰PNG
+
+   IHDR   €   €   Ã>aË  CIDATx^í½	´eWUïı›kï}šÛÕ­¶IUšJW	EB$A­Š ôò$¢".*‚(Ï§€ˆ¼”Æ§‚ŠÒòöCi$AHB’¶R©$U©¶¹İiv³Öüî;{³Æg[’|š=ÆÌµ×9cäÿŸÿ9×Úëì+ªÊÃ×]¾ÀÃxX ã¿(bş^ï¿5mX§§GFNQÕS@+œnrªkœ2í ­ª« é	Ìá9˜îV¸[àV·¼é´Ö=ü'¼şS4ï½¹¿ÅäV—9}Dá4ÎR@p)õ—^‘@b„8Z„È‘ÄÈÕX®¸Ìˆ\öú­ÍîÃxp2<¶ªOxNfõR«'¦…c1âEÕ“­JµŒèõ"0ˆ >‚hDB3’¼™Ë›±|Q•/üöé­àÆûnéŸ¼<-ôù½Â­éÂ)NKâ­SÜp…AôBğ÷Gq ©A)(c@"c„H#ÕœvlhDòƒ±ØüƒE?ñæÓÛÀı„?¹©7¹¤púšnî¹;2ë°¥½¢UJâ§
+¨.Ãö%üAüØÏ—dÀ"#Ä"DB96ÂXl²vbş9şâwÑ¾üaüäÄ¯‰Œ¼>µúªùÔ®êä–Üê"ù€xW
+@Ep.CBC¾ÃÙŠ–Põğ%#`P"bÃ"‰’È¸B;1W¶#yÏâÜçû}X ËÀ»~Ô]ÙˆÌo÷
+wélßNt2[’¾ˆLuP¨íŞ…ÖîÉ© "q å”TTñ4ûòA5‹+o+¨÷†Â] 6%’Hh³K´Ãx]ßåío~Dû`‰ÆÎ©¾6-ôm‡{ùêù´ /Ù|H«R8ßè) ü’x)c$•m# !ñ
+À7
+Aœ*6E^ ª¥ı‹T"€v$ˆ”ä7*$qÄXb˜lF—5¼şÍÛÚW?¼àÁ{oêıŒƒêæÛfz9Yáa(-¿@/Èd|u–F•äN B0¢ADñ6xp”„WZÀ¡XUl9_²ô¨"V1ÎV"€ÌOßä8cuÂ5‡"n:&èÜ>a²]ù?oìş¥:÷»o;sbæ¿´üñ‰EÂşd6-^µ>•~fÉŠ•íS­åéE†t9à¼Õ#UGQYğÿ…”1öİ:˜*z!xĞ°[D+²…Ìé"Ü ÚJ ¿äT§ˆ*Ü’ ‰¶®0üşc¦XÙJ¸lã÷fL•flh%Ó­xÏT#zí¢|ş¿¤ şôæŞãsËßï™ïo™íf¤yI¼Ï|¥p\¡Ò¨ÌşB@E ’Šh R¥‘Äƒ9oËâË€Âhô]©¯ÿUæVu ‚¾uôœ#w^ªĞìe$Î‹Ğ0ÂDlxı9Ó<kË*®;Xğ¥Ü6oiÆÍ˜éVô÷âÜkÿàì©y„+zÇ;ŞÁ}½fÿlÛI­ó_{d™µ^şã@ñ»³ıâïvé®šë¤ôÒ¼BA?³1¤EA'2tcCÈPï F0"ÃL%Šp¢8TtX @ñsÕZE¿wàQ–†ö_h™ıTâjF¥ãX _•(µµ–´ŸÓï¤d¹å?îí³·SpŞ†ŒÍpá¦<rUƒİ³»ç3úVÕˆã_y¨¸ì	ë{ÿ'€™÷o;)Ò+ç¯ûüûÆÎ}¹.iù×/¬@äŸîí¿z÷‘®étSºCâÒ¼BQĞ¡o¹S2ë´$ÛV*búù€G~E (RÂù*bİP¼P„ƒ'Šj\Tn ±Àxlˆ2›D„´“’Îw¹e_+÷üÌ±ãÑV·›<qó4'LÄÜz¸Ïşn±Ò"¿|åÁâŞ74®»çÇÿ3ïÜ×zä[æòM ¸ì¯Tu•Ì8¸Šú‹wßĞ9YŒùÒöı[g;ıáÙ"*ë§¨j~á´Ì6±ĞÏ@I""ç(€şdÍ¢ qD›r3È@¢‚¿nG@T¨n†ËB£ â¿æ/Í~[pxÛ÷[Ëau+Æš6ı¹.…Uâ±ÚSú½”«néñ¢{>|ñ$§¯½Ì$g¯=3Ö¬å‹;æùâÎn«Ÿ'ó¶«İ£.Ù3Şuß17GS¿5ñŒ…=d°ÿ~a³¡O²*ˆËB„õşq©Õ/ïØ?·z¡›³=û¿(y%€BÁ¢X@œj-…€Áf“ædcM$2$
+ˆ"
+F¤Š` S‘©RFCI¾H5)àK¾¢€¯÷!ñÅPxÀP¦šcÃÊñ&EV0ßM¡`úÜ;Óç’Èøóçó¸c÷ƒİOœœÊÅ'¯æ±Ú|øú#Ü;kók/úĞŸıÜoLü¼ü˜ñ§47ÛWÆÛú½‡œ ö® µàà©ÀGGvô~ÔıÙù~ñùí{fÇºıŸùÅ€ø¬pê*»ÕAt©È“¬@Çä¦t„<2Dª ˆ
+¬2sŒE97#Â
+t˜é¨_Šg¨²~hûê3¼¨æª±óM#1ŠƒÒ0Âš‰~Æ‚uÈx7ßc¦WğÊOÏòşç¶yÊ‰]H ñ‰lš8…wœ·–ÏÜ:Ëÿ[l]›^üñ…7Q|Z~iÃ/ÎœÔè¯¿¨ñè}‡2«€ƒxÚo ö½8êÀ9éÓ[³şm×u†äßØ½x¦›}zû™¤×Ïè§y)€Ü[;¬¯–*ó†MXI|ÑˆqQD¿İÀFgLé
+FxZë*?vkâg5ïd}4˜„kÜüÖ¡·ĞÕ	b¿X„ß$2„A
+Uï³_±ø2`Ti¥9$ñbÌ0QD³(ˆîvx®‡Ë
+ÌB)
+šFøèc~æ„ĞâMĞ<ÄpÕŞ.yÃÇ/ÜÅÏò7h·g8áWÒLl.lÿÌÎ#	°¹û]QÎ‚:pV[dı× ïxÏgî¤ŸŞ¾ûÈ€ü´$¿ÌüÜ’;çÉş­ÈÁ6äí&ÖHI: NQ”'6¯áãÉ™­íHœ ºˆ"(ákÙùüæ¡7‹YDeë@„©`D1"Cg6}œw¢¡ r/†^Äªôã˜¸Ú³HŠœB@œCŒÀÚ©6Gæz!GG¿(xÍ?9şö¥	goìA¾\ÚOä1ÆØ8óŞ«„/½ğÿá)÷[è?Íœ±åyùç¿zâS'Ÿ±#}P°ç÷OûoXİ ®²'¸lêŞ³ã¿Ÿ–~öÒ«¯Ÿé¤ŸºíîCCòQuøÖ7zN)†™W`[Šf‚SEˆ³ŒkÊùã7ò¼Ö·¸¸ùmH0
+4K\“Â›öÿ:¹qh,CòcÕRTBÕ(F|eğÛ¾P]‰ ¥Ğ
+Î­·~¢~),Gô“xğyh–“­œgåd‹y9k‰:–NZğÊO	Ÿû•˜ãVtKP@û)llğÎÖòî+”o¼ğ]<şãodìª…Ç¯>M?°ï}§÷×½ìŒ÷ÊºÏìzPàr}‹Ë*Àf`SWè»ÜîÛ‹›´Û½^:$?ËJòË½|ŸM•å{´šƒìW«`@PNêŞÍ‡7ü)[[w#¢WÌ:6ÀuùÅÛßHG@Æ2t¢‰«\À‰FuØ(
+ŠH°4lê,à|ÖS”n WÅ8Eª]Ë(·4Óm%Ø8B€~dp@#Í†½ÌD»¨ãHaÁYu
+^õéŸ}ùcqéÍ€±§0İŠyûù«y·ÙÊ/|;î³oåÑÇ¯LwÙ;f¾öÃg®|æo<‰ÕØõSÀîß=}K‘ê6µJ) E¿+dìœO¿…ËÎ{'½\†äçù¹óvê—S AI3¤‘€
+'ä»ø‡uïdCt,Ğ¦Œ"0¦`„]éZ.¹õõ,h;Õ@Æ ŠÃá"#J4 _ıSB_ªïûfĞ—OºUÈ+QˆSpéô‘Ü’5"¢Â’,ĞL°
+…¸p <æØ)Rë¸Å9t²A²ˆ[öf¼í«+yßEs ô 2	íÇ0Öˆù½ó&ùc}4×¼”5ßû_lÜÀ‰G¾Œmû·¯5ÍÏÊß›ÿ©	ÀY}ºÍU@Á ä}Á°fßN^òïãÏñjú¹–ÍSo¡Î7\%ù¡V^
+í+¿˜|W®ø?l0‡Á
+4OÕq1ñªÛ^Çá|‚şd‚mÅÄê‰/·…Ô°ùû€*†Ë@_¶d €T½‰ô²Áç¢)Q/ÃÈ`s(7í™ãÏ~á¶¬jó•ÛóWß»‹ÛvÙAÃøÏ×d\xâ}ú] 9Úù*DkÆñ4#Ãï<¶ÉÙgğı/ÜÁÅñ—$ïÃ/oÛüëûqø½çÿôëã¤WéRô—CQf?Î‚spÊ=×óª…ÿÅO{9mI9Ómg«ÜÃqfk³¬‰ç0‰Ã4”NÒd_´‚CÉ4·E[¸aáx&Ò.ï˜ük¢ØZ
+ Eå Ş}?Z8|²A6Ö@âba-ê›¿*Š
+Qª†q´ôÍŸ†äçˆ³bSÔ9lé0~ZÀÌ.X^óù›yï3OåeZÏK¹–¿ùşİ¼ÿ_o¥dw|©ÁÇµYİîæ0÷ItÕë1Œ'Â›ïè½’7ÜÁŠâı`5ÏY÷¼–öj¹åÃ?ØŒG,­¿¢Wop¶‚Ù»•¿?ôLOf€‚À*R ˆUVºm$ŠÏœ¸³ÎQì$å+ĞĞ!ù{ÒÕ|ôgQ´cÒ±f™‘Î@X-mßäˆàŸà—…¨" ¦p~NË1Î·­#TJØÂbûÂï|áf>üÂmœ³yÿıñ'ğüGmä÷?{_ıÁNŞõõõüé³÷ƒàÃì§`ú¥ ¬hÂ[ğôÍ¼àšßÀÌ-°ÿ;ÇpÜó~ô'ìÙö%6şè^ 9gi•é,±9¨ƒb  ¡5¡¬Ş¤4§ÀH†øí9\XQN±Œw$W¯øG5¦ÄGv]DŸ½‰Ö€ATP#X¬‚‘
+¾ùC´Æ\ø $\=pJ”[Z>Æ–Ù_~Ç¢VGÖœ*êE€p½ŒÙN×}â>ùëåøÕã¬™hò‘—?Ï¶·}êJ.yÌÎ\hıëĞîIHs ltüâ9¾¸ãµ<í«ïaï¿ßÉ±/|ü„ßúpÑ*€».İº9O‰Q6|¹TÖÎ‚D°şÇÄªŠp%Îc: TG„…X‘J 8 éwïfòI>¿ï	ô¦Û`œÙFµÜSÜ 
+¾ùC¨?4ªª ÙeÄK¸RUéxsàqa¥ ÊÜ°¡Ôr„æ*TeIˆƒ¦–C3]^÷·Wñé×ıÌ ÑxÁy[xÄæişêkßâ}Ïº´(1ûOèšã†eåìu·?åÜ|Û“9ñæo1¿óñLmşÊ³Ø5ş³lî|ı€Fœ˜u ë‚ÍªµÖÂä*eÃÅ$!Ûê£Ÿ?ôpB™² êí>|x_>pİ¸M¢2ûE¼ˆ %†" ª¨  #ŠÔê#/ğÄCI~(ÀFm&IŒ¨z—èBHˆ QdÀZnÛ3Ç»¾pøÂ³©®E¬ä·ŸÿsìŸÙÁºæíàrĞ>Ìı˜z6¨à§Ìó‹^ÂÚ;®æÀµ³Lw2¸íïe—ü+›UÄc"éP P5ƒl<QY¹AQ4xÎ2äNB€ÅğÖÜ£
+_?p.Y»f¾VÑh A«èÉGt„ÿ|@õs	\`4:G5öeA:Ö¢˜ï€³¨DJÿô½<mÛF.|Äª‹+ÇÑÉKàÀV[Å—¡­³‘x°¯|ì>xáËX÷Ã/pÒó¶»ıLŸz@PdlHJ¸B£œ°Í1¾Tñ™=‰ÄîIgtNñ|¡Pt„5Û÷£Ûâœ/°â{€²h%dH¾ˆR{©"@(ËÁÉw~pÖQXFˆ	&‰I’ÅÜïøìµ|å-O§İğtH¼]õ*Øÿ‡•0ÿ˜~1¨,«[)^|7şñ*Î3› ıíL 8İœv…¼'D±rÊ£ÍqPIg{Œ/¨Ï:_ÄÃïT*ƒŞnÃ‹ïş2ÿzê“™I¦¨5%éê³DQª÷—ÖŠÀgÿÈ*À‹! ^=ñ~¾lÍX{0û‡R#4ÆÇÙ?Ûá#‹KÁ×?sşÒÁ€®xúß€ôv4¿‰¦«şÀòäM¸æüóIfh&1PœÃ.y›õÛ÷àÄæ}AUÙz®£Ù®8AêÉõ<"RM-Q‚´^Eª0¬´óü›?À›¶½™ÜÄ%ÙZo@ñÙ?ˆ€=@&5AH~­‚q‰`ì|)€°‡bE0ƒR£bø»oßÆK.ØÂÆ•c€‚æÈØãĞş-Ğı Ğ¹&ŸR
+€¿ø˜Õëd5è>€W€ @ã†rò™æXÕ¨'Ş3'(€]D
+¥pQ	íå³‚‰àÜ#7ò¡;şˆ·ğZöÅkPQ¼ğN€" èĞ ê-@4hëÈ÷÷ıd}Ø8Î©sÕÂœL³Io~~ı&ŞñâGƒZĞ´B†¬xšßÅ~Èv¢ö"Ñp•pÌt^~7› ö<—]²‚Í:{¿
+ÀYŸ|¶clœáC Ÿµ¸0ÃC‘àX»BĞÍŞ{1@±  gÏİÂ—w¼o¬~,7ŸDÖl¢I±¡µÉâ&]ZÜ¹'&+sc«˜o¯¬iGEàIğö¡V ~ìÉï­+ 2e) Nøìw·óêŸ;•õ+L  p0õ,8ò÷ ú·@ëÔ¡K@iP.>q¿
+`2²eœÔá³T‚:€D#É^oıLù±zÂ	 Ø¾à¨ƒ$Ïù…ÙÿàYö{Dcf<"jÄ˜ö"Z1’Äè
+ÃÛ•o_¦ìêLpùÙsËqç.!V¢>.Á ìÌˆ*X„ªâDLœöº|â[7ñÆgŸšh
+m?z?€ì.h€'¿(¶‹ïWìÃ)OáµÎUäŠ ¡œâÉÙõKÄú2PïhX
+l
+® ›Ë"›€ÉÁu€ÂAµt–yEÄ¢yŠë+ºŸ?>vƒræ-ßâÖÍçø%`(À‹ (øFĞÃ-oy¨Î•¨D`©WG2Ág.¿“KŸq(W	 ŠÒÚŠfÛÁÎ@¾!ŸõN€Ã_<•]±Yí}ÀîßÚÚJ"şRdX÷+ £	$~ëÖïçŒìTÁ“ªïU©!ë›‰ÁD D”Jgè:$R0pUY-”±L‰#GáÆº%öê6„Â]AŠ¢‹,«T¤—Q(Ç€seCx`¶Ã7®ÛÅ3Îª²¿ö­G@ç{¥ Æ	ÙnĞ¬r‚şbppõ}@Üpo çdµş) Ï~O²Ó’4 {4†Ÿ-ª ²~¸;¨œ…ÈT~®
+j¡È”<4Š80¹Ş`iŒ,	¥Óƒ</ï“‰ã2Ë¡üğËB…¡İ3ß“_¹‚PcÀD|ñÊ{yÆYp%ùD¯{\ã wm%‚.áÅù÷Y »ßrÚt¢üvI~XûO £ÊDd©¥^H>ËÈ~§Õˆ•´kJbUq¶z™CÒ€(òÄ9§Ø‚ñynØøß™Ùÿ;9ã†µì(B^¤hu
+¸è­DĞŸf?%ñ^ ù^ Ö*.r¨‰ùæÓí¯e,É=ù®ïİ Ù ÅÁÒÆ/€Ş5U	˜#¼8ç>÷ îuL—]¿'€°Î?·ê3½>.§ğÇÀSJÚœ[”™]d7…FC‰¸ÊŠœEíSOfÓK.Â·™;7spõ©«„ML\UÑ~ŠDZŠZ‘Å1b]9WÁ“®¸aèÉwC€FB'W¾û£ƒ<ıQªşg|—‚$`šßÑ3¡yt¿	d„¼O¸çígD§¯Sj«Zª`O¸Áwô¾î{~Ë{ß­p ®¾h¯.-?ë—äª$ŒŸ°uçJÄì·“/t±˜ñqé3™>÷ĞíòÏßØÉ-g¼q£;M>ë}ækš•¤çôS
+. ?ƒutçæ@„V»zâ½hı~Î:PCnß¹şO?cº"Øz!˜	Èw4`ì±Ğù5×)÷I q‘½H,ëeH>N Ğ ûƒ5¿wß.¿p%Ô”ä—B qUp0yœC{ÎÆ6o`ìØŒŸ´™hÅô"V°æçD:ßÅ´[´·Î‘Şxß¸Sø·oÁÆ	ÆºĞ¡üÀ·EPdê,(5äûê´"ŞÑh6	‰_Êšõ1i—ïİ¸f €@&|¡,Ñ:´¹IL³K¦Ø¬s?‘ Äê/kÎI¸ë8‡Ï`Ov5 	RœÚuŠ ~ùW8À	ç8V¬ƒdMB<Ù@³MÓ2cMZk¦1c-´ÓåÀÛùÓë&ø—½Ó¨mÊ°şĞP¶Ÿ!qT’›å¾…ä£C¸2º2fıŞ $€âœÖ`pïÉOûØ…YòH¸ånÇB¯ËD3qrœƒ(@cÒ~*ô¿P×süøØõÖG¬Oœ>]-`}fW¼ø:næ!d4 ½¦”„PÎ×|œúñ *«Ï(Èv.àº‹˜ŸE"SÕ‡´ZĞu¤{÷ğùr>xÇ:	ˆC£ÚífPŞë_·Ã"ÂŒg”øŠ|†Ñ‘v;$Í.ìj@gœÅ*dühç;Åybß¥‰º9„ã¡ùt”qĞ.vµ«~¢aŸCÑ€|ÿƒz´ş¾:¤â@–t€0ª1ÁjÀ÷Î—„æ	–ì®ÅÁı¥ ÚcD“SÄk×“ïÙÍíÙ
+şäî¸aa*FÑ¸(ˆu(a’PÄ&Â9ÎfÄIBa-(>ã©¢ó€ºa¤r¢ßÃæq«]G@z%
+E­µP‰¤Pá–»z<îdšãV÷%;1h<	ú_~2%ÀáŸxÖª—ï¸nÙËó\êí€Àş}­G`‚rïSşhe€‘?$ÜŒ6ƒ)ímİ« ­6‘:œ1Ìiƒ¿ê=Š='Œ"Q‚Æ1FA«Ú/„W(Åˆ!n4pÖ™—4(ò k-Z?xàİÂSœ-pYŠ›¨ÊgèN•óN\Á~x[-·
+„;÷Xpe	ğ(PÔÛ«¦ş¿qëB´ûu$Tuó—l]×>Í¼xê²°ëÎjÅVŸ¢O¾«9™ãkÿ RwàheÀÏû2àLmæûfP ÙàH6[ò=.Ë¸¶»ŠwÍ\È~7ÆH'n€°.|/P=PÕ`,"Âã8"Š¢Ò¬¥ÛéàœõÄ;õã`ÎA•ínaIZeÉƒƒaxâ#7ñê§Î¯şñç†swï³ ]Ğ¼‚«È÷-|f6Î vàp‘ëÉû×ni·Î¾³wTH‘>UMÔ‡€„ö¾ËA¼@!$£E'¨T=€)ÉöB ªË‘NiŸYP0ü]ö(>^<‡XpqLTÙ•o‘:âCT÷Šªå|‰f«I¿ÓÁY?Œù•”±(Ğ´? ÀM¡•öÏtøÃ—>[îÜÏŸüİ7Quì9T€ëZ0mÔu*R]å.•íâh%P	u~q¾ßÄQÒ¿ øÆÑ`İS(@U*7k¼ç<t$D… ,Ïp~Uº€ J1ì:s5ıÃóPU\³«j=ÖúŒñÄ4P€ú{TuËùj¬ĞhµI;8gë]À“«ÚOÚE“¨c÷Ş Şöò§rÙÕ·óıëwppÆ–å†±GÁÜå¾Ç¨Ä%2€- Ùé.T à‡×¯>fÂòTíBv°yn²`y¢œ:Ìpïß`$…´®¦SGí¾Şğ'¨Ñ*ã$,ˆwµÊ»ä6H„8"‘*Ôû€úU`Mö«:lƒÆDÃ&0nµÈæçJB—vOœ«D`b¤úwİ… ¢Èğ¡ßy>çıòû˜™ÏKÁHi€3WC1úÿTUÈ€’“P! Üğ½c_yVz°GJvG­ØõÎsÚÆê9NÌ-t“*€ õ5=$NA„}Á’±F(ÊÄ“•r¬D„3§wÓOÚ ŠXRK~0®GH|Öëál1²õ+bˆÛc âÂÙâËèïır²ŒUyrÊşÿ gë	ëyõó/à¿ğP ’¬Áe3^TêÓ²á
+A’àÌĞnŸYÖiıƒÄ±w8–£	@òŞã´àv”L•R –ÑlÕëS2»´õ‡nà{O8~ô›š³ˆæXƒ€ CË÷÷P¨7 P¯Hœµio(†QQ-°¶CÑë¢yŠoøÔ_=r/•L‘¡Q2¸¿÷`d×_v!_øÚ¿£Î!ñ*Ğ>4§`ÁáÅæÀ´ÊÏ¨ö’Õ¨3C§»¹¿§¥?"±àœrT`õ<çä«Õ÷úgÿ>ºöĞêñYË·~ƒ^ ,V©È·å¼Z0¢4HYp‚ø¬È—Ğÿë¡~à¬E­«A½ª±ÍR$i¢¶@­Â[}xêĞò¥ƒH)ˆ¼ÈÉ³y’¤XV¯€K.:u»Ë,×yDRH´ŸyaÅã ½!ÄDÀ¸>iqkoı\±Npèê£
+@­œÌ¸|NZq
+x HªÚHnÈ®dÜ¨0â¾ˆâ" B5OÌ¦	"UÓ7"‚`\kAşy·@Uñã^ú=Ô>»ıÚß_E©¢8?gÒÚ6˜^gó,,ìeåŠi  ísÉ³O‚Ô‚Xp‡ÁÁ´:¸^VrO#¤ İ
+2šh³ûÈ4=Ó`>‡	U$ÑæÑ ’›±ºÍTähP×ë­Q7 ¼88š„O;‡aş ôç›	FàÖñuÜ¶y#7w×rÎª½¼ğø[éóµı'ãœõÙ.ZÀ·ÍüîµÁkd½ Bhë‰¯!_Ô!il¤åRovnQ “h)€«SìşU@§€İè¢Öòù0ñê’t×)£.”c3>øş§A„ƒyLBF<¡] Êw5×KTñâ÷[´!¡ZBÌèº~\p°;ì[DŞâ’†7àîæ
+Ş_HvW"|ïĞşrÇYüÊI7pgoÎZ|İ—Ğú=û²$ÿ(×º€·;­B=ñ¾D4,Rt†‚™›ÛzT(m¿±ÜĞ}àö‚İƒÈn¢$ƒæàæ|ö»Ğyu†;ö­g™³	kLF{GÀæwßôı»^·õú¥_( Õ0_ĞšS¼â9Gâ”±;;®‚t¡$¾ÕV’&Ä÷ÿA¦RŸŠ0êÈUøèmg’4›8D*ò	#Œö òŞ e°±E¸CXë¢Sdt´"Ø×MQk?Šx!”ğnÁÂü.(f / Iz`ƒî…âÔîE­‚ìÃ´’P :n ÖpÓîiÔZzÄ4W;â¦YŞÃ u²YUGÜÂD‘À!£¹€ÀÜ¸ã
+P'4Z4•¤A)€Ò8æÚl-½¤‹b¬‰1jieFÛ¨³¨ ˆ'ß[¿Ÿ[´"Z* A6¸8pÖ]Bâ=Átñ÷øÒà Ø6Æ;À¢GJ°{äcs´ˆÑFë@gJ¸ªè\é\V¸ñ`úD¬9Õ•bYÀê–ò€†.‡·j‰B§nO@–p ¿ ;®ší’üFâ&$Ié ;e’®¶É£dx~ĞJD7#.ŸX7TcP1Ô’\QƒH»CÂThÒ4pbÃò ~ì3P¾TÑÏ¡Åİç€í—ÑŞî jgP«ò]C|¢ó•Pº%Ü|é6ef>aÇ¾1¢¦E£ˆÍç(Z0{TÜó¾_u$êÀ ëƒó Z½G=é(~²"éîëš-­²Ÿı%N@TÈmÿŠT„B C „±"ÜS+ğ„ßB×ÇäÙğ3©Ùš¬7ˆ!ée2?¿XÛ`wBQ½)Œš¢éåà
+Ô\¡yŒËb¢‰Á®Ğz µ)WïX‰Z‹X¹É±fh!»* ™?tŒÚ*¡ Â2@xÖyÂï€,±ÆG™? ôf…F»ÌúP òØÏ#‡¯9 Šğp>ÜT–·(ázÓï€s'¸ö&í"Eh­ ü8¨û¡0|#8œ›HîBóÃ>ãÚ'¢n=ší+Gš4ÆV;T+ Š>ß¿uXÎòø_èA
+G@1×;fxX	wL	JAp¸³œ¯%=L½#÷B£9$“tØü™V˜Œ'´îá²Ş&Oò’Äû>”¥/	êš¯yDÚl#Î"bjH't?²¿¦'pL$šb@AœA“'cç?‹ùyL4¶alT%ÀuA+Èß½e
+±–‹O¿ƒs¶Ì¢ Ûî N“ªWALÍoşü¼ÈÃÍü¸v¹ ôæJÂ%ªìW’Š|‰AL)²7­¾–+ïYG¦‘ K9§4ÄO  mOxò ©@AA=BQ¸Ú±Ôo1İtØ´Q¹¨¹Ò8Ûû—R ‹pYDscµ4Ô4ÜÂÍ³çÀjnÛÓæœ“ñ{Oºõ­ßmG ÎU}•O"/lB1Ô¬ğ'ƒ<é5ÙŸö Š+âTĞaç/‘'ŸNkÌğîc¾Çoï:«&Èü¥j?Œe9<ZİÉ"|…Æ y6J:e\ñ¾mŠ^´€¶öfl—+ZL#!nwÁÎ)¾tcUÇ¿_?Í¹ÇÍòáÜDç 7.% Ï¡…¨‰s99Š f7Ï]¿#ä}H’’øÒîu¥(Äx †9}7ÍØòæ»KÇ5j3_´N á€ÿxr—/ ´ÑÆ¤½€ôúràç]­3¿®‡ë5†Vª*4ˆº‹›¿,´6Y°{<8#¨8p‚ªauÃñ7/½‘8R´ÊÚ‰píÑ@«}×Ø”s‘pÄg¹Ö9€Ôü0”šyËĞê“Ä7|&0$ßsŒ§Mïæó_ç­;ÃÕók—nş?†Ğ?çlšX ‰Ö	{:ãÌ¥^ÈÈRQ‡¥ &€ú±ˆ¢ªlîc»IĞLK$àµW’ï¿w1æÄSGÀYüñ0*Á˜2:á‰ÇuPg \õß:ùÒ;g—% 1Ü$Âu€x"Õ‚ÄèÃ]Bj–†UpŒÀô¨‚Ï¥ä‡®~|³ÃG¶^Î;ï<›¯<·” <ÕÁçÛVæ¹[vğ¤cwqÊª$Ö
+ ‘°ıÈ4ÿzÇf>qı©Ü539*€áïıíéÁØUdS#”K/ÙÆ?~#§mì¢©ø<Â qnQÛ ™Ğ>i\_ ¼ œà²MMİkp.XF	0V"¹YŒZ§á+Şœ!¨ÿµËÁ°	¬8dD1‹Ğ2FC²¨€¹ôš4zòUüÆ±7ñ×»Oáÿì?L£QÒÅÆñÌÍwó²Snã¬5!Œ‚B¡-Šb–SÖõxåy÷ğ?ØÄ»¾óHÒ$°IÚĞ[@²¾eÄDPá~@Ğ(B»exÕËÏäC{g³€fâ“plq{Áí!jÍ“LõˆÆsÔß!UÖûhhQ»Úıæ2çq3¿>ŠÅ¨SˆügÎ
+‘*Î×şrlÁD>9B1ÔmWˆ<ÂR.5üù&S§ø¸f‡·n¹s&-ºÁ&~0»†®‹‡ÊkE–³VægÙÍ³É_ÙN£¨•’0SÚ¦ZEr RL¬0pƒœ¸	¿|Şpü¿sÉgÃ]3á*¡5yŠØÂ[cÒBÛã˜#ûCQ¨«ŒÓOl±nåOxÌçlZ: €™n½ì^Lã^ZÇÎ£…AT ğäƒ:ƒª`çeİàşmYˆ&Z‡Èz;Tuñ¤ªx»ÇQ¨\0¼R
+L4ÈşA4fT(*äğßŠ )ç¬»‡ç¬¿ìËÛÌÙ„©fÎ†±.Q¤È"0@‰ŠiJÒE¥»Êé ŠsdlY3Î§^øû‰Ùßi†ï›‚"ƒÎ\u$-CDÀá;ğ%äÌ­@±ƒ_½È±¶_ ‡¶ƒâNp{»‰Àø#z)‚VBÀ	v.®s€+V½fÇÁå	 İÜo‘®PSşŸúåœ:°EÅ‚QO¼³áQt	KAÈ$şíQ„·{BÅ´ öá’€‚ËÓèqŒô :X
+ *H¤ƒX’¯•<ùïZ(’Us‹fólxÅÙ·-–ƒm ’j"d|
+zHˆ³ ‚èñÃxöi³Pôyê9Ì}Ë+…xbŠÔÍVGá›¸<Âg#¨– 7— EèœÀç–ıÓ°Íğíyàû?zÁiQ¬jsD]I¢ØBˆbõçÄÀDõ¿€Ñ¥ 1øúEğÇÃêß1åÂŞã¿ƒD+ò¥ª9LI¾?Æ("~Œ-Ê±ä¬ovkÃ¦º!­±rÎÙò{á2)xİùgî€\H&@óp•OíBm:‹PkĞ<F!lü/ k°3ØŠ¯ıÏ.S Û>{ËÂM/ØºÓY¶  Æ/ßœ“’ ãæløn ñÙ’æï‰’ğì€˜Òq°„o•Š@LH0u‡’]Ø<Vµ«"?6ŠAÒHg…şœ.yQSi­R&6*“›¦½Âğ×‡8[¿*ğb€´EæÅ: Ç­ïqÂ†[ 0‚Dkqİ€xe
+QÚµ‚:3Ü
+Véü
+ [­ Â>øò5¿sÇ]Ë@ø4ô
+µl)‰ñ³`Œ g=‘¡õ×÷QìïÑÊâ*¨Ä£êf ¿O€H`	a8¥zœ*¸\yîú!íQAp¸6ZÉÉæÆ¬\Ypç‘6‡òq$² 
+ ß†¡
+5µ_€§>v?j* “Xl¬NÑ<*‰wR=	\DWú©)N°‡#´  |ü'ADƒÿ@x	6«€VÖşŒÏÃ»",ÑÔ-«Ò`«ŞC´‚u
+°”uZü§ñ@«ñ%EspYE|Y*d}Q‘_Uáöh‚OÇÇ²[Æ  ;;
+ ±õgÃS2H°EjP¨íşAyöö¡…_b‰Ñá20YŸáò¸$Öœ5ƒûQ ÃU ¸#& ÌˆğéŸX EŸo&MÈ3O°ˆÿ­*şuíøİAçÀf§ö_#ñN%P(ä)Ä~kª¨ˆ'¼şŒ¿óQm)¨¢"?OñHË¬/rè‹ásÉ&.—Õ €Z¯0-¢©¼+ Ár*5h(ÊcV§œ{úü€PDıG™M˜	W’í¤²ƒf.3˜Š€Ãà°T¨x‚¯ûwt~blıÔ­?ºñâ­»Ó.›²¤ÅPõ]¸jY
+ÂUÁ¨@˜ı¡2FE7ı90¦BF¼ıCùáQ|[”(2Èò´r~yïlÇù¸Ëam êpQŒ‹“’ğàµq6X†ÖBÕÑàOŞ_Ötëÿ½KšBrzŠÍpBeÿ¸,Â¥áÊõN ÁõÍĞiœ`ŞŸßÖhó•¹ƒüº‰Àæ‚‰K†Axıã]@ÌÈsz Ğ0ƒãÆVAo:óETû%/ğÄ;¶Ìú’üB(rï %g¡áËÉz¾îÖ¢Z%UÜ@«†ÇxÂ½Â¼ ÂûPıP³
+ˆò’§Ä¥‰ÏÍkqieÿ®"š4€VcwĞÀĞlşqãŸl¿û> Ç¿$M~½Tkå	8KĞî›ÊP0‚t©?Rÿó°j•ÆøJhNÀÂaèÍ	bÊùR êµã§àl%‚Â¿*Î%ñ¶¨š<k¢|‘õ°@Ñ(ÂE	@Ğé{ãÂECry:²
+øùsgY7©Ø4A¼ °óñ¦•*Ó½€W
+ Ô¡V÷ìa ¬Bçp´k#pŸĞ•¯µÆôĞüVSı2ÇE:¶w’Au¡`ÀŒ6…K‹ fÉ'0½l¡tf íŠ?å£¡8[¹€•R¸7jr™â{:Ía—TâS4ŠÑê—ÅKŸ¢v	ƒ\‘!ê ¼âgaûqI¾ †òû†Ö¶Üg¿‚ZÀÉ º¾ø‡EJ¸!”‚Îû•í‡[kó‹·ŞgœõÕ[ŠÛ_²õ3³yµ‰üKšÅTv‹ÏZã5ZÚ¿ Ô6…õ"¨»×Ñ¹(†©µ‹X{†÷_½–‰¢`­±¬‚È)® 3špPvG-vÒf®ˆ…©1•İƒ¨õDC@r(€`k7€­~+ ¥<íÌyN]Ÿ¢}AEHV4°½W8Ì…DpıŠTçÉÇö– @À; ÃíßıYÂ®ÃM]‘o¹ßş`D‘ó×íq^İïû#†j	(½€Œß 
+ã+­™ó`MÛòkgæõWnâPÚ+—xâ†9<<Q<š©‚.÷pHè
+Î¢ª ’HyÃÏ(É7 Fh·X8´€:!>Æ•ä/Èğ/Ìt=A‹êsÂÀbğ™
+|à¦¼~Ãœ£¸ßpúçn½ú¦çn½®3ÏYÕ“4œóD;Ïhé¢Ã¬wU	p€ù1E€©y4Œ'g|è¼]¼ş›ÙÓkÖî†–ÙçÏøpø@ı%&Bm12ÿÊ'fódQvêFi­iB¶ç×õ¤>‹T¥Œ°‚öêízş%á»{“YQîuDôï» ÂM¡?k4ø»Â‚Í+r=Ÿ¨Tb¨¬Á˜jiè{‚OK	#œcS;ç£»›·^·‰gÆ®"EYò’ºG-ãSÎYœ-0¢8õß}Ô1}~õqG.âñˆ¤aç-Ú—Ğ\¨È×°ğÄ‹à \1;ÁÇ¶¯áıÇî¤ŸAÜdûı*€ùÃòÉñ)}÷á#¢¨ È~/À!WMw‰ ~nebùàcîæãw¬á“;W‘9SCêÒPÕ‰ê\uï0&Â9;ˆQœE nçüM=ŞğÍu ?ógÏÚ‹ÉK"MChODĞwØ¾ˆº`¨È÷ö¯9~ ÂzÛQîé7xû›xLkq—“Äzóı*€GÿÛ-Åm/ØúŞ8âıV*PÀùìW]´œ3€4,	±À+N>Èó;Âeû'¹i®Å=»»¥ËXñÚb@6aVÉ– ¿9^ºHş¥gæª}mâ¸ÁíğûOØÃtäšÆ×$W´€bÎ¡©©q ÂF°/ÁÀ0ö”^axóÇÒÉOŸ<HZ8VLX®¸_ ĞïğÑ©i~çĞ6–Ù"„®†‘•Á²EPÿâ±ğÁ AP÷½Ò½y†gWßuÀİİ&×nsÅq.Û7Iİµ´Åëğ½uäà‰»xÄê(<zMo<;cF‡äO¬ãÍ Q²YÀGu¾¾ãB(Šô”?¼e;;M“aÊ¥Äa¢©ªÊ×îwœùÕ[{·^¼õ’„?Ï\î;|'@ØxÒ—/æp´ñ[¾àá¾¾gŠ¿ß±š»:MÆ"Çdb™ÏGóÙD1"†¢È%¼d„üÉÄ2ğ=ìæŒÕ=À?{h£h.`Á$0µÁ	hî¦–ÍšÑF€j·5¯fÿp×jşıÀ1'Fû‘HÙ¼ZPÇ5§ÿóm;ïw ô:|djšß<°S'¸ŠT¦1†ZTŸyˆ«îÅcY%Az7 õnñsçøÙE\sxŒ/ï^Áåû'Gj¿-ò ÔÙò	œnÃXÎ¯l=Ä‡[\°¡Ãc×vÁyq~™7`jcAÖ—ú¬kp=©ép½…úÍ Ñzxãş¹c ç›ƒ¬kæœv¬A>Â2¯èïx?Îµáe—êOşùíêø¥"¯š€»jŞK8é‡Œ—lŞDÒµk8úñ1c9®_àÅ[sæÊ«šŠ0_DX5Ø"«_Ã8u•ã)›xÅéùÍ3ö°y< J-ğ¥aÊ2ßŸÕB;¶o*«ßb( ÑI…ß¼ê8lÄ”füÚª]œu¢`Tp}QC~uÍ/-XÆ%ªÊOr]ÿŒ­ÿr`/i¥V1`B Q5ÊÏ#ª±"~‘Æ€ø¹Úß€âçBP3ÿ>ŒÎ#şäÒ~Ì4a63*ˆÀŠ†cM+gıXA¨{t¬øƒ,&QÆÖX’1E‚Å¿WâÈ]±ïú¥ş›jbôaÙ»®_ÏWî&1·{O\ÛÅY Ş´í·½à(EÁk'§xòÌa&GMC¨€	ËP-ÅŸp®‚†êÃğ5ƒ>©ëK€Ôÿà³°±TX×,X×*jlkôP„]*ê­ˆjNé b—ƒ¢ÕAìŠÀJ]×ë‡4×‘jtÅÁñùgLuyã–=lŠ³!ùÎqsÒ–ÿà*/¹tnß?şEÇæ<#Ï¼Å/á·uiû×š9tÙöï¡£Ÿ…Ñ«şsù®
+‹ˆÇ =­D`ïŸêUc›
+İÃ•õ+CˆzòËFRÁ†ÖŸYá=?ÚÀ¯w€×lŞÇ¤ØŠxp\´íó·İó€À‹àuW,öOîw9A]Pçk!>#©ï	Ğ5„‚	ïJv=Ñ KÄğ{~N-ˆ*qSiLB”€'ŞÇrìï»‡ŒßÓ×QQªV’…äã”™nÄ/¬šá”VO<Xêøİ3¿rÛg ~j ¸ç¯ÿâß’¿’öh{‹”QŞê	òk=êI
+É:ú¼è)]®JŠTİ}Ô	u¯ô½¿œ8î
+â³ĞP¨4+#
+¨¢4SZÎaÔ_El!Ÿ<ëk·½à§.€Í¿úº¹{>ö·Šğâ<CÀ‹ ‚ƒK»øa0^¶£hİ}ÑGÏxDO0‘?–†„VV“ê	VõD)ds&´}*¨ŠË « eÔ‚œ-Ëˆsxâ™ü{”ğ‚ÿíRû  à¸_»ô–W¿z…³œ¿`ù=A¸v—¥êz=$(Ë¶4üÜ7>Ë	7¨|FûÏŸış;RÂ	.²¹J$ˆ<tB‘B‡‚pÃ—ˆI- ²T®P'Ï8çë·v4¼óï”ıİâ[OX;ñx[°E]CKg«R_£ôZb	!,+óeä°¥ HL„’zûöu¨2:[ TFDB!ÓàTS™ñ‚ÚQòÓ|»°<ã¼oßº ğàÀ×{s{/5«¢è«[§ZÏr9kPğj—Ú°iROœÖºH8z!ÔÏùXï£.aŒÏæĞê½DÁ¦Pôüwë¶ªı‘pE-øŒï Ş(rètäÓÿz`îE—\sW¯äïA€Ï~ ¢ïÏuìæFã'7/v9AbÖõÿò€†ãÊŒë×,-­mëH^:JH>"ş•!´Q¶.“ ´Œf¾_ï»œúŒ!¿´|=4§ï~ê÷oÃ·.€.º¯zªğÙ_!âËgº››ËOh7Ÿ£V[#€Ö”„rÂ±Ô°üã	A•àR]<DjÄ¤£p…`û•¤&ëÕCh¡¸Ô_Â†è,È‘Ì^ñ¢îø[ÀUPàA€Ï~/ ˆ†"˜[˜[ÅÿqÒXë™Xm…¤H}¦j((ø.›°‹Ö£	AAYÚæ5õ›JZKE¤w
+ $<‹b³‘e]PïóTØ˜+ÿê®C¿ôÇ;÷ü°üû.€˜ûv‰!>¸wßíÖ½â9Ó+ÿ2V]©N†[ÃR±*Foµ`ÊŒá½H9'Šjğì  áãäğ·ayÍÉG¤nŞëî u'rğqÎGWm!ÌÏÑ½ñpú—n¿ëc@ûçŠy ¯8pûL^¼ú¥«Öş¯–è7Bº"*CrQˆbÿÛC©‹"°ÿ°¨ˆú{á=àÇ•C‡õ¹æYhñr´Ò õM¯:¥È²Kk¾Ğ™Gï<\|û¯÷øÀwææï¦æz¨@ƒq>?sdçÎ4{í×m|×T$§Tp$tƒ¡ÆÉè_#"ÿ’*ñnP9€–±ºÄ«…ıx4Ûe‰Œ÷¢8ú³‹ğÌ!éÏÜ\;ßıØÛïİõ@Ğ 1 h=pT¸¶×9ø¦İw½ùí7¿qSÿLdDB7ª21á_Y‹cIÁ[¿J%ucOt0®BÍ;ı}]Ô÷ Ög="à­_(
+˜›fÁ–Ìjï‡ş+`=p5P_ ®‚­A{‹|á5÷ÜùŞß_¿éÎsÆÆÿ[¢j0
+
+Î¢”r.WÁ˜R ÎBîüëåL„?‚%å½yÒ¨#ÀQÎ,õépìºÄº°V‡_¾Mè§ÕFNîO¸|aŠãİ§º.ˆpKÑÿ§ÛÒşa (Q+õñ¾]¢ª÷ÇFPT!©Ğ š@Ëƒ60Æ"½bå™/š^õºIcVG¦"ÀHØĞ0Õ\A‡gÿŒ¾bÎÿ{Ï†ç¨¶„±N e\^ P¾g‰¢2Z½Ì/Àwç&¹,¦o-Ïq»X/–ñØ0'îÚ_İqçÛt*ûï{Y…œJªª…&ĞXÀTÊ€¼¼ñ/³Gn¼²³ğÖ×¯ÛxÉÉÆƒ  ÆÛ¹Qp®*
+ÖJğV1çÀe`Lä!Z‘hıGu5 V/(eé7ÍÊÒeë>Û“Ä¯Ò¾²ãPÌWgWòİbšL•sŠ]œ©GHLÄÄTDêô¶·nßõ.W’… ÷q ï~/`èŞ	š¡x7xÁŠU¾hjúeS‘Y¿Ì£Š"ø£cŞ)Â÷BàÆ”cºŞşCW@GI–0õ÷à_­/5{;fb>ypWÚ¨ÂF»ò]œÔ¶­HØ<‘°ãp~Õ[îØõ'ûòâH˜ù¤#BpªÊƒ+€zÄ^•<ÆVEñô«V¯»èÌVû©m#Qd€Šh$(¾<âAı@}ç_´¾,Ô•ø]( ğ«ğ‰ıkøÂÜjÆ#ËIq‡ÇE{ÙÔLÙ<1G,tÕ]¾·óÉ·ßsï'=ñƒ˜† ‡Ğ<oÔ;AØT±¡Œc@{Q ›iåšßhœÑc@B!ÔŠAD¨'½ê¢zK¯_%(Ôˆ¿V_úRP çELK‚%'Ë•»gŠíÿ¸çğ‡¾2;{³'ŸÔÇÚ`ò:¨A…äèBËÃ“'&O}Öäôs6%ÉÖ¶1O2„„C(DjDPÁøïÖ­,œ£“¾ôŸP?ŸæÊşy»ÿòÃŸúàşı_úË Ş“ïmÿ!*€P2Z*x4GËƒÇÓ&¦N{êÄÔÏŸ4Îh‘ØøşÀ“_—(Ş= êKƒËú‚å”ŸpNYè«îë;®˜íüËÇüvªÚÒQxÒk?ßğ?ÔPïaY¨C}¿Ğ<«5¶ù™S+~rÒ<o<2­–1õ3"†z¢CÈ(ùõàò¡ (……nê˜Ií¾;:éßY˜ÿÆ7çç·’íI¯Ëø
+. ÿ¡.€¥İÀ;B­|lÖ‰cUM>wjåùÛš­'®‹““ÚF¤™¡ 2§4¢°d@m¶×ß/µ¬ªJZ(ı|…ëïK‹[îêe7\—v¯şÖüüäuÙîQKüƒ €VÑˆêÑ¨‹gµÚÇ\8>yÁ–Fó‚•&:¶ºâö}YŞ9¶Ñ8mÌ˜v+64#ƒ’- £+Š¥–‡à´$Ø*8ÕrK×A¡j
+{p®pûögùÎCÖŞ³#OïX$|‡ÏæÚ˜/Iz=ñÿ9
+B!„b¨ÆèØÇsÚc×?wsœœƒĞúVgşK…jvz³uÚÆ89em’œ4fÌŠf$4Œ¡	F|¡ß•fÛoœëŞiĞÍœ’ƒŠTuáŞ,ßgöîÎ³7õú<qHOlí¸’^Cüƒ*€ÏBÄ>†ãşû¢çN­xäTO~·»pÇíiº ˜3Z­5[­ã6'É–)m7fõTmn‰Y¡ ·öûßúaÚ»ükós7…;mØ¥sø ˜«ù¾óxø¯"€Px1„ˆ–	3CÈ(üƒ2U<à
+ÆµbpÉ!\]–®†ôÿ’XÚ<L-ê‰®'Ş	âÒçÜHakïC¨Ç(é`ùî0"Š¥bÍ˜£©
+×‰¡Võß¡pÀ)ŒúûúX]†ÆG'ûa<¨â!?ÁQ7îÁàa<´¯ÿO®–¸NÅ£    IEND®B`‚                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       /* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+
+pref("app.update.channel", "release");
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           

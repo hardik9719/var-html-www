@@ -1,0 +1,103 @@
+<html id="t" i18n-values="dir:textdirection;lang:language">
+  <head>
+    <meta charset="utf-8">
+    <title i18n-content="title"></title>
+    <link rel="stylesheet" href="chrome://resources/css/text_defaults.css">
+<meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="chrome://version/about_version.css">
+<style>/* Copyright (c) 2012 The Chromium Authors. All rights reserved.
+ * Use of this source code is governed by a BSD-style license that can be
+ * found in the LICENSE file. */
+
+#outer {
+  text-align: left;
+  width: 90%;
+}
+
+#inner {
+  width: auto;
+}
+
+#logo {
+  float: none;
+  margin-left: auto;
+  margin-right: auto;
+}
+</style>
+
+
+
+    <script src="chrome://resources/js/cr.js"></script>
+    <script src="chrome://resources/js/load_time_data.js"></script>
+    <script src="chrome://resources/js/parse_html_subset.js"></script>
+    <script src="chrome://resources/js/util.js"></script>
+    <script src="chrome://version/version.js"></script>
+    <script src="chrome://version/strings.js"></script>
+  </head>
+
+  <body>
+    <div id="outer">
+      <div id="logo">
+
+<img src="data:image/png;base64,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">
+        <div id="company" i18n-content="company"></div>
+        <div id="copyright" i18n-content="copyright"></div>
+      </div>
+      <table id="inner" cellpadding="0" cellspacing="0" border="0">
+        <tr><td class="label" i18n-content="application_label"></td>
+          <td class="version" id="version">
+            <span i18n-content="version"></span>
+            (<span i18n-content="official"></span>)
+            <span i18n-content="version_modifier"></span>
+            <span i18n-content="version_bitsize"></span>
+          </td>
+        </tr>
+        <tr>
+          <td class="label" i18n-content="revision"></td>
+          <td class="version">
+            <span i18n-content="cl"></span>
+          </td>
+        </tr>
+<tr><td class="label" i18n-content="os_name"></td>
+          <td class="version" id="os_type">
+            <span i18n-content="os_type"></span>
+            <span id="os_version" i18n-content="os_version"></span>
+          </td>
+
+        </tr>
+<tr><td class="label">Blink</td>
+          <td class="version" id="blink_version" i18n-content="blink_version"></td>
+        </tr>
+        <tr><td class="label">JavaScript</td>
+          <td class="version" id="js_engine">
+            <span i18n-content="js_engine"></span>
+            <span i18n-content="js_version"></span>
+          </td>
+        </tr>
+
+        <tr><td class="label" i18n-content="user_agent_name"></td>
+          <td class="version" id="useragent" i18n-content="useragent"></td>
+        </tr>
+        <tr><td class="label" i18n-content="command_line_name"></td>
+          <td class="version" id="command_line" i18n-content="command_line"></td>
+        </tr>
+<tr><td class="label" i18n-content="executable_path_name"></td>
+          <td class="version" id="executable_path" i18n-content="executable_path"></td>
+        </tr>
+        <tr><td class="label" i18n-content="profile_path_name"></td>
+          <td class="version" id="profile_path" i18n-content="profile_path"></td>
+        </tr>
+        <tr id="variations-section">
+          <td class="label" i18n-content="variations_name"></td>
+          <td class="version" id="variations-list"></td>
+        </tr>
+<tr id="build-id-section">
+          <td class="label" i18n-content="build_id_name"></td>
+          <td class="version" i18n-content="build_id"></td>
+        </tr>
+
+      </table>
+    </div>
+    <script src="chrome://resources/js/i18n_template.js"></script>
+  </body>
+</html>

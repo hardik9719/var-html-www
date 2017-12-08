@@ -1,0 +1,146 @@
+<html>
+<head>
+<meta name="Version" content="4730"> <meta name="Microsoft Theme" content="none">
+<title>Enter Discussion Text</title>
+<style type="text/css"><!-- .dlgTitle {font: 12pt/14pt tahoma; font-weight: normal; color: "WindowText"; font-style: normal} .dlgLabel {font: 8pt/9pt tahoma; color: "WindowText"} .dlgLabelB {font: 8pt/9pt tahoma; font-weight:bold; color: "WindowText"} .dlgLabelI {font: 8pt/9pt tahoma; font-style:italic; color: "WindowText"} .dlgLabelU {font: 8pt/9pt tahoma; text-decoration:underline; color: "WindowText"} .dlgControl {font: 9pt tahoma; color: "WindowText"; width: 400px} .dlgLabelDisabled {font: 8pt/9pt tahoma; color: "GrayText"; filter: dropshadow(color=white, offx=1, offy=1)} .dlgEdit {font: 8pt/9pt tahoma; color: "WindowText"; width: 400px} .dlgLink {cursor: hand; text-decoration:none; color: "ButtonText"} .dlgLinkDisabled {cursor: default; text-decoration:none; color: "ButtonShadow"} .dlgBtn {cursor: hand; border-width: 0; color: "ButtonText"} .dlgBtnDisabled {cursor: default; border-width: 0; color: "ButtonShadow"; filter: dropshadow(color=white, offx=1, offy=1)} .dlgPushBtn {cursor: hand; font: 8pt/9pt tahoma; color: "ButtonText"; width=102px} .dlgOKCancelBtn {font: 8pt/9pt tahoma; color: "ButtonText"; width=80px} .dlgDropDown {font: 8pt/9pt tahoma; color: "WindowText"; width: 200px} .dlgTextEdit {font: 9pt tahoma; color: "WindowText"; width: 400px; height: 140px} .dlgHalfEdit {font: 8pt/9pt tahoma; color: "WindowText"; width: 262px} .dlgSmallDropDown {font: 8pt/9pt tahoma; color: "WindowText"; width: 100px} --></style>
+<script>
+function CloseDialog(fCancel)
+{
+	if (fCancel && !OnCancel())
+		return;
+	if (fCancel || ReturnDialogArgs())
+		window.close();
+}
+function BodyKeyDown()
+{
+	kc = window.event.keyCode;
+	if (kc == 27)  
+		{
+		CloseDialog(true);
+		window.event.keyCode = 34;  
+		}
+	else if (kc == 13 && OnEnter())  
+		CloseDialog(false);
+}
+var L_FrameAccessKey_Text = "f";
+var L_Frame_Text = "<u>F</u>rame:";
+var L_ConfirmCancel_Text = "This discussion item has not been sent.  Are you sure you want to discard changes?";
+var L_CommentTooLong_Text = "The discussion item is too large.";
+var dlgComment;
+var dlgOperation;
+var fDocSelect;
+var fTextFocus=false;
+var fSubjectFocus=false;
+var fDirty=false;
+dialogWidth = "430px";
+dialogHeight = "292px";
+function FrSelected()
+{
+	dialogArguments.Attribute(1) = diidTitleSelect.value;
+}
+function InitDialog()
+{
+	dialogHeight = 292+(292 -25)-document.body.clientHeight+"px";
+	dlgComment = dialogArguments.Attribute("owscomment");
+	dlgOperation = dialogArguments.Attribute("owsaction");
+	dialogArguments.Attribute("owscancel") = 1;
+	diidSubject.value = dlgComment.Subject;
+	diidComment.value = dlgComment.Text;
+	if (dlgOperation == 6)
+		diidComment.focus();
+	else
+		diidSubject.focus();
+	if (dialogArguments.Attribute("owsfsel") == 1)
+		{
+		lDocCount = 0;
+		lDefault = dialogArguments.Attribute("owsfindex");
+		htmlstring = "<select id=diidTitleSelect class=dlgEdit accesskey=" +
+			L_FrameAccessKey_Text + " onchange='FrSelected()'>";
+		dialogArguments.EnumReset(1);
+		while(!dialogArguments.EnumEOF)
+			{
+			lDocCount++;
+			lDocId = dialogArguments.EnumNext();
+			strDocTitle = dialogArguments.EnumNext();
+			if (lDocId == lDefault)
+				htmlstring = htmlstring + "<option selected value=" + lDocId + ">" + strDocTitle + "</option>";
+			else
+				htmlstring = htmlstring + "<option value=" + lDocId + ">" + strDocTitle + "</option>";
+			}
+		htmlstring = htmlstring + "</select>";
+		if (lDocCount > 1)
+			{
+			fDocSelect = true;
+			diidTitleLabel.innerHTML = "<span class=\"dlgLabel\">"+L_Frame_Text+"</span>";
+			diidTitleDrop.insertAdjacentHTML("BeforeEnd", htmlstring);
+			dialogHeight = "339px";
+			dialogHeight = 339+(339 -25)-document.body.clientHeight+"px";
+			}
+		}
+}
+function ReturnDialogArgs()
+{
+	if(diidComment.value.length > 65535)
+		{
+		alert(L_CommentTooLong_Text);
+		diidComment.focus();
+		return false;
+		}
+	dlgComment.Subject = diidSubject.value;
+	dlgComment.Text = diidComment.value;
+	if (fDocSelect)
+		dialogArguments.Attribute("owsfindex") = diidTitleSelect.value;
+	dialogArguments.Attribute("owscancel") = 0;
+	return true;
+}
+function BodyKeyPress()
+{
+	if (fSubjectFocus || fTextFocus)
+		fDirty = true;
+}
+function OnEnter()
+{
+	if (fSubjectFocus)
+	{
+		window.event.keyCode = 34;
+		window.event.returnValue = false;
+		diidComment.focus();
+	}
+	return false;
+}
+function OnTextFocus() { fTextFocus = true; }
+function OnTextBlur() { fTextFocus = false; }
+function OnSubjectFocus() { fSubjectFocus = true; }
+function OnSubjectBlur() { fSubjectFocus = false; }
+function OnCancel()
+{
+	if (fDirty && !confirm(L_ConfirmCancel_Text))
+		return false;
+	return true;
+}
+</script>
+</head>
+<body
+	topmargin=0 leftmargin=11 bottommargin=0 rightmargin=7
+	bgcolor="ThreedFace"
+	onLoad="InitDialog()" onkeydown="BodyKeyDown()" onkeypress="BodyKeyPress()" scroll="no">
+<table border="0" cellpadding="0" style="padding-top:4px;padding-bottom:4px" cellspacing="0" width=100%>
+	<tr>
+		<td height=5></td>
+	<tr>
+		<td><div id=diidTitleLabel></div></td></tr><tr><td colspan=2><div id=diidTitleDrop></div></td></tr>
+	<tr>
+		<td><div id=diidSubLabel class="dlgLabel">Discussion <u>s</u>ubject:</div></td></tr>
+		<tr><td colspan=2><input title="Discussion Subject" class=dlgControl onfocus="OnSubjectFocus()" onblur="OnSubjectBlur()" onchange="fDirty=true;"
+			type="text" maxlength="250" id=diidSubject accesskey=s></span></td></tr>
+	<tr>
+		<td><div id=diidTextLabel class="dlgLabel">Discussion <u>t</u>ext:</div></td></tr>
+		<tr><td colspan=2><textarea title="Discussion Text" id=diidComment wrap=physical
+			class=dlgTextEdit onfocus="OnTextFocus()" onblur="OnTextBlur()" onchange="fDirty=true;"
+			accesskey=t></textarea></td></tr>
+	<tr>
+		<td height=5></td>
+</table>
+<table border="0" cellpadding="0" style="padding-top:0;padding-bottom:0" cellspacing="0" width=401> <tr> <td bgcolor="ThreedFace" align="right">  <input type="button" class="dlgOKCancelBtn" id="diidOK" value="OK" onclick="CloseDialog(0)" /> &nbsp<input type="button" class="dlgOKCancelBtn" id="diidCancel" value="Cancel" onclick="CloseDialog(1)" onkeydown="window.event.cancelBubble = true" /> </td></tr> </table>
+</body>
+</html>

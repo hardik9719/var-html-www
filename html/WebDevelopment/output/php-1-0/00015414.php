@@ -1,0 +1,1 @@
+<?php \n\n\theader(location)\n\n ?>

@@ -1,0 +1,1 @@
+<?php\nrequire 'db_connect.php';\n\n$findquery=\"select * from Laptop \";\n$result=mysqli_query($connection,$findquery);\nif($result){\n\t\twhile ($row=mysqli_fetch_assoc($result)) {\n\t\t                 \t# code...\n\t\t\t$serverResponse[] = $row;\n\t\t                 }           \n\t\t    echo json_encode(array(\"laptops\"=>

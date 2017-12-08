@@ -1,0 +1,16 @@
+<html><h1 class="refsect1">BITAND</h1>
+<p><code>BITAND</code> computes an <code>AND</code> operation on the bits of two nonnegative integers, and returns an integer. This function is commonly used with the <code>DECODE</code> function.</p>
+<p>An <code>AND</code> operation compares two bit values. If both values are 1, the operator returns 1. If one or both values are 0, the operator returns 0.</p>
+<p class="titleinrefsubsect"><a id="sthref361" name="sthref361"></a>Return Value</p>
+<pre xml:space="preserve" class="oac_no_warn">NUMBER
+</pre>
+<p class="titleinrefsubsect"><a id="sthref362" name="sthref362"></a>Syntax</p>
+<pre xml:space="preserve" class="oac_no_warn"><span class="bold">BITAND</span>(expr1, expr2) 
+</pre>
+<p class="titleinrefsubsect"><a id="sthref363" name="sthref363"></a>Arguments</p>
+<p><code>expr1</code> and <code>expr2</code> are numeric expressions for nonnegative integers.</p>
+<p class="titleinrefsubsect"><a id="sthref364" name="sthref364"></a>Example</p>
+<p><code>BITAND(7, 29)</code> returns the value <code>5</code>.</p>
+<p>The binary value of <code>7</code> is <code>111</code> and of <code>29</code> is <code>11101</code>. A bit-by-bit comparison generates the binary value <code>101</code>, which is decimal <code>5</code>.</p>
+</div>
+</html>

@@ -1,0 +1,14 @@
+<html><h1 class="refsect1">ASCIISTR</h1>
+<p><code>ASCIISTR</code> converts a string in any character set to ASCII in the database character set. Non-ASCII characters are represented as <code>\</code>xxxx, where xxxx is a UTF-16 code unit.</p>
+<p class="titleinrefsubsect"><a id="sthref341" name="sthref341"></a>Return Value</p>
+<pre xml:space="preserve" class="oac_no_warn">VARCHAR2
+</pre>
+<p class="titleinrefsubsect"><a id="sthref342" name="sthref342"></a>Syntax</p>
+<pre xml:space="preserve" class="oac_no_warn"><span class="bold">ASCIISTR</span>(char)
+</pre>
+<p class="titleinrefsubsect"><a id="sthref343" name="sthref343"></a>Arguments</p>
+<p><code>char</code> can be any character string.</p>
+<p class="titleinrefsubsect"><a id="sthref344" name="sthref344"></a>Example</p>
+<p><code>ASCIISTR('Sk&aring;ne')</code> returns the value <code>Sk\00E5ne</code>.</p>
+</div>
+</html>

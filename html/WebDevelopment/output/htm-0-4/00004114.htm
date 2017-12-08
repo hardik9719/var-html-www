@@ -1,0 +1,26 @@
+<html><h1 class="refsect1">DECODE</h1>
+<p><code>DECODE</code> compares an expression to one or more search strings one by one.</p>
+<p>If <code>expr</code> is <code>search</code>, then <code>DECODE</code> returns the corresponding <code>result</code>. If there is no match, then <code>DECODE</code> returns <code>default</code>. If you omit <code>default</code>, then <code>DECODE</code> returns null.</p>
+<p class="titleinrefsubsect"><a id="sthref408" name="sthref408"></a>Return Value</p>
+<p>Data type of the first <code>result</code> argument</p>
+<p class="titleinrefsubsect"><a id="sthref409" name="sthref409"></a>Syntax</p>
+<pre xml:space="preserve" class="oac_no_warn"><span class="bold">DECODE</span>(expr, search, result
+          [, search, result ]...
+          [, default ]
+      )
+</pre>
+<p class="titleinrefsubsect"><a id="sthref410" name="sthref410"></a>Arguments</p>
+<p><code>expr</code> is an expression that is compared to one or more search strings.</p>
+<p><code>search</code> is a string that is searched for a match to <code>expr</code>.</p>
+<p><code>result</code> is the return value when <code>expr</code> matches the corresponding search string.</p>
+<p><code>default</code> is the return value when <code>expr</code> does not match any of the search strings. If <code>default</code> is omitted, then <code>DECODE</code> returns null.</p>
+<p>The arguments can be any numeric or character type. Two nulls are equivalent. If <code>expr</code> is null, then <code>DECODE</code> returns the <code>result</code> of the first <code>search</code> that is also null.</p>
+<p>The maximum number of components, including <code>expr</code>, <code>searches</code>, <code>results</code>, and <code>default</code>, is 255.</p>
+<p class="titleinrefsubsect"><a id="sthref411" name="sthref411"></a>Example</p>
+<p><code>DECODE(sysdate, '21-JUN-06', 'Summer Solstice', '21-DEC-06', 'Winter Solstice', 'Have a nice day!')</code></p>
+<p>returns these values:</p>
+<p><code>Summer Solstice</code> on June 21, 2006</p>
+<p><code>Winter Solstice</code> on December 21, 2006</p>
+<p><code>Have a nice day!</code> on all other days</p>
+</div>
+</html>

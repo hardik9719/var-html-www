@@ -1,0 +1,171 @@
+<html>\n<head>\n\
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">\n\
+	<title>'+htmlTitle()+'</title>\n\
+	<style type=\'text/css\'>\n\
+		body {overflow-y:scroll;}\n\
+		.stamp {width:100%;text-align:center;background-color:gray;line-height:30px;color:white;font:25px Arial;}\n\
+		.callgraph {margin-top:30px;box-shadow:5px 5px 20px black;}\n\
+		.callgraph article * {padding-left:28px;}\n\
+		h1 {color:black;font:bold 30px Times;}\n\
+		t0 {color:black;font:bold 30px Times;}\n\
+		t1 {color:black;font:30px Times;}\n\
+		t2 {color:black;font:25px Times;}\n\
+		t3 {color:black;font:20px Times;white-space:nowrap;}\n\
+		t4 {color:black;font:bold 30px Times;line-height:60px;white-space:nowrap;}\n\
+		cS {color:blue;font:bold 11px Times;}\n\
+		cR {color:red;font:bold 11px Times;}\n\
+		table {width:100%;}\n\
+		.gray {background-color:rgba(80,80,80,0.1);}\n\
+		.green {background-color:rgba(204,255,204,0.4);}\n\
+		.purple {background-color:rgba(128,0,128,0.2);}\n\
+		.yellow {background-color:rgba(255,255,204,0.4);}\n\
+		.time1 {font:22px Arial;border:1px solid;}\n\
+		.time2 {font:15px Arial;border-bottom:1px solid;border-left:1px solid;border-right:1px solid;}\n\
+		td {text-align:center;}\n\
+		r {color:#500000;font:15px Tahoma;}\n\
+		n {color:#505050;font:15px Tahoma;}\n\
+		.tdhl {color:red;}\n\
+		.hide {display:none;}\n\
+		.pf {display:none;}\n\
+		.pf:'+cgchk+' + label {background:url(\'data:image/svg+xml;utf,<?xml version="1.0" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" height="18" width="18" version="1.1"><circle cx="9" cy="9" r="8" stroke="black" stroke-width="1" fill="white"/><rect x="4" y="8" width="10" height="2" style="fill:black;stroke-width:0"/><rect x="8" y="4" width="2" height="10" style="fill:black;stroke-width:0"/></svg>\') no-repeat left center;}\n\
+		.pf:'+cgnchk+' ~ label {background:url(\'data:image/svg+xml;utf,<?xml version="1.0" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" height="18" width="18" version="1.1"><circle cx="9" cy="9" r="8" stroke="black" stroke-width="1" fill="white"/><rect x="4" y="8" width="10" height="2" style="fill:black;stroke-width:0"/></svg>\') no-repeat left center;}\n\
+		.pf:'+cgchk+' ~ *:not(:nth-child(2)) {display:none;}\n\
+		.zoombox {position:relative;width:100%;overflow-x:scroll;}\n\
+		.timeline {position:relative;font-size:14px;cursor:pointer;width:100%; overflow:hidden;background:linear-gradient(#cccccc, white);}\n\
+		.thread {position:absolute;height:0%;overflow:hidden;line-height:'+devtextH+';font-size:'+devtextS+';border:1px solid;text-align:center;white-space:nowrap;background-color:rgba(204,204,204,0.5);}\n\
+		.thread.sync {background-color:'+sysvals.synccolor+';}\n\
+		.thread.bg {background-color:'+sysvals.kprobecolor+';}\n\
+		.thread:hover {background-color:white;border:1px solid red;'+hoverZ+'}\n\
+		.hover {background-color:white;border:1px solid red;'+hoverZ+'}\n\
+		.hover.sync {background-color:white;}\n\
+		.hover.bg {background-color:white;}\n\
+		.traceevent {position:absolute;font-size:10px;overflow:hidden;color:black;text-align:center;white-space:nowrap;border-radius:5px;border:1px solid black;background:linear-gradient(to bottom right,rgba(204,204,204,1),rgba(150,150,150,1));}\n\
+		.traceevent:hover {background:white;}\n\
+		.phase {position:absolute;overflow:hidden;border:0px;text-align:center;}\n\
+		.phaselet {position:absolute;overflow:hidden;border:0px;text-align:center;height:100px;font-size:24px;}\n\
+		.t {z-index:2;position:absolute;pointer-events:none;top:0%;height:100%;border-right:1px solid black;}\n\
+		.legend {position:relative; width:100%; height:40px; text-align:center;margin-bottom:20px}\n\
+		.legend .square {position:absolute;cursor:pointer;top:10px; width:0px;height:20px;border:1px solid;padding-left:20px;}\n\
+		button {height:40px;width:200px;margin-bottom:20px;margin-top:20px;font-size:24px;}\n\
+		.logbtn {position:relative;float:right;height:25px;width:50px;margin-top:3px;margin-bottom:0;font-size:10px;text-align:center;}\n\
+		.devlist {position:'+x2changes[1]+';width:190px;}\n\
+		a:link {color:white;text-decoration:none;}\n\
+		a:visited {color:white;}\n\
+		a:hover {color:white;}\n\
+		a:active {color:white;}\n\
+		.version {position:relative;float:left;color:white;font-size:10px;line-height:30px;margin-left:10px;}\n\
+		#devicedetail {height:100px;box-shadow:5px 5px 20px black;}\n\
+		.tblock {position:absolute;height:100%;}\n\
+		.bg {z-index:1;}\n\
+	</style>\n</head>\n<body>\n'
+
+	# no header or css if its embedded
+	if(sysvals.embedded):
+		hf.write('pass True tSus %.3f tRes %.3f tLow %.3f fwvalid %s tSus %.3f tRes %.3f\n' %
+			(data.tSuspended-data.start, data.end-data.tSuspended, data.tLow, data.fwValid, \
+				data.fwSuspend/1000000, data.fwResume/1000000))
+	else:
+		hf.write(html_header)
+
+	# write the test title and general info header
+	if(sysvals.stamp['time'] != ""):
+		hf.write(headline_version)
+		if sysvals.addlogs and sysvals.dmesgfile:
+			hf.write('<button id="showdmesg" class="logbtn">dmesg</button>')
+		if sysvals.addlogs and sysvals.ftracefile:
+			hf.write('<button id="showftrace" class="logbtn">ftrace</button>')
+		hf.write(headline_stamp.format(sysvals.stamp['host'],
+			sysvals.stamp['kernel'], sysvals.stamp['mode'], \
+				sysvals.stamp['time']))
+
+	# write the device timeline
+	hf.write(devtl.html['header'])
+	hf.write(devtl.html['timeline'])
+	hf.write(devtl.html['legend'])
+	hf.write('<div id="devicedetailtitle"></div>\n')
+	hf.write('<div id="devicedetail" style="display:none;">\n')
+	# draw the colored boxes for the device detail section
+	for data in testruns:
+		hf.write('<div id="devicedetail%d">\n' % data.testnumber)
+		for b in data.phases:
+			phase = data.dmesg[b]
+			length = phase['end']-phase['start']
+			left = '%.3f' % (((phase['start']-t0)*100.0)/tTotal)
+			width = '%.3f' % ((length*100.0)/tTotal)
+			hf.write(html_phaselet.format(b, left, width, \
+				data.dmesg[b]['color']))
+		if sysvals.suspendmode == 'command':
+			hf.write(html_phaselet.format('cmdexec', '0', '0', \
+				data.dmesg['resume_complete']['color']))
+		hf.write('</div>\n')
+	hf.write('</div>\n')
+
+	# write the ftrace data (callgraph)
+	data = testruns[-1]
+	if(sysvals.usecallgraph and not sysvals.embedded):
+		hf.write('<section id="callgraphs" class="callgraph">\n')
+		# write out the ftrace data converted to html
+		html_func_top = '<article id="{0}" class="atop" style="background-color:{1}">\n<input type="checkbox" class="pf" id="f{2}" checked/><label for="f{2}">{3} {4}</label>\n'
+		html_func_start = '<article>\n<input type="checkbox" class="pf" id="f{0}" checked/><label for="f{0}">{1} {2}</label>\n'
+		html_func_end = '</article>\n'
+		html_func_leaf = '<article>{0} {1}</article>\n'
+		num = 0
+		for p in data.phases:
+			list = data.dmesg[p]['list']
+			for devname in data.sortedDevices(p):
+				if('ftrace' not in list[devname]):
+					continue
+				devid = list[devname]['id']
+				cg = list[devname]['ftrace']
+				clen = (cg.end - cg.start) * 1000
+				if clen < sysvals.mincglen:
+					continue
+				fmt = '<r>(%.3f ms @ '+sysvals.timeformat+' to '+sysvals.timeformat+')</r>'
+				flen = fmt % (clen, cg.start, cg.end)
+				name = devname
+				if(devname in sysvals.devprops):
+					name = sysvals.devprops[devname].altName(devname)
+				if sysvals.suspendmode == 'command':
+					ftitle = name
+				else:
+					ftitle = name+' '+p
+				hf.write(html_func_top.format(devid, data.dmesg[p]['color'], \
+					num, ftitle, flen))
+				num += 1
+				for line in cg.list:
+					if(line.length < 0.000000001):
+						flen = ''
+					else:
+						fmt = '<n>(%.3f ms @ '+sysvals.timeformat+')</n>'
+						flen = fmt % (line.length*1000, line.time)
+					if(line.freturn and line.fcall):
+						hf.write(html_func_leaf.format(line.name, flen))
+					elif(line.freturn):
+						hf.write(html_func_end)
+					else:
+						hf.write(html_func_start.format(num, line.name, flen))
+						num += 1
+				hf.write(html_func_end)
+		hf.write('\n\n    </section>\n')
+
+	# add the dmesg log as a hidden div
+	if sysvals.addlogs and sysvals.dmesgfile:
+		hf.write('<div id="dmesglog" style="display:none;">\n')
+		lf = open(sysvals.dmesgfile, 'r')
+		for line in lf:
+			hf.write(line)
+		lf.close()
+		hf.write('</div>\n')
+	# add the ftrace log as a hidden div
+	if sysvals.addlogs and sysvals.ftracefile:
+		hf.write('<div id="ftracelog" style="display:none;">\n')
+		lf = open(sysvals.ftracefile, 'r')
+		for line in lf:
+			hf.write(line)
+		lf.close()
+		hf.write('</div>\n')
+
+	if(not sysvals.embedded):
+		# write the footer and close
+		addScriptCode(hf, testruns)
+		hf.write('</body>\n</html>

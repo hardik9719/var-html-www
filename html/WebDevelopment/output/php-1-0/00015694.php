@@ -1,0 +1,1 @@
+<?php\n$servername = \"localhost\";\n$username = \"root\";\n$password = \"root\";\n$dbname = \"mydb\";\n$name= $_POST['name'];\n$pass=$_POST['usrpassword'];\n\n// Create connection\n$conn = new mysqli($servername, $username, $password, $dbname);\t\n\n// Check connection\nif ($conn->

@@ -1,0 +1,665 @@
+<html>
+<head>
+
+<title>Simple Add To Cart System Using jQuery,Ajax And PHP On TalkersCode.com</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0" />
+<meta name="Description" content="How to create Simple Add To Cart System Using jQuery,Ajax And PHP On TalkersCode.com">
+<meta name="Keywords" content="Simple Add To Cart System Using jQuery Ajax And PHP,Simple Add To Cart System,Add To Cart System Using jQuery Ajax And PHP,Add To Cart System,shopping cart system,online shopping cart system,shopping cart software,add shopping cart to website,shopping cart systems,shopping cart,best shopping cart,how to add a shopping cart to your website,online shopping cart,shopping cart website,wordpress shopping cart,online shopping cart software,shopping cart solutions,open source shopping cart,Cart System,online shopping cart system,shopping cart systems,Cart System php,Cart System ajax,Cart System jquey,add to Cart System php,add to Cart System ajax,add to Cart System jquery,add to Cart System php,add to Cart System php,add to Cart System php,add to Cart System php,php shopping cart,how to create shopping cart in php,how to create shopping cart in php,shopping cart system php tutorial,shopping cart in php source code,shopping cart script,shopping cart php tutorial,shopping cart php code,ajax cart,ajax shopping cart,php shopping cart,shopping cart php,shopping cart in php,ajax cart pro,ecommerce shopping cart,ajax add to cart,online shopping cart system,simple shopping cart php,simple php shopping cart,shopping cart code,ajax cart for html websites with orders,php ajax shopping cart,jquery Cart System,ajax Cart System,jquery shopping cart,jquery cart,wordpress shopping cart,jquery shopping cart plugin,jquery shopping cart tutorial,shopping cart jquery,jquery cart plugin,html shopping cart,website shopping cart,shopping cart for wordpress,php ecommerce,custom shopping cart,TalkersCode,Talkers Code,HTML,HTML5,CSS,CSS3,JavaScript,jQuery,PHP,MySQL,web development,web questions and answers,web tips,web tricks,css tutorials,html tutorials,javascript tutorials">
+<meta property="og:image" content="http://talkerscode.com/webtricks/images/cart_system.jpg"/>
+
+<link rel="canonical" href="http://talkerscode.com/webtricks/simple-add-to-cart-system-using-jquery-ajax-and-php.php"/>
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@TalkersCode">
+<meta name="twitter:title" content="Simple Add To Cart System Using jQuery,Ajax And PHP On TalkersCode.com">
+<meta name="twitter:description" content="How to create Simple Add To Cart System Using jQuery,Ajax And PHP On TalkersCode.com">
+<meta name="twitter:image" content="http://talkerscode.com/webtricks/images/cart_system.jpg">
+
+<link rel="stylesheet" type="text/css" href="../style/header.css">
+<link rel="stylesheet" type="text/css" href="../style/footer.css">
+<link rel="stylesheet" type="text/css" href="style/webtrick_tut.css">
+<link rel="stylesheet" type="text/css" href="style/big_display_style.css">
+<link rel="stylesheet" type="text/css" href="style/small_display_style.css">
+<link rel="stylesheet" type="text/css" href="style/middle_display_style.css">
+<script type="text/javascript" src="../js/jquery.js"></script>
+
+<script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+
+</head>
+<body>
+
+<script>
+function showmenu_links()
+{
+$('#mobile_menu_links').animate({width:'toggle'});
+}
+function close_menu()
+{
+	$('#mobile_menu_links').hide();
+}
+function show_search()
+{
+	$('#search_form').toggle();
+}
+function checksearch()
+{
+var sval=document.getElementById("search_query");
+if(sval.value=="")
+{
+	return false;
+}
+else
+{
+	return true;
+}
+}
+</script>
+
+
+<div id="sponsored_review_div">
+<p><a target="_blank" rel="nofollow" href="https://www.webhostface.com/fall-special/">90% OFF for SSD shared hosting, Free SSL, Free CDN, Multiple PHP versions! GET NOW!</a></p>
+</div>
+
+
+<div id="header_wrapper">
+
+	<div id='header'>
+	
+		<img src="http://talkerscode.com/includes/menu_icon.png" id="menu_icon" onclick="showmenu_links();">
+		
+		<a href='http://talkerscode.com/index.php' id='sitename'>TalkersCode</a>
+		<div id='menu_links'>
+			<li class="main_link"><a class="main_anchor">Learn Web Development</a>
+			<ul id="sub_menu_link">
+			<li><a href='http://talkerscode.com/html/html.php'>HTML</a></li>
+			<li><a href='http://talkerscode.com/css/css.php'>CSS</a></li>
+			<li><a href='http://talkerscode.com/javascript/javascript.php'>JavaScript</a></li>
+			<li><a href='http://talkerscode.com/jquery/jquery.php'>jQuery</a></li>
+			<li><a href='http://talkerscode.com/php/php.php'>PHP</a></li>
+			<li><a href='http://talkerscode.com/mysql/mysql.php'>MySQL</a></li>
+			</ul>
+			</li>
+			<li class="main_link"><a class="main_anchor"href='http://talkerscode.com/webtricks.php'>Tutorials</a></li>
+			<li class="main_link"><a class="main_anchor" href='http://talkerscode.com/blogging.php'>Blogging</a></li>
+			<li class="main_link"><a class="main_anchor" href='http://talkerscode.com/reviews.php'>Reviews</a></li>
+			<li class="main_link"><a class="main_anchor" href='http://talkerscode.com/offers.php'>Offers</a></li>
+			<li class="main_link"><a class="main_anchor" href='http://talkerscode.com/advertise.php'>Advertise</a></li>
+		</div>
+		
+		<input type="button" onclick="show_search();" id="search_button" value="SEARCH">
+
+		<div id='mobile_menu_links'>
+			<li id="close_button" onclick="close_menu();">&larr; CLOSE</li>
+			<li><a href='http://talkerscode.com/html/html.php'>HTML</a></li>
+			<li><a href='http://talkerscode.com/css/css.php'>CSS</a></li>
+			<li><a href='http://talkerscode.com/javascript/javascript.php'>JavaScript</a></li>
+			<li><a href='http://talkerscode.com/jquery/jquery.php'>jQuery</a></li>
+			<li><a href='http://talkerscode.com/php/php.php'>PHP</a></li>
+			<li><a href='http://talkerscode.com/mysql/mysql.php'>MySQL</a></li>
+			<li><a href='http://talkerscode.com/webtricks.php'>Tutorials</a></li>
+			<li><a href='http://talkerscode.com/blogging.php'>Blogging</a></li>
+			<li><a href='http://talkerscode.com/reviews.php'>Reviews</a></li>
+			<li><a href='http://talkerscode.com/offers.php'>Offers</a></li>
+			<li><a href='http://talkerscode.com/advertise.php'>Advertise</a></li>
+		</div>
+
+	</div><!--end of header-->
+</div><!--end of header_wrapper-->
+
+<div id="blogging_menu_wrapper">
+	<div id="blogging_menu">
+	<p>	
+		Want To Be A Blogger 
+		&nbsp;&rarr;&nbsp;
+		<a href="http://talkerscode.com/blogging/how-to-start-a-blog.php">Start A Blog</a>
+		&nbsp;&rarr;&nbsp;
+		<a href="http://talkerscode.com/blogging/increase-website-traffic.php">Increase Traffic</a>
+		&nbsp;&rarr;&nbsp;
+		<a href="http://talkerscode.com/blogging/make-money-online.php">Make Money Online</a>
+		&nbsp;&rarr;&nbsp;
+		<a href="http://talkerscode.com/recommended-things-for-bloggers.php">Recommended Things</a>
+	</p>	
+	</div>
+</div>
+
+<div id="search_form">
+	<form methof="get" action="http://talkerscode.com/search.php" onsubmit="return checksearch();">
+		<input type="text" id="search_query" name="search" placeholder="Enter Text To Search" autofocus>
+	</form>
+</div>
+
+
+<!--FoxPush Push Notification-->
+<script type="text/javascript">
+(function(){
+var foxscript = document.createElement('script');
+foxscript.src = '//js.foxpush.com/talkerscodecom.js?v='+Math.random();
+foxscript.type = 'text/javascript';
+foxscript.async = 'true';
+var fox_s = document.getElementsByTagName('script')[0];
+fox_s.parentNode.insertBefore(foxscript, fox_s);})();
+</script><div id='wrapper'>
+<div id="content">
+
+<center>
+<div id="bigad_display">
+
+</div>
+</center>
+<div id="left_div">
+<div id="webtrick_div">
+<h1 class="page_title">Simple Add To Cart System Using jQuery,Ajax And PHP.</h1>
+<p class="posttime">Thursday, Sep 28, 2017</p>
+
+<!--Social Sharing Buttons-->
+<script type='text/javascript' src='//platform-api.sharethis.com/js/sharethis.js#property=5990996cd85a710012ca4e41&product=inline-share-buttons' async='async'></script>
+<div class="sharethis-inline-share-buttons"></div>
+<p class="tuttags">Tags:- <a href="../webtricks.php?category=PHP">PHP</a> <a href="../webtricks.php?category=jQuery">jQuery</a> <a href="../webtricks.php?category=Ajax">Ajax</a></p>
+
+<div id="linkad_middle">
+
+</div><br>
+
+<p class="explain_para">In this tutorial we will create a simple but very Practical and helpful Cart System that you can include in 
+your ecommerce website.Cart System is very important in online shopping websites anything the user wants or wish he can click
+on a simple button and automatically that item is included in your cart.Cart is like a collection of items that user wants to buy.It 
+has the total record of items the user wants before the final payment.You may also like <a href="drag-and-drop-shopping-cart-using-jquery-and-php.php">drag and drop shopping cart using ajax and PHP</a>.</p>
+<center>
+<div id="middlead_display">
+
+</div>
+</center>
+<br>
+<a class="demolink" href="demo/demo_simple-add-to-cart-system-using-jquery-ajax-and-php.php" target="_blank">See Demo</a>
+<br>
+<center><img src="images/cart_system.jpg" class="tut_image" alt="Add to Cart System"></center>
+
+<br>
+<br>
+
+<p class="explain_para"><b><u>To Make a Cart System it takes only Three steps:-</u></b></p>
+<ol>
+<li>Make a HTML file and define markup and script for Cart System</li>
+<li>Make a PHP file for storing and retrieving items from Cart System</li>
+<li>Make a CSS file and define styling for Cart System</li>
+</ol>
+<br>
+
+<div id="second_middlead_display">
+</div>
+<br>
+<p class="explain_para"><b>Step 1.Make a HTML file and define markup and script for Cart System</b></p>
+<p class="explain_para">We make a HTML file and save it with a name <b>cart.html</b></p>
+<div class="code_div">
+<pre class='prettyprint'>
+<span class="tag">&lt;!DOCTYPE html&gt;</span>
+<span class="tag">&lt;html&gt;</span>
+<span class="tag">&lt;head&gt;</span>
+  <span class="tag">&lt;</span>link rel="stylesheet" type="text/css" href="cart_style.css"<span class="tag">&gt;</span>
+  <span class="tag">&lt;</span>script type="text/javascript" src="jquery.js"<span class="tag">&gt;</span><span class="tag">&lt;</span>/script<span class="tag">&gt;</span>
+  <span class="tag">&lt;</span>script type="text/javascript"<span class="tag">&gt;</span>
+
+    $(document).ready(function(){
+
+      $.ajax({
+        type:'post',
+        url:'store_items.php',
+        data:{
+          total_cart_items:"totalitems"
+        },
+        success:function(response) {
+          document.getElementById("total_items").value=response;
+        }
+      });
+
+    });
+
+    function cart(id)
+    {
+	  var ele=document.getElementById(id);
+	  var img_src=ele.getElementsByTagName("img")[0].src;
+	  var name=document.getElementById(id+"_name").value;
+	  var price=document.getElementById(id+"_price").value;
+	
+	  $.ajax({
+        type:'post',
+        url:'store_items.php',
+        data:{
+          item_src:img_src,
+          item_name:name,
+          item_price:price
+        },
+        success:function(response) {
+          document.getElementById("total_items").value=response;
+        }
+      });
+	
+    }
+
+    function show_cart()
+    {
+      $.ajax({
+      type:'post',
+      url:'store_items.php',
+      data:{
+        showcart:"cart"
+      },
+      success:function(response) {
+        document.getElementById("mycart").innerHTML=response;
+        $("#mycart").slideToggle();
+      }
+     });
+
+    }
+	
+<span class="tag">&lt;</span>/script<span class="tag">&gt;</span>
+  
+<span class="tag">&lt;/head&gt;</span>
+
+<span class="tag">&lt;body&gt;</span>
+
+<span class="tag">&lt;</span>p id="cart_button" onclick="show_cart();"<span class="tag">&gt;</span>
+  <span class="tag">&lt;</span>img src="cart_icon.png"<span class="tag">&gt;</span>
+  <span class="tag">&lt;</span>input type="button" id="total_items" value=""<span class="tag">&gt;</span>
+<span class="tag">&lt;</span>/p<span class="tag">&gt;</span>
+
+<span class="tag">&lt;</span>div id="mycart"<span class="tag">&gt;</span>
+<span class="tag">&lt;</span>/div<span class="tag">&gt;</span>
+
+<span class="tag">&lt;</span>h1<span class="tag">&gt;</span>Simple Add To Cart System Using jQuery,Ajax And PHP<span class="tag">&lt;</span>/h1<span class="tag">&gt;</span>
+
+<span class="tag">&lt;</span>div id="item_div"<span class="tag">&gt;</span>
+
+  <span class="tag">&lt;</span>div class="items" id="item1"<span class="tag">&gt;</span>
+    <span class="tag">&lt;</span>img src="product1.jpg"<span class="tag">&gt;</span>
+    <span class="tag">&lt;</span>input type="button" value="Add To CART" onclick="cart('item1')"<span class="tag">&gt;</span>
+    <span class="tag">&lt;</span>p<span class="tag">&gt;</span>Simple Navy Blue T-Shirt<span class="tag">&lt;</span>/p<span class="tag">&gt;</span>
+    <span class="tag">&lt;</span>p<span class="tag">&gt;</span>Price - $95<span class="tag">&lt;</span>/p<span class="tag">&gt;</span>
+    <span class="tag">&lt;</span>input type="hidden" id="item1_name" value="Simple Navy Blue T-Shirt"<span class="tag">&gt;</span>
+    <span class="tag">&lt;</span>input type="hidden" id="item1_price" value="$95"<span class="tag">&gt;</span>
+  <span class="tag">&lt;</span>/div<span class="tag">&gt;</span>
+
+  <span class="tag">&lt;</span>div class="items" id="item2"<span class="tag">&gt;</span>
+    <span class="tag">&lt;</span>img src="product2.jpg"<span class="tag">&gt;</span>
+    <span class="tag">&lt;</span>input type="button" value="Add To CART" onclick="cart('item2')"<span class="tag">&gt;</span>
+    <span class="tag">&lt;</span>p<span class="tag">&gt;</span>Trendy T-Shirt With Back Design<span class="tag">&lt;</span>/p<span class="tag">&gt;</span>
+    <span class="tag">&lt;</span>p<span class="tag">&gt;</span>Price - $105<span class="tag">&lt;</span>/p<span class="tag">&gt;</span>
+    <span class="tag">&lt;</span>input type="hidden" id="item2_name" value="Trendy T-Shirt With Back Design"<span class="tag">&gt;</span>
+    <span class="tag">&lt;</span>input type="hidden" id="item2_price" value="$105"<span class="tag">&gt;</span>
+  <span class="tag">&lt;</span>/div<span class="tag">&gt;</span>
+  
+  <span class="tag">&lt;</span>div class="items" id="item3"<span class="tag">&gt;</span>
+    <span class="tag">&lt;</span>img src="product3.jpg"<span class="tag">&gt;</span>
+    <span class="tag">&lt;</span>input type="button" value="Add To CART" onclick="cart('item3')"<span class="tag">&gt;</span>
+    <span class="tag">&lt;</span>p<span class="tag">&gt;</span>Two Color Half-Sleeves T-Shirt<span class="tag">&lt;</span>/p<span class="tag">&gt;</span>
+    <span class="tag">&lt;</span>p<span class="tag">&gt;</span>Price - $120<span class="tag">&lt;</span>/p<span class="tag">&gt;</span>
+    <span class="tag">&lt;</span>input type="hidden" id="item3_name" value="Two Color Half-Sleeves T-Shirt"<span class="tag">&gt;</span>
+    <span class="tag">&lt;</span>input type="hidden" id="item3_price" value="$120"<span class="tag">&gt;</span>
+  <span class="tag">&lt;</span>/div<span class="tag">&gt;</span>
+
+  <span class="tag">&lt;</span>div class="items" id="item4"<span class="tag">&gt;</span>
+    <span class="tag">&lt;</span>img src="product4.jpg"<span class="tag">&gt;</span>
+    <span class="tag">&lt;</span>input type="button" value="Add To CART" onclick="cart('item4')"<span class="tag">&gt;</span>
+    <span class="tag">&lt;</span>p<span class="tag">&gt;</span>Stylish Grey Chinos For Mens<span class="tag">&lt;</span>/p<span class="tag">&gt;</span>
+    <span class="tag">&lt;</span>p<span class="tag">&gt;</span>Price - $140<span class="tag">&lt;</span>/p<span class="tag">&gt;</span>
+    <span class="tag">&lt;</span>input type="hidden" id="item4_name" value="Stylish Grey Chinos For Mens"<span class="tag">&gt;</span>
+    <span class="tag">&lt;</span>input type="hidden" id="item4_price" value="$140"<span class="tag">&gt;</span>
+  <span class="tag">&lt;</span>/div<span class="tag">&gt;</span>
+
+  <span class="tag">&lt;</span>div class="items" id="item5"<span class="tag">&gt;</span>
+    <span class="tag">&lt;</span>img src="product5.jpg"<span class="tag">&gt;</span>
+    <span class="tag">&lt;</span>input type="button" value="Add To CART" onclick="cart('item5')"<span class="tag">&gt;</span>
+    <span class="tag">&lt;</span>p<span class="tag">&gt;</span>Comfortable Pants For Working<span class="tag">&lt;</span>/p<span class="tag">&gt;</span>
+    <span class="tag">&lt;</span>p<span class="tag">&gt;</span>Price - $130<span class="tag">&lt;</span>/p<span class="tag">&gt;</span>
+    <span class="tag">&lt;</span>input type="hidden" id="item5_name" value="Comfortable Pants For Working"<span class="tag">&gt;</span>
+    <span class="tag">&lt;</span>input type="hidden" id="item5_price" value="$130"<span class="tag">&gt;</span>
+  <span class="tag">&lt;</span>/div<span class="tag">&gt;</span>
+
+  <span class="tag">&lt;</span>div class="items" id="item6"<span class="tag">&gt;</span>
+    <span class="tag">&lt;</span>img src="product6.jpg"<span class="tag">&gt;</span>
+    <span class="tag">&lt;</span>input type="button" value="Add To CART" onclick="cart('item6')"<span class="tag">&gt;</span>
+    <span class="tag">&lt;</span>p<span class="tag">&gt;</span>Slim Track Pant For Jogging<span class="tag">&lt;</span>/p<span class="tag">&gt;</span>
+    <span class="tag">&lt;</span>p<span class="tag">&gt;</span>Price - $90<span class="tag">&lt;</span>/p<span class="tag">&gt;</span>
+    <span class="tag">&lt;</span>input type="hidden" id="item6_name" value="Slim Track Pant For Jogging"<span class="tag">&gt;</span>
+    <span class="tag">&lt;</span>input type="hidden" id="item6_price" value="$90"<span class="tag">&gt;</span>
+  <span class="tag">&lt;</span>/div<span class="tag">&gt;</span>
+
+<span class="tag">&lt;</span>/div<span class="tag">&gt;</span>
+
+<span class="tag">&lt;/body&gt;</span>
+<span class="tag">&lt;/html&gt;</span>
+</pre>
+</div>
+<br>
+<p class="explain_para">In this step we create 6 sample items to add in cart.And we made two functions to add items in cart and
+to display all the items in a cart whenever the user clicks on a cart button.</p>
+<br>
+<p class="explain_para">The first function cart(id) when user clicks on any item this function calls gets the id of that item create
+a ajax request and send the data to store_items.php to store items.</p>
+<br>
+<p class="explain_para">The Second function show_cart() is used to display the cart whenever user clicks on a cart icon this 
+function makes an ajax request and get the items user added in cart and then display all the items.</p>
+<br>
+<p class="explain_para">We also create an ajax request after page loading to get the total items in cart just to tell the user how 
+many items he added in cart.You can view our <a href="star-rating-system-using-php-and-javascript.php">star rating system using PHP</a> 
+and add product rating system.</p>
+
+<br>
+<br>
+
+<p class="explain_para"><b>Step 2.Make a PHP file for storing and retrieving items from Cart System</b></p>
+<p class="explain_para">We make a PHP file named store_items.php</p>
+<div class="code_div">
+<pre class='prettyprint'>
+<span class="tag">&lt;?php</span>
+  session_start();
+
+  if(isset($_POST['total_cart_items']))
+  {
+	echo count($_SESSION['name']);
+	exit();
+  }
+
+  if(isset($_POST['item_src']))
+  {
+    $_SESSION['name'][]=$_POST['item_name'];
+    $_SESSION['price'][]=$_POST['item_price'];
+    $_SESSION['src'][]=$_POST['item_src'];
+    echo count($_SESSION['name']);
+    exit();
+  }
+
+  if(isset($_POST['showcart']))
+  {
+    for($i=0;$i&lt;count($_SESSION['src']);$i++)
+    {
+      echo "<span class="tag">&lt;</span>div class='cart_items'<span class="tag">&gt;</span>";
+      echo "<span class="tag">&lt;</span>img src='".$_SESSION['src'][$i]."'<span class="tag">&gt;</span>";
+      echo "<span class="tag">&lt;</span>p<span class="tag">&gt;</span>".$_SESSION['name'][$i]."<span class="tag">&lt;</span>/p<span class="tag">&gt;</span>";
+      echo "<span class="tag">&lt;</span>p<span class="tag">&gt;</span>".$_SESSION['price'][$i]."<span class="tag">&lt;</span>/p<span class="tag">&gt;</span>";
+      echo "<span class="tag">&lt;</span>/div<span class="tag">&gt;</span>";
+    }
+    exit();	
+  }
+<span class="tag">?></span>
+</pre>
+</div>
+<br>
+<p class="explain_para">In this step we create three isset parts that store and send the data to ajax request.first one is to count 
+the total no of items in cart.Second one is to store the items in session you can use cookies also or you can store in database 
+but session is the best way to store cart items.Third one is to display all the items present in cart.</p>
+
+<br>
+<br>
+
+<p class="explain_para"><b>Step 3.Make a CSS file and define styling for Cart System</b></p>
+<p class="explain_para">We make a CSS file and save it with name <b>cart_style.css</b>.
+<div class="code_div">
+<pre class='prettyprint'>
+<span class="tag">body</span>
+<span class="tag">{</span>
+	background-color:#E6E6E6;
+	font-family:helvetica;
+	margin:0px auto;
+	padding:0px;
+<span class="tag">}</span>
+<span class="tag">#cart_button</span>
+<span class="tag">{</span>
+	margin-top:20px;
+	margin-left:80px;
+	cursor:pointer;
+<span class="tag">}</span>
+<span class="tag">#cart_button img</span>
+<span class="tag">{</span>
+	width:40px;
+	height:40px;
+<span class="tag">}</span>
+<span class="tag">#cart_button input[type="button"]</span>
+<span class="tag">{</span>
+	background:none;
+	border:none;
+	background-color:red;
+	border-radius:100%;
+	height:30px;
+	width:30px;
+	margin-top:0px;
+	color:white;
+	font-size:17px;
+	cursor:pointer;
+<span class="tag">}</span>
+<span class="tag">#mycart</span>
+<span class="tag">{</span>
+	display:none;
+	background-color:white;
+	width:800px;
+	margin-left:100px;
+<span class="tag">}</span>
+<span class="tag">#mycart .cart_items</span>
+<span class="tag">{</span>
+	border-bottom:1px dashed silver;
+	padding:20px;
+	padding-left:10px;
+<span class="tag">}</span>
+<span class="tag">#mycart .cart_items img</span>
+<span class="tag">{</span>
+	width:70px;
+	height:50px;
+	float:left;
+<span class="tag">}</span>
+<span class="tag">#mycart .cart_items p</span>
+<span class="tag">{</span>
+	margin:0px;
+	font-size:17px;
+	color:green;
+<span class="tag">}</span>
+<span class="tag">h1</span>
+<span class="tag">{</span>
+	margin-top:100px;
+	color:green;
+	text-align:center;
+<span class="tag">}</span>
+<span class="tag">#item_div</span>
+<span class="tag">{</span>
+	float:left;
+	margin-left:60px;
+<span class="tag">}</span>
+<span class="tag">.items</span>
+<span class="tag">{</span>
+	padding:20px;
+	background-color:white;
+	width:250px;
+	height:350px;
+	margin-top:20px;
+	box-shadow:0px 0px 10px 0px #A4A4A4;
+	box-sizing:border-box;
+	float:left;
+	margin:20px;
+	position:relative;
+<span class="tag">}</span>
+<span class="tag">.items:hover input[type="button"]</span>
+<span class="tag">{</span>
+	display:block;
+<span class="tag">}</span>
+<span class="tag">.items input[type="button"]</span>
+<span class="tag">{</span>
+	display:none;
+	background:none;
+	background-color:#3ADF00;
+	width:200px;
+	height:50px;
+	border:none;
+	font-size:20px;
+	color:white;
+	position:absolute;
+	top:150px;
+	left:25px;
+	cursor:pointer;
+<span class="tag">}</span>
+<span class="tag">.items img</span>
+<span class="tag">{</span>
+	width:200px;
+	height:200px;
+<span class="tag">}</span>
+<span class="tag">.items p</span>
+<span class="tag">{</span>
+	color: green;
+<span class="tag">}</span>
+</pre>
+</div>
+<br>
+<p class="explain_para">Thats all, this is how to create a simple add to cart system using PHP,jQuery and Ajax.You can 
+customize this code further as per your requirement. And please feel free to give comments on this tutorial.
+</p>
+</div><!--end of webtrick_div-->
+
+<div id="comment_div">
+<div id='latest_tutorial_div'><h2>Latest Tutorials</h2>			<li><a href="simple and best pagination with PHP,MySQL.php" class="latest_tut_links"><img src='images/pagination.jpg'>Simple And Best Pagination With PHP, MySQL</a></li>
+						<li><a href="reduce the size and make thumbnail of any image before uploading using PHP.php" class="latest_tut_links"><img src='images/compress_image.jpg'>Compress,Reduce,Resize The Image Before Uploading To Database With PHP</a></li>
+						<li><a href="upload image to database and server using HTML,PHP and MySQL.php" class="latest_tut_links"><img src='images/upload_image.jpg'>Upload Image to Database and Server using HTML,PHP and MySQL</a></li>
+						<li><a href="validate the form data before and after submitting the form.php" class="latest_tut_links"><img src='images/validate_form.jpg'>Validate The Form Data Before And After Submitting The Form Using JavaScript And PHP</a></li>
+						<li><a href="submit the form without page refresh using ajax and jquery.php" class="latest_tut_links"><img src='images/submit_form.jpg'>Submit The Form Without Page Refresh Using Ajax And jQuery</a></li>
+						<li><a href="load data from database without page refresh using ajax and jquery.php" class="latest_tut_links"><img src='images/load_data.jpg'>Load Data From Database Without Page Refresh Using Ajax and jQuery</a></li>
+			</div>
+<div id="user_comments">
+	<!--Discus Comment System-->
+<div id="disqus_thread"></div> 
+<script>  
+var disqus_config = function () 
+{
+this.page.url = 'http://talkerscode.com/webtricks/simple-add-to-cart-system-using-jquery-ajax-and-php.php'; // Replace PAGE_URL with your page's canonical URL variable 
+this.page.identifier = '48'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable 
+};
+(
+function() 
+{
+var d = document, s = d.createElement('script'); s.src = '//talkerscode.disqus.com/embed.js'; s.setAttribute('data-timestamp', +new Date()); (d.head || d.body).appendChild(s); 
+})(); 
+</script> 
+<noscript>
+Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a>
+</noscript>
+</div></div><!--end of comment_div-->
+
+</div><!--end of left_div-->
+
+<div id="right_div">
+<div id="subscribe_div">
+	<!-- Begin MailChimp Web Development Signup Form -->
+	<div id="mc_embed_signup">
+		<form action="//talkerscode.us16.list-manage.com/subscribe/post?u=f94e7bab7825ac584efee41ab&amp;id=58b691f037" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+			<div id="mc_embed_signup_scroll">
+				<p class="feed_head">Subscribe Our Newsletter And Get Tutorials And Offers Via Email</p>
+				<p>
+					<input type="text" value="" name="FNAME" class="" id="mce-FNAME" placeholder="First Name">
+					<input type="text" value="" name="LNAME" class="" id="mce-LNAME" placeholder="Last Name">
+				</p>
+				<p>
+				<input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL" placeholder="Email">
+				</p>
+				<div id="mce-responses" class="clear">
+					<div class="response" id="mce-error-response" style="display:none"></div>
+					<div class="response" id="mce-success-response" style="display:none"></div>
+				</div>    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+				<div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_f94e7bab7825ac584efee41ab_58b691f037" tabindex="-1" value=""></div>
+				<div class="clear">
+					<input type="submit" value="SUBSCRIBE" name="subscribe" id="mc-embedded-subscribe" class="button">
+				</div>
+			</div>
+		</form>
+	</div>
+<!--End mc_embed_signup-->
+</div>
+
+<div id='about_me_div'>
+<h2>About Me</h2>
+<p>
+<img id="myimage" src="includes/aboutme.jpg">
+<br>
+Hello, My Name is Mudit Jain. I am a Web Developer, Professional Blogger and Digital Marketer from India. I 
+am the founder of TalkersCode. I started this blog in february 2015 to help web developers & bloggers by providing easy 
+and best tutorials, articles and offers for web developers and bloggers.
+</p>
+<p class="social_image_wrapper">
+<a target="_blank" href="https://www.facebook.com/muditjainblogging/"><img src="includes/facebook_icon.png" class="social_image"></a>
+<a target="_blank" href="https://twitter.com/mudit101jain"><img src="includes/twitter_icon.png" class="social_image"></a>
+<a target="_blank" href="https://www.linkedin.com/in/muditjain310/"><img src="includes/linkedin_icon.png" class="social_image"></a>
+<a target="_blank" href="https://plus.google.com/102970142249395280883"><img src="includes/googleplus_icon.png" class="social_image"></a>
+</p>
+</div>
+
+<div id='related_link_div'><h2>Related Tutorials</h2>			<p class="related_links"><a href="simple-instant-comment-system-using-ajax.php"><img src='images/comment_system.jpg'>Create A Simple Instant Comment System Using Ajax</a></p>
+						<p class="related_links"><a href="drag-and-drop-shopping-cart-using-jquery-and-php.php"><img src='images/drag_and_drop_shopping_cart.jpg'>Drag And Drop Shopping Cart Using jQuery,Ajax And PHP</a></p>
+						<p class="related_links"><a href="youtube-style-like-and-dislike-rating-system-using-jquery-ajax-and-php.php"><img src='images/youtube_rating.jpg'>Youtube Style Like And Dislike Rating System Using jQuery,Ajax And PHP</a></p>
+						<p class="related_links"><a href="load-more-results-from-database-using-jquery-ajax-php-mysql.php"><img src='images/load_result.jpg'>Create Load More Results From Database System Using jQuery,Ajax,PHP and MySQL</a></p>
+						<p class="related_links"><a href="live voting system using ajax and php.php"><img src='images/voting_system.jpg'>Live Voting System Using Ajax And PHP </a></p>
+						<p class="related_links"><a href="basic-instant-fulltext-search-system-using-ajax-and-php.php"><img src='images/fulltext_search.jpg'>Basic Instant FullText Search System Using Ajax And PHP</a></p>
+						<p class="related_links"><a href="make your own captcha system on user signup using php.php"><img src='images/captcha.jpg'>Make Your Own Captcha System On User SignUp Using PHP And Ajax</a></p>
+						<p class="related_links"><a href="password-reset-system-using-php.php"><img src='images/password_reset.jpg'>Password Reset System Using PHP</a></p>
+						<p class="related_links"><a href="account-verification-system-through-email-using-php.php"><img src='images/account_verification.jpg'>Account Verification System Through Email Using PHP</a></p>
+						<p class="related_links"><a href="star-rating-system-using-php-and-javascript.php"><img src='images/star_rating.jpg'>Star Rating System Using PHP and JavaScript</a></p>
+			</div>
+<div id='related_link_div'><h2>Latest Offers</h2>			<p class="related_links"><a target="_blank" rel="nofollow" href="http://inmotion-hosting.evyy.net/c/457904/260033/4222"><img src='../deal_images/inmotion.jpg'>InMotion 40% Discount And Free Domain With Every Shared Hosting Plan</a></p>
+						<p class="related_links"><a target="_blank" rel="nofollow" href="https://secure.getresponse.com/pricing?a=talkerscode"><img src='../deal_images/getresponse.jpg'>GetResponse Summer Saving Sale</a></p>
+						<p class="related_links"><a target="_blank" rel="nofollow" href="//partners.hostgator.com/c/350179/343233/3094"><img src='../deal_images/hostgator.jpg'>HostGator Heavy Discount Offer</a></p>
+			</div>
+
+<!--FoxPush WebDevelopment Segmentation-->
+<script type="text/javascript"> 
+_foxpush_subscribe('389766');
+</script></div><!--end of right_div-->
+
+</div><!--end of content-->
+</div><!--end of wrapper-->
+<div id="footerwrapper">
+<div id='footer'>
+
+<div id="div1">
+<p class="footer_head">About TalkersCode</p>
+<p>TalkersCode is one of the best and biggest website for web developers in India. We also started Blogging articles, reviews and offers</p>
+<br>
+<br>
+<p class="footer_head">Affiliate Disclosure</p>
+<p>We as TalkersCode may receive compensation from some of the companies whose products we review.</p>
+</div>
+
+<div id="div2">
+<p class="footer_head">Useful Links</p>
+<p><a href='http://talkerscode.com/index.php'>Home</a></p>
+<p><a href='http://talkerscode.com/aboutus.php'>About Us</a></p>
+<p><a href='http://talkerscode.com/contactus.php'>Contact Us</a></p>
+<p><a href='http://talkerscode.com/alltutorials.php'>All Post</a></p>
+<p><a href='http://talkerscode.com/sitemap.xml'>Sitemap</a></p>
+<p><a href='http://talkerscode.com/rss.xml'>RSS</a></p>
+</div>
+
+<div id="div3">
+<p>&copy; 2015-2017 All Rights Reserved To TalkersCode</p>
+<p id="social_share">
+Follow Us On &rarr;
+<br>
+<a target="_blank" href="https://www.facebook.com/talkerscode/"><img src="http://talkerscode.com/images/facebook_icon.png"></a>
+<a target="_blank" href="https://twitter.com/Talkerscode"><img src="http://talkerscode.com/images/twitter_icon.png"></a>
+<a target="_blank" href="https://www.linkedin.com/in/muditjain310/"><img src="http://talkerscode.com/images/linkedin_icon.png"></a>
+<a target="_blank" href="https://plus.google.com/102970142249395280883"><img src="http://talkerscode.com/images/googleplus_icon.png"></a>
+<a target="_blank" href="http://feeds.feedburner.com/Talkerscode"><img src="http://talkerscode.com/images/rss_icon.png"></a>
+</p>
+</div>
+
+</div>
+
+</div>
+
+
+<!--Google Analytics-->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-61824078-1', 'auto');
+  ga('send', 'pageview');
+</script></body>
+</html>

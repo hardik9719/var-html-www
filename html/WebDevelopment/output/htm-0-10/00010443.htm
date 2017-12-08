@@ -1,0 +1,54 @@
+<html>
+        <head>
+            <xsl:call-template name="create.stylesheet.link">
+                <xsl:with-param name="package.name"/>
+            </xsl:call-template>
+        </head>
+        <body onload="open('allclasses-frame.html','classListFrame')">
+        <xsl:call-template name="pageHeader"/>
+        <h3>Summary</h3>
+        <table class="log" border="0" cellpadding="5" cellspacing="2" width="100%">
+        <tr>
+            <th>Audited classes</th>
+            <th>Reported classes</th>
+            <th>Violations</th>
+        </tr>
+        <tr class="a">
+            <td><xsl:value-of select="@audited"/></td>
+            <td><xsl:value-of select="@reported"/></td>
+            <td><xsl:value-of select="@violations"/></td>
+        </tr>
+        </table>
+        <table border="0" width="100%">
+        <tr>
+        <td style="text-align: justify;">
+        Note: Rules checked have originated from style guidelines suggested by the language designers,
+        experience from the Java development community and insite experience. Violations are generally
+        reported with a reference to the <a href="http://java.sun.com/docs/books/jls/second_edition/html/jTOC.doc.html">Java Language Specifications</a> (JLS x.x.x)
+        and Metamata Audit rules (x.x).
+        Please consult these documents for additional information about violations.
+        <p/>
+        Rules checked also enforce adherence to <a href="http://java.sun.com/docs/codeconv/html/CodeConvTOC.doc.html">Sun Java coding guidelines</a> in use at Jakarta.
+        <p/>
+        One should note that these violations do not necessary underline errors but should be used
+        as an indication for <i>possible</i> errors. As always, use your best judgment and review
+        them carefully, it might save you hours of debugging.
+        </td>
+        </tr>
+        </table>
+
+        <h3>Packages</h3>
+        <table class="log" border="0" cellpadding="5" cellspacing="2" width="100%">
+            <xsl:call-template name="class.audit.header"/>
+            <xsl:for-each select="class[not(./@package = preceding-sibling::class/@package)]">
+                <xsl:sort select="@package" order="ascending"/>
+                <tr>
+          <xsl:call-template name="alternate-row"/>
+                    <td><a href="{translate(@package,'.','/')}/package-summary.html"><xsl:value-of select="@package"/></a></td>
+                    <td><xsl:value-of select="sum(/classes/class[./@package = current()/@package]/@violations)"/></td>
+                </tr>
+            </xsl:for-each>
+        </table>
+        <xsl:call-template name="pageFooter"/>
+        </body>
+        </html>

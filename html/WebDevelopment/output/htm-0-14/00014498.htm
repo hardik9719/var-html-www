@@ -1,0 +1,112 @@
+<html lang="en">
+<head>
+	 <meta name="viewport" content="width=device-width, initial-scale=1">
+ 	
+ 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+ 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" >
+ 	<script src="js/jquery-3.2.1.min.js" ></script>
+ 	<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" ></script>
+ 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" ></script>
+
+ 	<style>
+ 		.card{
+			margin-top: 5%;
+ 		}
+ 	</style>
+</head>
+<body>
+
+	<nav class="navbar navbar-toggleable-md navbar-light bg-faded">
+	  <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+	    <span class="navbar-toggler-icon"></span>
+	  </button>
+	  <a class="navbar-brand" href="index.php">Navbar</a>
+
+	  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+	    <ul class="navbar-nav mr-auto">
+	      <li class="nav-item active">
+	        <a class="nav-link" href="index.php">Home</a>
+	      </li>
+	      <li class="nav-item">
+	        <a class="nav-link" href="#">Cart</a>
+	      </li>
+	      <li class="nav-item dropdown">
+	              <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	               Brands
+	              </a>
+	              <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+	                <a class="dropdown-item" href="#">Acer</a>
+	                <a class="dropdown-item" href="#">Asus action</a>
+	                
+	              </div>
+	            </li>
+	      
+	    </ul>
+	  <form class="form-inline">
+	  		<div class="input-group">
+	  			<span class="input-group-addon"><i class="fa fa-sign-in" aria-hidden="true"></i></span>
+				<input class="form-control mr-sm-2" type="text"  name="Username" placeholder="Username">
+			</div>
+			<div class="input-group">
+	  			<span class="input-group-addon"><i class="fa fa-key" aria-hidden="true"></i></span>
+				<input class="form-control mr-sm-2" type="text" name="Password" placeholder="Password">
+			</div>
+	      
+	      <button class="btn btn-outline-success " type="submit">Login</button>
+	      <button class="btn btn-outline-success " type="submit">Signup</button>
+	    </form>
+	  </div>
+	</nav>
+
+	<div class="container">
+
+		<div class="row">
+			<div class="col-md-3"></div>
+			<div class="col-md-6">
+				<div class="card">
+			  		<div class="card-block">
+			    	<div class="register">
+
+			    					<form name="myform">
+			    									<div class="form-group">
+			    										<label for="myName">Username *</label>
+			    										<input id="myName" name="myName" class="form-control" type="text" data-validation="required">
+			    										<span id="error_name" class="text-danger"></span>
+			    									</div>
+			    									
+			    									<div class="form-group">
+			    										<label for="email">Email *</label>
+			    										<input id="email" name="email"  class="form-control" type="text" min="1" >
+			    										<span id="error_email" class="text-danger"></span>
+			    									</div>
+			    									<div class="form-group">
+			    										<label for="password">Password *</label>
+			    										<input id="password" name="password"  class="form-control" type="password" min="1" >
+			    										<span id="error_password" class="text-danger"></span>
+			    									</div>
+			    									<div class="form-group">
+			    										<label for="cpassword">Confirm Password *</label>
+			    										<input id="cpassword" name="cpassword"  class="form-control" type="password" min="1" >
+			    										
+			    									</div>
+
+			    									
+			    									
+			    									</div>
+			    									
+			    									<button id="submit" type="button" value="submit" class="btn btn-primary center">Submit</button>
+			    							
+			    								</form>
+			    	</div>
+			    
+			  		</div>
+		</div>
+			</div>
+			<div class="col-md-3"></div>
+		</div>
+	</div>
+	
+	<script src="regvalid.js"></script>
+	
+</body>
+</html>

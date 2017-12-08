@@ -1,0 +1,99 @@
+<html>
+<style type="text/css"><!-- .dlgTitle {font: 12pt/14pt tahoma; font-weight: normal; color: "WindowText"; font-style: normal} .dlgLabel {font: 8pt/9pt tahoma; color: "WindowText"} .dlgLabelB {font: 8pt/9pt tahoma; font-weight:bold; color: "WindowText"} .dlgLabelI {font: 8pt/9pt tahoma; font-style:italic; color: "WindowText"} .dlgLabelU {font: 8pt/9pt tahoma; text-decoration:underline; color: "WindowText"} .dlgControl {font: 9pt tahoma; color: "WindowText"; width: 400px} .dlgLabelDisabled {font: 8pt/9pt tahoma; color: "GrayText"; filter: dropshadow(color=white, offx=1, offy=1)} .dlgEdit {font: 8pt/9pt tahoma; color: "WindowText"; width: 400px} .dlgLink {cursor: hand; text-decoration:none; color: "ButtonText"} .dlgLinkDisabled {cursor: default; text-decoration:none; color: "ButtonShadow"} .dlgBtn {cursor: hand; border-width: 0; color: "ButtonText"} .dlgBtnDisabled {cursor: default; border-width: 0; color: "ButtonShadow"; filter: dropshadow(color=white, offx=1, offy=1)} .dlgPushBtn {cursor: hand; font: 8pt/9pt tahoma; color: "ButtonText"; width=102px} .dlgOKCancelBtn {font: 8pt/9pt tahoma; color: "ButtonText"; width=80px} .dlgDropDown {font: 8pt/9pt tahoma; color: "WindowText"; width: 200px} .dlgTextEdit {font: 9pt tahoma; color: "WindowText"; width: 400px; height: 140px} .dlgHalfEdit {font: 8pt/9pt tahoma; color: "WindowText"; width: 262px} .dlgSmallDropDown {font: 8pt/9pt tahoma; color: "WindowText"; width: 100px} --></style>
+<style type="text/css">
+	TABLE {font: 8pt/9pt Tahoma}
+</style>
+<head>
+<meta name="Version" content="4730"> <meta name="Microsoft Theme" content="none">
+<title>Discussions Toolbar</title>
+<script language=javascript>
+function Hilite(diidItem, diidTest, fHilite)
+{
+	if (fHilite && diidTest.owsenabled == 1)
+		{
+		diidItem.borderColorLight = "ButtonHighlight";
+		diidItem.borderColorDark = "ButtonShadow";
+		}
+	else if (diidTest.owsdepressed == 1)
+		{
+		diidItem.borderColorLight = "ButtonShadow";
+		diidItem.borderColorDark = "ButtonHighlight";
+		}
+	else
+		{
+		diidItem.borderColorLight = "ThreedFace";
+		diidItem.borderColorDark = "ThreedFace";
+		}
+}
+function DoCmd(iCmd, diidFocus, fFocus)
+{
+	parent.browserui.DoCommand(iCmd)
+	if (fFocus)
+		diidFocus.focus();
+}
+</script>
+</head>
+<body bgcolor="ThreedFace" topmargin=1 leftmargin=1
+	language=JAVASCRIPT
+	onLoad=parent.browserui.OnFrameLoad(2,document)
+	onContextMenu="return false">
+<table cellpadding=0 cellspacing=0>
+	<tr>
+		<td><table cellpadding=2 height=20 cellspacing=0 id=diidInsert border=1 bordercolor="ThreedFace">
+			<tr><td id=diidInsertBtn nowrap onmouseover="Hilite(diidInsert, diidInsertBtn, true)"
+				onmouseout="Hilite(diidInsert, diidInsertBtn, false)" class=dlgBtn owsenabled=1
+				onclick=DoCmd(15,diidInsertLink,true)>
+				<a href="mso:2000" id=diidInsertLink class=dlgLink
+>
+				&nbsp;Discussions <img id=diidInsArrow src=dnarrow.gif border=0 align=middle></a></td></tr></table></td>
+		<td style="padding: 2px"><img src=msep.gif border=0></td>
+		<td><table cellpadding=2 cellspacing=0 id=diidInsInline border=1 bordercolor="ThreedFace"> <tr><td id=diidInsInBtn nowrap onmouseover="Hilite(diidInsInline, diidInsInImg, true)" onmouseout="Hilite(diidInsInline, diidInsInImg, false)" class=dlgBtn title="Insert Discussion in the Document" onclick=DoCmd(3,diidInsInLink,true)> <a href="mso:2000" id=diidInsInLink class=dlgLink title="Insert Discussion in the Document" > <img id=diidInsInImg src=cominlin.gif border=0 owsenabled=1></a></td></tr></table></td>
+		<td><table cellpadding=2 cellspacing=0 id=diidInsGen border=1 bordercolor="ThreedFace"> <tr><td id=diidInsGenBtn nowrap onmouseover="Hilite(diidInsGen, diidInsGenImg, true)" onmouseout="Hilite(diidInsGen, diidInsGenImg, false)" class=dlgBtn title="Insert Discussion about the Document" onclick=DoCmd(5,diidInsGenLink,true)> <a href="mso:2000" id=diidInsGenLink class=dlgLink title="Insert Discussion about the Document" > <img id=diidInsGenImg src=comgen.gif border=0 owsenabled=1></a></td></tr></table></td>
+		<td><table cellpadding=2 cellspacing=0 id=diidExpand border=1 bordercolor="ThreedFace"> <tr><td id=diidExpBtn nowrap onmouseover="Hilite(diidExpand, diidExpImg, true)" onmouseout="Hilite(diidExpand, diidExpImg, false)" class=dlgBtn title="Expand all Discussions" onclick=DoCmd(21,diidExpLink,true)> <a href="mso:2000" id=diidExpLink class=dlgLink title="Expand all Discussions" > <img id=diidExpImg src=dcomexpa.gif border=0 owsenabled=1></a></td></tr></table></td>
+		<td><table cellpadding=2 cellspacing=0 id=diidCollapse border=1 bordercolor="ThreedFace"> <tr><td id=diidCollBtn nowrap onmouseover="Hilite(diidCollapse, diidCollImg, true)" onmouseout="Hilite(diidCollapse, diidCollImg, false)" class=dlgBtn title="Collapse all Discussions" onclick=DoCmd(20,diidCollLink,true)> <a href="mso:2000" id=diidCollLink class=dlgLink title="Collapse all Discussions" > <img id=diidCollImg src=dcomcoll.gif border=0 owsenabled=1></a></td></tr></table></td>
+		<td><table cellpadding=2 cellspacing=0 id=diidPrev border=1 bordercolor="ThreedFace"> <tr><td id=diidPrevBtn nowrap onmouseover="Hilite(diidPrev, diidPrevImg, true)" onmouseout="Hilite(diidPrev, diidPrevImg, false)" class=dlgBtn title="Previous" onclick=DoCmd(23,diidPrevLink,false)> <a href="mso:2000" id=diidPrevLink class=dlgLink title="Previous" > <img id=diidPrevImg src=dcomprev.gif border=0 owsenabled=1></a></td></tr></table></td>
+		<td><table cellpadding=2 cellspacing=0 id=diidNext border=1 bordercolor="ThreedFace"> <tr><td id=diidNextBtn nowrap onmouseover="Hilite(diidNext, diidNextImg, true)" onmouseout="Hilite(diidNext, diidNextImg, false)" class=dlgBtn title="Next" onclick=DoCmd(22,diidNextLink,false)> <a href="mso:2000" id=diidNextLink class=dlgLink title="Next" > <img id=diidNextImg src=dcomnext.gif border=0 owsenabled=1></a></td></tr></table></td>
+		<td style="display: none; padding: 2px" id=diidSeparator2Elem>
+		    <img src=msep.gif border=0></td>
+		<td style="display: none" id=diidSubscribeElem>
+		    <table cellpadding=2 height=20 cellspacing=0 id=diidSubscribe border=1 bordercolor="ThreedFace">
+			    <tr><td id=diidSubscribeBtn nowrap onmouseover="Hilite(diidSubscribe, diidSubscribeBtn, true)"
+				onmouseout="Hilite(diidSubscribe, diidSubscribeBtn, false)" class=dlgBtn
+				title="Subscribe" owsenabled=1
+				onclick=DoCmd(24,diidSubscribeLink,true)>
+				<a href="mso:2000" id=diidSubscribeLink class=dlgLink
+>
+				Subscribe...</a>
+				</td></tr></table></td>
+		<td style="display: none" id=diidReturnReviewElem>
+			<table cellpadding=2 height=20 cellspacing=0 id=diidReturnReview border=1 bordercolor="ThreedFace">
+				<tr><td id=diidReturnReviewBtn nowrap onmouseover="Hilite(diidReturnReview, diidReturnReviewBtn, true)"
+				onmouseout="Hilite(diidReturnReview, diidReturnReviewBtn, false)" class=dlgBtn
+				title="Reply With Changes" owsenabled=1
+				onclick=DoCmd(35,diidReturnReviewLink,true)>
+				<a href="mso:2000" id=diidReturnReviewLink class=dlgLink
+>
+				<img id=diidReplyIcon src=review.gif border=0 align=middle>&nbsp;Reply with Changes</a>
+				</td></tr></table></td>
+		<td style="padding: 2px"><img src=msep.gif border=0></td>
+		<td><table cellpadding=2 cellspacing=0 id=diidTglPane border=1 bordercolor="ThreedFace"> <tr><td id=diidTglPaneBtn nowrap onmouseover="Hilite(diidTglPane, diidTglPaneImg, true)" onmouseout="Hilite(diidTglPane, diidTglPaneImg, false)" class=dlgBtn title="Show/Hide Discussion Pane" onclick=DoCmd(25,diidTglPaneLink,true)> <a href="mso:2000" id=diidTglPaneLink class=dlgLink title="Show/Hide Discussion Pane" > <img id=diidTglPaneImg src=dpaneup.gif border=0 owsenabled=1></a></td></tr></table></td>
+		<td style="padding: 2px"><img src=msep.gif border=0>&nbsp;</td>
+		<td valign=middle>
+			<img id=diidNoDisc src=space.gif border=0
+			onclick="parent.browserui.DoCommand(11)"></td>
+		<td>&nbsp;</td>
+		<td id=diidLabel nowrap></td>
+		<td height=21 width="80%">&nbsp;</td>
+		<td valign=middle>
+			<img id=diidFilter src=space.gif border=0
+			onclick="parent.browserui.DoCommand(31)"></td>
+		<td>&nbsp;</td>
+		<td valign=middle>
+			<img id=diidBusy src=space.gif border=0
+			onclick="parent.browserui.DoCommand(30)"></td>
+		<td>&nbsp;</td>
+		<td><table cellpadding=2 cellspacing=0 id=diidHelp border=1 bordercolor="ThreedFace"> <tr><td id=diidHelpBtn nowrap onmouseover="Hilite(diidHelp, diidHelpImg, true)" onmouseout="Hilite(diidHelp, diidHelpImg, false)" class=dlgBtn title="Web Discussions Help" onclick=DoCmd(26,diidHelpLink,true)> <a href="mso:2000" id=diidHelpLink class=dlgLink title="Web Discussions Help" > <img id=diidHelpImg src=help.gif border=0 owsenabled=1></a></td></tr></table></td>
+	</tr>
+</table>
+</body>
+</html>

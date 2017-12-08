@@ -1,0 +1,24 @@
+<html>
+        <head>
+            <xsl:call-template name="create.stylesheet.link"/>
+        </head>
+        <body>
+            <h2>Classes</h2>
+            <table width="100%">
+                <xsl:for-each select="package/class">
+                    <xsl:sort select="@name"/>
+                    <xsl:variable name="package.name" select="(ancestor::package)[last()]/@name"/>
+                    <xsl:variable name="link">
+                        <xsl:if test="not($package.name='')">
+                            <xsl:value-of select="translate($package.name,'.','/')"/><xsl:text>/</xsl:text>
+                        </xsl:if><xsl:value-of select="@name"/><xsl:text>.html</xsl:text>
+                    </xsl:variable>
+                    <tr>
+                        <td nowrap="nowrap">
+                            <a target="classFrame" href="{$link}"><xsl:value-of select="@name"/></a>
+                        </td>
+                    </tr>
+                </xsl:for-each>
+            </table>
+        </body>
+    </html>

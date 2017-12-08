@@ -1,0 +1,46 @@
+<html><h1 class="refsect1">REGEXP_REPLACE</h1>
+<p><code>REGEXP_REPLACE</code> searches a string for a regular pattern and replaces it with another string. By default, the function returns <code>source_char</code> with every occurrence of the regular expression pattern replaced with <code>replace_string</code>.</p>
+<p class="titleinrefsubsect"><a id="sthref568" name="sthref568"></a>Return Value</p>
+<pre xml:space="preserve" class="oac_no_warn">CHAR | NCHAR | VARCHAR2 | NVARCHAR2
+</pre>
+<p class="titleinrefsubsect"><a id="sthref569" name="sthref569"></a>Syntax</p>
+<pre xml:space="preserve" class="oac_no_warn"><span class="bold">REGEXP_REPLACE</span>(source_char, pattern
+               [, replace_string
+                  [, position
+                     [, occurrence
+                        [, match_parameter ]
+                     ]
+                  ]
+               ]
+              )
+</pre>
+<p class="titleinrefsubsect"><a id="sthref570" name="sthref570"></a>Arguments</p>
+<p><code>source_char</code> is the text expression that is searched.</p>
+<p><code>pattern</code> is the text expression to search for. It is usually a text literal and can contain up to 512 bytes. For a list of operators, refer to the <span class="italic">Oracle Database SQL Language Reference</span>, Appendix D, "Oracle Regular Expression Support."</p>
+<p><code>replace_string</code> is the text that replaces <code>pattern</code> in <code>source_char</code>.</p>
+<p><code>position</code> is a nonzero integer indicating the character of <code>source_char</code> where the function begins the search. When <code>position</code> is negative, then the function counts and searches backward from the end of string. The default value of <code>position</code> is 1, which means that the function begins searching at the first character of <code>source_char</code>.</p>
+<p><code>occurrence</code> is an integer indicating which occurrence of <code>pattern</code> the function should search for. The value of <code>occurrence</code> must be positive. The default values of <code>occurrence</code> is 1, meaning the function searches for the first occurrence of <code>pattern</code>.</p>
+<p><code>match_parameter</code> is a text literal that lets you change the default matching behavior of the function. You can specify one or more of the following values:</p>
+<ul>
+<li>
+<p><code>c</code>: Case-sensitive matching.</p>
+</li>
+<li>
+<p><code>i</code>: Case-insensitive matching.</p>
+</li>
+<li>
+<p><code>m</code>: Treat the source string as multiple lines. The function interprets <code>^</code> and <code>$</code> as the start and end, respectively, of any line anywhere in the source string, rather than only at the start or end of the entire source string. By default, the function treats the source string as a single line.</p>
+</li>
+<li>
+<p><code>n</code>: New-line character is among the characters matched by a period (the wildcard character). By default, it is not.</p>
+</li>
+<li>
+<p><code>x</code>: Ignore whitespace characters.</p>
+</li>
+</ul>
+<p class="titleinrefsubsect"><a id="sthref571" name="sthref571"></a>Example</p>
+<p><code>REGEXP_REPLACE('500 Oracle Parkway, Redwood Shores, CA', '( ){2,}', ' ')</code></p>
+<p>eliminates extra spaces and returns the string</p>
+<p><code>500 Oracle Parkway, Redwood Shores, CA</code></p>
+</div>
+</html>

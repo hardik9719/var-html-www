@@ -1,0 +1,214 @@
+<html><h1 class="refsect1">LEAD</h1>
+<p><code>LEAD</code> returns the value of an expression for a later time period.</p>
+<p class="titleinrefsubsect"><a id="sthref202" name="sthref202"></a>Return Value</p>
+<p>The same data type as the value expression</p>
+<p class="titleinrefsubsect"><a id="sthref203" name="sthref203"></a>Syntax</p>
+<pre xml:space="preserve" class="oac_no_warn"><span class="bold">LEAD (</span>lead_args<span class="bold">) OVER (</span>lead_clause<span class="bold">)</span>
+</pre>
+<p><span class="bolditalic">lead_args</span>::=</p>
+<pre xml:space="preserve" class="oac_no_warn">expression, offset [, {default_expression | <span class="bold">CLOSEST</span>} ]
+</pre>
+<p><span class="bolditalic">lead_clause</span>::=</p>
+<pre xml:space="preserve" class="oac_no_warn">[ {<span class="bold">DIMENSION</span> dimension_id | <span class="bold">HIERARCHY</span> hierarchy_id} ]
+[ [<span class="bold">BY</span>] { <span class="bold">LEVEL</span> 
+       | <span class="bold">PARENT</span> 
+       | <span class="bold">GREGORIAN</span> {<span class="bold">YEAR</span> | <span class="bold">QUARTER</span> | <span class="bold">MONTH</span> | <span class="bold">WEEK</span> | <span class="bold">DAY</span>}
+       | <span class="bold">ANCESTOR AT</span> { <span class="bold">DIMENSION LEVEL</span> dim_level_id
+                      | <span class="bold">HIERARCHY LEVEL</span> hier_level_id
+                      }
+       }
+                [<span class="bold">POSITION FROM</span> {<span class="bold">BEGINNING</span> | <span class="bold">END</span>}] 
+] 
+</pre>
+<p class="titleinrefsubsect"><a id="sthref204" name="sthref204"></a>Arguments</p>
+<p class="subhead2"><a id="OLAXS276" name="OLAXS276"></a><a id="sthref205" name="sthref205"></a><span class="italic">expression</span></p>
+<p>A dimensional expression whose values you want to calculate.</p>
+<p class="subhead2"><a id="OLAXS277" name="OLAXS277"></a><a id="sthref206" name="sthref206"></a><span class="italic">offset</span></p>
+<p>A numeric expression for the number of periods to count forward from the current time period.</p>
+<p class="subhead2"><a id="OLAXS278" name="OLAXS278"></a><a id="sthref207" name="sthref207"></a><span class="italic">default_expression</span></p>
+<p>The value returned when <code><span class="codeinlineitalic">offset</span></code> does not identify a valid period. This clause is either an expression of any data type or the <code>CLOSEST</code> keyword for the closest match. The closest match is the first member when counting forward.</p>
+<p class="subhead2"><a id="OLAXS279" name="OLAXS279"></a><a id="sthref208" name="sthref208"></a><span class="italic">dimension_id</span></p>
+<p>The Time dimension over which the lead is calculated.</p>
+<p class="subhead2"><a id="OLAXS280" name="OLAXS280"></a><a id="sthref209" name="sthref209"></a><span class="italic">hierarchy_id</span></p>
+<p>The hierarchy over which the lead is calculated. Otherwise, the default hierarchy for <code><span class="codeinlineitalic">dimension_id</span></code> is used.</p>
+<p class="subhead2"><a id="OLAXS281" name="OLAXS281"></a><a id="sthref210" name="sthref210"></a><span class="italic">dim_level_id</span></p>
+<p>The name of a level of <code><span class="codeinlineitalic">dimension_id</span></code>.</p>
+<p class="subhead2"><a id="OLAXS282" name="OLAXS282"></a><a id="sthref211" name="sthref211"></a><span class="italic">hier_level_id</span></p>
+<p>The name of a level of <code><span class="codeinlineitalic">hierarchy_id</span></code>.</p>
+<p class="subhead2"><a id="OLAXS283" name="OLAXS283"></a><a id="sthref212" name="sthref212"></a>BY subclause</p>
+<p>The BY subclause identifies the range of time periods used when counting the offset. Following are descriptions of the keywords:</p>
+<div class="inftblinformal">
+<table class="Informal" title="LEAD Offset Units" summary="Offset units in LEAD BY clause" dir="ltr" border="1" width="100%" frame="hsides" rules="groups" cellpadding="3" cellspacing="0">
+<col width="32%" />
+<col width="*" />
+<thead>
+<tr align="left" valign="top">
+<th align="left" valign="bottom" id="r1c1-t21">Offset Unit</th>
+<th align="left" valign="bottom" id="r1c2-t21">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr align="left" valign="top">
+<td align="left" id="r2c1-t21" headers="r1c1-t21"><code>LEVEL</code></td>
+<td align="left" headers="r2c1-t21 r1c2-t21">The member at the same level <code><span class="codeinlineitalic">offset</span></code> periods after the current member. (Default)</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r3c1-t21" headers="r1c1-t21"><code>PARENT</code></td>
+<td align="left" headers="r3c1-t21 r1c2-t21">The member at the same level with the same parent <code><span class="codeinlineitalic">offset</span></code> periods after the current member.</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r4c1-t21" headers="r1c1-t21"><code>GREGORIAN YEAR</code></td>
+<td align="left" headers="r4c1-t21 r1c2-t21">The period at the same level with a start date exactly <code>offset</code> years after the start date of the current period.</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r5c1-t21" headers="r1c1-t21"><code>GREGORIAN QUARTER</code></td>
+<td align="left" headers="r5c1-t21 r1c2-t21">The period at the same level with a start date exactly <code><span class="codeinlineitalic">offset</span></code> quarters after the start date of the current period.</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r6c1-t21" headers="r1c1-t21"><code>GREGORIAN MONTH</code></td>
+<td align="left" headers="r6c1-t21 r1c2-t21">The period at the same level with a start date exactly <code><span class="codeinlineitalic">offset</span></code> months after the start date of the current period.</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r7c1-t21" headers="r1c1-t21"><code>GREGORIAN WEEK</code></td>
+<td align="left" headers="r7c1-t21 r1c2-t21">The period at the same level with a start date exactly <code><span class="codeinlineitalic">offset</span></code> weeks after the start date of the current period.</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r8c1-t21" headers="r1c1-t21"><code>GREGORIAN DAY</code></td>
+<td align="left" headers="r8c1-t21 r1c2-t21">The period at the same level with a start date exactly <code><span class="codeinlineitalic">offset</span></code> days after the start date of the current period.</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r9c1-t21" headers="r1c1-t21"><code>ANCESTOR</code></td>
+<td align="left" headers="r9c1-t21 r1c2-t21">The period at the same level as the current period and whose ancestor is <code><span class="codeinlineitalic">offset</span></code> positions after the ancestor of the current period.</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="inftblinformal" -->
+<p class="titleinrefsubsect"><a id="sthref213" name="sthref213"></a>Examples</p>
+<p>This calculation returns the value of the next time period based on calendar quarter. The sample output from this calculation appears in the Next Qtr column.</p>
+<p><code>LEAD (GLOBAL.UNITS_CUBE.UNITS, 1, CLOSEST) OVER (DIMENSION GLOBAL.TIME BY ANCESTOR AT DIMENSION LEVEL GLOBAL.TIME.CALENDAR_QUARTER)</code></p>
+<div class="inftblinformal">
+<table class="Informal" title="LEAD Example" summary="Output from LEAD example" dir="ltr" border="1" width="100%" frame="hsides" rules="groups" cellpadding="3" cellspacing="0">
+<col width="*" />
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+<thead>
+<tr align="left" valign="top">
+<th align="left" valign="bottom" id="r1c1-t22">Time</th>
+<th align="left" valign="bottom" id="r1c2-t22">Parent</th>
+<th align="left" valign="bottom" id="r1c3-t22">Units</th>
+<th align="left" valign="bottom" id="r1c4-t22">Next Qtr</th>
+</tr>
+</thead>
+<tbody>
+<tr align="left" valign="top">
+<td align="left" id="r2c1-t22" headers="r1c1-t22"><code>2005</code></td>
+<td align="left" headers="r2c1-t22 r1c2-t22">TOTAL</td>
+<td align="left" headers="r2c1-t22 r1c3-t22">565718</td>
+<td align="left" headers="r2c1-t22 r1c4-t22">--</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r3c1-t22" headers="r1c1-t22"><code>Q1-05</code></td>
+<td align="left" headers="r3c1-t22 r1c2-t22">CY2005</td>
+<td align="left" headers="r3c1-t22 r1c3-t22">143607</td>
+<td align="left" headers="r3c1-t22 r1c4-t22">138096</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r4c1-t22" headers="r1c1-t22"><code>Q2-05</code></td>
+<td align="left" headers="r4c1-t22 r1c2-t22">CY2005</td>
+<td align="left" headers="r4c1-t22 r1c3-t22">138096</td>
+<td align="left" headers="r4c1-t22 r1c4-t22">138953</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r5c1-t22" headers="r1c1-t22"><code>Q3-05</code></td>
+<td align="left" headers="r5c1-t22 r1c2-t22">CY2005</td>
+<td align="left" headers="r5c1-t22 r1c3-t22">138953</td>
+<td align="left" headers="r5c1-t22 r1c4-t22">145062</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r6c1-t22" headers="r1c1-t22"><code>Q4-05</code></td>
+<td align="left" headers="r6c1-t22 r1c2-t22">CY2005</td>
+<td align="left" headers="r6c1-t22 r1c3-t22">145062</td>
+<td align="left" headers="r6c1-t22 r1c4-t22">146819</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r7c1-t22" headers="r1c1-t22"><code>Jan-05</code></td>
+<td align="left" headers="r7c1-t22 r1c2-t22">CY2005.Q1</td>
+<td align="left" headers="r7c1-t22 r1c3-t22">50098</td>
+<td align="left" headers="r7c1-t22 r1c4-t22">40223</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r8c1-t22" headers="r1c1-t22"><code>Feb-05</code></td>
+<td align="left" headers="r8c1-t22 r1c2-t22">CY2005.Q1</td>
+<td align="left" headers="r8c1-t22 r1c3-t22">43990</td>
+<td align="left" headers="r8c1-t22 r1c4-t22">45477</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r9c1-t22" headers="r1c1-t22"><code>Mar-05</code></td>
+<td align="left" headers="r9c1-t22 r1c2-t22">CY2005.Q1</td>
+<td align="left" headers="r9c1-t22 r1c3-t22">49519</td>
+<td align="left" headers="r9c1-t22 r1c4-t22">52396</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r10c1-t22" headers="r1c1-t22"><code>Apr-05</code></td>
+<td align="left" headers="r10c1-t22 r1c2-t22">CY2005.Q2</td>
+<td align="left" headers="r10c1-t22 r1c3-t22">40223</td>
+<td align="left" headers="r10c1-t22 r1c4-t22">45595</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r11c1-t22" headers="r1c1-t22"><code>May-05</code></td>
+<td align="left" headers="r11c1-t22 r1c2-t22">CY2005.Q2</td>
+<td align="left" headers="r11c1-t22 r1c3-t22">45477</td>
+<td align="left" headers="r11c1-t22 r1c4-t22">46882</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r12c1-t22" headers="r1c1-t22"><code>Jun-05</code></td>
+<td align="left" headers="r12c1-t22 r1c2-t22">CY2005.Q2</td>
+<td align="left" headers="r12c1-t22 r1c3-t22">52396</td>
+<td align="left" headers="r12c1-t22 r1c4-t22">46476</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r13c1-t22" headers="r1c1-t22"><code>Jul-05</code></td>
+<td align="left" headers="r13c1-t22 r1c2-t22">CY2005.Q3</td>
+<td align="left" headers="r13c1-t22 r1c3-t22">45595</td>
+<td align="left" headers="r13c1-t22 r1c4-t22">47476</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r14c1-t22" headers="r1c1-t22"><code>Aug-05</code></td>
+<td align="left" headers="r14c1-t22 r1c2-t22">CY2005.Q3</td>
+<td align="left" headers="r14c1-t22 r1c3-t22">46882</td>
+<td align="left" headers="r14c1-t22 r1c4-t22">47496</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r15c1-t22" headers="r1c1-t22"><code>Sep-05</code></td>
+<td align="left" headers="r15c1-t22 r1c2-t22">CY2005.Q3</td>
+<td align="left" headers="r15c1-t22 r1c3-t22">46476</td>
+<td align="left" headers="r15c1-t22 r1c4-t22">50090</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r16c1-t22" headers="r1c1-t22"><code>Oct-05</code></td>
+<td align="left" headers="r16c1-t22 r1c2-t22">CY2005.Q4</td>
+<td align="left" headers="r16c1-t22 r1c3-t22">47476</td>
+<td align="left" headers="r16c1-t22 r1c4-t22">47776</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r17c1-t22" headers="r1c1-t22"><code>Nov-05</code></td>
+<td align="left" headers="r17c1-t22 r1c2-t22">CY2005.Q4</td>
+<td align="left" headers="r17c1-t22 r1c3-t22">47496</td>
+<td align="left" headers="r17c1-t22 r1c4-t22">47695</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r18c1-t22" headers="r1c1-t22"><code>Dec-05</code></td>
+<td align="left" headers="r18c1-t22 r1c2-t22">CY2005.Q4</td>
+<td align="left" headers="r18c1-t22 r1c3-t22">50090</td>
+<td align="left" headers="r18c1-t22 r1c4-t22">51348</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="inftblinformal" -->
+<p class="titleinrefsubsect"><a id="sthref214" name="sthref214"></a>Related Topics</p>
+<p><a href="olap_functions012.htm#CIHIEIEA">LAG</a>, <a href="olap_functions016.htm#CIHBGJED">LEAD_VARIANCE</a>, <a href="olap_functions017.htm#CIHDAEBF">LEAD_VARIANCE_PERCENT</a></p>
+</div>
+</html>

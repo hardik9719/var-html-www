@@ -1,0 +1,28 @@
+<html>
+        <HEAD>
+            <xsl:call-template name="create.stylesheet.link">
+                <xsl:with-param name="package.name" select="@name"/>
+            </xsl:call-template>
+        </HEAD>
+        <BODY>
+            <table width="100%">
+                <tr>
+                    <td nowrap="nowrap">
+                        <H2><a href="package-summary.html" target="classFrame"><xsl:value-of select="@name"/></a></H2>
+                    </td>
+                </tr>
+            </table>
+
+            <H2>Classes</H2>
+            <TABLE WIDTH="100%">
+                <xsl:for-each select="class">
+                    <xsl:sort select="@name"/>
+                    <tr>
+                        <td nowrap="nowrap">
+                            <a href="{@name}.html" target="classFrame"><xsl:value-of select="@name"/></a>
+                        </td>
+                    </tr>
+                </xsl:for-each>
+            </TABLE>
+        </BODY>
+    </html>

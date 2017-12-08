@@ -1,0 +1,23 @@
+<html><h1 class="refsect1">NLS_CHARSET_NAME</h1>
+<p><code>NLS_CHARSET_NAME</code> returns the name corresponding to a specified character set number.</p>
+<p class="titleinrefsubsect"><a id="sthref508" name="sthref508"></a>Return Value</p>
+<pre xml:space="preserve" class="oac_no_warn">VARCHAR2
+</pre>
+<p class="titleinrefsubsect"><a id="sthref509" name="sthref509"></a>Syntax</p>
+<pre xml:space="preserve" class="oac_no_warn"><span class="bold">NLS_CHARSET_NAME </span>(charset_id)
+</pre>
+<p class="titleinrefsubsect"><a id="sthref510" name="sthref510"></a>Arguments</p>
+<p><code>charset_id</code> is a valid character set number or one of these keywords:</p>
+<ul>
+<li>
+<p><code>CHAR_CS</code> represents the database character set.</p>
+</li>
+<li>
+<p><code>NCHAR_CS</code> represents the national character set. The national character set for the database can be either UTF-8 or AL16UTF16 (default). However, the national character set for analytic workspaces is always UTF-8.</p>
+</li>
+</ul>
+<p>If the number does not correspond to a character set, then the function returns NULL.</p>
+<p class="titleinrefsubsect"><a id="sthref511" name="sthref511"></a>Example</p>
+<p><code>NLS_CHARSET_NAME(2000)</code> returns the value <code>AL16UTF16</code>.</p>
+</div>
+</html>

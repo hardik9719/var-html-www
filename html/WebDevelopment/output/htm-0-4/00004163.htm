@@ -1,0 +1,16 @@
+<html><h1 class="refsect1">RTRIM</h1>
+<p><code>RTRIM</code> scans a text expression from right to left and removes all the characters that match the characters in the trim expression, until it finds an unmatched character. The data type of the return value is the same as the original text.</p>
+<p class="titleinrefsubsect"><a id="sthref602" name="sthref602"></a>Return Value</p>
+<pre xml:space="preserve" class="oac_no_warn">CHAR | NCHAR | VARCHAR2 | NVARCHAR2
+</pre>
+<p class="titleinrefsubsect"><a id="sthref603" name="sthref603"></a>Syntax</p>
+<pre xml:space="preserve" class="oac_no_warn"><span class="bold">RTRIM</span>(char [, set ])
+</pre>
+<p class="titleinrefsubsect"><a id="sthref604" name="sthref604"></a>Arguments</p>
+<p><code>char</code> is the text expression to be trimmed.</p>
+<p><code>set</code> is a text expression with the characters to remove. The default value of <code>set</code> is a single blank.</p>
+<p class="titleinrefsubsect"><a id="sthref605" name="sthref605"></a>Examples</p>
+<p><code>RTRIM('You did that!?!?!?!', '?!')</code> returns the value <code>You did that</code>.</p>
+<p><code>RTRIM('3.14848', '84')</code> returns the text value <code>3.1</code>.</p>
+</div>
+</html>

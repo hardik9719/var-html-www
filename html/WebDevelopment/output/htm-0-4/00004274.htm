@@ -1,0 +1,241 @@
+<html>
+
+      <head>
+        <title>
+          <xsl:value-of select="MANIFEST/TITLE"/>
+        </title>
+      </head>
+
+      <body>
+
+        <h1>
+          <xsl:value-of select="MANIFEST/TITLE"/>
+        </h1>
+
+        <p></p>
+
+        <h2>Manifest details</h2>
+
+        <table border="1">
+          <tr>
+            <th>Package ID</th>
+            <td>
+              <xsl:value-of select="MANIFEST/PACKAGE_DETAILS/PACKAGE_ID"/>
+            </td>
+          </tr>
+          <tr>
+            <th>Creation time</th>
+            <td>
+              <xsl:value-of select="MANIFEST/PACKAGE_DETAILS/CREATION_TIME"/>
+            </td>
+          </tr>
+          <tr>
+            <th>Archive time</th>
+            <td>
+              <xsl:value-of select="MANIFEST/PACKAGE_DETAILS/ARCHIVE_TIME"/>
+            </td>
+          </tr>
+          <tr>
+            <th>Sequence</th>
+            <td>
+              <xsl:value-of select="MANIFEST/PACKAGE_DETAILS/SEQUENCE"/>
+            </td>
+          </tr>
+          <tr>
+            <th>Package mode</th>
+            <td>
+              <xsl:value-of select="MANIFEST/PACKAGE_DETAILS/PACKAGE_MODE"/>
+            </td>
+          </tr>
+          <tr>
+            <th>Package status</th>
+            <td>
+              <xsl:value-of select="MANIFEST/PACKAGE_DETAILS/PACKAGE_STATUS"/>
+            </td>
+          </tr>
+          <tr>
+            <th>Package flags</th>
+            <td>
+              <xsl:value-of select="MANIFEST/PACKAGE_DETAILS/PACKAGE_FLAGS"/>
+            </td>
+          </tr>
+        </table>
+
+        <p></p>
+
+        <h2>Contents summary</h2>
+
+        <table border="1">
+          <tr>
+            <th>Main problems</th>
+            <td>
+              <xsl:value-of select="MANIFEST/CONTENTS_SUMMARY/MAIN_PROBLEMS"/>
+            </td>
+          </tr>
+          <tr>
+            <th>Correlated problems</th>
+            <td>
+              <xsl:value-of select="MANIFEST/CONTENTS_SUMMARY/CORRELATED_PROBLEMS"/>
+            </td>
+          </tr>
+          <tr>
+            <th>Main incidents</th>
+            <td>
+              <xsl:value-of select="MANIFEST/CONTENTS_SUMMARY/MAIN_INCIDENTS"/>
+            </td>
+          </tr>
+          <tr>
+            <th>Correlated incidents</th>
+            <td>
+              <xsl:value-of select="MANIFEST/CONTENTS_SUMMARY/CORRELATED_INCIDENTS"/>
+            </td>
+          </tr>
+        </table> 
+
+        <p></p>
+
+        <h2>ADR details</h2>
+
+        <table border="1">
+          <tr>
+            <th>Product</th>
+            <td>
+              <xsl:value-of select="MANIFEST/ADR_DETAILS/PRODUCT"/>
+            </td>
+          </tr>
+          <tr>
+            <th>Target</th>
+            <td>
+              <xsl:value-of select="MANIFEST/ADR_DETAILS/TARGET"/>
+            </td>
+          </tr>
+          <tr>
+            <th>Instance</th>
+            <td>
+              <xsl:value-of select="MANIFEST/ADR_DETAILS/INSTANCE"/>
+            </td>
+          </tr>
+          <tr>
+            <th>ADR base</th>
+            <td>
+              <xsl:value-of select="MANIFEST/ADR_DETAILS/ADR_BASE"/>
+            </td>
+          </tr>
+          <tr>
+            <th>ADR home</th>
+            <td>
+              <xsl:value-of select="MANIFEST/ADR_DETAILS/ADR_HOME"/>
+            </td>
+          </tr>
+        </table> 
+
+        <p></p>
+
+        <h2>Main problems</h2>
+
+        <table border="1">
+          <tr>
+            <th>Problem ID</th>
+            <th>Problem key</th>
+            <th>Incidents included</th>
+            <th>Incidents total</th>
+          </tr>
+          <xsl:for-each select="MANIFEST/MAIN_PROBLEMS/PROBLEM">
+            <tr>
+              <td><xsl:value-of select="PROBLEM_ID"/></td>
+              <td><xsl:value-of select="PROBLEM_KEY"/></td>
+              <td><xsl:value-of select="INCIDENTS_INCLUDED"/></td>
+              <td><xsl:value-of select="INCIDENTS_TOTAL"/></td>
+            </tr>
+          </xsl:for-each>
+        </table>
+
+        <p></p>
+
+        <h2>Correlated problems</h2>
+
+        <table border="1">
+          <tr>
+            <th>Problem ID</th>
+            <th>Problem key</th>
+            <th>Incidents included</th>
+            <th>Incidents total</th>
+          </tr>
+          <xsl:for-each select="MANIFEST/CORRELATED_PROBLEMS/PROBLEM">
+            <tr>
+              <td><xsl:value-of select="PROBLEM_ID"/></td>
+              <td><xsl:value-of select="PROBLEM_KEY"/></td>
+              <td><xsl:value-of select="INCIDENTS_INCLUDED"/></td>
+              <td><xsl:value-of select="INCIDENTS_TOTAL"/></td>
+            </tr>
+          </xsl:for-each>
+        </table>
+
+        <p></p>
+
+        <h2>Main incidents</h2>
+
+        <table border="1">
+          <tr>
+            <th>Incident ID</th>
+            <th>Problem ID</th>
+            <th>Error Message</th>
+            <th>Incident time</th>
+          </tr>
+          <xsl:for-each select="MANIFEST/MAIN_INCIDENTS/INCIDENT">
+            <tr>
+              <td><xsl:value-of select="INCIDENT_ID"/></td>
+              <td><xsl:value-of select="PROBLEM_ID"/></td>
+              <td><xsl:value-of select="ERROR_MESSAGE"/></td>
+              <td><xsl:value-of select="INCIDENT_TIME"/></td>
+            </tr>
+          </xsl:for-each>
+        </table>
+
+        <p></p>
+
+        <h2>Correlated incidents</h2>
+
+        <table border="1">
+          <tr>
+            <th>Incident ID</th>
+            <th>Problem ID</th>
+            <th>Error Message</th>
+            <th>Incident time</th>
+          </tr>
+          <xsl:for-each select="MANIFEST/CORRELATED_INCIDENTS/INCIDENT">
+            <tr>
+              <td><xsl:value-of select="INCIDENT_ID"/></td>
+              <td><xsl:value-of select="PROBLEM_ID"/></td>
+              <td><xsl:value-of select="ERROR_MESSAGE"/></td>
+              <td><xsl:value-of select="INCIDENT_TIME"/></td>
+            </tr>
+          </xsl:for-each>
+        </table>
+
+        <p></p>
+
+        <h2>Files</h2>
+
+        <table border="1">
+          <tr>
+            <th>File name</th>
+            <th>Location</th>
+            <th>Size</th>
+            <th>File time</th>
+          </tr>
+          <xsl:for-each select="MANIFEST/FILES/FILE">
+            <tr>
+              <td><xsl:value-of select="FILE_NAME"/></td>
+              <td><xsl:value-of select="LOCATION"/></td>
+              <td><xsl:value-of select="SIZE"/></td>
+              <td><xsl:value-of select="FILE_TIME"/></td>
+            </tr>
+          </xsl:for-each>
+        </table>
+
+        <br></br>
+        <p></p>
+
+      </body>
+    </html>

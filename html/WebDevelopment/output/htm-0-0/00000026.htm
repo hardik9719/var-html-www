@@ -1,0 +1,111 @@
+<html>
+<head>
+<meta name="Version" content="4730"> <meta name="Microsoft Theme" content="none">
+<title>Filter Discussions</title>
+<style type="text/css"><!-- .dlgTitle {font: 12pt/14pt tahoma; font-weight: normal; color: "WindowText"; font-style: normal} .dlgLabel {font: 8pt/9pt tahoma; color: "WindowText"} .dlgLabelB {font: 8pt/9pt tahoma; font-weight:bold; color: "WindowText"} .dlgLabelI {font: 8pt/9pt tahoma; font-style:italic; color: "WindowText"} .dlgLabelU {font: 8pt/9pt tahoma; text-decoration:underline; color: "WindowText"} .dlgControl {font: 9pt tahoma; color: "WindowText"; width: 400px} .dlgLabelDisabled {font: 8pt/9pt tahoma; color: "GrayText"; filter: dropshadow(color=white, offx=1, offy=1)} .dlgEdit {font: 8pt/9pt tahoma; color: "WindowText"; width: 400px} .dlgLink {cursor: hand; text-decoration:none; color: "ButtonText"} .dlgLinkDisabled {cursor: default; text-decoration:none; color: "ButtonShadow"} .dlgBtn {cursor: hand; border-width: 0; color: "ButtonText"} .dlgBtnDisabled {cursor: default; border-width: 0; color: "ButtonShadow"; filter: dropshadow(color=white, offx=1, offy=1)} .dlgPushBtn {cursor: hand; font: 8pt/9pt tahoma; color: "ButtonText"; width=102px} .dlgOKCancelBtn {font: 8pt/9pt tahoma; color: "ButtonText"; width=80px} .dlgDropDown {font: 8pt/9pt tahoma; color: "WindowText"; width: 200px} .dlgTextEdit {font: 9pt tahoma; color: "WindowText"; width: 400px; height: 140px} .dlgHalfEdit {font: 8pt/9pt tahoma; color: "WindowText"; width: 262px} .dlgSmallDropDown {font: 8pt/9pt tahoma; color: "WindowText"; width: 100px} --></style>
+<script>
+function CloseDialog(fCancel)
+{
+	if (fCancel && !OnCancel())
+		return;
+	if (fCancel || ReturnDialogArgs())
+		window.close();
+}
+function BodyKeyDown()
+{
+	kc = window.event.keyCode;
+	if (kc == 27)  
+		{
+		CloseDialog(true);
+		window.event.keyCode = 34;  
+		}
+	else if (kc == 13 && OnEnter())  
+		CloseDialog(false);
+}
+var dlgFiltAuth;
+var dlgFiltDate;
+var L_AllParticipants_Text = "(all participants)";
+dialogWidth = "363px";
+dialogHeight = "162px";
+function InitDialog()
+{
+	dialogHeight = 162+(162 -25)-document.body.clientHeight+"px";
+	dialogArguments.Attribute("owscancel") = 1;
+	dlgFiltAuth = dialogArguments.Attribute("owsfiltauth");
+	dlgFiltDate = dialogArguments.Attribute("owsfiltdate");
+	dialogArguments.EnumReset(2);
+	fFirst = true;
+	do
+		{
+		el = document.createElement("OPTION");
+		if (fFirst)
+			{
+			strAuthor = L_AllParticipants_Text;
+			fFirst = false;
+			}
+		else
+			{
+			strAuthor = dialogArguments.EnumNext();
+			el.value=strAuthor;
+			}
+		el.text=strAuthor;
+		diidDropAuth.add(el);
+		}
+	while (!dialogArguments.EnumEOF);
+	if (dlgFiltAuth != "")
+		diidDropAuth.value = dlgFiltAuth;
+	else
+		diidDropAuth.selectedIndex = 0;
+	if (dlgFiltDate != 0)
+		diidDropDate.value = dlgFiltDate
+	diidDropAuth.focus();	
+}
+function OnEnter() { return true; }
+function OnCancel() { return true; }
+function ReturnDialogArgs()
+{
+	dialogArguments.Attribute("owsfiltauth") = diidDropAuth.value;
+	dialogArguments.Attribute("owsfiltdate") = diidDropDate.value;
+	dialogArguments.Attribute("owscancel") = 0;
+	return true;
+}
+</script>
+</head>
+<body
+	topmargin="4" leftmargin="7" bottommargin="0" rightmargin="7"
+	bgcolor="ThreedFace" text="ThreedShadow"
+	onLoad="InitDialog()" onkeydown="BodyKeyDown()" scroll="no">
+<table border="0" style="padding-top:4px;padding-bottom:4px;padding-left:4px" cellspacing="0" width=339> <tr> <td width="1%" nowrap bgcolor="ThreedFace"> <div id="diidTitle" class="dlgLabel">Show discussion items that were:</div></td><td><hr></td></tr> </table>
+<table bgcolor="ThreedFace" border=0 style="padding-top:2px;padding-left:7px; padding-right:0px" cellspacing=0 width=339>
+	<tr>
+		<td width=10></td>
+		<td height=26 nowrap>
+			<div id=diidCreatedByLabel class="dlgLabel">
+				Created <u>b</u>y:</div></td>
+		<td valign="middle" height="26">
+			<select id=diidDropAuth size=1 class=dlgDropDown accesskey=b>
+			</select></td></tr>
+	<tr>
+		<td width=10></td>
+		<td height=26 nowrap>
+			<div id=diidCreatedByLabel class="dlgLabel">
+				Creat<u>i</u>on time:</div></td>
+		<td height="26">
+			<select id="diidDropDate" size="1" class=dlgDropDown accesskey=i>
+				<option id=diidAnytime value=0>(anytime)</option>
+				<option id=diidTwentyfourHours value=1>in the last 24 hours</option>
+				<option id=diidTwoDays value=2>in the last 2 days</option>
+				<option id=diidSevenDays value=7>in the last 7 days</option>
+				<option id=diidThirtyDays value=30>in the last 30 days</option>
+				<option id=diidTwoMonths value=60>in the last 2 months</option>
+				<option id=diidSixMonths value=182>in the last 6 months</option>
+			</select></td></tr>
+</table>
+<table width=339 border=0 cellspacing=0 style="padding-top:5px;padding-left:3px">
+<tr><td>
+<hr>
+</td></tr>
+</table>
+<table border="0" cellpadding="0" style="padding-top:0;padding-bottom:0" cellspacing="0" width=339> <tr> <td bgcolor="ThreedFace" align="right">  <input type="button" class="dlgOKCancelBtn" id="diidOK" value="OK" onclick="CloseDialog(0)" /> &nbsp<input type="button" class="dlgOKCancelBtn" id="diidCancel" value="Cancel" onclick="CloseDialog(1)" onkeydown="window.event.cancelBubble = true" /> </td></tr> </table>
+</body>
+</html>

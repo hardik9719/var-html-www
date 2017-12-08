@@ -1,0 +1,20 @@
+<html><h1 class="refsect1">SOUNDEX</h1>
+<p><code>SOUNDEX</code> returns a character string containing the phonetic representation of a text expression. This function lets you compare words that are spelled differently but sound alike.</p>
+<p>The function is based on the algorithm described in Donald Knuth's <span class="italic">The Art of Computer Programming</span>. This algorithm was designed specifically for English. Its results for other languages other than English are unpredictable and typically unsatisfactory.</p>
+<p class="titleinrefsubsect"><a id="sthref621" name="sthref621"></a>Return Value</p>
+<pre xml:space="preserve" class="oac_no_warn">VARCHAR2
+</pre>
+<p class="titleinrefsubsect"><a id="sthref622" name="sthref622"></a>Syntax</p>
+<pre xml:space="preserve" class="oac_no_warn"><span class="bold">SOUNDEX </span>(char)
+</pre>
+<p class="titleinrefsubsect"><a id="sthref623" name="sthref623"></a>Arguments</p>
+<p><code>char</code> can be any text expression.</p>
+<p class="titleinrefsubsect"><a id="sthref624" name="sthref624"></a>Example</p>
+<p>All of these examples return the value <code>D500</code>:</p>
+<pre xml:space="preserve" class="oac_no_warn">soundex('Donna')
+
+soundex('Diane')
+
+soundex('Dana')
+</pre></div>
+</html>

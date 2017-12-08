@@ -1,0 +1,16 @@
+<html>
+    <head>
+      <xsl:call-template name="create.stylesheet.link">
+        <xsl:with-param name="package.name" select="''"/>
+      </xsl:call-template>
+    </head>
+    <body>
+      <h2>Classes</h2>
+      <table width="100%">
+          <xsl:for-each select="$doctree/classes/class">
+              <xsl:sort select="@name"/>
+              <xsl:apply-templates select="." mode="all.classes"/>
+          </xsl:for-each>
+      </table>
+    </body>
+  </html>

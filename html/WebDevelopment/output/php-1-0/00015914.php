@@ -1,0 +1,1 @@
+<?php \n\tsession_start();\n\tif(empty($_SESSSION[\"userid\"])){\n\t\techo \"login\";\n\t}else{\n\t\techo( )\n\t}\n\n ?>

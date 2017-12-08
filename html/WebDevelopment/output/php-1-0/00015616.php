@@ -1,0 +1,1 @@
+<?php\n\n$host=\"localhost\";\n$username=\"root\";\n$password=\"\";\n$dbname=\"users\";\n\n$connection=mysqli_connect($host,$username,$password,$dbname);\n/*if($connection){\n\techo \"Connection Successfull\";\n}else{\n\techo \"Not Successfull\";\n}*/\n\n\n\n\n\n\n?>

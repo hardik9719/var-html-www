@@ -1,0 +1,168 @@
+<html><h1 class="refsect1">SHARE</h1>
+<p><code>SHARE</code> calculates the ratio of an expression's value for the current dimension member to the value for a related member of the same dimension. Arguments to this function identify which related member is used in the ratio.</p>
+<p class="titleinrefsubsect"><a id="sthref301" name="sthref301"></a>Return Value</p>
+<pre xml:space="preserve" class="oac_no_warn">NUMBER
+</pre>
+<p class="titleinrefsubsect"><a id="sthref302" name="sthref302"></a>Syntax</p>
+<p><span class="bolditalic">share_expression</span>::=</p>
+<pre xml:space="preserve" class="oac_no_warn"><span class="bold">SHARE (</span>expression share_clause [share_clause]... <span class="bold">)</span>
+ 
+</pre>
+<p><span class="bolditalic">share_clause</span>::=</p>
+<pre xml:space="preserve" class="oac_no_warn"><span class="bold">OF</span> { <span class="bold">DIMENSION</span> dimension_id | <span class="bold">HIERARCHY</span> hierarchy_id }
+   { <span class="bold">PARENT</span> 
+   | <span class="bold">TOP</span> 
+   | <span class="bold">MEMBER</span> 'member_name'
+   | <span class="bold">DIMENSION LEVEL</span> dim_level_id 
+   | <span class="bold">HIERARCHY LEVEL</span> hier_level_id 
+   }
+</pre>
+<p class="titleinrefsubsect"><a id="sthref303" name="sthref303"></a>Arguments</p>
+<p class="subhead2"><a id="OLAXS344" name="OLAXS344"></a><a id="sthref304" name="sthref304"></a><span class="italic">expression</span></p>
+<p>A dimensional expression whose values you want to calculate.</p>
+<p class="subhead2"><a id="OLAXS345" name="OLAXS345"></a><a id="sthref305" name="sthref305"></a><span class="italic">dimension_id</span></p>
+<p>A dimension of <code><span class="codeinlineitalic">expression</span></code>. The default hierarchy is used in the calculation. If you want to use a different hierarchy, use the <code>HIERARCHY</code> argument instead.</p>
+<p class="subhead2"><a id="OLAXS346" name="OLAXS346"></a><a id="sthref306" name="sthref306"></a><span class="italic">hierarchy_id</span></p>
+<p>A level hierarchy of <code><span class="codeinlineitalic">expression</span></code></p>
+<p class="subhead2"><a id="OLAXS347" name="OLAXS347"></a><a id="sthref307" name="sthref307"></a><span class="italic">member_name</span></p>
+<p>A member of the specified dimension or hierarchy.</p>
+<p class="subhead2"><a id="OLAXS348" name="OLAXS348"></a><a id="sthref308" name="sthref308"></a><span class="italic">dim_level_id</span></p>
+<p>The name of a level of <code><span class="codeinlineitalic">dimension_id</span></code>.</p>
+<p class="subhead2"><a id="OLAXS349" name="OLAXS349"></a><a id="sthref309" name="sthref309"></a><span class="italic">hier_level_id</span></p>
+<p>The name of a level of <code><span class="codeinlineitalic">hierarchy_id</span></code>.</p>
+<p>Share is calculated with these formulas:</p>
+<div class="inftblinformal">
+<table class="Informal" title="Share Calculations" summary="Calculations for SHARE keywords" dir="ltr" border="1" width="100%" frame="hsides" rules="groups" cellpadding="3" cellspacing="0">
+<col width="27%" />
+<col width="*" />
+<thead>
+<tr align="left" valign="top">
+<th align="left" valign="bottom" id="r1c1-t34">Keyword</th>
+<th align="left" valign="bottom" id="r1c2-t34">Formula</th>
+</tr>
+</thead>
+<tbody>
+<tr align="left" valign="top">
+<td align="left" id="r2c1-t34" headers="r1c1-t34"><code>PARENT</code></td>
+<td align="left" headers="r2c1-t34 r1c2-t34"><span class="italic">current member/parent</span></td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r3c1-t34" headers="r1c1-t34"><code>TOP</code></td>
+<td align="left" headers="r3c1-t34 r1c2-t34"><span class="italic">current member/root ancestor</span></td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r4c1-t34" headers="r1c1-t34"><code>MEMBER</code></td>
+<td align="left" headers="r4c1-t34 r1c2-t34"><span class="italic">current member/specified member</span></td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r5c1-t34" headers="r1c1-t34"><code>DIMENSION LEVEL</code></td>
+<td align="left" headers="r5c1-t34 r1c2-t34"><span class="italic">current member/ancestor at specified level</span> or null if the current member is above the specified level.</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="inftblinformal" -->
+<p class="titleinrefsubsect"><a id="sthref310" name="sthref310"></a>Example</p>
+<p>This example calculates the percent share of the parent member for each product. The results appear in the Share of Parent column.</p>
+<p><code>(SHARE(UNITS_CUBE.SALES OF HIERARCHY PRODUCT.PRIMARY PARENT))*100</code></p>
+<p>The next example calculates the percent share of Total Product for each product. The results appear in the Share of Top column.</p>
+<p><code>(SHARE(UNITS_CUBE.SALES OF HIERARCHY PRODUCT.PRIMARY TOP))*100</code></p>
+<div class="inftblinformal">
+<table class="Informal" title="SHARE Examples" summary="Output from SHARE examples" dir="ltr" border="1" width="100%" frame="hsides" rules="groups" cellpadding="3" cellspacing="0">
+<col width="*" />
+<col width="19%" />
+<col width="19%" />
+<col width="21%" />
+<col width="21%" />
+<thead>
+<tr align="left" valign="top">
+<th align="left" valign="bottom" id="r1c1-t35">Product</th>
+<th align="left" valign="bottom" id="r1c2-t35">Parent</th>
+<th align="left" valign="bottom" id="r1c3-t35">Sales</th>
+<th align="left" valign="bottom" id="r1c4-t35">Share of Parent</th>
+<th align="left" valign="bottom" id="r1c5-t35">Share of Top</th>
+</tr>
+</thead>
+<tbody>
+<tr align="left" valign="top">
+<td align="left" id="r2c1-t35" headers="r1c1-t35">Desktop PCs</td>
+<td align="left" headers="r2c1-t35 r1c2-t35">HRD</td>
+<td align="left" headers="r2c1-t35 r1c3-t35">74556528</td>
+<td align="left" headers="r2c1-t35 r1c4-t35">60</td>
+<td align="left" headers="r2c1-t35 r1c5-t35">54</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r3c1-t35" headers="r1c1-t35">Portable PCs</td>
+<td align="left" headers="r3c1-t35 r1c2-t35">HRD</td>
+<td align="left" headers="r3c1-t35 r1c3-t35">18338225</td>
+<td align="left" headers="r3c1-t35 r1c4-t35">15</td>
+<td align="left" headers="r3c1-t35 r1c5-t35">13</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r4c1-t35" headers="r1c1-t35">CD/DVD</td>
+<td align="left" headers="r4c1-t35 r1c2-t35">HRD</td>
+<td align="left" headers="r4c1-t35 r1c3-t35">16129497</td>
+<td align="left" headers="r4c1-t35 r1c4-t35">13</td>
+<td align="left" headers="r4c1-t35 r1c5-t35">12</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r5c1-t35" headers="r1c1-t35">Memory</td>
+<td align="left" headers="r5c1-t35 r1c2-t35">HRD</td>
+<td align="left" headers="r5c1-t35 r1c3-t35">5619219</td>
+<td align="left" headers="r5c1-t35 r1c4-t35">5</td>
+<td align="left" headers="r5c1-t35 r1c5-t35">4</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r6c1-t35" headers="r1c1-t35">Modems/Fax</td>
+<td align="left" headers="r6c1-t35 r1c2-t35">HRD</td>
+<td align="left" headers="r6c1-t35 r1c3-t35">5575726</td>
+<td align="left" headers="r6c1-t35 r1c4-t35">4</td>
+<td align="left" headers="r6c1-t35 r1c5-t35">4</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r7c1-t35" headers="r1c1-t35">Monitors</td>
+<td align="left" headers="r7c1-t35 r1c2-t35">HRD</td>
+<td align="left" headers="r7c1-t35 r1c3-t35">3972142</td>
+<td align="left" headers="r7c1-t35 r1c4-t35">3</td>
+<td align="left" headers="r7c1-t35 r1c5-t35">3</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r8c1-t35" headers="r1c1-t35">Accessories</td>
+<td align="left" headers="r8c1-t35 r1c2-t35">SFT</td>
+<td align="left" headers="r8c1-t35 r1c3-t35">6213535</td>
+<td align="left" headers="r8c1-t35 r1c4-t35">49</td>
+<td align="left" headers="r8c1-t35 r1c5-t35">5</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r9c1-t35" headers="r1c1-t35">Operating Systems</td>
+<td align="left" headers="r9c1-t35 r1c2-t35">SFT</td>
+<td align="left" headers="r9c1-t35 r1c3-t35">4766857</td>
+<td align="left" headers="r9c1-t35 r1c4-t35">37</td>
+<td align="left" headers="r9c1-t35 r1c5-t35">3</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r10c1-t35" headers="r1c1-t35">Documentation</td>
+<td align="left" headers="r10c1-t35 r1c2-t35">SFT</td>
+<td align="left" headers="r10c1-t35 r1c3-t35">1814844</td>
+<td align="left" headers="r10c1-t35 r1c4-t35">14</td>
+<td align="left" headers="r10c1-t35 r1c5-t35">1</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r11c1-t35" headers="r1c1-t35">Hardware</td>
+<td align="left" headers="r11c1-t35 r1c2-t35">TOTAL</td>
+<td align="left" headers="r11c1-t35 r1c3-t35">124191336</td>
+<td align="left" headers="r11c1-t35 r1c4-t35">91</td>
+<td align="left" headers="r11c1-t35 r1c5-t35">91</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r12c1-t35" headers="r1c1-t35">Software/Other</td>
+<td align="left" headers="r12c1-t35 r1c2-t35">TOTAL</td>
+<td align="left" headers="r12c1-t35 r1c3-t35">12795236</td>
+<td align="left" headers="r12c1-t35 r1c4-t35">9</td>
+<td align="left" headers="r12c1-t35 r1c5-t35">9</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="inftblinformal" --></div>
+</html>

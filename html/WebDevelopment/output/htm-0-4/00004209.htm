@@ -1,0 +1,107 @@
+<html><h1 class="refsect1">HIER_ORDER</h1>
+<p><code>HIER_ORDER</code> sorts the members of a dimension with children immediately after their parents, and returns a sequential number for each member.</p>
+<p class="titleinrefsubsect"><a id="sthref142" name="sthref142"></a>Return Value</p>
+<pre xml:space="preserve" class="oac_no_warn">NUMBER
+</pre>
+<p class="titleinrefsubsect"><a id="sthref143" name="sthref143"></a>Syntax</p>
+<pre xml:space="preserve" class="oac_no_warn"><span class="bold">HIER_ORDER (</span> 
+   [member_expression] [<span class="bold">WITHIN</span>]
+   {<span class="bold">DIMENSION</span> dimension_id | <span class="bold">HIERARCHY</span> hierarchy_id} <span class="bold">)</span> 
+</pre>
+<p class="titleinrefsubsect"><a id="sthref144" name="sthref144"></a>Arguments</p>
+<p class="subhead2"><a id="OLAXS237" name="OLAXS237"></a><a id="sthref145" name="sthref145"></a><span class="italic">member_expression</span></p>
+<p>Identifies a single dimension member within the hierarchy used for the calculation. If this optional argument is specified, then the result does not vary across dimension members.</p>
+<p class="subhead2"><a id="OLAXS238" name="OLAXS238"></a><a id="sthref146" name="sthref146"></a><span class="italic">dimension_id</span></p>
+<p>The dimension over which the values are calculated using the default hierarchy.</p>
+<p class="subhead2"><a id="OLAXS239" name="OLAXS239"></a><a id="sthref147" name="sthref147"></a><span class="italic">hierarchy_id</span></p>
+<p>The hierarchy over which the values are calculated. If <code><span class="codeinlineitalic">dimension_id</span></code> is used instead, the default hierarchy is used.</p>
+<p class="titleinrefsubsect"><a id="sthref148" name="sthref148"></a>Example</p>
+<p>This example orders the values of the Time dimension:</p>
+<p><code>HIER_ORDER(DIMENSION "TIME")</code></p>
+<div class="inftblinformal">
+<table class="Informal" title="HIER_ORDER Example 1" summary="Output from HIER_ORDER example 1" dir="ltr" border="1" width="100%" frame="hsides" rules="groups" cellpadding="3" cellspacing="0">
+<col width="*" />
+<col width="50%" />
+<thead>
+<tr align="left" valign="top">
+<th align="left" valign="bottom" id="r1c1-t12">Time</th>
+<th align="left" valign="bottom" id="r1c2-t12">Order</th>
+</tr>
+</thead>
+<tbody>
+<tr align="left" valign="top">
+<td align="left" id="r2c1-t12" headers="r1c1-t12">2006</td>
+<td align="left" headers="r2c1-t12 r1c2-t12">138</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r3c1-t12" headers="r1c1-t12">Q1.06</td>
+<td align="left" headers="r3c1-t12 r1c2-t12">139</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r4c1-t12" headers="r1c1-t12">JAN-06</td>
+<td align="left" headers="r4c1-t12 r1c2-t12">140</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r5c1-t12" headers="r1c1-t12">FEB-06</td>
+<td align="left" headers="r5c1-t12 r1c2-t12">141</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r6c1-t12" headers="r1c1-t12">MAR-06</td>
+<td align="left" headers="r6c1-t12 r1c2-t12">142</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r7c1-t12" headers="r1c1-t12">Q2.06</td>
+<td align="left" headers="r7c1-t12 r1c2-t12">143</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r8c1-t12" headers="r1c1-t12">APR-06</td>
+<td align="left" headers="r8c1-t12 r1c2-t12">144</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r9c1-t12" headers="r1c1-t12">MAY-06</td>
+<td align="left" headers="r9c1-t12 r1c2-t12">145</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r10c1-t12" headers="r1c1-t12">JUN-06</td>
+<td align="left" headers="r10c1-t12 r1c2-t12">146</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r11c1-t12" headers="r1c1-t12">Q3.06</td>
+<td align="left" headers="r11c1-t12 r1c2-t12">147</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r12c1-t12" headers="r1c1-t12">JUL-06</td>
+<td align="left" headers="r12c1-t12 r1c2-t12">148</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r13c1-t12" headers="r1c1-t12">AUG-06</td>
+<td align="left" headers="r13c1-t12 r1c2-t12">149</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r14c1-t12" headers="r1c1-t12">SEP-06</td>
+<td align="left" headers="r14c1-t12 r1c2-t12">150</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r15c1-t12" headers="r1c1-t12">Q4.06</td>
+<td align="left" headers="r15c1-t12 r1c2-t12">151</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r16c1-t12" headers="r1c1-t12">OCT-06</td>
+<td align="left" headers="r16c1-t12 r1c2-t12">152</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r17c1-t12" headers="r1c1-t12">NOV-06</td>
+<td align="left" headers="r17c1-t12 r1c2-t12">153</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r18c1-t12" headers="r1c1-t12">DEC-06</td>
+<td align="left" headers="r18c1-t12 r1c2-t12">154</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="inftblinformal" -->
+<p>The next example returns <code>78</code> as the order number of Business World in the Market hierarchy of the Customer dimension.</p>
+<p><code>HIER_ORDER('BUSN WRLD' WITHIN HIERARCHY CUSTOMER.MARKET)</code></p>
+</div>
+</html>

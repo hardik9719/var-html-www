@@ -1,0 +1,64 @@
+<html>
+      <head>
+        <title><xsl:value-of select="$title"/></title>
+        <style type="text/css">
+          body, p {
+          font-family: verdana,arial,helvetica;
+          font-size: 80%;
+          color:#000000;
+          }
+	  .dateAndAuthor {
+          font-family: verdana,arial,helvetica;
+          font-size: 80%;
+          font-weight: bold;
+          text-align:left;
+          background:#a6caf0;
+	  }
+          tr, td{
+          font-family: verdana,arial,helvetica;
+          font-size: 80%;
+          background:#eeeee0;
+          }	  
+	  </style> 
+      </head>
+      <body link="#000000" alink="#000000" vlink="#000000" text="#000000">       
+          <h1>
+            <a name="top"><xsl:value-of select="$title"/></a>
+          </h1>
+          Tagdiff between <xsl:value-of select="@startTag"/> <xsl:value-of select="@startDate"/> and
+			<xsl:value-of select="@endTag"/> <xsl:value-of select="@endDate"/>
+          <p align="right">Designed for use with <a href="http://ant.apache.org/">Ant</a>.</p>
+          <hr size="2"/>
+	<a name="TOP"/>
+	<table width="100%">
+		<tr>
+			<td align="right">
+				<a href="#New">New Files</a> |
+				<a href="#Modified">Modified Files</a> |
+				<a href="#Removed">Removed Files</a>
+			</td>
+		</tr>
+	</table>
+        <table border="0" width="100%" cellpadding="3" cellspacing="1">
+		<xsl:call-template name="show-entries">
+			<xsl:with-param name="title">New Files</xsl:with-param>
+			<xsl:with-param name="anchor">New</xsl:with-param>
+			<xsl:with-param name="entries" select=".//entry[file/revision][not(file/prevrevision)]"/>
+		</xsl:call-template>
+
+		<xsl:call-template name="show-entries">
+			<xsl:with-param name="title">Modified Files</xsl:with-param>
+			<xsl:with-param name="anchor">Modified</xsl:with-param>
+			<xsl:with-param name="entries" select=".//entry[file/revision][file/prevrevision]"/>
+		</xsl:call-template>
+
+		<!-- change to entries select to address bug #36827 -->
+		<xsl:call-template name="show-entries">
+			<xsl:with-param name="title">Removed Files</xsl:with-param>
+			<xsl:with-param name="anchor">Removed</xsl:with-param>
+			<xsl:with-param name="entries" select=".//entry[not(file/revision)][file/prevrevision]"/>
+		</xsl:call-template>
+        </table>
+        
+      </body>
+    </html>

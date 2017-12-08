@@ -1,0 +1,68 @@
+<html>
+	<xsl:variable name="title">
+	    <xsl:choose>
+		<xsl:when test="$type = 'fails'">
+		    <xsl:text>All Failures</xsl:text>
+		</xsl:when>
+		<xsl:when test="$type = 'errors'">
+		    <xsl:text>All Errors</xsl:text>
+		</xsl:when>
+		<xsl:when test="$type = 'skipped'">
+		    <xsl:text>All Skipped</xsl:text>
+		</xsl:when>
+		<xsl:otherwise>
+		    <xsl:text>All Tests</xsl:text>
+		</xsl:otherwise>
+	    </xsl:choose>
+	</xsl:variable>
+	<head>
+	    <title>Unit Test Results: <xsl:value-of select="$title"/></title>
+	    <xsl:call-template name="create.stylesheet.link">
+                <xsl:with-param name="package.name"/>
+            </xsl:call-template>
+	</head>
+	<body>
+	    <xsl:attribute name="onload">open('allclasses-frame.html','classListFrame')</xsl:attribute>
+            <xsl:call-template name="pageHeader"/>
+            <h2><xsl:value-of select="$title"/></h2>
+
+            <table class="details" border="0" cellpadding="5" cellspacing="2" width="95%">
+		<xsl:call-template name="testcase.test.header">
+		    <xsl:with-param name="show.class" select="'yes'"/>
+		</xsl:call-template>
+		<!--
+                test can even not be started at all (failure to load the class)
+		so report the error directly
+		-->
+              <xsl:if test="./error">
+                <tr class="Error">
+                  <td colspan="4">
+                    <xsl:apply-templates select="./error"/>
+                  </td>
+                </tr>
+              </xsl:if>
+              <xsl:choose>
+                <xsl:when test="$type = 'fails'">
+                  <xsl:apply-templates select=".//testcase[failure]" mode="print.test">
+                    <xsl:with-param name="show.class" select="'yes'"/>
+                  </xsl:apply-templates>
+                </xsl:when>
+                <xsl:when test="$type = 'errors'">
+                  <xsl:apply-templates select=".//testcase[error]" mode="print.test">
+                    <xsl:with-param name="show.class" select="'yes'"/>
+                  </xsl:apply-templates>
+                </xsl:when>
+                <xsl:when test="$type = 'skipped'">
+                  <xsl:apply-templates select=".//testcase[skipped]" mode="print.test">
+                    <xsl:with-param name="show.class" select="'yes'"/>
+                  </xsl:apply-templates>
+                </xsl:when>
+                <xsl:otherwise>
+                  <xsl:apply-templates select=".//testcase" mode="print.test">
+                    <xsl:with-param name="show.class" select="'yes'"/>
+                  </xsl:apply-templates>
+                </xsl:otherwise>
+              </xsl:choose>
+            </table>
+        </body>
+    </html>

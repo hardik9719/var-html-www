@@ -1,0 +1,32 @@
+<html>
+        <head>
+            <title>Unit Test Classes: <xsl:value-of select="$name"/></title>
+            <xsl:call-template name="create.stylesheet.link">
+                <xsl:with-param name="package.name" select="$name"/>
+            </xsl:call-template>
+        </head>
+        <body>
+            <table width="100%">
+                <tr>
+                    <td nowrap="nowrap">
+                        <h2><a href="package-summary.html" target="classFrame">
+                            <xsl:value-of select="$name"/>
+                            <xsl:if test="$name = ''">&lt;none&gt;</xsl:if>
+                        </a></h2>
+                    </td>
+                </tr>
+            </table>
+
+            <h2>Classes</h2>
+            <table width="100%">
+                <xsl:for-each select="/testsuites/testsuite[./@package = $name]">
+                    <xsl:sort select="@name"/>
+                    <tr>
+                        <td nowrap="nowrap">
+                            <a href="{@id}_{@name}.html" target="classFrame"><xsl:value-of select="@name"/></a>
+                        </td>
+                    </tr>
+                </xsl:for-each>
+            </table>
+        </body>
+    </html>

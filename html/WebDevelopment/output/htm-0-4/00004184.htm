@@ -1,0 +1,24 @@
+<html><h1 class="refsect1">TO_NCHAR (datetime)</h1>
+<p><code>TO_NCHAR(datetime)</code> converts a datetime or interval value to the national character set.</p>
+<p class="titleinrefsubsect"><a id="sthref684" name="sthref684"></a>Return Value</p>
+<pre xml:space="preserve" class="oac_no_warn">NVARCHAR2
+</pre>
+<p class="titleinrefsubsect"><a id="sthref685" name="sthref685"></a>Syntax</p>
+<pre xml:space="preserve" class="oac_no_warn"><span class="bold">TO_NCHAR</span>({ datetime | interval }
+         [, fmt [, 'nlsparam' ] ]
+        )
+</pre>
+<p class="titleinrefsubsect"><a id="sthref686" name="sthref686"></a>Arguments</p>
+<p><code>datetime</code> is a datetime expression to be converted to text.</p>
+<p><code>interval</code> is an interval expression to be converted to text.</p>
+<p><code>fmt</code> is a datetime model format specifying the format of <code>char</code>. The default date format is determined implicitly by the <code>NLS_TERRITORY</code> initialization parameter or can be set explicitly by the <code>NLS_DATE_FORMAT</code> parameter. For data type formats, refer to the <span class="italic">Oracle Database SQL Language Reference</span>.</p>
+<p><code>nlsparam</code> specifies the language in which month and day names and abbreviations are returned. This argument can have this form:</p>
+<pre xml:space="preserve" class="oac_no_warn">'NLS_DATE_LANGUAGE = language' 
+</pre>
+<p>By default, the return value is in the session date language.</p>
+<p class="titleinrefsubsect"><a id="sthref687" name="sthref687"></a>Examples</p>
+<p><code>TO_NCHAR(SYSDATE)</code> returns a value such as <code>11-APR-08</code>.</p>
+<p><code>TO_NCHAR(SYSDATE, 'Day: MONTH DD, YYYY')</code> returns a value such as <code>Friday : APRIL 11, 2008</code>.</p>
+<p><code>TO_NCHAR(SYSDATE, 'Day: MONTH DD, YYYY', 'NLS_DATE_LANGUAGE = Spanish')</code> returns a value such as <code>Viernes : ABRIL 11, 2008</code>.</p>
+</div>
+</html>

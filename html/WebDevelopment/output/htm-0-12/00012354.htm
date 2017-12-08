@@ -1,0 +1,26 @@
+<html>
+  <head>
+    <title>%(TITLE)s</title>
+    <style>
+      .node { margin:1em 0; }
+    </style>
+  </head>
+  <body>
+    <h1>%(TITLE)s</h1>"""
+entry = """
+<div class="node">
+  <a name="%(NAME)s" />
+  %(CONTENT)s
+</div>"""
+contpl = """<tt>%(NAME)s</tt> %(TYPE)s"""
+contpl_linked = """\
+<a target="code" href="%(URL)s" type="text/plain"><tt>%(NAME)s</tt></a>"""
+imports = """\
+  <div class="import">
+%(HEAD)s:
+  %(LINKS)s
+  </div>
+"""
+footer = """
+  </body>
+</html>

@@ -1,0 +1,117 @@
+<html>\n<head>\n\
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">\n\
+	<title>AnalyzeSuspend Summary</title>\n\
+	<style type=\'text/css\'>\n\
+		body {overflow-y: scroll;}\n\
+		.stamp {width: 100%;text-align:center;background-color:#495E09;line-height:30px;color:white;font: 25px Arial;}\n\
+		table {width:100%;border-collapse: collapse;}\n\
+		.summary {font: 22px Arial;border:1px solid;}\n\
+		th {border: 1px solid black;background-color:#A7C942;color:white;}\n\
+		td {text-align: center;}\n\
+		tr.alt td {background-color:#EAF2D3;}\n\
+		tr.avg td {background-color:#BDE34C;}\n\
+		a:link {color: #90B521;}\n\
+		a:visited {color: #495E09;}\n\
+		a:hover {color: #B1DF28;}\n\
+		a:active {color: #FFFFFF;}\n\
+	</style>\n</head>\n<body>\n'
+
+	# group test header
+	count = len(testruns)
+	headline_stamp = '<div class="stamp">{0} {1} {2} {3} ({4} tests)</div>\n'
+	html += headline_stamp.format(sysvals.stamp['host'],
+		sysvals.stamp['kernel'], sysvals.stamp['mode'],
+		sysvals.stamp['time'], count)
+
+	# check to see if all the tests have the same value
+	stampcolumns = False
+	for data in testruns:
+		if diffStamp(sysvals.stamp, data.stamp):
+			stampcolumns = True
+			break
+
+	th = '\t<th>{0}</th>\n'
+	td = '\t<td>{0}</td>\n'
+	tdlink = '\t<td><a href="{0}">Click Here</a></td>\n'
+
+	# table header
+	html += '<table class="summary">\n<tr>\n'
+	html += th.format("Test #")
+	if stampcolumns:
+		html += th.format("Hostname")
+		html += th.format("Kernel Version")
+		html += th.format("Suspend Mode")
+	html += th.format("Test Time")
+	html += th.format("Suspend Time")
+	html += th.format("Resume Time")
+	html += th.format("Detail")
+	html += '</tr>\n'
+
+	# test data, 1 row per test
+	sTimeAvg = 0.0
+	rTimeAvg = 0.0
+	num = 1
+	for data in testruns:
+		# data.end is the end of post_resume
+		resumeEnd = data.dmesg['resume_complete']['end']
+		if num % 2 == 1:
+			html += '<tr class="alt">\n'
+		else:
+			html += '<tr>\n'
+
+		# test num
+		html += td.format("test %d" % num)
+		num += 1
+		if stampcolumns:
+			# host name
+			val = "unknown"
+			if('host' in data.stamp):
+				val = data.stamp['host']
+			html += td.format(val)
+			# host kernel
+			val = "unknown"
+			if('kernel' in data.stamp):
+				val = data.stamp['kernel']
+			html += td.format(val)
+			# suspend mode
+			val = "unknown"
+			if('mode' in data.stamp):
+				val = data.stamp['mode']
+			html += td.format(val)
+		# test time
+		val = "unknown"
+		if('time' in data.stamp):
+			val = data.stamp['time']
+		html += td.format(val)
+		# suspend time
+		sTime = (data.tSuspended - data.start)*1000
+		sTimeAvg += sTime
+		html += td.format("%3.3f ms" % sTime)
+		# resume time
+		rTime = (resumeEnd - data.tResumed)*1000
+		rTimeAvg += rTime
+		html += td.format("%3.3f ms" % rTime)
+		# link to the output html
+		html += tdlink.format(data.outfile)
+
+		html += '</tr>\n'
+
+	# last line: test average
+	if(count > 0):
+		sTimeAvg /= count
+		rTimeAvg /= count
+	html += '<tr class="avg">\n'
+	html += td.format('Average') 	# name
+	if stampcolumns:
+		html += td.format('')			# host
+		html += td.format('')			# kernel
+		html += td.format('')			# mode
+	html += td.format('')			# time
+	html += td.format("%3.3f ms" % sTimeAvg)	# suspend time
+	html += td.format("%3.3f ms" % rTimeAvg)	# resume time
+	html += td.format('')			# output link
+	html += '</tr>\n'
+
+	# flush the data to file
+	hf.write(html+'</table>\n')
+	hf.write('</body>\n</html>

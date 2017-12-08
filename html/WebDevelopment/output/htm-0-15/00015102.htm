@@ -1,0 +1,514 @@
+<html lang="en">
+	<head>
+<link href="http://www.technicalkeeda.com//img/images/tk-icon.gif" rel="shortcut icon" />
+
+
+<meta name="alexaVerifyID" content="QSRinQz4FOVAR0COGd2BS4D2DKc" />
+
+<title>Password and Confirm Password Validation in Jquery</title>
+<meta name="description" content="Password and Confirm Password Validation in Jquery. While User registration we have to validate Password and Confirm Password. Jquery Validation plugin provide facility to check the two fields are equal value.">
+<meta name="keywords" content="Password and Confirm Password Validation in Jquery,jquery.validate.js download,jquery.validate.js download,confirm password validation using jquery,jquery validation plugin,jquery validation examples,jquery form validation,jquery onblur validation,jquery.validate.js file download,jquery validation demo">
+
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta http-equiv="refresh" content="1500">
+
+
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-7893183410463407",
+    enable_page_level_ads: true
+  });
+</script>
+
+<link href="http://www.technicalkeeda.com/css/bootstrap.css" rel="stylesheet">
+
+<link rel="canonical" href="http://www.technicalkeeda.com/jquery-tutorials/password-and-confirm-password-validation-in-jquery" />
+
+<link href="http://www.technicalkeeda.com/css/atelier-cave-dark.min.css" rel="stylesheet">
+
+
+<script src="http://www.technicalkeeda.com/js/jquery.js"></script>
+<script src="http://www.technicalkeeda.com/js/bootstrap.min.js"></script>
+
+<script type="text/javascript" src="http://www.technicalkeeda.com/js/prettify.js"></script>
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="http://www.technicalkeeda.com/js/html5shiv.js"></script>
+      <script src="http://www.technicalkeeda.com/js/respond.min.js"></script>
+    <![endif]-->
+
+<script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
+<script type="text/javascript">stLight.options({publisher: "edf5eac0-4fc9-4c1d-95a5-75ebca79a71c", doNotHash:true, doNotCopy:true,hashAddressBar:false}); </script>
+
+<style>
+
+.container {
+     padding-right:35px;
+     padding-left:35px;  /*idem*/
+     margin-right:auto;
+     margin-left: auto;
+}
+
+.bottommargin{
+margin-bottom:10px;
+}
+.highLightCode {
+    background-color:#FFFFE0;
+    border: 1px solid #FFA500;
+    border-radius:2px;
+    margin:3px;
+    padding:3px;
+    color:#000000;
+}
+.hello{
+    background: #ffffff;
+}
+
+.thumbnail:hover {
+	border-color: #0088cc;
+	-webkit-box-shadow: 0 1px 4px rgba(0, 105, 214, 0.25);
+	-moz-box-shadow: 0 1px 4px rgba(0, 105, 214, 0.25);
+	box-shadow: 0 1px 4px rgba(0, 105, 214, 0.25);
+}
+
+pre {
+	overflow: auto;
+	-ms-word-wrap: normal;
+    	word-wrap: normal;
+    	overflow-wrap: normal;
+    	white-space: pre;
+    	font-size: 13px;
+}
+
+p{
+line-height:1.7;
+}
+
+.tagcontainer ul li{
+padding:3px;
+}
+
+h1 { font-size: 28px; line-height: 30px;color: #226CCD; font-weight:bold;}
+h2 { font-size: 20px; line-height: 30px; }
+h3 { font-size: 16px; line-height: 30px; }
+h4 { font-size: 14px; line-height: 16px; }
+h5 { font-size: 12px; line-height: 16px; }
+h6 { font-size: 9px; line-height: 16px; }
+
+
+#pagination {
+	-moz-border-radius: 2px;
+	margin-top: 10px;
+	margin-left:0px;
+	margin-right: auto;
+	margin-bottom: 10px;
+	
+}
+
+#pagination a,#pagination strong {
+	-moz-border-radius: 2px;
+	background: #226CCD;
+	height: 9px;
+	padding: 5px;
+	text-decoration: none;
+	border: solid 1px #226CCD;
+	background-color: #226CCD;
+	color: #FFFFFF;
+	font-size: 13px;
+	font-weight: bold;
+	-moz-border-radius:2px;
+	-webkit-border-radius:2px;
+	border-radius:2px;
+}
+
+#pagination strong,#pagination a:hover {
+	-moz-border-radius: 2px;
+	background: #226CCD;
+	padding: 5px;
+	text-decoration: none;
+	border: solid 1px #226CCD;
+	color: black;
+	font-size: 13px;
+	font-weight: bold;
+}
+
+.progress {height:2px;}
+
+.fixed {
+    #width:350px;
+    #float: right;
+    #position: fixed;
+}
+
+.fixed + div {
+     #margin-left:0px;
+     #overflow: hidden;
+}
+
+#edm {
+    background: none repeat scroll 0 0 #2A2A2A;
+    color: #FFFFFF;
+    margin-bottom: 15px;
+    padding: 10px 15px;
+    text-shadow: none;
+}
+
+#edm .email{
+    border: 0 none;
+    border-radius: 3px 3px 3px 3px;
+    color: #ACACAC;
+    float: left;
+    margin: 0 5px 5px 0;
+    padding: 8px 10px;
+    width:65%;
+}
+
+figure{
+    margin-bottom: 10px;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top:10px;
+}
+</style>
+
+
+<script type="text/javascript">
+
+	$(document).ready(
+		function(){
+			prettyPrint();
+
+			$("#search").click(function() {
+				  var query = $("#query").val()
+				  $("#search-form").attr("action", "/search?query" + query);
+				  $( "#search-form" ).submit();
+			});
+
+
+			
+		});
+	</script>
+	
+	<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-31975682-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</head>
+	<body>
+		
+		<div class="container">
+						<div class="row">
+				<div class="navbar navbar-inverse" role="navigation">
+				  <div class="navbar-header">
+				    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+				      <span class="sr-only">Toggle navigation</span>
+				      <span class="icon-bar"></span>
+				      <span class="icon-bar"></span>
+				      <span class="icon-bar"></span>
+				    </button>
+				    <a class="navbar-brand" href="http://www.technicalkeeda.com/">Technicalkeeda.com</a>
+				  </div>
+				  <div class="collapse navbar-collapse navbar-ex1-collapse">
+				    <ul class="nav navbar-nav">
+				      <li class="dropdown">
+				        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Tutorials<b class="caret"></b></a>
+				        <ul class="dropdown-menu">				          
+				          <li><a href="/tutorials/codeigniter-tutorials">Codeigniter Tutorials</a></li>				          				          
+				          <li><a href="/tutorials/servlet-jsp-tutorials">Servlet Jsp Tutorials</a></li>
+				          <li><a href="/tutorials/mongodb-tutorials">Mongodb Tutorials</a></li>
+				          <li><a href="/tutorials/nodejs-tutorials">Nodejs Tutorials</a></li>				          		
+				          <li><a href="/tutorials/jquery-tutorials">jQuery Tutorials</a></li>
+				          <li><a href="/tutorials/bootstrap-tutorials">Bootstrap Tutorials</a></li>		          
+				        </ul>
+				      </li>
+				      <li class="dropdown">
+				        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Java Tutorials<b class="caret"></b></a>
+				        <ul class="dropdown-menu">				          				          
+				          <li><a href="/tutorials/java-tutorials">Java Tutorials</a></li>
+				          <li><a href="/tutorials/java-8-tutorials">Java 8 Tutorials</a></li>
+				          <li><a href="/java-tutorials/java-io-tutorials">Java IO Tutorials</a></li>
+				          <li><a href="/tutorials/java-mongodb-tutorials">Java Mongodb Tutorials</a></li>
+				          <li><a href="/tutorials/jdbc-tutorials">Jdbc Tutorials</a></li>
+				          <li><a href="/tutorials/apache-poi-tutorials">Apache POI Tutorials</a></li>				          
+				          
+				        </ul>
+				      </li>
+				      <li class="dropdown">
+				        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Spring Tutorials<b class="caret"></b></a>
+				        <ul class="dropdown-menu">				          				          
+				          <li><a href="/tutorials/spring-tutorials">Spring Tutorials</a></li>
+				          <li><a href="/tutorials/spring-4-tutorials">Spring 4 Tutorials</a></li>
+				          <li><a href="/tutorials/spring-4-mvc-tutorials">Spring 4 MVC Tutorials</a></li>				          
+				          <li><a href="/tutorials/spring-boot-tutorials">Spring Boot Tutorials</a></li>
+				          <li><a href="/tutorials/spring-mongodb-tutorials">Spring MongoDB Tutorials</a></li>
+				        </ul>
+				      </li>
+				    </ul>
+				    
+				    <ul class="nav navbar-nav navbar-right">
+				    				    				    	
+				      <li><a data-toggle="modal" href="#login" data-target="#login">Login</a></li>
+				       <!-- 
+				    	<li><a data-toggle="modal" href="#register" data-target="#register">Register</a></li>
+				    	 -->
+				      
+				    </ul>
+				  </div>
+				</div>
+			</div>
+			
+						<div class="row">
+	<div class="col-lg-8">
+				<div class="row">
+			<article>
+				<header class="hello">
+					<h1>Password and Confirm Password Validation in Jquery</h1>
+					<p class="meta"><span class="glyphicon glyphicon-time"></span>&nbsp;Posted On&nbsp;<time>2012-11-04</time>&nbsp;|&nbsp;<a rel="me" href="https://plus.google.com/116241548760694569961?rel=author" target="_blank" title="Google Plus">Yashwant Chavan</a>&nbsp;</span></p>                
+				</header>
+				<div class="hello">
+					<div class="row" style="margin:5px;">
+						<span class='st_fblike_hcount' displayText='Facebook Like'></span>
+						<span class='st_plusone_hcount' displayText='Google +1'></span>
+						<span class='st_facebook_hcount' displayText='Facebook'></span>
+						<span class='st_twitter_hcount' displayText='Tweet'></span>
+					</div>	
+					<p>While User registration process, Sometimes we need to validate Password and Confirm Password. Jquery Validation plugin provide facility to verify value of two fields are equal or not</p>
+					<div>
+						<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- mobile-review-page-links -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:200px;height:90px"
+     data-ad-client="ca-pub-7893183410463407"
+     data-ad-slot="9886912477"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+					</div>
+					<p><h2>Password and Confirm Password Validation Code</h2>
+<p>Below codes validates your Password and Conform Password field. It display the error message if values are not identical. You can download (jquery.validate.js) <a href="http://docs.jquery.com/Plugins/Validation"> Jquery Validation Plugin </a> from Official website of Jquery.</p>
+
+<pre class="prettyprint linenums prettyprinted lang-html">
+&lt;html&gt;
+
+&lt;head&gt;
+    &lt;title&gt; Password and Confirm Password Validation Using Jquery &lt;/title&gt;
+    &lt;script type=&quot;text/javascript&quot; src=&quot;http://www.technicalkeeda.com/js/javascripts/plugin/jquery.js&quot;&gt;&lt;/script&gt;
+    &lt;script type=&quot;text/javascript&quot; src=&quot;http://www.technicalkeeda.com/js/javascripts/plugin/jquery.validate.js&quot;&gt;&lt;/script&gt;
+    &lt;script&gt;
+    function validatePassword() {
+        var validator = $(&quot;#loginForm&quot;).validate({
+            rules: {
+                password: &quot;required&quot;,
+                confirmpassword: {
+                    equalTo: &quot;#password&quot;
+                }
+            },
+            messages: {
+                password: &quot; Enter Password&quot;,
+                confirmpassword: &quot; Enter Confirm Password Same as Password&quot;
+            }
+        });
+        if (validator.form()) {
+            alert&#40;'Sucess'&#41;;
+        }
+    }
+
+    &lt;/script&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+    &lt;form method=&quot;post&quot; id=&quot;loginForm&quot; name=&quot;loginForm&quot;&gt;
+        &lt;table cellpadding=&quot;0&quot; border=&quot;1&quot;&gt;
+            &lt;tr&gt;
+                &lt;td&gt;Password&lt;/td&gt;
+                &lt;td&gt;&lt;input tabindex=&quot;1&quot; size=&quot;40&quot; type=&quot;password&quot; name=&quot;password&quot; id=&quot;password&quot; /&gt;&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                &lt;td&gt;Confirm Password&lt;/td&gt;
+                &lt;td&gt;&lt;input tabindex=&quot;1&quot; size=&quot;40&quot; type=&quot;password&quot; name=&quot;confirmpassword&quot; id=&quot;confirmpassword&quot; /&gt;&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                &lt;td colspan=&quot;2&quot; align=&quot;center&quot;&gt;&lt;input tabindex=&quot;3&quot; type=&quot;button&quot; value=&quot;Submit&quot; onClick=&quot;validatePassword();&quot; /&gt;&lt;/td&gt;
+            &lt;/tr&gt;
+        &lt;/table&gt;
+    &lt;/form&gt;
+&lt;/body&gt;
+
+&lt;/html&gt;
+</pre>
+<h2>Define Validation Rule</h2>
+<p>You just need to define the equalTo property of along with Id of Matching field. like <code class="highLightCode">equalTo: "#password"</code></p>     </p>
+											<div class="thumbnail well well-sm">
+							<a class="btn btn-danger" href="/demo/password-and-confirm-password-validation-in-jquery"><strong>Live Demo</strong></a>
+						</div>
+										
+																
+					            
+									
+					
+            </div>
+        </article>
+        </div>
+			</div>
+	<div class="col-lg-4 fixed" >
+		<div style="margin-top:10px;">		
+		<ul style="list-style-type: none;padding:10px;">
+	<li><a href="/tutorials/mongodb-tutorials">Mongodb Tutorials</a></li>
+	<li><a href="/tutorials/nodejs-tutorials">Nodejs Tutorials</a></li>  
+	<li><a href="/tutorials/codeigniter-tutorials">CodeIgniter Tutorials</a></li>
+	<li><a href="/tutorials/java-8-tutorials">Java 8 Tutorials</a></li>
+	<li><a href="/tutorials/spring-4-tutorials">Spring 4 Tutorials</a></li>
+	<li><a href="/tutorials/spring-4-mvc-tutorials">Spring 4 MVC Tutorials</a></li>	
+</ul>
+		</div>
+		<div style="margin-top:10px;">
+		<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- RESPONSIVE_2 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-7893183410463407"
+     data-ad-slot="3512971945"
+     data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+		
+		<div style="margin-top:10px;">
+		<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- RESPONSIVE_2 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-7893183410463407"
+     data-ad-slot="3512971945"
+     data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+		
+		<div style="margin-top:10px;">
+		<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- RESPONSIVE_2 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-7893183410463407"
+     data-ad-slot="3512971945"
+     data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+		
+		
+		
+		
+		
+	</div>
+</div>	
+		    	
+		    		
+										
+					
+					
+				
+			<div class="row">
+			<hr>
+<footer class="text-center"><p>&copy; technicalkeeda.com 2017</p></footer>
+<div class="row">
+	<p class="text-center">
+	<a rel="author" href="/aboutus" title="About us">About us</a>&nbsp;|&nbsp;
+	<a href="https://plus.google.com/101630438296976305163">Find us on Google+</a>&nbsp;|&nbsp;
+	<a href='/feed' title='Subscribe to our rss feed'  target="_blank">Rss Feed</a>
+	</p>
+	<p class="text-center">Loaded in 0.0266 seconds.</p>
+</div>			</div>
+			<div class="modal" id="login">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4>Welcome to technicalkeeda.com</h4>
+        </div>
+        <div class="modal-body">
+			<form class="form-horizontal" role="form" action='/user/login' method="post" name="loginForm">
+			  <div class="form-group">
+			    <label for="email" class="col-lg-4 control-label">Email</label>
+			    <div class="col-lg-6">
+			      <input type="text" class="form-control" name="email" id="email" placeholder="Email" value="">
+			    </div>
+			  </div>
+			  <div class="form-group">
+			    <label for="password" class="col-lg-4 control-label">Password</label>
+			    <div class="col-lg-6">
+			      <input type="password" class="form-control" name="password" id="password" placeholder="Password" value="">
+			    </div>
+			  </div>
+			  <div class="form-group">
+			    <div class="col-lg-offset-4 col-lg-10">
+			      <button type="submit" class="btn btn-primary">Login</button>
+			    </div>
+			  </div>
+			</form>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->			<div class="modal" id="register">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4>Register to technicalkeeda.com</h4>
+        </div>
+        <div class="modal-body">
+			<form class="form-horizontal" role="form" action='/user/register' method="post">
+			  <div class="form-group">
+			    <label for="firstName" class="col-lg-4 control-label">First Name</label>
+			    <div class="col-lg-6">
+			      <input type="text" class="form-control" name="firstName" id="firstName" placeholder="First Name">
+			    </div>
+			  </div>
+			  <div class="form-group">
+			    <label for="lastName" class="col-lg-4 control-label">Last Name</label>
+			    <div class="col-lg-6">
+			      <input type="text" class="form-control" name="lastName" id="lastName" placeholder="Last Name">
+			    </div>
+			  </div>
+			  <div class="form-group">
+			    <label for="email" class="col-lg-4 control-label">Email</label>
+			    <div class="col-lg-6">
+			      <input type="text" class="form-control" name="email" id="email" placeholder="Email">
+			    </div>
+			  </div>
+			  <div class="form-group">
+			    <label for="password" class="col-lg-4 control-label">Password</label>
+			    <div class="col-lg-6">
+			      <input type="password" class="form-control" name="password" id="password" placeholder="Password">
+			    </div>
+			  </div>
+			  <div class="form-group">
+			    <div class="col-lg-offset-4 col-lg-10">
+			      <button type="submit" class="btn btn-primary">Register</button>
+			    </div>
+			  </div>
+			</form>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->		</div>
+		
+	</body>
+</html>

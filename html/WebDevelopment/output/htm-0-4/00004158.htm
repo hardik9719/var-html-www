@@ -1,0 +1,16 @@
+<html><h1 class="refsect1">ROUND (date)</h1>
+<p><code>ROUND</code> returns a date rounded to the unit specified by the date format.</p>
+<p class="titleinrefsubsect"><a id="sthref584" name="sthref584"></a>Return Value</p>
+<pre xml:space="preserve" class="oac_no_warn">DATE
+</pre>
+<p class="titleinrefsubsect"><a id="sthref585" name="sthref585"></a>Syntax</p>
+<pre xml:space="preserve" class="oac_no_warn"><span class="bold">ROUND</span>(date [, fmt ])
+</pre>
+<p class="titleinrefsubsect"><a id="sthref586" name="sthref586"></a>Arguments</p>
+<p><code>date</code> is an expression that identifies a date and time.</p>
+<p><code>fmt</code> is a text literal with a date format, as described in the <span class="italic">Oracle Database SQL Language Reference</span>.</p>
+<p class="titleinrefsubsect"><a id="sthref587" name="sthref587"></a>Examples</p>
+<p><code>ROUND(SYSDATE, 'YEAR')</code> returns the value <code>01-JAN-07</code> for any day in the last half of 2006.</p>
+<p><code>ROUND(TO_DATE('13-OCT-06'), 'MONTH')</code> returns the value <code>01-OCT-06</code>.</p>
+</div>
+</html>

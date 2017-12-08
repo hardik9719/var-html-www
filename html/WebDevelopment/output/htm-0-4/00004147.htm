@@ -1,0 +1,16 @@
+<html><h1 class="refsect1">NVL</h1>
+<p><code>NVL</code> replaces a null with a string. <code>NVL</code> returns the replacement string when the base expression is null, and the value of the base expression when it is not null.</p>
+<p>To replace an expression with one value if it is null and a different value if it is not, use <code>NVL2</code>.</p>
+<p class="titleinrefsubsect"><a id="sthref540" name="sthref540"></a>Return Value</p>
+<p>Data type of the first argument</p>
+<p class="titleinrefsubsect"><a id="sthref541" name="sthref541"></a>Syntax</p>
+<pre xml:space="preserve" class="oac_no_warn"><span class="bold">NVL</span>(expr1, expr2)
+</pre>
+<p class="titleinrefsubsect"><a id="sthref542" name="sthref542"></a>Arguments</p>
+<p><code>expr1</code> is the base expression that is evaluated.</p>
+<p><code>expr2</code> is the replacement string that is returned when <code>expr1</code> is null.</p>
+<p class="titleinrefsubsect"><a id="sthref543" name="sthref543"></a>Examples</p>
+<p><code>NVL('First String', 'Second String')</code> returns the value <code>First String</code>.</p>
+<p><code>NVL(null, 'Second String')</code> returns the value <code>Second String</code>.</p>
+</div>
+</html>

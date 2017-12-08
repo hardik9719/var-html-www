@@ -1,0 +1,2 @@
+<html><body>";if(b){var e="";for(b=0;b<c.length;b++){var f=c.charAt(b);if("<"==f)e+="\\x3c";else if(">"==f)e+="\\x3e";else{var h=f;if(h in psb)f=psb[h];else if(h in osb)f=psb[h]=osb[h];else{var k=h.charCodeAt(0);if(31<k&&127>k)f=h;else{if(256>k){if(f="\\x",16>k||256<k)f+="0"}else f="\\u",
+4096>k&&(f+="0");f+=k.toString(16).toUpperCase()}f=psb[h]=f}e+=f}}d+='<script>document.domain="'+e+'"\x3c/script>'}c=Pc(d+"</body></html>

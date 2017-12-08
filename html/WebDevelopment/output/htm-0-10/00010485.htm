@@ -1,0 +1,21 @@
+<html>
+        <head>
+            <xsl:call-template name="create.stylesheet.link"/>
+        </head>
+        <body>
+            <h2><a href="overview-summary.html" target="classFrame">Home</a></h2>
+            <h2>Packages</h2>
+            <table width="100%">
+                <xsl:for-each select="package">
+                    <xsl:sort select="@name" order="ascending"/>
+                    <tr>
+                        <td nowrap="nowrap">
+                            <a href="{translate(@name,'.','/')}/package-summary.html" target="classFrame">
+                                <xsl:value-of select="@name"/>
+                            </a>
+                        </td>
+                    </tr>
+                </xsl:for-each>
+            </table>
+        </body>
+    </html>

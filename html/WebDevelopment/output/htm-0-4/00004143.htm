@@ -1,0 +1,17 @@
+<html><h1 class="refsect1">NLSSORT</h1>
+<p><code>NLSSORT</code> returns the string of bytes used to sort a text string. You can use this function to specify sorting and comparison operations based on a linguistic sort sequence rather than on the binary value of a string.</p>
+<p><span class="bold">Note</span>: <code>NLSSORT</code> returns a <code>RAW</code> value, which you may pass to another function. To create a measure or a calculated measure for the values returned by <code>NLSSORT</code>, use the <code>RAWTOHEX</code> function.</p>
+<p>For more information about linguistic sorting, refer to the <span class="italic">Oracle Database Globalization Support Guide</span>.</p>
+<p class="titleinrefsubsect"><a id="sthref524" name="sthref524"></a>Return Value</p>
+<pre xml:space="preserve" class="oac_no_warn">RAW
+</pre>
+<p class="titleinrefsubsect"><a id="sthref525" name="sthref525"></a>Syntax</p>
+<pre xml:space="preserve" class="oac_no_warn"><span class="bold">NLSSORT</span>(char [, 'nlsparam' ])
+</pre>
+<p class="titleinrefsubsect"><a id="sthref526" name="sthref526"></a>Arguments</p>
+<p><code>char</code> is a text expression.</p>
+<p><code>nlsparam</code> is a linguistic sort sequence in the form <code>NLS_SORT =</code><code>sort</code><code>[_ai |_ci]</code>, where <code>sort</code> is an NLS language. You can add a suffix to the language to modify the sort: <code>_ai</code> for an accent-insensitive sort, or <code>_ci</code> for a case-insensitive sort.</p>
+<p class="titleinrefsubsect"><a id="sthref527" name="sthref527"></a>Example</p>
+<p><code>NLSSORT('Rumpelstiltskin')</code> returns the value <code>52756D70656C7374696C74736B696E00</code> for a default linguistic sort, which in this case is American.</p>
+</div>
+</html>

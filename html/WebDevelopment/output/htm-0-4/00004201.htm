@@ -1,0 +1,143 @@
+<html><h1 class="refsect1">AVERAGE_RANK</h1>
+<p><code>AVERAGE_RANK</code> orders the members of a dimension based on the values of an expression. The function returns the sequence numbers of the dimension members.</p>
+<p><code>AVERAGE_RANK</code> assigns the same average rank to identical values. For example, <code>AVERAGE_RANK</code> may return 1, 2, 3.5, 3.5, 5 for a series of five dimension members.</p>
+<p class="titleinrefsubsect"><a id="sthref58" name="sthref58"></a>Return Value</p>
+<pre xml:space="preserve" class="oac_no_warn">NUMBER
+</pre>
+<p class="titleinrefsubsect"><a id="sthref59" name="sthref59"></a>Syntax</p>
+<pre xml:space="preserve" class="oac_no_warn"><span class="bold">AVERAGE_RANK ( ) OVER (</span>rank_clause<span class="bold">)</span>
+</pre>
+<p><span class="bolditalic">rank_clause</span>::=</p>
+<pre xml:space="preserve" class="oac_no_warn">{ <span class="bold">DIMENSION</span> dimension_id | <span class="bold">HIERARCHY</span> hierarchy_id }
+  <span class="bold">ORDER BY</span> order_by_clause [<span class="bold">,</span> order_by_clause]...
+  [ <span class="bold">WITHIN</span> { <span class="bold">LEVEL</span> 
+            | <span class="bold">PARENT</span> 
+            |<span class="bold"> ANCESTOR AT</span> { <span class="bold">DIMENSION LEVEL</span> dim_lvl_id
+                           |<span class="bold"> HIERARCHY LEVEL</span> hier_level_id
+                           }
+            }
+  ]
+</pre>
+<p><span class="bolditalic">order_by_clause</span>::=</p>
+<pre xml:space="preserve" class="oac_no_warn">expression [<span class="bold">ASC</span> | <span class="bold">DESC</span>] [<span class="bold">NULLS</span> {<span class="bold">FIRST</span> | <span class="bold">LAST</span>}] 
+</pre>
+<p class="titleinrefsubsect"><a id="sthref60" name="sthref60"></a>Arguments</p>
+<p class="subhead2"><a id="OLAXS181" name="OLAXS181"></a><a id="sthref61" name="sthref61"></a><span class="italic">dimension_id</span></p>
+<p>The dimension over which the values are calculated using the default hierarchy.</p>
+<p class="subhead2"><a id="OLAXS182" name="OLAXS182"></a><a id="sthref62" name="sthref62"></a><span class="italic">hierarchy_id</span></p>
+<p>The hierarchy over which the values are calculated. If <code><span class="codeinlineitalic">dimension_id</span></code> is used instead, the default hierarchy is used.</p>
+<p class="subhead2"><a id="OLAXS183" name="OLAXS183"></a><a id="sthref63" name="sthref63"></a>ORDER BY</p>
+<p>Provides the basis for the ranking. You can provide additional <code>ORDER BY</code> clauses to break any ties in the order.</p>
+<p class="subhead2"><a id="OLAXS184" name="OLAXS184"></a><a id="sthref64" name="sthref64"></a>expression</p>
+<p>Provides the values to use as the basis for the rankings.</p>
+<p class="subhead2"><a id="OLAXS185" name="OLAXS185"></a><a id="sthref65" name="sthref65"></a>ASC | DESC</p>
+<p>Sorts the ranking from smallest to largest (ascending) or from largest to smallest (descending).</p>
+<p class="subhead2"><a id="OLAXS186" name="OLAXS186"></a><a id="sthref66" name="sthref66"></a>NULLS {FIRST | LAST}</p>
+<p>Determines whether members with null values are listed first or last.</p>
+<p class="subhead2"><a id="OLAXS187" name="OLAXS187"></a><a id="sthref67" name="sthref67"></a>WITHIN</p>
+<p>Selects a set of related dimension members to be ranked.</p>
+<p><code>LEVEL</code> ranks all members at the same level.</p>
+<p><code>PARENT</code> ranks members at the same level with the same parent.</p>
+<p><code>ANCESTOR</code> ranks all members at the same level and with the same ancestor at a specified level.</p>
+<p class="subhead2"><a id="OLAXS188" name="OLAXS188"></a><a id="sthref68" name="sthref68"></a><span class="italic">dim_level_id</span></p>
+<p>The name of a level of <code><span class="codeinlineitalic">dimension_id</span></code>.</p>
+<p class="subhead2"><a id="OLAXS189" name="OLAXS189"></a><a id="sthref69" name="sthref69"></a><span class="italic">hier_level_id</span></p>
+<p>The name of a level of <code><span class="codeinlineitalic">hierarchy_id</span></code>.</p>
+<p class="titleinrefsubsect"><a id="sthref70" name="sthref70"></a>Example</p>
+<p>This example ranks time periods within a calendar year by Unit Cost. Notice that no month is ranked 7, because two months (JAN-02 and JUL-02) have the same value and the same rank (6.5).</p>
+<p><code>AVERAGE_RANK() OVER (HIERARCHY TIME.CALENDAR ORDER BY PRICE_CUBE.UNIT_COST DESC NULLS LAST WITHIN ANCESTOR AT DIMENSION LEVEL TIME.CALENDAR_YEAR)</code></p>
+<div class="inftblinformal">
+<table class="Informal" title="AVERAGE_RANK Example" summary="Output from AVERAGE_RANK example" dir="ltr" border="1" width="100%" frame="hsides" rules="groups" cellpadding="3" cellspacing="0">
+<col width="*" />
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+<thead>
+<tr align="left" valign="top">
+<th align="left" valign="bottom" id="r1c1-t2">Product</th>
+<th align="left" valign="bottom" id="r1c2-t2">Time</th>
+<th align="left" valign="bottom" id="r1c3-t2">Cost</th>
+<th align="left" valign="bottom" id="r1c4-t2">Average Rank</th>
+</tr>
+</thead>
+<tbody>
+<tr align="left" valign="top">
+<td align="left" id="r2c1-t2" headers="r1c1-t2">Deluxe Mouse</td>
+<td align="left" headers="r2c1-t2 r1c2-t2">MAR-02</td>
+<td align="left" headers="r2c1-t2 r1c3-t2">24.05</td>
+<td align="left" headers="r2c1-t2 r1c4-t2">1</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r3c1-t2" headers="r1c1-t2">Deluxe Mouse</td>
+<td align="left" headers="r3c1-t2 r1c2-t2">APR-02</td>
+<td align="left" headers="r3c1-t2 r1c3-t2">23.95</td>
+<td align="left" headers="r3c1-t2 r1c4-t2">2</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r4c1-t2" headers="r1c1-t2">Deluxe Mouse</td>
+<td align="left" headers="r4c1-t2 r1c2-t2">FEB-02</td>
+<td align="left" headers="r4c1-t2 r1c3-t2">23.94</td>
+<td align="left" headers="r4c1-t2 r1c4-t2">3</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r5c1-t2" headers="r1c1-t2">Deluxe Mouse</td>
+<td align="left" headers="r5c1-t2 r1c2-t2">AUG-02</td>
+<td align="left" headers="r5c1-t2 r1c3-t2">23.88</td>
+<td align="left" headers="r5c1-t2 r1c4-t2">4</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r6c1-t2" headers="r1c1-t2">Deluxe Mouse</td>
+<td align="left" headers="r6c1-t2 r1c2-t2">MAY-02</td>
+<td align="left" headers="r6c1-t2 r1c3-t2">23.84</td>
+<td align="left" headers="r6c1-t2 r1c4-t2">5</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r7c1-t2" headers="r1c1-t2">Deluxe Mouse</td>
+<td align="left" headers="r7c1-t2 r1c2-t2">JAN-02</td>
+<td align="left" headers="r7c1-t2 r1c3-t2">23.73</td>
+<td align="left" headers="r7c1-t2 r1c4-t2">6.5</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r8c1-t2" headers="r1c1-t2">Deluxe Mouse</td>
+<td align="left" headers="r8c1-t2 r1c2-t2">JUL-02</td>
+<td align="left" headers="r8c1-t2 r1c3-t2">23.73</td>
+<td align="left" headers="r8c1-t2 r1c4-t2">6.5</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r9c1-t2" headers="r1c1-t2">Deluxe Mouse</td>
+<td align="left" headers="r9c1-t2 r1c2-t2">JUN-02</td>
+<td align="left" headers="r9c1-t2 r1c3-t2">23.72</td>
+<td align="left" headers="r9c1-t2 r1c4-t2">8</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r10c1-t2" headers="r1c1-t2">Deluxe Mouse</td>
+<td align="left" headers="r10c1-t2 r1c2-t2">SEP-02</td>
+<td align="left" headers="r10c1-t2 r1c3-t2">23.71</td>
+<td align="left" headers="r10c1-t2 r1c4-t2">9</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r11c1-t2" headers="r1c1-t2">Deluxe Mouse</td>
+<td align="left" headers="r11c1-t2 r1c2-t2">NOV-02</td>
+<td align="left" headers="r11c1-t2 r1c3-t2">23.65</td>
+<td align="left" headers="r11c1-t2 r1c4-t2">10</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r12c1-t2" headers="r1c1-t2">Deluxe Mouse</td>
+<td align="left" headers="r12c1-t2 r1c2-t2">DEC-02</td>
+<td align="left" headers="r12c1-t2 r1c3-t2">23.62</td>
+<td align="left" headers="r12c1-t2 r1c4-t2">11</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r13c1-t2" headers="r1c1-t2">Deluxe Mouse</td>
+<td align="left" headers="r13c1-t2 r1c2-t2">OCT-02</td>
+<td align="left" headers="r13c1-t2 r1c3-t2">23.37</td>
+<td align="left" headers="r13c1-t2 r1c4-t2">12</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="inftblinformal" -->
+<p class="titleinrefsubsect"><a id="sthref71" name="sthref71"></a>Related Topics</p>
+<p><a href="olap_functions004.htm#CIHFFJAC">DENSE_RANK</a>, <a href="olap_functions021.htm#CIHCBHFG">RANK</a>, <a href="olap_functions022.htm#CIHDCBFD">ROW_NUMBER</a></p>
+</div>
+</html>

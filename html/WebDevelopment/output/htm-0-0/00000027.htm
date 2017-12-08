@@ -1,0 +1,274 @@
+<html>
+<head>
+<meta name="Version" content="4730"> <meta name="Microsoft Theme" content="none">
+<OBJECT ID="Servers"
+	CLASSID="CLSID:BDEADEB7-C265-11d0-BCED-00A0C90AB50F">
+</OBJECT>
+<title>Discussion Options</title>
+<style type="text/css"><!-- .dlgTitle {font: 12pt/14pt tahoma; font-weight: normal; color: "WindowText"; font-style: normal} .dlgLabel {font: 8pt/9pt tahoma; color: "WindowText"} .dlgLabelB {font: 8pt/9pt tahoma; font-weight:bold; color: "WindowText"} .dlgLabelI {font: 8pt/9pt tahoma; font-style:italic; color: "WindowText"} .dlgLabelU {font: 8pt/9pt tahoma; text-decoration:underline; color: "WindowText"} .dlgControl {font: 9pt tahoma; color: "WindowText"; width: 400px} .dlgLabelDisabled {font: 8pt/9pt tahoma; color: "GrayText"; filter: dropshadow(color=white, offx=1, offy=1)} .dlgEdit {font: 8pt/9pt tahoma; color: "WindowText"; width: 400px} .dlgLink {cursor: hand; text-decoration:none; color: "ButtonText"} .dlgLinkDisabled {cursor: default; text-decoration:none; color: "ButtonShadow"} .dlgBtn {cursor: hand; border-width: 0; color: "ButtonText"} .dlgBtnDisabled {cursor: default; border-width: 0; color: "ButtonShadow"; filter: dropshadow(color=white, offx=1, offy=1)} .dlgPushBtn {cursor: hand; font: 8pt/9pt tahoma; color: "ButtonText"; width=102px} .dlgOKCancelBtn {font: 8pt/9pt tahoma; color: "ButtonText"; width=80px} .dlgDropDown {font: 8pt/9pt tahoma; color: "WindowText"; width: 200px} .dlgTextEdit {font: 9pt tahoma; color: "WindowText"; width: 400px; height: 140px} .dlgHalfEdit {font: 8pt/9pt tahoma; color: "WindowText"; width: 262px} .dlgSmallDropDown {font: 8pt/9pt tahoma; color: "WindowText"; width: 100px} --></style>
+<script>
+function CloseDialog(fCancel)
+{
+	if (fCancel && !OnCancel())
+		return;
+	if (fCancel || ReturnDialogArgs())
+		window.close();
+}
+function BodyKeyDown()
+{
+	kc = window.event.keyCode;
+	if (kc == 27)  
+		{
+		CloseDialog(true);
+		window.event.keyCode = 34;  
+		}
+	else if (kc == 13 && OnEnter())  
+		CloseDialog(false);
+}
+var L_ConfirmDelete_Text = "Are you sure you want to remove this entry?";
+var L_MustSelectField_Text = "At least one discussion field must be selected";
+var L_ShowDiscFields_Text = "Show discussion fields";
+var L_Current_Text = "Current";
+var L_LocalServer_Text = "Active document's server";
+L_dialogWidth_Text = "344px";
+dialogWidth = L_dialogWidth_Text;
+L_dialogHeight_Text = "248px";
+dialogHeight = L_dialogHeight_Text;
+function SetBtnsState()
+{
+	var sel = ListBox.selectedIndex;
+	fDisableBtns = (sel < 0 || Servers(sel).ServerAddress == "[docserver]");
+	ModifyBtn.disabled = fDisableBtns;
+	DeleteBtn.disabled = fDisableBtns;
+}
+function RefreshListbox()
+{
+	while (ListBox.length > 0)
+		ListBox.remove(0);
+	l = Servers.Length;
+	for (i = 0; i < l; i++)
+		{
+		var str;
+		var srv = Servers(i);
+		var el = document.createElement("OPTION");
+		if (srv.ServerAddress == "[docserver]")
+			{
+			str = L_LocalServer_Text;
+			if (dialogArguments.Attribute("owsservername") != 0)
+				str = str + " (" + dialogArguments.Attribute("owsservername") + ")";
+			}
+		else
+			str = srv + " (" + srv.ServerAddress + ")";
+		if (i == 0)
+			str += " (" + L_Current_Text + ")";
+		el.text=str;
+		ListBox.add(el);
+		}
+	SetBtnsState();
+}
+function DeleteItem()
+{
+	var sel = ListBox.selectedIndex;
+	var srv = Servers(sel);
+	if (srv.ServerAddress == "[docserver]")
+		return;
+	if (!confirm(L_ConfirmDelete_Text + "\n\n" + srv.FriendlyName + " (" + srv.ServerAddress + ')'))
+		return;
+	srv.Delete();
+	RefreshListbox();
+	if(sel == 0)
+		serverChanged = 1;
+	ListBox.selectedIndex = 0;
+	SetBtnsState();
+	if (!diidOK.disabled)
+		diidOK.focus();
+}
+function EditItem()
+{
+	var sel = ListBox.selectedIndex;
+	var srv = Servers(sel);
+	if (srv.ServerAddress == "[docserver]")
+		return;
+	document.body.setAttribute("Friendly", srv.FriendlyName);
+	document.body.setAttribute("Server", srv.ServerAddress);
+	document.body.setAttribute("Servers", Servers);
+	window.showModalDialog("addsvr.htm", document.body, "help:no");
+	Friendly = document.body.getAttribute("Friendly");
+	SrvAddress = document.body.getAttribute("Server");
+	if (Friendly == "" || SrvAddress == "")
+		return;
+	srv.FriendlyName = Friendly;
+	srv.ServerAddress =	SrvAddress;
+	RefreshListbox(false);
+	if(sel == 0)
+		serverChanged = 1;
+	ListBox.selectedIndex = sel;
+	SetBtnsState();
+	if (!diidOK.disabled)
+		diidOK.focus();
+}
+function AddItem()
+{
+	document.body.setAttribute("Friendly", "");
+	document.body.setAttribute("Server", "");
+	document.body.setAttribute("Servers", Servers);
+	window.showModalDialog("addsvr.htm", document.body, "help:no");
+	Friendly = document.body.getAttribute("Friendly");
+	SrvAddress = document.body.getAttribute("Server");
+	if (Friendly == "" || SrvAddress == "")
+		return;
+	Servers.Add(Friendly, SrvAddress);
+	RefreshListbox();
+	ListBox.selectedIndex = ListBox.length-1;
+	if (ListBox.length == 1)
+		serverChanged = 1;
+	SetBtnsState();
+	if (!diidOK.disabled)
+		diidOK.focus();
+}
+var fButtonFocus=false;
+function OnButtonFocus() { fButtonFocus = true; }
+function OnButtonBlur() { fButtonFocus = false; }
+function OnEnter() { return !fButtonFocus; }
+function OnCancel() { return true; }
+function ReturnDialogArgs()
+{
+	if (ListBox.selectedIndex > 0)
+		serverChanged = 1;
+	if (serverChanged && Servers.Length>0)
+		Servers(ListBox.selectedIndex).SetAsDefault();
+	dlgDispMask = 0;
+	if (diidAuthorCheck.checked)
+		dlgDispMask |= 0x8;
+	if (diidLoginCheck.checked)
+		dlgDispMask |= 0x10;
+	if (diidTextCheck.checked)
+		dlgDispMask |= 0x1;
+	if (diidSubjectCheck.checked)
+		dlgDispMask |= 0x4;
+	if (diidTimeCheck.checked)
+		dlgDispMask |= 0x2;
+	if (dlgDispMask == 0)
+		{
+		alert(L_MustSelectField_Text);
+		diidAuthorCheck.focus();
+		return false;
+		}
+	dialogArguments.Attribute("owsserverchanged") = serverChanged;
+	dialogArguments.Attribute("owsdispmask") = dlgDispMask;
+	dialogArguments.Attribute("owsshowclosed") =
+		diidResolvedCheck.checked ? 1 : 0;
+	dialogArguments.Attribute("owscancel") = 0;
+	return true;
+}
+function ItemClick(diidItem)
+{
+	diidItem.checked = !diidItem.checked;
+	diidItem.focus();
+}
+function InitDialog()
+{
+	dialogHeight = 248+(248 -25)-document.body.clientHeight+"px";	
+	RefreshListbox();
+	ListBox.selectedIndex = 0;	
+	SetBtnsState();  
+	dialogArguments.Attribute("owscancel") = 1;
+	document.title = L_ShowDiscFields_Text;
+	dlgDispMask = dialogArguments.Attribute("owsdispmask");
+	if (dlgDispMask & 0x8)
+		diidAuthorCheck.checked = true;
+	if (dlgDispMask & 0x10)
+		diidLoginCheck.checked = true;
+	if (dlgDispMask & 0x1)
+		diidTextCheck.checked = true;
+	if (dlgDispMask & 0x4)
+		diidSubjectCheck.checked = true;
+	if (dlgDispMask & 0x2)
+		diidTimeCheck.checked = true;
+	serverChanged = 0;
+	if (dialogArguments.Attribute("owsshowclosed") == 1)
+		diidResolvedCheck.checked = true;
+	ListBox.focus();
+}
+</script>
+</head>
+<body id="bd"
+	topmargin="0" scroll="no" leftmargin="7" bottommargin="0" rightmargin="7"
+	bgcolor="ThreedFace" text="ThreedShadow"
+	onLoad="InitDialog()" onkeydown="BodyKeyDown()">
+<table border=0 style="padding-left:3px;padding-top:3px;padding-bottom:3px;padding-right:0px" cellspacing="0" width="322">
+	<tr>
+		<td nowrap width=10%>
+			<div id="diidTitle" class="dlgLabel">Select a dis<u>c</u>ussion server:</div>
+		</td>
+		<td valign="bottom" ><hr></td>
+	</tr>
+</table>
+<table border="0" cellpadding="0" width="320">
+	<tr>
+		<td valign="top" align=left width="316">
+			<select class="dlgLabel" id="ListBox" name="listbox" size=1 style="WIDTH: 320px" onClick="SetBtnsState()" accesskey="c"></select>
+		</td>
+	</tr>
+</table>
+<table border="0" cellpadding="0" style="padding-left:4px" cellspacing="0" width=318>
+	<tr> <td>
+		<table border="0" style="margin-top:4px;margin-bottom:4px" cellspacing="0" cellpadding="0">
+		<tr>
+		<td width="25%" height="23">
+			<button class="dlgPushBtn" id="AddBtn" name="AddBtn" onClick="AddItem()"
+				accesskey=a onfocus="OnButtonFocus()" onblur="OnButtonBlur()"><u>A</u>dd...</button>
+		</td>
+		<td width="25%" height="23">
+			<button class="dlgPushBtn" id="ModifyBtn" name="ModifyBtn" onClick="EditItem()"
+			accesskey=e onfocus="OnButtonFocus()" onblur="OnButtonBlur()"><u>E</u>dit...</button>
+		</td>
+		<td width="25%" height="23">
+			<button class="dlgPushBtn" id="DeleteBtn" name="DeleteBtn" onClick="DeleteItem()"
+				accesskey=r onfocus="OnButtonFocus()" onblur="OnButtonBlur()"><u>R</u>emove</button>
+		</td>
+		</tr>
+		</table>
+		</td>
+	</tr>
+	<tr><td><table cellspacing=0 border=0 cellpadding=0 width=320><tr><td nowrap width="10%" height="5" bordercolor="#000000">
+	<div id=diidFieldsLabel class="dlgLabel">	Discussion fields to display:&nbsp</div>
+	</td><td valign="bottom" style="padding-right:2px"><hr></td></tr></table></tr>
+	<tr><td width="100%" height="10" bordercolor="#000000">
+		<div align=left><table border="0" cellpadding="1" width="100%"><tr>
+			<td width="20%">
+				<input id=diidAuthorCheck type="checkbox" accesskey=d title="Display name">
+				<span class="dlgLabel" onclick=ItemClick(diidAuthorCheck)><u>D</u>isplay name</span>
+			</td><td width="20%">
+				<input id=diidLoginCheck type="checkbox" accesskey=n title="User name">
+				<span class="dlgLabel" onclick=ItemClick(diidLoginCheck)>User <u>n</u>ame</span>
+			</td><td width="20%">
+				<input id=diidSubjectCheck type="checkbox" accesskey=b title="Subject">
+				<span class="dlgLabel" onclick=ItemClick(diidSubjectCheck)>Su<u>b</u>ject</span>
+			</td></tr><tr><td width="20%">
+				<input id=diidTextCheck type="checkbox" accesskey=t title="Text">
+				<span class="dlgLabel" onclick=ItemClick(diidTextCheck)><u>T</u>ext</span>
+			</td><td width="20%">
+					<input id=diidTimeCheck type="checkbox" accesskey=m title="Time">
+				<span class="dlgLabel" onclick=ItemClick(diidTimeCheck)>Ti<u>m</u>e</span>
+			</td><td></td>
+		</tr>
+		</table></div>
+	</td></tr>
+	<tr><td>
+	<table width=318 border="0" cellpadding=0 cellspacing=0">
+	<tr><td height="10" ><hr>
+	</td></tr>
+	<tr><td><input id=diidResolvedCheck type="checkbox" accesskey=s title="Show closed discussions">
+		<span class="dlgLabel" onclick=ItemClick(diidResolvedCheck)><u>S</u>how closed discussions</span>
+	</td></tr>
+</table>
+</td></tr>
+</table> 
+<table border=0 style="padding-right:0px;padding-bottom:0px" width=318>
+<tr><td>
+<table border="0" cellpadding="0" style="padding-top:0;padding-bottom:0" cellspacing="0" width=318> <tr> <td bgcolor="ThreedFace" align="right">  <input type="button" class="dlgOKCancelBtn" id="diidOK" value="OK" onclick="CloseDialog(0)" /> &nbsp<input type="button" class="dlgOKCancelBtn" id="diidCancel" value="Cancel" onclick="CloseDialog(1)" onkeydown="window.event.cancelBubble = true" /> </td></tr> </table>
+</td></tr>
+</table>
+</body>
+</html>

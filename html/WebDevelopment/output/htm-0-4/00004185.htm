@@ -1,0 +1,38 @@
+<html><h1 class="refsect1">TO_NCHAR (number)</h1>
+<p><code>TO_NCHAR(number)</code> converts a number to the national character set.</p>
+<p class="titleinrefsubsect"><a id="sthref688" name="sthref688"></a>Return Value</p>
+<pre xml:space="preserve" class="oac_no_warn">NVARCHAR2
+</pre>
+<p class="titleinrefsubsect"><a id="sthref689" name="sthref689"></a>Syntax</p>
+<pre xml:space="preserve" class="oac_no_warn"><span class="bold">TO_CHAR</span>(n [, fmt [, 'nlsparam' ] ])
+</pre>
+<p class="titleinrefsubsect"><a id="sthref690" name="sthref690"></a>Arguments</p>
+<p><code>n</code> is a numeric expression to be converted.</p>
+<p><code>fmt</code> is a text expression that identifies a number format model as described in the <span class="italic">Oracle Database SQL Language Reference</span>.</p>
+<p><code>nlsparam</code> is a text expression that specifies the characters that are returned by these number format elements:</p>
+<ul>
+<li>
+<p>Decimal character</p>
+</li>
+<li>
+<p>Group separator</p>
+</li>
+<li>
+<p>Local currency symbol</p>
+</li>
+<li>
+<p>International currency symbol</p>
+</li>
+</ul>
+<p>This argument has the format shown here:</p>
+<pre xml:space="preserve" class="oac_no_warn">'NLS_NUMERIC_CHARACTERS = ''dg''
+   NLS_CURRENCY = ''text''
+   NLS_ISO_CURRENCY = territory '
+</pre>
+<p>The characters <code>d</code> and <code>g</code> represent the decimal character and group separator, respectively. They must be different single-byte characters. Within the quoted string, use two single quotation marks around the parameter values. Ten characters are available for the currency symbol.</p>
+<p>If you omit this argument or any of the NLS parameters, then this function uses the default values for your session.</p>
+<p class="titleinrefsubsect"><a id="sthref691" name="sthref691"></a>Examples</p>
+<p><code>TO_NCHAR(1234567, 'C9G999G999D99')</code> returns a text string such as <code>USD1,234,567.00</code>.</p>
+<p><code>TO_NCHAR(1234567, 'C9G999G999D99', 'NLS_ISO_CURRENCY = SPAIN')</code> returns the text string <code>EUR1,234,567.00</code>.</p>
+</div>
+</html>

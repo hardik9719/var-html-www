@@ -1,0 +1,33 @@
+<html><h1 class="refsect1">EXTRACT (datetime)</h1>
+<p><code>EXTRACT</code> returns the value of a specified field from a datetime or interval expression.</p>
+<p class="titleinrefsubsect"><a id="sthref416" name="sthref416"></a>Return Value</p>
+<pre xml:space="preserve" class="oac_no_warn">NUMBER
+</pre>
+<p class="titleinrefsubsect"><a id="sthref417" name="sthref417"></a>Syntax</p>
+<pre xml:space="preserve" class="oac_no_warn"><span class="bold">EXTRACT</span>( { { <span class="bold">YEAR</span>
+           | <span class="bold">MONTH</span>
+           | <span class="bold">DAY</span>
+           | <span class="bold">HOUR</span>
+           | <span class="bold">MINUTE</span>
+           | <span class="bold">SECOND</span>
+           }
+         | { <span class="bold">TIMEZONE_HOUR</span>
+           | <span class="bold">TIMEZONE_MINUTE</span>
+           }
+         | { <span class="bold">TIMEZONE_REGION</span>
+           | <span class="bold">TIMEZONE_ABBR</span>
+           }
+         }
+    <span class="bold">FROM</span>   { datetime_value_expression
+           | interval_value_expression
+           }
+       )
+</pre>
+<p class="titleinrefsubsect"><a id="sthref418" name="sthref418"></a>Arguments</p>
+<p><code>datetime_value_expression</code> is an expression with a datetime data type.</p>
+<p><code>interval_value_expression</code> is an expression with an interval data type.</p>
+<p class="titleinrefsubsect"><a id="sthref419" name="sthref419"></a>Example</p>
+<p><code>EXTRACT(MONTH FROM CURRENT_TIMESTAMP)</code> returns the value <code>8</code> for August when the current timestamp is <code>08-AUG-06 01.10.55.330120 PM -07:00</code>.</p>
+<p><code>EXTRACT(TIMEZONE_HOUR FROM CURRENT_TIMESTAMP)</code> returns the value <code>-7</code> from the same example.</p>
+</div>
+</html>

@@ -1,0 +1,58 @@
+<html>
+			<head>
+				<title><!-- _locID_text="Title" _locComment="{StringCategory=TXT}" -->Microsoft Office SmartArt Graphics Log File</title>
+				<style type="text/css">
+					body
+					{
+					font-family: verdana, arial, helvetica, sans-serif;
+					background: white;
+					color: black;
+					}
+					table
+					{
+					border: 1px solid #95b7f3;
+					}
+					th
+					{
+					color: #003399;
+					font-size: 8pt;
+					font-weight:normal;
+					text-align: left;
+					vertical-align: middle;
+					border: 0;
+					}
+					td
+					{
+					font-size: 8pt;
+					text-align: left;
+					vertical-align: middle;
+					border: 0;
+					}
+				</style>
+			</head>
+			<body>
+				<h3><!-- _locID_text="Heading" _locComment="{StringCategory=TXT}" -->Microsoft Office SmartArt Graphics Log File</h3>
+				<p>
+					<table border="1">
+						<thead>
+							<tr>
+								<th></th>
+								<th></th>
+								<th><!-- _locID_text="DateTime" _locComment="{StringCategory=TXT}" -->Date/Time</th>
+								<th><!-- _locID_text="Host" _locComment="{StringCategory=TXT}" -->Host</th>
+								<th><!-- _locID_text="File" _locComment="{StringCategory=TXT}" -->File</th>
+								<th><!-- _locID_text="UniqueId" _locComment="{StringCategory=TXT}" -->Unique Id</th>
+								<th><!-- _locID_text="Type" _locComment="{StringCategory=TXT}" -->Type</th>
+								<th><!-- _locID_text="Description" _locComment="{StringCategory=TXT}" -->Description</th>
+								<th><!-- _locID_text="Context" _locComment="{StringCategory=TXT}" -->Context</th>
+								<th><!-- _locID_text="Line" _locComment="{StringCategory=TXT}" -->Line</th>
+								<th><!-- _locID_text="Col" _locComment="{StringCategory=TXT}" -->Col</th>
+							</tr>
+						</thead>
+						<xsl:apply-templates select="entry">
+							<xsl:sort select="time" order="descending" />
+						</xsl:apply-templates>
+					</table>
+				</p>
+			</body>
+		</html>

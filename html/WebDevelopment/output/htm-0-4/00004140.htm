@@ -1,0 +1,16 @@
+<html><h1 class="refsect1">NLS_INITCAP</h1>
+<p><code>NLS_INITCAP</code> returns a string in which each word begins with a capital followed by lower-case letters. White space and nonalphanumeric characters delimit the words.</p>
+<p class="titleinrefsubsect"><a id="sthref512" name="sthref512"></a>Return Value</p>
+<pre xml:space="preserve" class="oac_no_warn">VARCHAR2
+</pre>
+<p class="titleinrefsubsect"><a id="sthref513" name="sthref513"></a>Syntax</p>
+<pre xml:space="preserve" class="oac_no_warn"><span class="bold">NLS_INITCAP </span>(char [, 'nlsparam' ])
+</pre>
+<p class="titleinrefsubsect"><a id="sthref514" name="sthref514"></a>Arguments</p>
+<p><code>char</code> can be any text string.</p>
+<p><code>nlsparam</code> can have the form <code>'NLS_SORT =</code><code>sort</code><code>'</code> where <code>sort</code> is either a linguistic sort sequence or <code>BINARY</code>. The linguistic sort sequence handles special linguistic requirements for case conversions. These requirements can result in a return value of a different length than <code>char</code>. If you omit <code>nlsparam</code>, then this function uses the default sort sequence for your session.</p>
+<p class="titleinrefsubsect"><a id="sthref515" name="sthref515"></a>Example</p>
+<p><code>NLS_INITCAP('WALKING&amp;THROUGH*A*winter wonderland')</code> returns the value <code>Walking#Through*A*Winter Wonderland</code>.</p>
+<p><code>NLS_INITCAP('ijsland')</code> returns the value <code>Ijsland</code>, but <code>NLS_INITCAP(NLS_INITCAP('ijsland', 'NLS_SORT = XDutch')</code> returns <code>IJsland</code>.</p>
+</div>
+</html>

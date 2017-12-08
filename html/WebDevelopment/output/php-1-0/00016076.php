@@ -1,0 +1,1 @@
+<?php\n\n$host=\"ftp.riidl.org\";\n$port=3306;\n$socket=\"\";\n$user=\"riidlorg_lift\";\n$password=\"zxfghjm90\";\n$dbname=\"riidlorg_liftplease\";\n\n$connection = new mysqli($host, $user, $password, $dbname, $port, $socket)\n\tor die ('Could not connect to the database server' . mysqli_connect_error());\n\t\t// Check connection\nif ($connection->

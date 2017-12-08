@@ -1,0 +1,107 @@
+<html><h1 class="refsect1">ORA_HASH</h1>
+<p><code>ORA_HASH</code> generates hash values for an expression. You can use it to randomly assign a set of values into several buckets for analysis, or to generate a set of random numbers.</p>
+<p class="titleinrefsubsect"><a id="sthref548" name="sthref548"></a>Return Value</p>
+<pre xml:space="preserve" class="oac_no_warn">NUMBER
+</pre>
+<p class="titleinrefsubsect"><a id="sthref549" name="sthref549"></a>Syntax</p>
+<pre xml:space="preserve" class="oac_no_warn"><span class="bold">ORA_HASH </span> (expr [, max_bucket [, seed_value ] ])
+</pre>
+<p class="titleinrefsubsect"><a id="sthref550" name="sthref550"></a>Arguments</p>
+<p><code>expr</code> can be any expression that provides the data for generating the hash values.</p>
+<p><code>max_bucket</code> is the maximum bucket number. For example, when <code>max_bucket</code> is set to 5, ORA_HASH returns values of 0 to 5, creating six buckets. Set this value from 0 to 4294967295 or 2^32-1 (default).</p>
+<p><code>seed_value</code> is a value used by <code>ORA_HASH</code> to generate the hash values. Enter a different <code>seed_value</code> for different results. Set this value from 0 (default) to 4294967295 or 2^32-1.</p>
+<p class="titleinrefsubsect"><a id="sthref551" name="sthref551"></a>Example</p>
+<p><code>ORA_HASH(PRODUCT_CUBE.PRICES, 5)</code> returns a value in the range of 0 to 5 for each value of the Prices measure, as shown in the Hash 5 column. The rows are also sorted on the Hash 5 column.</p>
+<p><code>ORA_HASH(PRODUCT_CUBE.PRICES, 5, 13)</code> also returns values in the range of 0 to 5, but uses a different seed.</p>
+<div class="inftblinformal">
+<table class="Informal" summary="ORA_HASH example output" dir="ltr" border="1" width="100%" frame="hsides" rules="groups" cellpadding="3" cellspacing="0">
+<col width="*" />
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+<thead>
+<tr align="left" valign="top">
+<th align="left" valign="bottom" id="r1c1-t4">Product</th>
+<th align="left" valign="bottom" id="r1c2-t4">Prices</th>
+<th align="left" valign="bottom" id="r1c3-t4">Hash 5</th>
+<th align="left" valign="bottom" id="r1c4-t4">Seed 13</th>
+</tr>
+</thead>
+<tbody>
+<tr align="left" valign="top">
+<td align="left" id="r2c1-t4" headers="r1c1-t4">ENVY STD</td>
+<td align="left" headers="r2c1-t4 r1c2-t4">200539.83</td>
+<td align="left" headers="r2c1-t4 r1c3-t4">0</td>
+<td align="left" headers="r2c1-t4 r1c4-t4">4</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r3c1-t4" headers="r1c1-t4">ENVY EXE</td>
+<td align="left" headers="r3c1-t4 r1c2-t4">255029.31</td>
+<td align="left" headers="r3c1-t4 r1c3-t4">0</td>
+<td align="left" headers="r3c1-t4 r1c4-t4">5</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r4c1-t4" headers="r1c1-t4">1GB USB DRV</td>
+<td align="left" headers="r4c1-t4 r1c2-t4">44645.65</td>
+<td align="left" headers="r4c1-t4 r1c3-t4">1</td>
+<td align="left" headers="r4c1-t4 r1c4-t4">2</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r5c1-t4" headers="r1c1-t4">DLX MOUSE</td>
+<td align="left" headers="r5c1-t4 r1c2-t4">1379.49</td>
+<td align="left" headers="r5c1-t4 r1c3-t4">2</td>
+<td align="left" headers="r5c1-t4 r1c4-t4">2</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r6c1-t4" headers="r1c1-t4">144MB DISK</td>
+<td align="left" headers="r6c1-t4 r1c2-t4">3011.43</td>
+<td align="left" headers="r6c1-t4 r1c3-t4">2</td>
+<td align="left" headers="r6c1-t4 r1c4-t4">5</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r7c1-t4" headers="r1c1-t4">512 USB DRV</td>
+<td align="left" headers="r7c1-t4 r1c2-t4">22139.99</td>
+<td align="left" headers="r7c1-t4 r1c3-t4">2</td>
+<td align="left" headers="r7c1-t4 r1c4-t4">2</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r8c1-t4" headers="r1c1-t4">19 SVGA</td>
+<td align="left" headers="r8c1-t4 r1c2-t4">34837.16</td>
+<td align="left" headers="r8c1-t4 r1c3-t4">3</td>
+<td align="left" headers="r8c1-t4 r1c4-t4">0</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r9c1-t4" headers="r1c1-t4">56KPS MODEM</td>
+<td align="left" headers="r9c1-t4 r1c2-t4">12478</td>
+<td align="left" headers="r9c1-t4 r1c3-t4">3</td>
+<td align="left" headers="r9c1-t4 r1c4-t4">2</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r10c1-t4" headers="r1c1-t4">ENVY EXT KBD</td>
+<td align="left" headers="r10c1-t4 r1c2-t4">4312.22</td>
+<td align="left" headers="r10c1-t4 r1c3-t4">3</td>
+<td align="left" headers="r10c1-t4 r1c4-t4">5</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r11c1-t4" headers="r1c1-t4">17 SVGA</td>
+<td align="left" headers="r11c1-t4 r1c2-t4">22605.55</td>
+<td align="left" headers="r11c1-t4 r1c3-t4">4</td>
+<td align="left" headers="r11c1-t4 r1c4-t4">1</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r12c1-t4" headers="r1c1-t4">EXT CD ROM</td>
+<td align="left" headers="r12c1-t4 r1c2-t4">17990.14</td>
+<td align="left" headers="r12c1-t4 r1c3-t4">4</td>
+<td align="left" headers="r12c1-t4 r1c4-t4">0</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r13c1-t4" headers="r1c1-t4">ENVY ABM</td>
+<td align="left" headers="r13c1-t4 r1c2-t4">205462.25</td>
+<td align="left" headers="r13c1-t4 r1c3-t4">5</td>
+<td align="left" headers="r13c1-t4 r1c4-t4">1</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="inftblinformal" --></div>
+</html>

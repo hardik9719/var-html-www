@@ -1,0 +1,13 @@
+<html><h1 class="refsect1">SYSDATE</h1>
+<p><code>SYSDATE</code> returns the current date and time of the operating system on which the database resides. The format of the value depends on the value of the <code>NLS_DATE_FORMAT</code> initialization parameter.</p>
+<p class="titleinrefsubsect"><a id="sthref638" name="sthref638"></a>Return Value</p>
+<pre xml:space="preserve" class="oac_no_warn">DATE
+</pre>
+<p class="titleinrefsubsect"><a id="sthref639" name="sthref639"></a>Syntax</p>
+<pre xml:space="preserve" class="oac_no_warn"><span class="bold">SYSDATE</span>
+</pre>
+<p class="titleinrefsubsect"><a id="sthref640" name="sthref640"></a>Examples</p>
+<p><code>SYSDATE</code> returns a value such as <code>13-AUG-06</code> with <code>NLS_DATE_FORMAT</code> set to <code>DD-MON-RR</code>.</p>
+<p><code>TO_CHAR(SYSDATE, 'MM-DD-YYYY HH24:MI:SS')</code> returns a value such as <code>08-13-2006 17:20:47</code>. The date format provided in the call to <code>TO_CHAR</code> displays both the date and the time.</p>
+</div>
+</html>

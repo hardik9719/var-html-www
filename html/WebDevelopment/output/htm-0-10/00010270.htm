@@ -1,0 +1,275 @@
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Home</title>
+        <link rel="stylesheet" type="text/css" href="pro_dropdown_2/pro_dropdown_2.css" />
+        <link rel="stylesheet" type="text/css" href="css/custom.css" />
+        <link rel="stylesheet" type="text/css" href=CSS/frfox1.css />
+
+        
+        
+        <script type='text/javascript' src="user/javascript/md5.js"></script>
+
+
+        <script type="text/javascript" src="css/amazon_scroller.js"></script>
+
+        <script language="javascript" type="text/javascript">
+
+            $(function() {
+
+                $("#amazon_scroller2").amazon_scroller({
+                    scroller_title_show: 'disable',
+                    scroller_time_interval: '3000',
+                    scroller_window_background_color: "none",
+                    scroller_window_padding: '2',
+                    scroller_border_size: '0',
+                    scroller_border_color: '#CCC',
+                    scroller_images_width: '211',
+                    scroller_images_height: '49',
+                    scroller_title_size: '12',
+                    scroller_title_color: 'black',
+                    scroller_show_count: '13',
+                    directory: 'images'
+                });
+
+            });
+
+            function view(){
+                var a ="** Disclaimer: Service conditions apply based on the user category.\n NIC/MORT&H is the sole Authority for registering SARATHI users.";
+                document.getElementById("disc").textContent=a;
+            }
+        </script>
+
+        <script type="text/javascript" >
+            function chkValidation()
+            {
+                var userID = null;
+                if(document.getElementById("homeform:tf_USER_ID").value=="" || document.getElementById("homeform:tf_PASSWORD").value=="" ){
+                    alert("Enter the Login and Password Details");
+                    return false;
+                }else{
+                    var pagecount =1;
+                    userID = document.getElementById("homeform:tf_USER_ID").value;
+                }
+
+
+                checkit();
+            }
+            function checkit(){
+
+                var val = document.getElementById("homeform:tf_PASSWORD").value;
+
+                var md5val=hex_md5(val);
+                var randomnumber=674;
+                var saltedval = hex_md5(md5val + randomnumber);
+                document.getElementById("homeform:tf_PASSWORD").value = saltedval;
+                return true;
+            }
+            function getLinks(value){
+                window.open(value,'_blank','menubar=no,resizable=yes,scrollbars=yes,status=no,toolbar=no,addressbar=no,fullscreen=no, location=no');
+            }
+
+
+        </script>
+        <style>
+            disabledLinks{
+                color:gray;
+            }
+            #myContent
+            {display: none;}
+
+            .header_bg {
+                margin-bottom: 11px;
+            }
+
+            .imgA1 { top: 0px; left: 0px;  }
+            .imgB1 { position: absolute;
+                     top: 50px;
+                     /* left: 100px; */
+                     RIGHT: 1px;
+                     z-index: 7;
+                     float: right; }
+
+        </style>
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
+        <script type="text/javascript">
+            function toggleDiv(divId) {
+
+                $("#"+divId).toggle();
+            }
+        </script>
+    </head>
+
+    
+        <body>
+
+            
+
+
+
+            <div class="header_bg" style="position:relative;">
+
+                <img class="imgA1" src="Images/head1.jpg" width="100%"/>
+                <a href="loginPage.jsp"><img class="imgB1" src="Images/login-but.png" /></a>
+            </div>
+
+
+
+            
+            
+            
+<form id="homeform" name="homeform" method="post" action="/nrportal/sarathi/HomePage.jsp" class="marstl" accept-charset="false" enctype="false">
+<input type="hidden" name="homeform" value="homeform" />
+
+                
+                
+			<!--	 <h1 style="font-size:24px;"><marquee style="color:red;" scrolldelay="100" behavior="scroll"><b> The Website will not be available from 15:45 Hrs to 17:30 Hrs due to maintenance. Inconvenience is regretted.</b>    </marquee></h1> -->
+                
+               <!-- <center> <img src="Images/new.gif" width="30" height="10"/> <font size=3><b>Difficulty in filling downloaded Application form (pdf file),<a href="#" style="color: fuchsia "id="disc" onclick=" getLinks('Browser/pdfHelp.html')" > Click here </a> to see the help on settings to be done at  your computer’s  Adobe Reader software.</b></font></center>-->
+                    
+                    
+                    <!--<marquee loop="infinite" height="5%" behavior="scroll" direction="left" scrollamount="10" scrolldelay="120"> -->
+               <center>  <b> <font color="red" size=3>
+APPLICATIONS FOR RTO LUCKNOW (UP-32) OFFICE : APPLICATIONS FOR NEW LL/DL & APPOINTMENTS FOR LL/DL TEST FOR RTO LUCKNOW (UP32) ARE DISCONTINUED  FROM THIS PORTAL. SUCH APPLICANTS  MAY PLEASE USE THE URL <a href="https://parivahan.gov.in/sarathiservice/" target="_blank">https://parivahan.gov.in/sarathiservice/</a></font></b></center>
+                    <!--</marquee> -->
+
+                <!--     <marquee loop="infinite" height="5%" behavior="scroll" direction="left" specialeffect="blinking" scrollamount="10" scrolldelay="150">-->
+                <!--<center> <b>  <font color="red" size=3>For New LL applicants already holding appointments for MH02 RTO MUMBAI(WEST),MH12 RTO PUNE AND MH34 RTO CHANDRAPUR<a href="https://parivahan.gov.in/sarathiservice/applViewStatus.do" target="_blank">click here</a></font></b></center>-->
+                <!--     </marquee>-->
+
+
+                <table width="100%" class="table" cellspacing="1" cellpadding="-10" >
+                    <tr>
+                        <td valign="top" width="33%" style="border:#399bbe 2px solid;" >
+                            <div id="style-2"  >
+                                <div class="grad" style="text-align:center;font-weight: bolder; font-size: 20">Sarathi(Licence)Services</div>
+                                <ul class="ul">
+
+                                    
+
+                                    <br><br>
+                                    <li>Apply Online for:
+                                        <ul>
+
+                                          <li><a href="LLDLForm.jsp">Application Form for New LL and DL  </a> </li>
+                                           <li><a href="DLChangesCA.jsp">Application Form for Transaction on DL (Beta)</a> </li>
+                                        
+
+
+
+                                            <!--<li>============================</li>-->
+
+                                           
+                                            <!--<li><a href="Instructions.jsp" >New Learner Licence(Old Version)</a></li>
+                                            <li><a href="Instructions.jsp" >New Driving Licence(Old Version)</a></li> 
+                                            <li><a href="exinstructions.jsp">Transactions on Learner Licence (Old Version)</a></li>
+                                            <li><a href="exinstructions.jsp">Transactions on Driving Licence(Old Version)</a></li>-->
+                                        </ul>
+                                    </li>
+
+                                    <li><a href="form2.jsp">Print Application Form</a><br>
+                                        Download forms<font color="red">(Applicable in case of UP State)</font>&nbsp;
+                                        <ul>
+                                            <li><a href="redirect.jsp?id=upllform">Undertaking for LL</a></li>
+                                            <li><a href="redirect.jsp?id=updlform">Undertaking for DL</a></li>
+                                        </ul>
+                                        
+                                    </li>
+                                    <li><a href="redirectPage.jsp?page=epayments" >Online Payment<font color="red">(Only for UP)</font></a> </li>
+
+
+
+                                    <li><a href="redirectPage.jsp?page=appointments" >Appointment for Slot Booking</a></li>
+                                    
+                                 <!--   <li> <a href="#" onclick=" getLinks('Browser/Help_LLNew.html')">Help for Online LL Applications </a></li>-->
+                                 <!--   <li> <a href="#" onclick=" getLinks('Browser/Help_for_Online_Appointment_in_MARATHI.html')">Help for Online Appointment in MARATHI </a><img src="Images/new.gif" width="30" height="10"/> </li>-->
+                                    <li> <a href="redirect.jsp?id=sms">Get details through SMS </a> </li>
+                                </ul>
+                            </div>
+                        </td>
+                        <td valign="top" width="33%" style="border:#399bbe 2px solid;">
+
+                            <div class="grad" style="text-align:center;font-weight: bolder; font-size: 20 " >Information / Notification </div>
+                            <div style="height:350px; overflow:hidden">
+                                <marquee loop="infinite" behavior="scroll" direction="up" style="height:inherit !important;" specialeffect="blinking"  scrolldelay="200">
+                                    <center>  <h1><font color="#0489B1" size=3 style="text-align: justify">
+                                                <li>Sarathi and Vahan are the two flagship applications of MoRTH. These applications are brought under Mission Mode Project by NeGP which are Driven by Ministry of Road Transport & Highways (MoRTH).</li><br>
+                                                <li>Sarathi & Vahan are designed, developed, implemented and supported by NIC. These applications are implemented across 1000+ RTOs of the country. The Driving Licence data is consolidated at State and National level through periodic replication process.</li><br>
+                                                <li>Sarathi-on-Web facilitates public to submit applications for LL & DL related transactions thru this mode. The application data is in turn transferred to the remote RTO/DTOs of the states for further processing of the request (submitted thru ONLINE) at the local RTO/DTO Office.</li><br>
+                                                <li>Services like E-payment GW, CSC , SSDG and  Service partners are also being provided.</li>
+                                            </font></h1></center>
+                                </marquee>
+
+                            </div>
+
+
+                        </td>
+                        <td valign="top" width="33%" style="border:#399bbe 2px solid;">
+                            <div class="grad" style="text-align:center;font-weight: bolder; font-size: 20;">National Register(DL) Queries</div>
+                            <ul class="ul">
+                              <li><a href="DlDetRequest.jsp">Status of Licence</a></li>
+                             <!-- <li><a href="DlStatusRequest.jsp">Status of Licence</a></li>-->
+                               <li><a href="ApplNumSearch.jsp">Search Web Application Number</a></li>
+                                <li><a href="ApplStatusRequest.jsp">Status of the Web Application</a></li>
+                                <li><a href="ApplRtoStatusRequest.jsp">Status of the Application made with RTO/STA</a></li>
+                                
+                                
+                               <!-- <li>Licence Search</li>-->
+                                <li>Dashboard for Online Applications </li>
+                                <li><a href="RtoDetailsRequest.jsp">List of RTO in a State</a></li>
+                                <li><a href="faqs.jsp">FAQs</a></li>
+
+                            </ul>
+                        </td>
+
+
+
+                    </tr>
+                </table>
+
+
+                <table width="100%" >
+                    <tr align="center">
+                        <td align="center">
+                            <font style="color:teal">
+                                Disclaimer: Service conditions apply based on the user category.
+                                NIC/MORT&H is the sole Authority for registering SARATHI users.<br>
+
+                            </font>
+                        </td>
+                    </tr>
+                </table>
+                <table width="100%"  >
+                    <tr align="center">
+                        <td width="35%"></td>
+                        <td > <a href="#" onclick="getLinks('http://www.india.gov.in')" >
+                                <img src="Images/banner4.gif" alt="http://india.gov.in, the National Portal of India" border="0"/></a>
+                        </td>
+                        <td width="30%"><a href="contact.jsp">Contact Us</a></td>
+
+                    </tr>
+
+                </table>
+
+            <input type="hidden" name="javax.faces.ViewState" id="javax.faces.ViewState" value="j_id28288:j_id28289" />
+</form>
+                <center>
+                    
+
+    <body >
+        <table width="100%" >
+            <tr>
+            <td align="center">
+        
+        <h5 class="h1">Designed and Developed by Centre of Excellence for DL and RC, NIC.</h5>
+            </td></tr>
+        </table>
+    </body>
+
+
+                </center>
+            
+            
+        </body>
+    
+</html>

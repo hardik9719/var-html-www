@@ -1,0 +1,1 @@
+<?php\n\t$db_servername='localhost';\n\t$db_user='root';\n\t$db_password='root';\n\t$db_databaseName='wp2';\n\n\t$t=$_POST\n\n\t$connection=new mysqli($db_servername,$db_user,$db_password,$db_databaseName);\n\n\t// Check connection\nif ($connection->

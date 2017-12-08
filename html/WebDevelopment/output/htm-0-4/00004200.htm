@@ -1,0 +1,19 @@
+<html><h1 class="refsect1">WIDTH_BUCKET</h1>
+<p><code>WIDTH_BUCKET</code> enables you to construct a histogram range divided into intervals of identical size. The function returns the bucket number into which the value of an expression falls.</p>
+<p>When needed, <code>WIDTH_BUCKET</code> creates an underflow bucket numbered 0 and an overflow bucket numbered <code>num_buckets</code>+1. These buckets handle values outside the specified range and are helpful in checking the reasonableness of the end points.</p>
+<p class="titleinrefsubsect"><a id="sthref746" name="sthref746"></a>Return Value</p>
+<pre xml:space="preserve" class="oac_no_warn">NUMBER
+</pre>
+<p class="titleinrefsubsect"><a id="sthref747" name="sthref747"></a>Syntax</p>
+<pre xml:space="preserve" class="oac_no_warn"><span class="bold">WIDTH_BUCKET</span>
+   (expr, min_value, max_value, num_buckets)
+</pre>
+<p class="titleinrefsubsect"><a id="sthref748" name="sthref748"></a>Arguments</p>
+<p><code>expr</code> is the expression for which the histogram is being created. This expression must evaluate to a numeric or datetime value or to a value. If <code>expr</code> evaluates to null, then the function returns null.</p>
+<p><code>min_value</code> and <code>max_value</code> are expressions for the end points of the acceptable range for <code>expr</code>. Both of these expressions must evaluate to numeric or datetime values, and neither can evaluate to null.</p>
+<p><code>num_buckets</code> is an expression for the number of buckets. This expression must evaluate to a positive integer.</p>
+<p class="titleinrefsubsect"><a id="sthref749" name="sthref749"></a>Example</p>
+<p><code>WIDTH_BUCKET(13, 0, 20, 4)</code> returns the value <code>3</code>. It creates four buckets from 0 to 20 and sorts the value 13 into bucket 3.</p>
+<p><code>WIDTH_BUCKET(-5, 0, 20, 4)</code> returns the value <code>0</code>. The value <code>-5</code> is below the beginning of the range.</p>
+</div>
+</html>

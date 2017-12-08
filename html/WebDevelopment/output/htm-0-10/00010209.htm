@@ -1,0 +1,255 @@
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>How to install Tomcat 8 on Ubuntu 17.04?</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="/static/css/main.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-83036906-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-top" role="navigation">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">DevManuals.Net</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">DevManuals.Net</a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="/about.html">About</a>
+                    </li>
+                    <li>
+                        <a href="/privacy.html">Privacy Policy</a>
+                    </li>
+                    <li>
+                        <a href="/contact.html">Contact</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <!-- Full Width Image Header -->
+    <header >
+        <div >
+            <div class="container">
+                <h1>How to install Tomcat 8 on Ubuntu 17.04?</h1>
+                <p>Tomcat 8 is the latest server from Apache and in this tutorial we will see the steps of installing it on Ubuntu 17.04</p>
+				<p style="font-size:11px;color:#D1D0CE;">Ads</p>
+
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- devmanuals.net-4 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-0714075272818912"
+     data-ad-slot="6437542122"
+     data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+<br>&nbsp;
+            </div>
+        </div>
+    </header>
+
+    <!-- Page Content -->
+    <div class="container">
+
+
+
+			<div class="row">
+			<div class="col-md-8">
+
+
+        <div class="featurette" id="about">
+            <h2 class="featurette-heading">How to install Tomcat 8 on Ubuntu 17.04?</h2>
+            <p>Tomcat 8 is the latest server from Apache and in this tutorial we will see the steps of installing it on Ubuntu 17.04</p>
+			
+			<p><p><strong>How to install Tomcat 8 on Ubuntu 17.04 with apt command?</strong></p>
+<p>There are various ways to install Tomcat server on the Ubuntu operating 
+system, you can compile Tomcat and then install. You can also download the 
+binary version and then install it on Ubuntu 17.04. But the easiest method is to 
+use the apt-command to install the most stable version of Tomcat 8 on Ubuntu 
+17.04</p>
+<p>In this tutorial I will teach you the steps of installing and using Tomcat 8 
+on Ubuntu 17.04.</p>
+<p><strong>Installing Tomcat 8 on Ubuntu 17.04</strong></p>
+<p>Java and JDK is the pre-requisite for installing and running Tomcat 8 on 
+Ubuntu, so we have to install Java prior to the installation of Tomcat 8 on 
+Ubunut.</p>
+<p>Let&#39;s do it step-by step.</p>
+<p><strong>Step 1: Update your system</strong></p>
+<p>First of all update the latest repository information by running the 
+following command:</p>
+<pre>sudo apt-get update</pre>
+
+<p><b>Video: How to install Tomcat 8 on Ubuntu 17.04?</b></p>
+<p>Here is the video instruction of complete process:</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/YxW8307-dRc" frameborder="0" allowfullscreen></iframe>
+
+<p><strong>Step 2: Install Oracle JDK 8</strong></p>
+<p>Now we can proceed to install Java on Ubunut 17.04. First of all run the 
+following command to add the required repositories to the system:</p>
+<pre>sudo apt-get install python-software-properties
+sudo add-apt-repository ppa:webupd8team/java</pre>
+<p>After this update and run installer:</p>
+<pre>sudo apt-get update
+sudo apt-get install oracle-java8-installer</pre>
+<p>Here is the part of installation log:</p>
+<pre>deepak@deepak-VirtualBox:~$ sudo apt-get install oracle-java8-installer
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+The following additional packages will be installed:
+  gsfonts-x11 java-common oracle-java8-set-default
+Suggested packages:
+  binfmt-support visualvm ttf-baekmuk | ttf-unfonts | ttf-unfonts-core
+  ttf-kochi-gothic | ttf-sazanami-gothic ttf-kochi-mincho
+  | ttf-sazanami-mincho ttf-arphic-uming
+The following NEW packages will be installed:
+  gsfonts-x11 java-common oracle-java8-installer oracle-java8-set-default
+0 upgraded, 4 newly installed, 0 to remove and 4 not upgraded.
+Need to get 43.9 kB of archives.
+After this operation, 245 kB of additional disk space will be used.
+Do you want to continue? [Y/n] y
+Get:1 http://ppa.launchpad.net/webupd8team/java/ubuntu zesty/main amd64 oracle-java8-installer all 8u111+8u111arm-1~webupd8~0 [23.5 kB]
+Get:2 http://in.archive.ubuntu.com/ubuntu zesty/main amd64 java-common all 0.57ubuntu1 [7,492 B]
+Get:3 http://in.archive.ubuntu.com/ubuntu zesty/universe amd64 gsfonts-x11 all 0.24 [7,314 B]
+Get:4 http://ppa.launchpad.net/webupd8team/java/ubuntu zesty/main amd64 oracle-java8-set-default all 8u111+8u111arm-1~webupd8~0 [5,550 B]
+Fetched 43.9 kB in 3s (14.4 kB/s)                   </pre>
+<p>After completion check Java version:</p>
+<pre>java -version</pre>
+<p>You will get similar output:</p>
+<pre>deepak@deepak-VirtualBox:~$ java -version
+java version "1.8.0_111"
+Java(TM) SE Runtime Environment (build 1.8.0_111-b14)
+Java HotSpot(TM) 64-Bit Server VM (build 25.111-b14, mixed mode)</pre>
+<p><strong>Step 3: Install Tomcat 8</strong></p>
+<p>Now run the following command to install Tomcat 8:</p>
+<pre>sudo apt-get install tomcat8 tomcat8-docs tomcat8-admin tomcat8-examples</pre>
+<p>
+<strong>Step 4: Test Tomcat</strong></p>
+<p>
+Open browser and type http://localhost:8080<br />
+</p>
+<p>
+Your browser should display the Tomcat 8 default home page.</p>
+<p>
+Image here::::</p>
+<p>
+Step 5: Restart tomcat 8</p>
+<p>
+In the final step I will show you how you can start/stop/restart Tomcat 8?</p>
+<p>
+To stop Tomcat 8 run following command on terminal:</p>
+<pre>
+service tomcat8 stop</pre>
+<p>
+To start the service run following command on the terminal:</p>
+<pre>
+service tomcat8 start</pre>
+<p>
+To restart the service run the following command:</p>
+<pre>
+service tomcat8 restart
+</pre>
+
+
+<p>By completing above steps you will be able to run Tomcat 8 on Ubuntu 17.04.</p>
+<p>Check more tutorials at <a href="https://www.devmanuals.net/">
+https://www.devmanuals.net/</a>. We have large collection of Tutorials of Ubuntu 
+operating system.</p>
+</p>
+
+        </div>
+
+
+
+		</div> 		<div class="col-md-4">
+			<div class="row">
+			<div style="width:350px;height:650px;content-align:center;">
+
+			<p style="font-size:11px;color:#D1D0CE;">Ads</p>
+
+									
+										<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+										<!-- devmanuals.net-1 -->
+										<ins class="adsbygoogle"
+											 style="display:block"
+											 data-ad-client="ca-pub-0714075272818912"
+											 data-ad-slot="6856344524"
+											 data-ad-format="auto"></ins>
+										<script>
+										(adsbygoogle = window.adsbygoogle || []).push({});
+										</script>
+
+			</div>
+			</div>
+		</div> 		</div> 
+
+
+        
+
+  
+
+        <!-- Footer -->
+        <footer>
+            <div class="row">
+                <div class="col-lg-12">
+                    <p>Copyright &copy; DevManuals.net 2016</p>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+    <!-- /.container -->
+
+    <!-- jQuery -->
+    <script src="/static/js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="/static/js/bootstrap.min.js"></script>
+
+</body>
+
+</html>

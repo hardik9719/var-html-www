@@ -1,0 +1,1 @@
+<?php\nrequire 'db_connect.php';\n$name=$_POST[\"name\"];\n$findRider=\"select * from UserLocation where name\"\n\n\n?>

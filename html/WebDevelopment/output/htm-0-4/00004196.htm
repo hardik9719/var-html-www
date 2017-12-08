@@ -1,0 +1,14 @@
+<html><h1 class="refsect1">UNISTR</h1>
+<p><code>UNISTR</code> converts a text string to the national character set.</p>
+<p class="titleinrefsubsect"><a id="sthref731" name="sthref731"></a>Return Value</p>
+<pre xml:space="preserve" class="oac_no_warn">NVARCHAR2
+</pre>
+<p class="titleinrefsubsect"><a id="sthref732" name="sthref732"></a>Syntax</p>
+<pre xml:space="preserve" class="oac_no_warn"><span class="bold">UNISTR </span>( string )
+</pre>
+<p class="titleinrefsubsect"><a id="sthref733" name="sthref733"></a>Arguments</p>
+<p><code>string</code> can be any text expression. For portability, Oracle recommends using only ASCII characters and Unicode encoding values as text literals. A Unicode encoding value has the form \<span class="italic">xxxx</span> where <span class="italic">xxxx</span> is the hexadecimal value of a character. Supplementary characters are encoded as two code units, the first from the high-surrogates range (U+D800 to U+DBFF), and the second from the low-surrogates range (U+DC00 to U+DFFF). To include a literal backslash in the string, precede it with another backslash (\\).</p>
+<p class="titleinrefsubsect"><a id="sthref734" name="sthref734"></a>Example</p>
+<p><code>UNISTR('abc\00e5\00f1\00f6')</code> returns the value <code>abc&aring;&ntilde;&ouml;</code>.</p>
+</div>
+</html>

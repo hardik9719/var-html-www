@@ -1,0 +1,18 @@
+<html><h1 class="refsect1">LPAD</h1>
+<p><code>LPAD</code> adds characters to the left of an expression to a specified length. The data type of the return value is the same as the original text.</p>
+<p>Use <code>RPAD</code> to add characters to the right.</p>
+<p class="titleinrefsubsect"><a id="sthref476" name="sthref476"></a>Return Value</p>
+<pre xml:space="preserve" class="oac_no_warn">CHAR | NCHAR | VARCHAR2 | NVARCHAR2
+</pre>
+<p class="titleinrefsubsect"><a id="sthref477" name="sthref477"></a>Syntax</p>
+<pre xml:space="preserve" class="oac_no_warn"><span class="bold">LPAD</span>(expr1, n [, expr2 ])
+</pre>
+<p class="titleinrefsubsect"><a id="sthref478" name="sthref478"></a>Arguments</p>
+<p><code>expr1</code> is a text expression for the base string.</p>
+<p><code>n</code> is the total length of the returned expression. If <code>expr1</code> is longer than <code>n</code>, then this function truncates <code>expr1</code> to <code>n</code> characters.</p>
+<p><code>expr2</code> is a text expression for the padding characters. By default, it is a space.</p>
+<p class="titleinrefsubsect"><a id="sthref479" name="sthref479"></a>Example</p>
+<p><code>LPAD('Page 1',15,'*.')</code> returns the value <code>*.*.*.*.*Page 1</code>.</p>
+<p><code>LPAD('Stay tuned', 4)</code> returns the value <code>Stay</code>.</p>
+</div>
+</html>

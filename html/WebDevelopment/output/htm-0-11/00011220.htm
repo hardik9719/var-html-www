@@ -1,0 +1,25 @@
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset={## insert element=pragma.charset}" />
+<title>{## if element=title}{## insert element=title suppress=tags}{## elseif element=property.title}{## insert element=property.title}{## else}{## insert element=pragma.sourcefilename}{## /if}</title>
+{## insert element=pragma.embeddedcss}
+{## if element=pragma.jsfile}<script language="Javascript1.2" src="{## insert element=pragma.jsfile}"></script>
+{## /if}</head>
+{## if element=pragma.jsfile}<body onload="DoTabStops()">
+<span id="oneinch" style="width: 1in"></span>{## else}<body>{## /if}
+{## anchor aref="prev" format="<a href=\"%url\">Prev</a><br />\r\n"}{## /header}{## if element=type value=ar}{## unit}<p><b>Contents of {## insert element=pragma.sourcefilename}</b></p>
+<p>{## repeat element=sections}{## insert element=body}{## if element=sections.next.body}<br />
+{## /if}{## /repeat}</p>
+{## /unit}{## elseif element=type value=mm}{## unit}<table cellspacing="10">{## repeat element=property.all}<tr><td><b>{## insert element=property.all.current.name}</b></td><td>{## insert element=property.all.current.body}</td></tr>
+{## /repeat}</table>{## /unit}{## else}{## repeat element=sections}{## if element=type value=wp}{## unit}{## insert element=bodyorimage}
+{## if element=footnotes.1.body}<br />
+{## repeat element=footnotes}{## insert element=footnotes.current.body}<br />
+{## /repeat}{## /if}{## if element=endnotes.1.body}<br />
+{## repeat element=endnotes}{## insert element=endnotes.current.body}<br />
+{## /repeat}{## /if}{## /unit}{## elseif element=type value=em}{## unit break}{## insert element=bodyorimage}
+{## footer}{## if element=slides.next.bodyorimage}<hr /><br />{## /if}{## /footer}{## /unit}{## elseif element=type value=pr}{## unit break}{## insert element=bodyorimage width=640}
+{## footer}{## if element=slides.next.bodyorimage}<hr /><br />{## /if}{## /footer}{## /unit}{## else}{## unit break}{## header}{## if element=title}<h1>{## insert element=title suppress=tags}</h1>
+{## /if}{## /header}{## insert element=bodyorimage}{## if element=sections.next.bodyorimage}
+<hr /><br />
+{## /if}{## /unit}{## /if}{## /repeat}{## /if}{## footer}{## anchor aref="next" format="\r\n<br clear=\"all\" /><a href=\"%url\">Next</a>\r\n"}</body>
+</html>

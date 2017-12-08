@@ -1,0 +1,335 @@
+<html><h1 class="refsect1">SYS_CONTEXT</h1>
+<p><code>SYS_CONTEXT</code> returns the value of an attribute of a named context. The context, attribute, and value must already be defined in the database. If the context is not defined, <code>SYS_CONTEXT</code> returns <code>NULL</code>.</p>
+<p class="titleinrefsubsect"><a id="sthref633" name="sthref633"></a>Return Value</p>
+<pre xml:space="preserve" class="oac_no_warn">VARCHAR2
+</pre>
+<p class="titleinrefsubsect"><a id="sthref634" name="sthref634"></a>Syntax</p>
+<pre xml:space="preserve" class="oac_no_warn"><span class="bold">SYS_CONTEXT </span>('namespace', 'parameter')
+</pre>
+<p class="titleinrefsubsect"><a id="sthref635" name="sthref635"></a>Arguments</p>
+<p><code>namespace</code> can be any named context in the database. <code>USERENV</code> is a built-in context that describes the current session.</p>
+<p><code>parameter</code> is a defined attribute of <code>namespace</code>. <a href="#BABBIFIJ">Table 3-3</a> describes the predefined attributes of <code>USERENV</code> that are most likely to have values. For a complete list, refer to the SYS_CONTEXT entry in the <span class="italic">Oracle Database SQL Language Reference</span>.</p>
+<div class="tblformal">
+<p class="titleintable"><a id="OLAXS473" name="OLAXS473"></a><a id="sthref636" name="sthref636"></a><a id="BABBIFIJ" name="BABBIFIJ"></a>Table 3-3 USERENV Attributes</p>
+<table class="Formal" title="USERENV Attributes" summary="USERENV attributes for SYS_CONTEXT function" dir="ltr" border="1" width="100%" frame="hsides" rules="groups" cellpadding="3" cellspacing="0">
+<col width="31%" />
+<col width="*" />
+<thead>
+<tr align="left" valign="top">
+<th align="left" valign="bottom" id="r1c1-t5">USERENV Attribute</th>
+<th align="left" valign="bottom" id="r1c2-t5">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr align="left" valign="top">
+<td align="left" id="r2c1-t5" headers="r1c1-t5">
+<p><code>AUTHENTICATED_IDENTITY</code></p>
+</td>
+<td align="left" headers="r2c1-t5 r1c2-t5">
+<p>The identity used for authentication, such as database user name, schema name, or operating system login name.</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r3c1-t5" headers="r1c1-t5">
+<p><code>AUTHENTICATION_METHOD</code></p>
+</td>
+<td align="left" headers="r3c1-t5 r1c2-t5">
+<p>The method of authentication, such as <code>PASSWORD</code>, <code>OS</code>, or <code>SSL</code>.</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r4c1-t5" headers="r1c1-t5">
+<p><code>CURRENT_EDITION_ID</code></p>
+</td>
+<td align="left" headers="r4c1-t5 r1c2-t5">
+<p>The session edition identifier, such as <code>100</code>.</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r5c1-t5" headers="r1c1-t5">
+<p><code>CURRENT_EDITION_NAME</code></p>
+</td>
+<td align="left" headers="r5c1-t5 r1c2-t5">
+<p>The session edition name, such as <code>ORA$BASE</code>.</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r6c1-t5" headers="r1c1-t5">
+<p><code>CURRENT_SCHEMA</code></p>
+</td>
+<td align="left" headers="r6c1-t5 r1c2-t5">
+<p>The name of the currently active default schema, such as <code>SH</code>.</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r7c1-t5" headers="r1c1-t5">
+<p><code>CURRENT_SCHEMA_ID</code></p>
+</td>
+<td align="left" headers="r7c1-t5 r1c2-t5">
+<p>The numeric identifier of the currently active default schema, such as <code>80</code>.</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r8c1-t5" headers="r1c1-t5">
+<p><code>CURRENT_USER</code></p>
+</td>
+<td align="left" headers="r8c1-t5 r1c2-t5">
+<p>The name of the database user whose privileges are currently active, such as <code>SH</code>.</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r9c1-t5" headers="r1c1-t5">
+<p><code>CURRENT_USERID</code></p>
+</td>
+<td align="left" headers="r9c1-t5 r1c2-t5">
+<p>The numeric identifier of the database user whose privileges are currently active, such as <code>80</code>.</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r10c1-t5" headers="r1c1-t5">
+<p><code>DATABASE_ROLE</code></p>
+</td>
+<td align="left" headers="r10c1-t5 r1c2-t5">
+<p>Data Guard role of the database: <code>PRIMARY</code>, <code>PHYSICAL STANDBY</code>, <code>LOGICAL STANDBY</code>, or <code>SNAPSHOT STANDBY</code>.</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r11c1-t5" headers="r1c1-t5">
+<p><code>DB_DOMAIN</code></p>
+</td>
+<td align="left" headers="r11c1-t5 r1c2-t5">
+<p>The network domain of the database as specified by the <code>DB_DOMAIN</code> initialization parameter, such as <code>us.example.com</code>.</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r12c1-t5" headers="r1c1-t5">
+<p><code>DB_NAME</code></p>
+</td>
+<td align="left" headers="r12c1-t5 r1c2-t5">
+<p>The name of the database as specified by the <code>DB_NAME</code> initialization parameter.</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r13c1-t5" headers="r1c1-t5">
+<p><code>DB_UNIQUE_NAME</code></p>
+</td>
+<td align="left" headers="r13c1-t5 r1c2-t5">
+<p>The unique name of the database within the domain as specified by the <code>DB_UNIQUE_NAME</code> initialization parameter.</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r14c1-t5" headers="r1c1-t5">
+<p><code>ENTERPRISE_IDENTITY</code></p>
+</td>
+<td align="left" headers="r14c1-t5 r1c2-t5">
+<p>The enterprise-wide identity of the user, or <code>NULL</code> for local users, SYSDBA, and SYSOPER.</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r15c1-t5" headers="r1c1-t5">
+<p><code>FG_JOB_ID</code></p>
+</td>
+<td align="left" headers="r15c1-t5 r1c2-t5">
+<p>Job identifier of the current session if a client foreground process opened it; otherwise, <code>NULL</code>.</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r16c1-t5" headers="r1c1-t5">
+<p><code>GLOBAL_CONTEXT_MEMORY</code></p>
+</td>
+<td align="left" headers="r16c1-t5 r1c2-t5">
+<p>The number used in the System Global Area by the globally accessed context.</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r17c1-t5" headers="r1c1-t5">
+<p><code>GLOBAL_UID</code></p>
+</td>
+<td align="left" headers="r17c1-t5 r1c2-t5">
+<p>The global user identification from Oracle Internet Directory for Enterprise User Security logins; otherwise, <code>NULL</code>.</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r18c1-t5" headers="r1c1-t5">
+<p><code>HOST</code></p>
+</td>
+<td align="left" headers="r18c1-t5 r1c2-t5">
+<p>The name of the client host computer.</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r19c1-t5" headers="r1c1-t5">
+<p><code>IDENTIFICATION_TYPE</code></p>
+</td>
+<td align="left" headers="r19c1-t5 r1c2-t5">
+<p>The way the user schema was created in the database: <code>LOCAL</code>, <code>EXTERNAL</code>, <code>GLOBAL SHARED</code>, or <code>GLOBAL PRIVATE</code>.</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r20c1-t5" headers="r1c1-t5">
+<p><code>INSTANCE</code></p>
+</td>
+<td align="left" headers="r20c1-t5 r1c2-t5">
+<p>The identification number of the current instance, such as <code>1</code>.</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r21c1-t5" headers="r1c1-t5">
+<p><code>INSTANCE_NAME</code></p>
+</td>
+<td align="left" headers="r21c1-t5 r1c2-t5">
+<p>The name of the database instance.</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r22c1-t5" headers="r1c1-t5">
+<p><code>IP_ADDRESS</code></p>
+</td>
+<td align="left" headers="r22c1-t5 r1c2-t5">
+<p>The IP address of the client, such as <code>10.255.255.255</code>.</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r23c1-t5" headers="r1c1-t5">
+<p><code>ISDBA</code></p>
+</td>
+<td align="left" headers="r23c1-t5 r1c2-t5">
+<p><code>TRUE</code> if the user was authenticated with DBA privileges; otherwise, <code>FALSE</code>.</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r24c1-t5" headers="r1c1-t5">
+<p><code>LANG</code></p>
+</td>
+<td align="left" headers="r24c1-t5 r1c2-t5">
+<p>A short name for the session language, such as <code>US</code> for <code>AMERICAN</code>.</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r25c1-t5" headers="r1c1-t5">
+<p><code>LANGUAGE</code></p>
+</td>
+<td align="left" headers="r25c1-t5 r1c2-t5">
+<p>The language, territory, and database character set in the form <code><span class="codeinlineitalic">language_territory.characterset</span></code>, such as <code>AMERICA_AMERICAN.WE8DEC</code>.</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r26c1-t5" headers="r1c1-t5">
+<p><code>MODULE</code></p>
+</td>
+<td align="left" headers="r26c1-t5 r1c2-t5">
+<p>The application name set through the <code>DBMS_APPLICATION_INFO</code> package or OCI, such as <code>JDBC Thin Client</code> or <code>SQL Developer</code>.</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r27c1-t5" headers="r1c1-t5">
+<p><code>NETWORK_PROTOCOL</code></p>
+</td>
+<td align="left" headers="r27c1-t5 r1c2-t5">
+<p>The network protocol being used for communication, such as <code>TCP</code>.</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r28c1-t5" headers="r1c1-t5">
+<p><code>NLS_CALENDAR</code></p>
+</td>
+<td align="left" headers="r28c1-t5 r1c2-t5">
+<p>The session calendar, such as <code>GREGORIAN</code>.</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r29c1-t5" headers="r1c1-t5">
+<p><code>NLS_CURRENCY</code></p>
+</td>
+<td align="left" headers="r29c1-t5 r1c2-t5">
+<p>The session currency mark, such as $.</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r30c1-t5" headers="r1c1-t5">
+<p><code>NLS_DATE_FORMAT</code></p>
+</td>
+<td align="left" headers="r30c1-t5 r1c2-t5">
+<p>The session date format, such as <code>DD-MON-RR</code>.</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r31c1-t5" headers="r1c1-t5">
+<p><code>NLS_DATE_LANGUAGE</code></p>
+</td>
+<td align="left" headers="r31c1-t5 r1c2-t5">
+<p>The session date language, such as <code>AMERICAN</code>.</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r32c1-t5" headers="r1c1-t5">
+<p><code>NLS_SORT</code></p>
+</td>
+<td align="left" headers="r32c1-t5 r1c2-t5">
+<p><code>BINARY</code> or a linguistic sort basis, such as <code>XSPANISH</code>.</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r33c1-t5" headers="r1c1-t5">
+<p><code>NLS_TERRITORY</code></p>
+</td>
+<td align="left" headers="r33c1-t5 r1c2-t5">
+<p>The session territory, such as <code>AMERICA</code>.</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r34c1-t5" headers="r1c1-t5">
+<p><code>OS_USER</code></p>
+</td>
+<td align="left" headers="r34c1-t5 r1c2-t5">
+<p>The operating system user name of the client process that initiated the database session.</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r35c1-t5" headers="r1c1-t5">
+<p><code>SERVER_HOST</code></p>
+</td>
+<td align="left" headers="r35c1-t5 r1c2-t5">
+<p>The host name of the computer where the database instance is running.</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r36c1-t5" headers="r1c1-t5">
+<p><code>SERVICE_NAME</code></p>
+</td>
+<td align="left" headers="r36c1-t5 r1c2-t5">
+<p>The name of the service the session is connected to., such as <code>SYS$USERS</code>.</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r37c1-t5" headers="r1c1-t5">
+<p><code>SESSION_USER</code></p>
+</td>
+<td align="left" headers="r37c1-t5 r1c2-t5">
+<p>The database user name or schema name that identified the user at login, such as <code>SH</code>.</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r38c1-t5" headers="r1c1-t5">
+<p><code>SESSIONID</code></p>
+</td>
+<td align="left" headers="r38c1-t5 r1c2-t5">
+<p>The session identifier, such as <code>120456</code>.</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r39c1-t5" headers="r1c1-t5">
+<p><code>SID</code></p>
+</td>
+<td align="left" headers="r39c1-t5 r1c2-t5">
+<p>The session number, such as <code>86</code>.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="tblformal" -->
+<p class="titleinrefsubsect"><a id="sthref637" name="sthref637"></a>Example</p>
+<p><code>SYS_CONTEXT('USERENV','NLS_DATE_FORMAT')</code> returns a value such as <code>DD-MON-RR</code>.</p>
+</div>
+</html>

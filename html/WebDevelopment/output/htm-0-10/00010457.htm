@@ -1,0 +1,39 @@
+<html>
+      <head>
+         <link rel="stylesheet" type="text/css" href="stylesheet.css"/>
+      </head>
+      <body>
+         <xsl:call-template name="pageHeader"/>
+  <table width="100%"><tr align="left"><h2>Cycles</h2><td>
+  </td><td align="right">
+  [<a href="overview-summary.html">summary</a>]
+  [<a href="overview-packages.html">packages</a>]
+  [cycles]
+  [<a href="overview-explanations.html">explanations</a>]
+   </td></tr></table>
+  <!--<table width="100%"><tr><td>
+  </td><td align="right">
+    [<a href="#NVsummary">summary</a>]
+  [<a href="#NVpackages">packages</a>]
+  [<a href="#NVcycles">cycles</a>]
+   [<a href="#NVexplanations">explanations</a>]
+  </td></tr></table> -->
+
+  <xsl:if test="count(Cycles/Package) = 0">
+    <p>There are no cyclic dependancies.</p>
+  </xsl:if>
+  <xsl:for-each select="Cycles/Package">
+     <h3><a><xsl:attribute name="name">#CY<xsl:value-of select="@Name"/></xsl:attribute><xsl:value-of select="@Name"/></a></h3><p>
+    <xsl:for-each select="Package">
+      <xsl:value-of select="."/><br/>
+    </xsl:for-each></p>
+  </xsl:for-each>
+  <!-- this is often a long listing; provide a lower navigation table also -->
+  <table width="100%"><tr align="left"><td></td><td align="right">
+  [<a href="overview-summary.html">summary</a>]
+  [<a href="overview-packages.html">packages</a>]
+  [cycles]
+  [<a href="overview-explanations.html">explanations</a>]
+   </td></tr></table>
+  </body>
+  </html>

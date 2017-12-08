@@ -1,0 +1,14 @@
+<html><h1 class="refsect1">MONTHS_BETWEEN</h1>
+<p><code>MONTHS_BETWEEN</code> calculates the number of months between two dates. When the two dates have the same day component or are both the last day of the month, then the return value is a whole number. Otherwise, the return value includes a fraction that considers the difference in the days based on a 31-day month.</p>
+<p class="titleinrefsubsect"><a id="sthref488" name="sthref488"></a>Return Value</p>
+<pre xml:space="preserve" class="oac_no_warn">NUMBER
+</pre>
+<p class="titleinrefsubsect"><a id="sthref489" name="sthref489"></a>Syntax</p>
+<pre xml:space="preserve" class="oac_no_warn"><span class="bold">MONTHS_BETWEEN</span>(date1, date2)
+</pre>
+<p class="titleinrefsubsect"><a id="sthref490" name="sthref490"></a>Arguments</p>
+<p><code>date1</code> and <code>date2</code> are datetime expressions. If <code>date1</code> is later than <code>date2</code>, then the result is positive. If <code>date1</code> is earlier than <code>date2</code>, then the result is negative.</p>
+<p class="titleinrefsubsect"><a id="sthref491" name="sthref491"></a>Example</p>
+<p><code>MONTHS_BETWEEN('15-APR-06', '01-JAN-06')</code> returns the value <code>3.4516129</code>.</p>
+</div>
+</html>

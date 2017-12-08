@@ -1,0 +1,53 @@
+<html><h1 class="refsect1">OLAP_DML_EXPRESSION</h1>
+<p><code>OLAP_DML_EXPRESSION</code> executes an expression in the OLAP DML language.</p>
+<p class="titleinrefsubsect"><a id="sthref267" name="sthref267"></a>Return Value</p>
+<p>The data type specified in the syntax</p>
+<p class="titleinrefsubsect"><a id="sthref268" name="sthref268"></a>Syntax</p>
+<pre xml:space="preserve" class="oac_no_warn"><span class="bold">OLAP_DML_EXPRESSION (</span>expression, datatype<span class="bold">)</span>
+</pre>
+<p class="titleinrefsubsect"><a id="sthref269" name="sthref269"></a>Arguments</p>
+<p class="subhead2"><a id="OLAXS321" name="OLAXS321"></a><a id="sthref270" name="sthref270"></a><span class="italic">expression</span></p>
+<p>An expression in the OLAP DML language, such as a call to a function or a program.</p>
+<p class="subhead2"><a id="OLAXS322" name="OLAXS322"></a><a id="sthref271" name="sthref271"></a><span class="italic">datatype</span></p>
+<p>The data type of the return value from <code><span class="codeinlineitalic">expression</span></code></p>
+<p class="titleinrefsubsect"><a id="sthref272" name="sthref272"></a>Example</p>
+<p>In this example, the <code>OLAP_DML_EXPRESSION</code> function executes the OLAP DML <code>RANDOM</code> function to generate a calculated measure with random numbers between 1.05 and 1.10.</p>
+<p><code>OLAP_DML_EXPRESSION('RANDOM(1.05, 1.10)', NUMBER)</code></p>
+<div class="inftblinformal">
+<table class="Informal" title="OLAP_DML_Expression Example" summary="Output from OLAP_DML_Expression example" dir="ltr" border="1" width="100%" frame="hsides" rules="groups" cellpadding="3" cellspacing="0">
+<col width="*" />
+<col width="33%" />
+<col width="33%" />
+<thead>
+<tr align="left" valign="top">
+<th align="left" valign="bottom" id="r1c1-t31">Time</th>
+<th align="left" valign="bottom" id="r1c2-t31">Product</th>
+<th align="left" valign="bottom" id="r1c3-t31">Random</th>
+</tr>
+</thead>
+<tbody>
+<tr align="left" valign="top">
+<td align="left" id="r2c1-t31" headers="r1c1-t31">2005</td>
+<td align="left" headers="r2c1-t31 r1c2-t31">Hardware</td>
+<td align="left" headers="r2c1-t31 r1c3-t31">1.07663806</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r3c1-t31" headers="r1c1-t31">2005</td>
+<td align="left" headers="r3c1-t31 r1c2-t31">Software/Other</td>
+<td align="left" headers="r3c1-t31 r1c3-t31">1.08295738</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r4c1-t31" headers="r1c1-t31">2006</td>
+<td align="left" headers="r4c1-t31 r1c2-t31">Hardware</td>
+<td align="left" headers="r4c1-t31 r1c3-t31">1.08707305</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r5c1-t31" headers="r1c1-t31">2006</td>
+<td align="left" headers="r5c1-t31 r1c2-t31">Software/Other</td>
+<td align="left" headers="r5c1-t31 r1c3-t31">1.09730881</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="inftblinformal" --></div>
+</html>

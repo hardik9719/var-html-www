@@ -1,0 +1,652 @@
+<html i18n-values="dir:textdirection;lang:language">
+<head>
+<!-- If you change the title, make sure you also update
+chrome/test/functional/special_tabs.py. -->
+<meta charset="utf-8">
+<title>Sync Internals</title>
+<link rel="stylesheet" href="chrome://resources/css/text_defaults.css">
+<link rel="stylesheet" href="chrome://resources/css/list.css">
+<link rel="stylesheet" href="chrome://resources/css/tabs.css">
+<link rel="stylesheet" href="chrome://resources/css/tree.css">
+<style>/* Copyright 2013 The Chromium Authors. All rights reserved.
+ * Use of this source code is governed by a BSD-style license that can be
+ * found in the LICENSE file. */
+
+#about-info {
+  -webkit-column-width: 350px;
+}
+
+#about-info > div {
+  -webkit-column-break-inside: avoid;
+  width: 350px;
+}
+
+#about-info h2 {
+  color: rgb(74, 142, 230);
+  font-size: 100%;
+  margin-bottom: 0;
+}
+
+#about-info .err {
+  color: red;
+}
+
+#about-info .section {
+  display: inline-block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.about-details {
+  width: 100%;
+}
+
+.about-details tr:nth-child(odd) {
+  background: rgb(239, 243, 255);
+}
+
+#typeInfo .error {
+ background: rgb(255, 204, 204);
+}
+
+#typeInfo .warning {
+ background: rgb(255, 255, 204);
+}
+
+#typeInfo .disabled {
+ background: rgb(224, 224, 224);
+}
+
+#typeInfo .ok {
+ background: rgb(204, 255, 204);
+}
+
+@-webkit-keyframes highlight1 {
+  0% {
+    background: rgb(255, 255, 0);
+  }
+  100% {
+    background: #fff;
+  }
+}
+
+@-webkit-keyframes highlight2 {
+  0% {
+    background: rgb(155, 158, 166);
+  }
+  100% {
+    background: rgb(239, 243, 255);
+  }
+}
+
+.about-details [highlighted] {
+  -webkit-animation-duration: 3s;
+  -webkit-animation-name: highlight1;
+  -webkit-animation-timing-function: linear;
+}
+
+.about-details [highlighted]:nth-child(odd) {
+  -webkit-animation-duration: 3s;
+  -webkit-animation-name: highlight2;
+  -webkit-animation-timing-function: linear;
+}
+
+.about-details .uninitialized {
+  color: #7f7f7f;
+}
+
+#status {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  width: 300px;
+}
+
+#dump-status {
+  margin: 2px;
+}
+
+#import-status {
+  margin: 2px;
+}
+
+#traffic-event-container {
+  border: 1px solid;
+  height: 500px;
+  max-width: 500px;
+  overflow-y: auto;
+}
+
+.traffic-event-entry {
+  border: 2px outset;
+  padding: 0.5em;
+}
+
+.traffic-event-entry:hover {
+  background-color: #eee;
+}
+
+.traffic-event-entry .time {
+  color: #222;
+}
+
+.traffic-event-entry .type {
+  font-weight: bold;
+  margin: 0.5em;
+  white-space: nowrap;
+}
+
+.traffic-event-entry .details {
+  margin: 0.5em;
+  overflow-x: auto;
+}
+
+.traffic-event-entry .proto {
+  display: none;
+}
+
+.traffic-event-entry-expanded .proto {
+  background-color: #fff;
+  border: 1px solid #222;
+  display: block;
+  max-height: 300px;
+  overflow-x: auto;
+  overflow-y: auto;
+}
+</style>
+<style>/* Copyright 2014 The Chromium Authors. All rights reserved.
+ * Use of this source code is governed by a BSD-style license that can be
+ * found in the LICENSE file.
+ */
+
+#sync-events-table,
+#sync-events-table th,
+#sync-events-table td {
+  border: 1px black solid;
+}
+
+#sync-events-table {
+  table-layout: fixed;
+  width: 100%;
+}
+
+#sync-events > tr {
+  vertical-align: top;
+}
+
+.expanded .attrib-column {
+  display: none;
+}
+</style>
+<style>/* Copyright 2014 The Chromium Authors. All rights reserved.
+ * Use of this source code is governed by a BSD-style license that can be
+ * found in the LICENSE file.
+ */
+
+#type-counters-table {
+  table-layout: fixed;
+}
+
+#type-counters-table th {
+  max-width: 80px;
+  width: 80px;
+}
+
+#type-counters-table th.type {
+  max-width: 200px;
+  width: 200px;
+}
+
+#type-counters-table tr:nth-child(odd) {
+  background: rgb(239, 243, 255);
+}
+
+</style>
+<style>/* Copyright (c) 2012 The Chromium Authors. All rights reserved.
+ * Use of this source code is governed by a BSD-style license that can be
+ * found in the LICENSE file. */
+
+#sync-search-query {
+  width: 16em;
+}
+
+#sync-search-query[error] {
+  background-color: rgb(255,170,170);
+}
+
+.sync-search-quicklink {
+  background-color: rgb(239,243,255);
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+#sync-search-status {
+  color: rgb(51,51,51);
+  font-style: italic;
+}
+
+#sync-results-container {
+  display: -webkit-box;
+  /* Should be > #sync-page's min-height. */
+  /* TODO(akalin): Find a less hacky way to do this. */
+  height: 750px;
+}
+
+#sync-results-list {
+  -webkit-padding-start: 10px;
+  box-sizing: border-box;
+  height: 100%;
+  /* min-width and max-width are used by the split pane. */
+  max-width: 50%;
+  min-width: 50px;
+  overflow: auto;
+  padding: 5px;
+  width: 275px;
+}
+
+#sync-results-splitter {
+  background-color: rgb(235, 239, 249);
+  cursor: col-resize;
+
+  width: 5px;
+}
+
+#sync-result-details-container {
+  -webkit-box-flex: 1;
+  height: 100%;
+  overflow: auto;
+  /* TODO(akalin): Figure out why this is needed, even with box-flex: 1. */
+  width: 100%;
+}
+</style>
+<style>/* Copyright (c) 2012 The Chromium Authors. All rights reserved.
+ * Use of this source code is governed by a BSD-style license that can be
+ * found in the LICENSE file. */
+
+#sync-node-browser-refresher {
+  border-bottom: 1px rgb(160,160,160) solid;
+}
+
+#sync-node-browser-refresher > * {
+  display: inline-block;
+}
+
+#sync-node-browser-container {
+  display: -webkit-box;
+  height: 750px;
+}
+
+#sync-node-tree-container {
+  -webkit-padding-start: 10px;
+  box-sizing: border-box;
+  height: 100%;
+  /* min-width and max-width are used by the split pane. */
+  max-width: 50%;
+  min-width: 50px;
+  overflow: auto;
+  width: 200px;
+}
+
+#sync-node-tree {
+  display: inline-block;
+  min-width: 100%;
+  overflow: visible; /* let the container do the scrolling */
+}
+
+/* TODO(akalin): Find a better icon to use for leaf nodes. */
+#sync-node-tree .leaf .tree-label {
+  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAALCAYAAACprHcmAAABr0lEQVQY02NgQAOFJU96jI1PfA0Kud/DgA8sWfFWMzn16sVZU7P/+/ntu9jW+VoTQ9GcBa9FJ0x9JVrb9C6jvGzr//evZP/nZnX/T818lzFhymvReYveiIIVBgbfri6reva/qOTxf1//5//nzKj5//8/6//+9tD/tvb3/hcUP/6fk//kv6/f7WoGVbVj//u6qv8fOBDxf8/2tP9vXpj9//eT8/+bp3L/d26N+L9/f9j/4tyg/zIyu/4z5BY8ehTg1/Z/5yZFoIlM////5P7/9ws/kOb6/+8b4/8t67j+e3vk/E9Ju/yIYfP2d0rV9a9mSklufb17i8X//3+4/v//DlLM/n/2FOX/4mKTX2fnv5y5Yu1bJbgnvX1vn1q1LBzoBKb/754w/v/7len/3Glq/zW1zp5CCY2d+z7XxSec/f34psr/eVOl/wf4xPyfN032/9VTLP/d3ab/njLjfR1ccVrGi97QkOb/tWWq/83MFvw3NH641s529f/EWIP/ft6x/909H/bCFc+a+7rF2nrbVw+vw1+B4drh63+TaeHSzx3unqe/qmts/lpZ+6QFpA4AtfnoAC8Qt2wAAAAASUVORK5CYII=);
+}
+
+#sync-node-splitter {
+  background-color: rgb(235, 239, 249);
+  cursor: col-resize;
+  width: 5px;
+
+}
+
+#sync-node-details-container {
+  -webkit-box-flex: 1;
+  height: 100%;
+  overflow: auto;
+  visibility: hidden;  /* Element is invisible until first refresh. */
+}
+
+#node-details {
+  width: 100%;
+}
+
+#node-details td {
+  vertical-align: top;
+  white-space: nowrap;
+}
+
+#node-details tr:nth-child(odd) {
+  background: rgb(239, 243, 255);
+}
+</style>
+
+
+
+<script src="chrome://resources/js/event_tracker.js"></script>
+<script src="chrome://resources/js/cr.js"></script>
+<script src="chrome://resources/js/cr/event_target.js"></script>
+<script src="chrome://resources/js/cr/ui/touch_handler.js"></script>
+<script src="chrome://resources/js/cr/ui.js"></script>
+<script src="chrome://resources/js/cr/ui/focus_outline_manager.js"></script>
+<script src="chrome://resources/js/cr/ui/splitter.js"></script>
+<script src="chrome://resources/js/load_time_data.js"></script>
+
+<!-- List stuff. -->
+<script src="chrome://resources/js/cr/ui/array_data_model.js"></script>
+<script src="chrome://resources/js/cr/ui/list_item.js"></script>
+<script src="chrome://resources/js/cr/ui/list_selection_controller.js"></script>
+<script src="chrome://resources/js/cr/ui/list_selection_model.js"></script>
+<script src="chrome://resources/js/cr/ui/list.js"></script>
+<script src="chrome://resources/js/cr/ui/tabs.js"></script>
+<script src="chrome://resources/js/cr/ui/tree.js"></script>
+<script src="chrome://resources/js/util.js"></script>
+<script src="chrome://sync-internals/chrome_sync.js"></script>
+<script src="chrome://sync-internals/about.js"></script>
+<script src="chrome://sync-internals/events.js"></script>
+<script src="chrome://sync-internals/types.js"></script>
+<script src="chrome://sync-internals/sync_log.js"></script>
+<script src="chrome://sync-internals/sync_node_browser.js"></script>
+<script src="chrome://sync-internals/sync_search.js"></script>
+<script src="chrome://sync-internals/strings.js"></script>
+</head>
+<body>
+
+<style>
+#sync-page {
+  /* TODO(akalin): Figure out a better way to make the tab box the
+     same height no matter which tab is selected. */
+  min-height: 650px;
+}
+</style>
+
+<tabbox id="sync-page">
+  <tabs>
+    <tab id="sync-about-tab">About</tab>
+    <tab id="sync-types-tab">Types</tab>
+    <tab id="sync-data-tab">Data</tab>
+    <tab id="sync-events-tab">Events</tab>
+    <tab id="sync-browser-tab">Sync Node Browser</tab>
+    <tab id="sync-search-tab">Search</tab>
+  </tabs>
+  <tabpanels>
+    <tabpanel>
+      
+<div id="status">
+  <div id="dump">
+    <button id="dump-status">Dump status</button>
+    <input type="checkbox" id="include-ids">
+      Include Identifiers
+    </input>
+  </div>
+  <div id="import">
+    <button id="import-status">Import status</button>
+  </div>
+  <div id="status-data">
+    <textarea rows="10" cols="30" id="status-text"></textarea>
+  </div>
+</div>
+
+<div id='about-info'>
+  <div class="section" jsselect="details">
+    <h2 jscontent="title"></h2>
+    <table class="about-details">
+      <tr jsselect="data"
+            jsvalues="class:$this.is_valid ? '' : 'uninitialized'"
+            jseval='chrome.sync.about_tab.highlightIfChanged(this, this.children[1].innerText, stat_value)'>
+        <td class="detail" jscontent="stat_name" width=50%></td>
+        <td class="value" jscontent="stat_value" width=50%></td>
+      </tr>
+    </table>
+  </div>
+
+  <div id="traffic-event-container-wrapper" jsskip="true">
+    <h2>Sync Protocol Log</h2>
+    <div id="traffic-event-container">
+      <div class="traffic-event-entry"
+           jsselect="events"
+           jseval="chrome.sync.about_tab.addExpandListener(this)">
+        <span class="time" jscontent="(new Date(time)).toLocaleString()"></span>
+        <span class="type" jscontent="type"></span>
+        <pre class="details" jscontent="details"></pre>
+        <pre class="proto" jscontent="JSON.stringify(proto, null, 2)"></pre>
+      </div>
+    </div>
+  </div>
+
+  <div class="section" style="overflow-x: auto">
+    <h2>Type Info</h2>
+    <table id="typeInfo">
+      <tr jsselect="type_status" jsvalues="class:$this.status">
+        <td jscontent="name" width=50%></td>
+        <td jscontent="value" width=30%></td>
+        <td jscontent="num_entries" width=10%></td>
+        <td jscontent="num_live" width=10%></td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="section" jsdisplay="unrecoverable_error_detected">
+    <p>
+      <span class="err" jscontent="unrecoverable_error_message"></span>
+    </p>
+  </div>
+
+  <div class="section" jsdisplay="actionable_error_detected">
+    <p>
+      <h2>Actionable Error</h2>
+      <table id="actionableError">
+        <tr jsselect="actionable_error">
+          <td jscontent="stat_name"></td>
+          <td jscontent="stat_value"></td>
+        </tr>
+      </table>
+    </p>
+  </div>
+</div>
+
+    </tabpanel>
+    <tabpanel>
+        <div id="type-counters-container-wrapper" jsskip="true">
+    <div class="section">
+      <h2>Type Counters</h2>
+      <table id="type-counters-table">
+        <thead>
+          <tr>
+            <th class='type'>Type</th>
+            <th>Total Entries</th>
+
+            <th>Updates Received</th>
+            <th>Reflected Updates Received</th>
+            <th>Tombstone Updates Received</th>
+
+            <th>Updates Applied</th>
+            <th>Hierarchy Conflict Application Failures</th>
+            <th>Encryption Conflict Application Failures</th>
+
+            <th>Server Overwrite Conflicts</th>
+            <th>Local Overwrite Conflicts</th>
+
+            <th>Commit Attempts</th>
+            <th>Commit Successes</th>
+            <th>Commit Conflicts</th>
+            <th>Commit Errors</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr jsselect="rows">
+            <td jscontent="type"></td>
+            <td jscontent="counters.numEntries || 0">0</td>
+
+            <td jscontent="counters.numUpdatesReceived || 0">0</td>
+            <td jscontent="counters.numReflectedUpdatesReceived || 0">0</td>
+            <td jscontent="counters.numTombstoneUpdatesReceived || 0">0</td>
+
+            <td jscontent="counters.numUpdatesApplied || 0">0</td>
+            <td jscontent="counters.numHierarchyConflictApplicationFailures || 0">0</td>
+            <td jscontent="counters.numEncryptionConflictApplicationFailures || 0">0</td>
+
+            <td jscontent="counters.numServerOverwrites || 0">0</td>
+            <td jscontent="counters.numLocalOverwrites || 0">0</td>
+
+            <td jscontent="counters.numCommitsAttempted || 0">0</td>
+            <td jscontent="counters.numCommitsSuccess || 0">0</td>
+            <td jscontent="counters.numCommitsConflict || 0">0</td>
+            <td jscontent="counters.numCommitsError || 0">0</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+    </tabpanel>
+    <tabpanel>
+      <p><strong>Some personal info may be in the events dump. Be
+careful about posting data dumps on bug reports.</strong></p>
+
+<button id="dump-to-text">Dump sync events to text</button>
+
+<pre id="data-dump"></pre>
+
+<hr>
+
+<div id="node-type-checkboxes">
+</div>
+
+
+<button id="dump-to-file">Dump sync nodes to file</button>
+
+<input type="checkbox" id="include-specifics">include node content <font color="red">WARNING: This is likely to include personal information.</font><br>
+
+<a style="display: none" id="dump-to-file-anchor"></a>
+
+<script src="chrome://sync-internals/data.js"></script>
+
+    </tabpanel>
+    <tabpanel>
+      <table id="sync-events-table">
+  <thead>
+    <th>Details</th>
+    <th>Submodule</th>
+    <th>Event</th>
+    <th>Time</th>
+  </thead>
+  <tbody id="sync-events">
+    <tr jsselect="eventList">
+      <td>
+        <button class="toggle-button">Toggle Display</button>
+        <pre jscontent="textDetails" class="details" hidden></pre>
+      </td>
+      <td jscontent="submodule" class="attrib-column"></td>
+      <td jscontent="event" class="attrib-column"></td>
+      <td jscontent="date" class="attrib-column"></td>
+    </tr>
+  </tbody>
+</table>
+
+    </tabpanel>
+    <tabpanel>
+      <!-- TODO(akalin): Move to a three-pane view; node tree on the left
+(minus leaf nodes), tree contents list on the upper right, selected
+item detail on the lower right. -->
+
+<div id="sync-node-main">
+  <!-- TODO(akalin): Figure out how to get this element to be as tall
+       as its container (style.height=100% doesn't work).  Also fix
+       behavior when tree is too tall (currently it makes you scroll the
+       entire page). -->
+  <div id="sync-node-browser-refresher">
+    <button id="node-browser-refresh-button">Refresh</button>
+    <div id="node-refresh-status">
+      Last refresh time: <span id="node-browser-refresh-time">Never</span>
+    </div>
+  </div>
+  <div id="sync-node-browser-container">
+    <div id="sync-node-tree-container">
+    </div>
+    <div id="sync-node-splitter"></div>
+    <div id="node-details">
+      <table>
+        <tr>
+          <td>Title</td>
+          <td jscontent="NON_UNIQUE_NAME"></td>
+        </tr>
+        <tr>
+          <td>ID</td>
+          <td jscontent="ID"></td>
+        </tr>
+        <tr>
+          <td>Modification Time</td>
+          <td jscontent="MTIME"></td>
+        </tr>
+        <tr>
+          <td>Parent</td>
+          <td jscontent="PARENT_ID"></td>
+        </tr>
+        <tr>
+          <td>Is Folder</td>
+          <td jscontent="IS_DIR"></td>
+        </tr>
+        <tr>
+          <td>Type</td>
+          <td jscontent="modelType"></td>
+        </tr>
+        <tr>
+          <td>External ID</td>
+          <td jscontent="LOCAL_EXTERNAL_ID"></td>
+        </tr>
+        <tr jsdisplay="$this.hasOwnProperty('positionIndex')">
+          <td>Position Index</td>
+          <td jscontent="positionIndex"></td>
+        </tr>
+      </table>
+      <pre jscontent="JSON.stringify($this, null, 2)"></pre></td>
+    </div>
+  </div>
+</div>
+
+    </tabpanel>
+    <tabpanel>
+      <p>
+<input id="sync-search-query" type="search"
+       placeholder="Search Sync Data">
+<button id="sync-search-submit">Search</button>
+  <span id="sync-search-quicklink-container">Quick Search:
+    <a class='sync-search-quicklink' data-query="&quot;IS_UNAPPLIED_UPDATE&quot;: true"
+      href="#">Unapplied Updates</a>
+    <a class='sync-search-quicklink' data-query="&quot;IS_UNSYNCED&quot;: true"
+      href="#">Unsynced</a>
+    <a class='sync-search-quicklink' data-query="((&quot;IS_UNAPPLIED_UPDATE&quot;: true)[\s\S]*(&quot;IS_UNSYNCED&quot;: true))|((&quot;IS_UNSYNCED&quot;: true)[\s\S]*(&quot;IS_UNAPPLIED_UPDATE&quot;: true))"
+      href="#">Conflicted</a>
+    <a class='sync-search-quicklink' data-query="&quot;IS_DEL&quot;: true"
+      href="#">Deleted</a>
+  </span>
+</p>
+<p>
+<span id="sync-search-status"></span>
+</p>
+
+<div id="sync-results-container">
+  <list id="sync-results-list"></list>
+  <div id="sync-results-splitter"></div>
+  <div id="sync-result-details-container">
+    <pre id="sync-result-details"></pre>
+  </div>
+</div>
+
+<script src="chrome://sync-internals/search.js"></script>
+
+    </tabpanel>
+  </tabpanels>
+</tabbox>
+
+<script src="chrome://resources/js/i18n_template.js"></script>
+<script src="chrome://resources/js/jstemplate_compiled.js"></script>
+<script src="chrome://sync-internals/sync_index.js"></script>
+</body>
+</html>

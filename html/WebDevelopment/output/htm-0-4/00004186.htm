@@ -1,0 +1,38 @@
+<html><h1 class="refsect1">TO_NUMBER</h1>
+<p><code>TO_NUMBER</code> converts a text expression containing a number to a value of <code>NUMBER</code> data type.</p>
+<p class="titleinrefsubsect"><a id="sthref692" name="sthref692"></a>Return Value</p>
+<pre xml:space="preserve" class="oac_no_warn">NUMBER
+</pre>
+<p class="titleinrefsubsect"><a id="sthref693" name="sthref693"></a>Syntax</p>
+<pre xml:space="preserve" class="oac_no_warn"><span class="bold">TO_NUMBER</span>(expr [, fmt [, 'nlsparam' ] ])
+</pre>
+<p class="titleinrefsubsect"><a id="sthref694" name="sthref694"></a>Arguments</p>
+<p><code>expr</code> is an expression to be converted to a number.</p>
+<p><code>fmt</code> is a text expression that identifies a number format model as described in the <span class="italic">Oracle Database SQL Language Reference</span>.</p>
+<p><code>nlsparam</code> specifies the characters used by these number format elements:</p>
+<ul>
+<li>
+<p>Decimal character</p>
+</li>
+<li>
+<p>Group separator</p>
+</li>
+<li>
+<p>Local currency symbol</p>
+</li>
+<li>
+<p>International currency symbol</p>
+</li>
+</ul>
+<p>This argument has the format shown here:</p>
+<pre xml:space="preserve" class="oac_no_warn">'NLS_NUMERIC_CHARACTERS = ''dg''
+ NLS_CURRENCY = ''text''
+ NLS_ISO_CURRENCY = territory '
+</pre>
+<p>The <code>d</code> is the decimal character, and the <code>g</code> is the group separator. They must be different single-byte characters. Within the quoted string, use two single quotation marks around the parameter values. Ten characters are available for the currency symbol.</p>
+<p>If you omit this argument or any of the NLS parameters, then this function uses the default values for your session to interpret <code>expr</code>.</p>
+<p class="titleinrefsubsect"><a id="sthref695" name="sthref695"></a>Examples</p>
+<p><code>TO_NUMBER('$1,234,567.89', 'L999G999G999D99')</code> returns the value <code>1234567.89</code>.</p>
+<p><code>TO_NUMBER('EUR1,234,567.89', 'C999G999G999D99', 'NLS_ISO_CURRENCY=SPAIN')</code> also returns the value <code>1234567.89</code>.</p>
+</div>
+</html>

@@ -1,0 +1,6 @@
+<html><head></head><body style="{0}"><b>Step 2 - Target Connection</b> Choose the target Oracle connection to use to migrate your database. \
+<b>Note:</b> For single-schema migrations, your new objects will be created in this user's database. This user will need the following rights:\
+<ol><li>RESOURCE</li><li>CREATE SESSION</li><li>CREATE VIEW</li></ol>For multi-schema migrations, this user will be used \
+to create target databases, and it will need the following <i>additional</i> rights:\
+<DL><DT></DT><DD>CREATE USER, CREATE ROLE, ALTER ANY TRIGGER and RESOURCE all <b>WITH ADMIN OPTION</b>.</DD></DL>
+QUICKMIGRATE_REPO_DESC=<html><head></head><body style="{0}"><b>Step 3 - Repository</b> A repository is needed during migration for storing captured and converted metadata.</body></html>

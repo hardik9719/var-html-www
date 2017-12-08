@@ -1,0 +1,88 @@
+<html lang="en" ng-app="app">
+<head>
+	<meta charset="utf-8">
+	<meta name="author" content="Michal Šimonfy; http://virae.org">
+	<meta http-equiv="cache-control" content="public">
+	<meta http-equiv="expires" content="Wed, 1 Jan 2014 00:00:00 GMT">
+	<title i18n="new_tab">New tab</title>
+
+	<link rel="stylesheet/less" type="text/css" href="css/beta.less" />
+
+	<script src="js/jquery.min.js"></script>
+	<script src="js/moment.js"></script>
+	
+	<script src="js_system/common.js"></script>
+	<script src="js_system/options.js"></script>
+	<script src="js_system/themes.js"></script>
+	<script src="js/bootstrap-contextmenu.js"></script>
+
+	<script src="js/less.min.js"></script>
+	<script src="js/underscore.min.js"></script>
+	<script src="js/angular.min.js"></script>
+	<script src="js/angular-sanitize.min.js"></script>
+		
+</head>
+
+<body ng-controller="speeddial">
+
+	<header>
+		<ul ng-cloak>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<strong>Groups</strong>
+			<li ng-class="0 == activeGroup ? 'is-active' : ''">
+				<a ng-click="loadGroup(0)">Home</a>
+			</li>
+			<li ng-class="group.id == activeGroup ? 'is-active' : ''" ng-repeat="group in groups track by $index">
+				<a ng-bind-html="group.title" ng-click="loadGroup(group.id)"></a>
+			</li>
+		</ul>
+		<ul class="pull-right">
+			<li>
+				Order by: <strong>Most visited <small>&#9660;</small></strong>
+			</li>
+			<li class="header-search">
+				<input type="text" ng-keyup="keyPress($event)" ng-model="searchTerm" placeholder="Search">	
+			</li>
+		</ul>
+
+	</header>
+	
+	<div class="container">
+			
+		<section id="bookmarks">
+		
+			<a ng-href="{{bookmark.url}}" ng-data-id="bookmark.id" ng-repeat="bookmark in bookmarks track by $index" class="bookmark" ng-class="bookmark.thumbnail ? 'is-logo' : 'is-thumbnail'" data-toggle="context" data-target="#bookmark-context-menu">
+				<div class="bookmark-background" style="background-image: url('{{getBackground(bookmark)}}')">
+				</div>
+				<div class="bookmark-footer">
+					<div class="bookmark-favicon">
+						<img ng-src="{{getFavicon(bookmark)}}" alt="">
+					</div>
+					<div class="bookmark-title">
+						{{bookmark.title}}
+						<br>
+						<!-- {{getCreatedDate(bookmark)}} -->
+					</div>
+				</div>
+			</a>
+			
+		</section>
+	
+	</div>
+
+	<div class="context-menu" id="bookmark-context-menu">
+		<ul class="dropdown-menu" role="menu">
+			<li><a tabindex="-1" i18n="newtab_open_in_new_tab">Open in new tab</a></li>
+			<li class="divider"></li>
+			<li><a tabindex="-1" i18n="edit">Edit</a></li>
+			<li><a tabindex="-1" i18n="remove">Remove</a></li>
+			<li><a tabindex="-1" i18n="newtab_reload_thumbnail">Reload thumbnail</a></li>
+		</ul>
+	</div>
+
+	<script src="js_system/db.js"></script>
+	<script src="beta/js/db-beta.js"></script>
+	<script src="beta/js/beta.speeddial.js"></script>
+
+</body>
+</html>

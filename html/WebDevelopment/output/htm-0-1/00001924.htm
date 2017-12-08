@@ -1,0 +1,33 @@
+<html><head><link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../paper-styles/shadow.html">
+<link rel="import" href="paper-material-shared-styles.html">
+
+<!--
+Material design: [Cards](https://www.google.com/design/spec/components/cards.html)
+
+`paper-material` is a container that renders two shadows on top of each other to
+create the effect of a lifted piece of paper.
+
+Example:
+
+    <paper-material elevation="1">
+      ... content ...
+    </paper-material>
+
+@group Paper Elements
+@demo demo/index.html
+-->
+
+</head><body><dom-module id="paper-material">
+  <template>
+    <style include="paper-material-shared-styles"></style>
+    <style>
+      :host([animated]) {
+        @apply(--shadow-transition);
+      }
+    </style>
+
+    <content></content>
+  </template>
+</dom-module>
+<script src="paper-material-extracted.js"></script></body></html>

@@ -1,0 +1,1 @@
+<?php\n\nrequire 'db_connect.php';\n$name=$_POST[\"name\"];\n$findRider=\"select * from Rides where Email_fk='$name'\";\n\n$result=mysqli_query($connection,$findRider);\n\nif($result) {\n\n\twhile ($row=mysqli_fetch_assoc($result)) {\n\t                 \t# code...\n\t\t$serverResponse[] = $row;\n\t                 }           \n\t    echo json_encode(array(\"rides\"=>

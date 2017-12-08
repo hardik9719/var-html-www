@@ -1,0 +1,45 @@
+<html><h1 class="refsect1">REGEXP_INSTR</h1>
+<p><code>REGEXP_INSTR</code> searches a string for a regular pattern. It can return an integer indicating either the beginning or the ending position of the matched substring. If no match is found, the function returns 0.</p>
+<p>The function evaluates strings using characters as defined by the input character set.</p>
+<p class="titleinrefsubsect"><a id="sthref564" name="sthref564"></a>Return Value</p>
+<pre xml:space="preserve" class="oac_no_warn">NUMBER
+</pre>
+<p class="titleinrefsubsect"><a id="sthref565" name="sthref565"></a>Syntax</p>
+<pre xml:space="preserve" class="oac_no_warn"><span class="bold">REGEXP_INSTR</span> (source_char, pattern
+              [, position
+                 [, occurrence
+                    [, return_option
+                       [, match_parameter ]
+                    ]
+                 ]
+              ]
+             )
+</pre>
+<p class="titleinrefsubsect"><a id="sthref566" name="sthref566"></a>Arguments</p>
+<p><code>source_char</code> is the text expression to search.</p>
+<p><code>pattern</code> is the string to search for. A period matches any character. For a list of operators, refer to the <span class="italic">Oracle Database SQL Language Reference</span>, Appendix D, Oracle Regular Expression Support.</p>
+<p><code>position</code> is a nonzero integer indicating the character of <code>source_char</code> where the function begins the search. When <code>position</code> is negative, then the function counts and searches backward from the end of string. The default value of <code>position</code> is 1, which means that the function begins searching at the first character of <code>source_char</code>.</p>
+<p><code>occurrence</code> is an integer indicating which occurrence of <code>pattern</code> the function should search for. The value of <code>occurrence</code> must be positive. The default values of <code>occurrence</code> is 1, meaning the function searches for the first occurrence of <code>pattern</code>.</p>
+<p><code>return_option</code> is either 0 to return the position of the match (default), or 1 to return the position of the character following the match.</p>
+<p><code>match_parameter</code> is a text literal that lets you change the default matching behavior of the function. You can specify one or more of the following values:</p>
+<ul>
+<li>
+<p><code>c</code>: Case-sensitive matching.</p>
+</li>
+<li>
+<p><code>i</code>: Case-insensitive matching.</p>
+</li>
+<li>
+<p><code>m</code>: Treat the source string as multiple lines. The function interprets <code>^</code> and <code>$</code> as the start and end, respectively, of any line anywhere in the source string, rather than only at the start or end of the entire source string. By default, the function treats the source string as a single line.</p>
+</li>
+<li>
+<p><code>n</code>: New-line character is among the characters matched by a period (the wildcard character). By default, it is not.</p>
+</li>
+<li>
+<p><code>x</code>: Ignore whitespace characters.</p>
+</li>
+</ul>
+<p class="titleinrefsubsect"><a id="sthref567" name="sthref567"></a>Example</p>
+<p><code>REGEXP_INSTR('Mississippi', 'i', 1, 3)</code> searches the string <code>Mississippi</code> for the third instance of the letter <code>i</code>, beginning the search at the first letter. It returns the value <code>8</code>.</p>
+</div>
+</html>

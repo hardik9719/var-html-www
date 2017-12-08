@@ -1,0 +1,15 @@
+<html><h1 class="refsect1">TO_CHAR (character)</h1>
+<p><code>TO_CHAR(character)</code> converts a text expression to the database character set.</p>
+<p class="titleinrefsubsect"><a id="sthref660" name="sthref660"></a>Return Value</p>
+<pre xml:space="preserve" class="oac_no_warn">VARCHAR2
+</pre>
+<p class="titleinrefsubsect"><a id="sthref661" name="sthref661"></a>Syntax</p>
+<pre xml:space="preserve" class="oac_no_warn"><span class="bold">TO_CHAR</span>(exp)
+</pre>
+<p class="titleinrefsubsect"><a id="sthref662" name="sthref662"></a>Arguments</p>
+<p><code>char</code> is a text expression. If it contains characters that are not represented in the database character set, then the conversion results in a loss of data.</p>
+<p class="titleinrefsubsect"><a id="sthref663" name="sthref663"></a>Examples</p>
+<p><code>TO_CHAR('&iexcl;Una qu&eacute; sorpresa!')</code> returns the value <code>?Una qu? sorpresa!</code> Two letters are lost in the conversion (<code>&iexcl;</code>and <code>&eacute;</code>) because they are not in the database character set.</p>
+<p><code>TO_CHAR('David Ortiz')</code> returns the value <code>David Ortiz</code> in the database character set. No characters are lost in this conversion because all of them are in the database character set.</p>
+</div>
+</html>

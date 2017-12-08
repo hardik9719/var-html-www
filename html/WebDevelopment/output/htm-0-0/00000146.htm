@@ -1,0 +1,974 @@
+<html xmlns:o="urn:schemas-microsoft-com:office:office"
+						xmlns:w="urn:schemas-microsoft-com:office:word"
+						xmlns="http://www.w3.org/TR/REC-html40">
+					<head>
+						
+						<style>
+							p.MsoBibliography, li.MsoBibliography, div.MsoBibliography
+						</style>
+					</head>
+
+					<body>
+						
+						
+						<xsl:variable name="ListPopulatedWithMain">
+							<xsl:call-template name="populateMain">
+								<xsl:with-param name="Type">b:Bibliography</xsl:with-param>
+							</xsl:call-template>
+						</xsl:variable>
+
+						
+						
+						<xsl:variable name="SortedList">
+							<xsl:call-template name="sortedList">
+								<xsl:with-param name="sourceRoot">
+									<xsl:copy-of select="$ListPopulatedWithMain"/>
+								</xsl:with-param>
+								
+							</xsl:call-template>
+						</xsl:variable>
+
+						
+						<xsl:for-each select="msxsl:node-set($SortedList)/b:Bibliography/b:Source">
+							<xsl:element name="p">
+				                <xsl:variable name="LCID">
+				                  <xsl:choose>
+				                    <xsl:when test="b:LCID='0' or b:LCID='' or not(b:LCID)">
+				                      <xsl:value-of select="/*/b:Locals/b:DefaultLCID"/>
+				                    </xsl:when>
+				                    <xsl:otherwise>
+				                      <xsl:value-of select="b:LCID"/>
+				                    </xsl:otherwise>
+				                  </xsl:choose>
+				                </xsl:variable>
+								<xsl:attribute name="lang">
+									<xsl:value-of select="/*/b:Locals/b:Local[@LCID=$LCID]/@Culture"/>
+								</xsl:attribute>
+				                <xsl:attribute name="dir">
+									<xsl:value-of select="/*/b:Locals/b:Local[@LCID=$LCID]/b:Properties/b:Direction"/>
+								</xsl:attribute>
+								<xsl:attribute name="class">
+									<xsl:value-of select="'MsoBibliography'"/>
+								</xsl:attribute>
+								
+						
+							
+
+								<xsl:variable name="prevBook">
+									<xsl:value-of select="position()-1"/>
+								</xsl:variable>
+
+								<xsl:variable name="cMaxAllow">
+									<xsl:call-template name="maxAuthor"/>
+								</xsl:variable>
+
+								
+								
+								<xsl:variable name ="NonEmptySectionsCount">
+									<xsl:call-template name ="getNonEmptySectionsCount"/>
+								</xsl:variable>
+
+								
+								<xsl:variable name ="SectionsCount">
+									<xsl:call-template name="getSectionsCount"/>
+								</xsl:variable>
+
+								
+								<xsl:variable name ="AllPersonsCount">
+									<xsl:call-template name="getAllPersonsCount"/>
+								</xsl:variable>
+
+								
+								<xsl:variable name ="EtAlSectionsCount">
+									<xsl:call-template name="getEtAlSectionsCount"/>
+								</xsl:variable>
+
+
+								
+
+								
+								<xsl:variable name="Authors">
+									<xsl:call-template name="formatAuthor"/>
+								</xsl:variable>
+
+								
+								<xsl:variable name="Editors">
+									<xsl:call-template name="formatEditor"/>
+								</xsl:variable>
+
+								
+								<xsl:variable name="Translators">
+									<xsl:call-template name="formatTranslator"/>
+								</xsl:variable>
+
+								<xsl:variable name = "Artists">
+									<xsl:call-template name = "formatArtist"/>
+								</xsl:variable>
+
+								<xsl:variable name = "Composers">
+									<xsl:call-template name ="formatComposer"/>
+								</xsl:variable>
+
+								<xsl:variable name ="Conductors">
+									<xsl:call-template name="formatConductor"/>
+								</xsl:variable>
+
+								<xsl:variable name="Performers">
+									<xsl:call-template name ="formatPerformer"/>
+								</xsl:variable>
+
+								<xsl:variable name="Writers">
+									<xsl:call-template name ="formatWriter"/>
+								</xsl:variable>
+
+								<xsl:variable name ="Directors">
+									<xsl:call-template name ="formatDirector"/>
+								</xsl:variable>
+
+								<xsl:variable name ="ProducerNames">
+									<xsl:call-template name ="formatProducerName"/>
+								</xsl:variable>
+
+								<xsl:variable name ="Interviewees">
+									<xsl:call-template name ="formatInterviewee"/>
+								</xsl:variable>
+
+								<xsl:variable name ="Compilers">
+									<xsl:call-template name ="formatCompiler"/>
+								</xsl:variable>
+
+								<xsl:variable name ="Inventors">
+									<xsl:call-template name ="formatInventor"/>
+								</xsl:variable>
+
+								<xsl:variable name="Reporters">
+									<xsl:if test="string-length(b:Reporter)">
+										<xsl:value-of select ="b:Reporter"/>
+									</xsl:if>
+								</xsl:variable>
+
+								<xsl:variable name="Counsels">
+									<xsl:call-template name="formatCounsel"/>
+								</xsl:variable>
+
+								<xsl:variable name ="BookMainAuthors">
+									<xsl:if test="string-length(b:Author/b:BookAuthor/b:NameList/b:Person/b:Last)>0">
+										
+										<xsl:call-template name="templ_str_BookAuthorShortUnCap"/>
+										<xsl:call-template name="templ_prop_Space" />
+										<xsl:for-each select="b:Author/b:BookAuthor">
+											<xsl:call-template name="formatPersons"/>
+										</xsl:for-each>
+									</xsl:if>
+								</xsl:variable>
+
+							    <xsl:variable name="prop_APA_Hyphens2">
+							      <xsl:call-template name="templ_prop_Hyphens"/>
+							    </xsl:variable>
+
+								<xsl:variable name="volume" select="b:Volume"/>
+
+								<xsl:variable name="volVolume">
+									<xsl:if test="string-length($volume) > 0">
+										<xsl:call-template name="StringFormat">
+											<xsl:with-param name="format">
+											  <xsl:choose>
+												<xsl:when test="not(string-length($volume)=string-length(translate($volume, ',', '')))">
+												  <xsl:call-template name="templ_str_VolumesShortCap"/>
+												</xsl:when>
+												<xsl:when test="string-length($volume)=string-length(translate($volume, $prop_APA_Hyphens2, ''))">
+												  <xsl:call-template name="templ_str_VolumeShortCap"/>
+												</xsl:when>
+												<xsl:otherwise>
+												  <xsl:call-template name="templ_str_VolumesShortCap"/>
+												</xsl:otherwise>
+											  </xsl:choose>
+											</xsl:with-param>
+											<xsl:with-param name="parameters">
+												<t:params>
+													<t:param>
+														<xsl:value-of select="$volume"/>
+													</t:param>
+												</t:params>
+											</xsl:with-param>
+										</xsl:call-template>
+									</xsl:if>
+								</xsl:variable>
+
+								
+								<xsl:variable name ="CityPublisherYearHyphenSection">
+									<xsl:call-template name ="formatHyphenSection">
+										
+										
+										<xsl:with-param name ="FirstElement">
+											<xsl:call-template name ="formatLocationElement">
+												
+												<xsl:with-param name ="Location" select="b:City"/>
+												<xsl:with-param name ="Publisher" select="b:Publisher"/>
+											</xsl:call-template>
+										</xsl:with-param>
+										<xsl:with-param name ="SecondElement" select ="b:Year"/>
+									</xsl:call-template>
+								</xsl:variable>
+
+								<xsl:variable name ="VolumeNumberVolumesHyphenSection">
+									<xsl:call-template name ="formatHyphenSection">
+										<xsl:with-param name ="FirstElement">
+											<xsl:call-template name ="formatColonElement">
+												<xsl:with-param name ="FirstParam" select ="b:Edition"/>
+												<xsl:with-param name ="SecondParam" select ="$volVolume"/>
+												<xsl:with-param name ="ThirdParam" select ="b:NumberVolumes"/>
+											</xsl:call-template>
+										</xsl:with-param>
+									</xsl:call-template>
+								</xsl:variable>
+
+							    <xsl:variable name="prop_APA_Hyphens">
+							      <xsl:call-template name="templ_prop_Hyphens"/>
+							    </xsl:variable>
+
+								<xsl:variable name="pages" select="b:Pages"/>
+
+								<xsl:variable name ="Pages">
+				                  <xsl:if test="string-length($pages)>0">
+				                    <xsl:choose>
+				                      <xsl:when test="not(string-length($pages)=string-length(translate($pages, ',', '')))">
+				                        <xsl:call-template name="templ_str_PagesCountinousShort"/>
+				                      </xsl:when>
+				                      <xsl:when test="string-length($pages)=string-length(translate($pages, $prop_APA_Hyphens, ''))">
+				                        <xsl:call-template name="templ_str_PageShort"/>
+				                      </xsl:when>
+				                      <xsl:otherwise>
+				                        <xsl:call-template name="templ_str_PagesCountinousShort"/>
+				                      </xsl:otherwise>
+				                    </xsl:choose>
+				                    <xsl:call-template name="templ_prop_Space"/>
+				                    <xsl:value-of select="$pages"/>
+				                  </xsl:if>
+								</xsl:variable>
+
+								<xsl:variable name ="EditionVolumeNumberVolumesPagesHyphenSection">
+									<xsl:call-template name ="formatHyphenSection">
+										<xsl:with-param name ="FirstElement">
+											<xsl:call-template name ="formatColonElement">
+												<xsl:with-param name ="FirstParam" select ="b:Edition"/>
+												<xsl:with-param name ="SecondParam" select ="$volVolume"/>
+												<xsl:with-param name ="ThirdParam" select ="b:NumberVolumes"/>
+												<xsl:with-param name ="FourthParam" select ="$Pages"/>
+											</xsl:call-template>
+										</xsl:with-param>
+									</xsl:call-template>
+								</xsl:variable>
+
+								<xsl:variable name ="CityPublisherDateMonthYearHyphenSection">
+									<xsl:call-template name ="formatHyphenSection">
+										<xsl:with-param name ="FirstElement">
+											<xsl:call-template name ="formatLocationElement">
+												<xsl:with-param name ="Location" select="b:City"/>
+												<xsl:with-param name ="Publisher" select="b:Publisher"/>
+											</xsl:call-template>
+										</xsl:with-param>
+										<xsl:with-param name ="SecondElement">
+											<xsl:call-template name ="formatDateMonthYear"/>
+										</xsl:with-param>
+									</xsl:call-template>
+								</xsl:variable>
+
+								<xsl:variable name ="CityBroadcasterStationPublisherDateMonthYearHyphenSection">
+									<xsl:call-template name ="formatHyphenSection">
+										<xsl:with-param name ="FirstElement">
+											<xsl:call-template name ="formatLocationElement">
+												<xsl:with-param name ="Location" select="b:City"/>
+												<xsl:with-param name ="Publisher">
+													<xsl:value-of select="b:Broadcaster"/>
+													<xsl:if test="string-length(b:Broadcaster)>0 and (string-length(b:Station)>0 or string-length(b:Publisher)>0)">
+                            <xsl:call-template name="templ_prop_NonBreakingSpace"/>
+                            <xsl:call-template name="templ_prop_GroupSeparator"/>													
+													</xsl:if>
+													<xsl:value-of select="b:Station"/>
+													<xsl:if test="string-length(b:Station)>0 and string-length(b:Publisher)>0">
+                            <xsl:call-template name="templ_prop_NonBreakingSpace"/>
+                            <xsl:call-template name="templ_prop_GroupSeparator"/>													
+													</xsl:if>
+													<xsl:value-of select="b:Publisher"/>
+												</xsl:with-param>
+											</xsl:call-template>
+										</xsl:with-param>
+										<xsl:with-param name ="SecondElement">
+											<xsl:call-template name ="formatDateMonthYear"/>
+										</xsl:with-param>
+									</xsl:call-template>
+								</xsl:variable>
+
+								<xsl:variable name ="IssueVolumeHyphenSection">
+									<xsl:call-template name ="formatHyphenSection">
+										<xsl:with-param name ="FirstElement">
+											<xsl:call-template name ="formatColonElement">
+												<xsl:with-param name ="FirstParam" select ="b:Issue"/>
+												<xsl:with-param name ="SecondParam" select ="$volVolume"/>
+											</xsl:call-template>
+										</xsl:with-param>
+									</xsl:call-template>
+								</xsl:variable>
+
+								<xsl:variable name ="PagesHyphenSection">
+									<xsl:call-template name ="formatHyphenSection">
+										<xsl:with-param name ="FirstElement" select ="$Pages"/>
+									</xsl:call-template>
+								</xsl:variable>
+
+								<xsl:variable name ="InstitutionHyphenSection">
+									<xsl:call-template name ="formatHyphenSection">
+										<xsl:with-param name ="FirstElement" select ="b:Institution"/>
+									</xsl:call-template>
+								</xsl:variable>
+
+								<xsl:variable name ="EditionHyphenSection">
+									<xsl:call-template name ="formatHyphenSection">
+										<xsl:with-param name ="FirstElement" select ="b:Edition"/>
+									</xsl:call-template>
+								</xsl:variable>
+
+								<xsl:variable name ="VolumeHyphenSection">
+									<xsl:call-template name ="formatHyphenSection">
+										<xsl:with-param name ="FirstElement" select ="$volVolume"/>
+									</xsl:call-template>
+								</xsl:variable>
+
+								<xsl:variable name ="CityInstitutionHyphenSection">
+									<xsl:call-template name ="formatHyphenSection">
+										<xsl:with-param name ="FirstElement">
+											<xsl:call-template name ="formatLocationElement">
+												<xsl:with-param name ="Location" select="b:City"/>
+												<xsl:with-param name ="Publisher" select="b:Institution"/>
+											</xsl:call-template>
+										</xsl:with-param>
+									</xsl:call-template>
+								</xsl:variable>
+
+								<xsl:variable name ="CityPublisherHyphenSection">
+									<xsl:call-template name ="formatHyphenSection">
+										<xsl:with-param name ="FirstElement">
+											<xsl:call-template name ="formatLocationElement">
+												<xsl:with-param name ="Location" select="b:City"/>
+												<xsl:with-param name ="Publisher" select="b:Publisher"/>
+											</xsl:call-template>
+										</xsl:with-param>
+									</xsl:call-template>
+								</xsl:variable>
+
+								<xsl:variable name ="CityProductionCompanyYearHyphenSection">
+									<xsl:call-template name ="formatHyphenSection">
+										<xsl:with-param name ="FirstElement">
+											<xsl:call-template name ="formatLocationElement">
+												<xsl:with-param name ="Location" select="b:City"/>
+												<xsl:with-param name ="Publisher" select="b:ProductionCompany"/>
+											</xsl:call-template>
+										</xsl:with-param>
+										<xsl:with-param name ="SecondElement" select ="b:Year"/>
+									</xsl:call-template>
+								</xsl:variable>
+
+								<xsl:variable name ="TheaterCityProductionCompanyDateMonthYearHyphenSection">
+									
+									<xsl:variable name ='TheaterCity'>
+										<xsl:value-of select ='b:Theater'/>
+										<xsl:if test ='string-length(b:Theater)>0 and string-length(b:City)>0'>
+											
+											
+											
+											
+											
+											<xsl:value-of select="$constGost_TheaterCitySeparator"/>
+										</xsl:if>
+										<xsl:value-of select ='b:City'/>
+									</xsl:variable>
+
+									<xsl:call-template name ="formatHyphenSection">
+										<xsl:with-param name ="FirstElement">
+											<xsl:call-template name ="formatLocationElement">
+												<xsl:with-param name ="Location" select="$TheaterCity"/>
+												<xsl:with-param name ="Publisher" select="b:ProductionCompany"/>
+											</xsl:call-template>
+										</xsl:with-param>
+										<xsl:with-param name ="SecondElement">
+											<xsl:call-template name ="formatDateMonthYear"/>
+										</xsl:with-param>
+									</xsl:call-template>
+								</xsl:variable>
+
+								<xsl:variable name ="ProductionCompanyDateMonthYearHyphenSection">
+									<xsl:call-template name ="formatHyphenSection">
+										<xsl:with-param name ="FirstElement" select ="b:ProductionCompany"/>
+										<xsl:with-param name ="SecondElement">
+											<xsl:call-template name ="formatDateMonthYear"/>
+										</xsl:with-param>
+									</xsl:call-template>
+								</xsl:variable>
+
+								<xsl:variable name ="URLHyphenSection">
+									<xsl:call-template name ="formatHyphenSection">
+										<xsl:with-param name ="FirstElement" select ="b:URL"/>
+									</xsl:call-template>
+								</xsl:variable>
+
+								<xsl:variable name ="VersionHyphenSection">
+									<xsl:call-template name ="formatHyphenSection">
+										<xsl:with-param name ="FirstElement" select ="b:Version"/>
+									</xsl:call-template>
+								</xsl:variable>
+
+								<xsl:variable name ="DateMonthYearHyphenSection">
+									<xsl:call-template name ="formatHyphenSection">
+										<xsl:with-param name ="FirstElement">
+											<xsl:call-template name ="formatDateMonthYear"/>
+										</xsl:with-param>
+									</xsl:call-template>
+								</xsl:variable>
+
+								<xsl:variable name ="SLProductionCompanyDistributorYearHyphenSection">
+									<xsl:call-template name ="formatHyphenSection">
+										<xsl:with-param name ="FirstElement">
+											<xsl:call-template name ="formatLocationElement">
+												<xsl:with-param name ="Location">
+													
+													
+												</xsl:with-param>
+												
+												<xsl:with-param name ="Publisher" select ="b:ProductionCompany"/>
+												<xsl:with-param name ="Distributor" select="b:Distributor"/>
+												<xsl:with-param name ="noSL">yes</xsl:with-param>
+											</xsl:call-template>
+										</xsl:with-param>
+										<xsl:with-param name ="SecondElement" select ="b:Year"/>
+									</xsl:call-template>
+								</xsl:variable>
+
+
+								<xsl:variable name ="CountryRegionDateMonthYearHyphenSection">
+									<xsl:call-template name ="formatHyphenSection">
+										<xsl:with-param name ="FirstElement" select ="b:CountryRegion"/>
+										<xsl:with-param name ="SecondElement">
+											<xsl:call-template name ="formatDateMonthYear"></xsl:call-template>
+										</xsl:with-param>
+									</xsl:call-template>
+								</xsl:variable>
+
+								<xsl:variable name ="CityPublisherProductionCompanyDateMonthYearHyphenSection">
+									
+									<xsl:variable name ='PublisherProductionCompany'>
+										<xsl:value-of select ='b:Publisher'/>
+										<xsl:if test ='string-length(b:Publisher)>0 and string-length(b:ProductionCompany)>0'>
+											
+											
+											
+											
+											
+											<xsl:value-of select="$constGost_PublisherProductionCompanySeparator"/>
+										</xsl:if>
+										<xsl:value-of select ='b:ProductionCompany'/>
+									</xsl:variable>
+
+									<xsl:call-template name ="formatHyphenSection">
+										<xsl:with-param name ="FirstElement">
+											<xsl:call-template name ="formatLocationElement">
+												<xsl:with-param name ="Location" select ="b:City"/>
+												<xsl:with-param name ="Publisher" select ="$PublisherProductionCompany"/>
+											</xsl:call-template>
+										</xsl:with-param>
+										<xsl:with-param name ="SecondElement">
+											<xsl:call-template name ="formatDateMonthYear"></xsl:call-template>
+										</xsl:with-param>
+									</xsl:call-template>
+								</xsl:variable>
+
+								<xsl:variable name ="CityCourtDateMonthYearHyphenSection">
+									<xsl:call-template name ="formatHyphenSection">
+										<xsl:with-param name ="FirstElement">
+											<xsl:call-template name ="formatLocationElement">
+												<xsl:with-param name ="Location" select ="b:City"/>
+												<xsl:with-param name ="Publisher" select ="b:Court"/>
+											</xsl:call-template>
+										</xsl:with-param>
+										<xsl:with-param name ="SecondElement">
+											<xsl:call-template name ="formatDateMonthYear"></xsl:call-template>
+										</xsl:with-param>
+									</xsl:call-template>
+								</xsl:variable>
+
+								<xsl:variable name ="DateMonthYearAccessedHyphenSection">
+									<xsl:call-template name ="formatHyphenSection">
+										<xsl:with-param name ="FirstElement">
+											<xsl:call-template name ="formatDateMonthYearAccessed" />
+										</xsl:with-param>
+									</xsl:call-template>
+								</xsl:variable>
+
+								
+
+								<xsl:variable name = "srcText">
+
+
+
+								
+								<b>
+									<xsl:if test="string-length(b:TitlePrefix) > 0">
+										<xsl:value-of select="b:TitlePrefix"/>
+										
+										<xsl:value-of select="$constGost_TitlePrefixTitleSeparator"/>
+									</xsl:if>
+									<xsl:value-of select="b:Title"/>
+								</b>
+
+								
+								
+								
+								<xsl:variable name ="SourceType">
+									<xsl:value-of select="b:SourceType"/>
+								</xsl:variable>
+
+								<xsl:choose>
+									<xsl:when test="string-length($SourceType)=0">
+									</xsl:when>
+									<xsl:when test="b:SourceType='InternetSite' or b:SourceType='DocumentFromInternetSite'">
+										<xsl:value-of select="$constGost_SourceTypeOpen"/>
+										<xsl:call-template name="templ_str_OnlineCap"/>
+										<xsl:value-of select="$constGost_SourceTypeClose"/>
+									</xsl:when>
+									<xsl:when test="b:SourceType='Misc' or b:SourceType='ElectronicSource' or b:SourceType='Film'">
+										<xsl:if test="string-length(b:Medium) > 0">
+											<xsl:value-of select="$constGost_SourceTypeOpen"/>
+											<xsl:value-of select="b:Medium"/>
+											<xsl:value-of select="$constGost_SourceTypeClose"/>
+										</xsl:if>
+									</xsl:when>
+									<xsl:otherwise>
+										<xsl:value-of select="$constGost_SourceTypeOpen"/>
+										<xsl:value-of select="/b:Bibliography/b:Locals/b:Local[@LCID=$LCID]/b:SourceNames/*[local-name()=$SourceType]"/>
+										<xsl:value-of select="$constGost_SourceTypeClose"/>
+									</xsl:otherwise>
+								</xsl:choose>
+								
+								
+
+                <xsl:if test = "b:SourceType='ElectronicSource' and string-length(b:PublicationTitle) >0">
+                  
+                  
+                  
+                  <xsl:value-of select="$constGost_ShortTitleHeader"/>
+                  <xsl:value-of select="b:PublicationTitle" />
+                </xsl:if>
+
+								<xsl:if test = "b:SourceType='Case' and string-length(b:Reporter) >0">
+									<xsl:value-of select="$constGost_ShortTitleHeader"/>
+									<xsl:value-of select="b:Reporter" />
+								</xsl:if>
+
+                
+								<xsl:if test = "string-length(b:ShortTitle) >0">
+									
+									
+									
+									<xsl:value-of select="$constGost_ShortTitleHeader"/>
+									<xsl:value-of select="b:ShortTitle" />
+								</xsl:if>
+
+								
+
+								
+								<xsl:if test ="b:SourceType='Book'">
+
+									<xsl:call-template name ="formatPrimaryResponsibilities">
+										<xsl:with-param name ="FirstElement" select ="$Authors"/>
+										<xsl:with-param name ="NonEmptyPrimSectionsCount">
+											<xsl:call-template name ="getNonEmpty_Book_PrimSectionsCount"/>
+										</xsl:with-param>
+									</xsl:call-template>
+
+									<xsl:call-template name ="formatSecondaryResponsibilities">
+										<xsl:with-param name ="FirstElement" select ="$Editors"/>
+										<xsl:with-param name ='SecondElement' select ='$Translators'/>
+									</xsl:call-template>
+
+									<xsl:value-of select ="$CityPublisherYearHyphenSection"/>
+									<xsl:value-of select ="$EditionVolumeNumberVolumesPagesHyphenSection"/>
+								</xsl:if>
+								
+
+								
+								<xsl:if test ="b:SourceType='BookSection'">
+									<xsl:call-template name ="formatPrimaryResponsibilities">
+										<xsl:with-param name ="FirstElement" select ="$Authors"/>
+										<xsl:with-param name ="NonEmptyPrimSectionsCount">
+											<xsl:call-template name ="getNonEmpty_BookSection_PrimSectionsCount"/>
+										</xsl:with-param>
+									</xsl:call-template>
+
+									<xsl:call-template name ="formatSecondaryResponsibilities">
+										<xsl:with-param name ="CollectionName" select ="b:BookTitle"/>
+										<xsl:with-param name ="FirstElement" select ="$BookMainAuthors"/>
+										<xsl:with-param name ='SecondElement' select ='$Editors'/>
+										<xsl:with-param name ='ThirdElement' select ='$Translators'/>
+									</xsl:call-template>
+
+									<xsl:value-of select ="$CityPublisherYearHyphenSection"/>
+									<xsl:value-of select ="$VolumeNumberVolumesHyphenSection"/>
+								</xsl:if>
+
+								<xsl:if test ="b:SourceType='JournalArticle'">
+
+
+									<xsl:call-template name ="formatPrimaryResponsibilities">
+										<xsl:with-param name ="FirstElement" select ="$Authors"/>
+										<xsl:with-param name ="NonEmptyPrimSectionsCount">
+											<xsl:call-template name ="getNonEmpty_JournalArticle_PrimSectionsCount"/>
+										</xsl:with-param>
+									</xsl:call-template>
+
+									<xsl:call-template name ="formatSecondaryResponsibilities">
+										<xsl:with-param name ="CollectionName" select ="b:JournalName"/>
+										<xsl:with-param name ="FirstElement" select ="$Editors"/>
+									</xsl:call-template>
+
+									<xsl:value-of select ="$CityPublisherDateMonthYearHyphenSection"/>
+									<xsl:value-of select ="$IssueVolumeHyphenSection"/>
+									<xsl:value-of select ="$PagesHyphenSection"/>
+								</xsl:if>
+
+
+								<xsl:if test ="b:SourceType='ArticleInAPeriodical'">
+
+									<xsl:call-template name ="formatPrimaryResponsibilities">
+										<xsl:with-param name ="FirstElement" select ="$Authors"/>
+										<xsl:with-param name ="NonEmptyPrimSectionsCount">
+											<xsl:call-template name ="getNonEmpty_ArticleInAPeriodical_PrimSectionsCount"/>
+										</xsl:with-param>
+									</xsl:call-template>
+
+									<xsl:call-template name ="formatSecondaryResponsibilities">
+										<xsl:with-param name ="CollectionName" select ="b:PeriodicalTitle"/>
+										<xsl:with-param name ="FirstElement" select ="$Editors"/>
+									</xsl:call-template>
+
+									<xsl:value-of select ="$CityPublisherDateMonthYearHyphenSection"/>
+									<xsl:value-of select ="$EditionHyphenSection"/>
+									<xsl:value-of select ="$IssueVolumeHyphenSection"/>
+									<xsl:value-of select ="$PagesHyphenSection"/>
+								</xsl:if>
+
+
+								<xsl:if test="b:SourceType='ConferenceProceedings'">
+									<xsl:call-template name ="formatPrimaryResponsibilities">
+										<xsl:with-param name ="FirstElement" select ="$Authors"/>
+										<xsl:with-param name ="NonEmptyPrimSectionsCount">
+											<xsl:call-template name ="getNonEmpty_ConferenceProceedings_PrimSectionsCount"/>
+										</xsl:with-param>
+									</xsl:call-template>
+
+									<xsl:call-template name ="formatSecondaryResponsibilities">
+										<xsl:with-param name ="CollectionName" select ="b:ConferenceName"/>
+										<xsl:with-param name ="FirstElement" select ="$Editors"/>
+									</xsl:call-template>
+
+									<xsl:value-of select ="$CityPublisherYearHyphenSection"/>
+									<xsl:value-of select ="$VolumeHyphenSection"/>
+									<xsl:value-of select ="$PagesHyphenSection"/>
+								</xsl:if>
+
+
+								<xsl:if test="b:SourceType='Report'">
+
+									<xsl:if test="string-length(b:ThesisType)>0">
+										
+										
+										
+										
+										
+										<xsl:value-of select="$constGost_ReportTypeHeader"/>
+										<xsl:value-of select="b:ThesisType"/>
+									</xsl:if>
+
+									<xsl:call-template name ="formatPrimaryResponsibilities">
+										<xsl:with-param name ="FirstElement" select ="$Authors"/>
+										<xsl:with-param name ="NonEmptyPrimSectionsCount">
+											<xsl:call-template name ="getNonEmpty_Report_PrimSectionsCount"/>
+										</xsl:with-param>
+									</xsl:call-template>
+
+									<xsl:variable name = "DepartmentAndInstitution">
+										<xsl:call-template name ="format_SemiColonSeparated_Items">
+											<xsl:with-param name ="Item1" select ="b:Department"/>
+											<xsl:with-param name ="Item2" select ="b:Institution"/>
+										</xsl:call-template>
+									</xsl:variable>
+
+									<xsl:call-template name ="formatSecondaryResponsibilities">
+										<xsl:with-param name ="FirstElement" select ="$DepartmentAndInstitution"/>
+									</xsl:call-template>
+
+									<xsl:value-of select ="$CityPublisherYearHyphenSection"/>
+									<xsl:value-of select ="$PagesHyphenSection"/>
+								</xsl:if>
+
+
+								<xsl:if test="b:SourceType='SoundRecording'">
+
+									<xsl:if test="string-length(b:Medium)>0">
+										
+										
+										
+										
+										
+										<xsl:value-of select="$constGost_SoundRecordingMediumHeader"/>
+										<xsl:value-of select="b:Medium"/>
+									</xsl:if>
+
+									<xsl:call-template name ="formatPrimaryResponsibilities">
+										<xsl:with-param name ="FirstElement" select ="$Artists"/>
+										<xsl:with-param name ="SecondElement" select ="$Composers"/>
+										<xsl:with-param name ="NonEmptyPrimSectionsCount">
+											<xsl:call-template name ="getNonEmpty_SoundRecording_PrimSectionsCount"/>
+										</xsl:with-param>
+									</xsl:call-template>
+
+									<xsl:call-template name ="formatSecondaryResponsibilities">
+										<xsl:with-param name ="CollectionName" select ="b:AlbumTitle"/>
+										<xsl:with-param name ="FirstElement" select ="$Conductors"/>
+										<xsl:with-param name ='SecondElement' select ='$Performers'/>
+										<xsl:with-param name ='ThirdElement' select ='$ProducerNames'/>
+									</xsl:call-template>
+
+									<xsl:value-of select ="$CityProductionCompanyYearHyphenSection"/>
+								</xsl:if>
+
+
+								<xsl:if test ="b:SourceType='Performance'">
+									<xsl:call-template name ="formatPrimaryResponsibilities">
+										<xsl:with-param name ="FirstElement" select ="$Writers"/>
+										<xsl:with-param name ="SecondElement" select ="$Performers"/>
+										<xsl:with-param name ="ThirdElement" select ="$Directors"/>
+										<xsl:with-param name ="NonEmptyPrimSectionsCount">
+											<xsl:call-template name ="getNonEmpty_Performance_PrimSectionsCount"/>
+										</xsl:with-param>
+									</xsl:call-template>
+
+									<xsl:call-template name ="formatSecondaryResponsibilities">
+										<xsl:with-param name ="FirstElement" select ="$ProducerNames"/>
+									</xsl:call-template>
+
+									<xsl:value-of select ="$TheaterCityProductionCompanyDateMonthYearHyphenSection"/>
+								</xsl:if>
+
+								<xsl:if test="b:SourceType='Art'">
+									<xsl:call-template name ="formatPrimaryResponsibilities">
+										<xsl:with-param name ="FirstElement" select ="$Artists"/>
+										<xsl:with-param name ="NonEmptyPrimSectionsCount">
+											<xsl:call-template name ="getNonEmpty_Art_PrimSectionsCount"/>
+										</xsl:with-param>
+									</xsl:call-template>
+
+									<xsl:value-of select ="$CityInstitutionHyphenSection"/>
+								</xsl:if>
+
+								<xsl:if test="b:SourceType='DocumentFromInternetSite'">
+									<xsl:call-template name ="formatPrimaryResponsibilities">
+										<xsl:with-param name ="FirstElement" select ="$Authors"/>
+										<xsl:with-param name ="NonEmptyPrimSectionsCount">
+											<xsl:call-template name ="getNonEmpty_DocumentFromInternetSite_PrimSectionsCount"/>
+										</xsl:with-param>
+									</xsl:call-template>
+
+									<xsl:call-template name ='formatSecondaryResponsibilities'>
+										<xsl:with-param name ='CollectionName' select ='b:InternetSiteTitle'/>
+										<xsl:with-param name ='FirstElement' select ='$Editors'/>
+										<xsl:with-param name ='SecondElement' select ='$ProducerNames'/>
+									</xsl:call-template>
+									<xsl:value-of select ="$ProductionCompanyDateMonthYearHyphenSection"/>
+									<xsl:value-of select ="$VersionHyphenSection"/>
+									<xsl:value-of select ="$DateMonthYearAccessedHyphenSection"/>
+									<xsl:value-of select ="$URLHyphenSection"/>
+								</xsl:if>
+
+								<xsl:if test ="b:SourceType = 'InternetSite'">
+									<xsl:call-template name ="formatPrimaryResponsibilities">
+										<xsl:with-param name ="FirstElement" select ="$Authors"/>
+										<xsl:with-param name ="NonEmptyPrimSectionsCount">
+											<xsl:call-template name ="getNonEmpty_InternetSite_PrimSectionsCount"/>
+										</xsl:with-param>
+									</xsl:call-template>
+
+									<xsl:call-template name ='formatSecondaryResponsibilities'>
+										<xsl:with-param name ='CollectionName' select ='b:InternetSiteTitle'/>
+										<xsl:with-param name ="FirstElement" select ="$Editors"/>
+										<xsl:with-param name ='SecondElement' select ='$ProducerNames'/>
+									</xsl:call-template>
+
+									<xsl:value-of select ="$ProductionCompanyDateMonthYearHyphenSection"/>
+									<xsl:value-of select ="$DateMonthYearAccessedHyphenSection"/>
+									<xsl:value-of select ="$URLHyphenSection"/>
+								</xsl:if>
+
+
+
+
+								<xsl:if test ="b:SourceType='Film'">
+									<xsl:call-template name ="formatPrimaryResponsibilities">
+										<xsl:with-param name ="FirstElement" select ="$Writers"/>
+										<xsl:with-param name ="SecondElement" select ="$Performers"/>
+										<xsl:with-param name ="ThirdElement" select ="$Directors"></xsl:with-param>
+										<xsl:with-param name ="NonEmptyPrimSectionsCount">
+											<xsl:call-template name ="getNonEmpty_Film_PrimSectionsCount"/>
+										</xsl:with-param>
+									</xsl:call-template>
+
+									<xsl:call-template name ="formatSecondaryResponsibilities">
+										<xsl:with-param name ="FirstElement" select ="$ProducerNames"/>
+									</xsl:call-template>
+
+									<xsl:value-of select ="$SLProductionCompanyDistributorYearHyphenSection"/>
+								</xsl:if>
+
+
+								
+								<xsl:if test ="b:SourceType='Interview'">
+									<xsl:call-template name ="formatSecondaryResponsibilities">
+                    <xsl:with-param name ="FirstElement" select ="$Interviewees"/>
+                    <xsl:with-param name ="SecondElement" select ="$Compilers"/>
+										<xsl:with-param name ="ThirdElement" select ="$Editors"/>
+										<xsl:with-param name ="FourthElement" select ="$Translators"/>
+									</xsl:call-template>
+
+									<xsl:value-of select="$CityBroadcasterStationPublisherDateMonthYearHyphenSection"/>
+									<xsl:value-of select ="$PagesHyphenSection"/>
+								</xsl:if>
+
+
+								<xsl:if test ="b:SourceType='Patent'">
+									<xsl:if test ="string-length(b:PatentNumber) >0">
+										
+										
+										
+										
+										<xsl:value-of select="$constGost_PatentNumberHeader"/>
+										<xsl:value-of select ="b:PatentNumber"/>
+									</xsl:if>
+									<xsl:if test ="string-length(b:Type) >0">
+										
+										
+										
+										
+										
+										<xsl:value-of select="$constGost_PatentTypeHeader"/>
+										<xsl:value-of select ="b:Type"/>
+									</xsl:if>
+
+									<xsl:call-template name ="formatPrimaryResponsibilities">
+										<xsl:with-param name ='FirstElement' select ='$Inventors'/>
+										<xsl:with-param name ="NonEmptyPrimSectionsCount">
+											<xsl:call-template name ="getNonEmpty_Patent_PrimSectionsCount"/>
+										</xsl:with-param>
+									</xsl:call-template>
+
+									<xsl:call-template name ="formatSecondaryResponsibilities">
+										<xsl:with-param name ="FirstElement" select ="$Editors"/>
+										<xsl:with-param name ="SecondElement" select ="$Translators"/>
+									</xsl:call-template>
+
+									<xsl:value-of select ="$CountryRegionDateMonthYearHyphenSection"/>
+								</xsl:if>
+
+								<xsl:if test ="b:SourceType='ElectronicSource'">
+									<xsl:call-template name ='formatPrimaryResponsibilities'>
+										<xsl:with-param name ='FirstElement' select ='$Authors'/>
+										<xsl:with-param name ="NonEmptyPrimSectionsCount">
+											<xsl:call-template name ="getNonEmpty_ElectronicSource_PrimSectionsCount"/>
+										</xsl:with-param>
+									</xsl:call-template>
+
+									<xsl:call-template name ='formatSecondaryResponsibilities'>
+                    <xsl:with-param name ='FirstElement' select ='$Editors'/>
+                    <xsl:with-param name ='SecondElement' select ='$ProducerNames'/>
+                    <xsl:with-param name ='ThirdElement' select ='$Translators'/>
+                  </xsl:call-template>
+
+									<xsl:value-of select="$CityPublisherProductionCompanyDateMonthYearHyphenSection"/>
+									<xsl:value-of select ="$EditionHyphenSection"/>
+									<xsl:value-of select ="$VolumeHyphenSection"/>
+								</xsl:if>
+
+								<xsl:if test="b:SourceType='Case'">
+									<xsl:if test ="string-length(b:CaseNumber) >0">
+										
+										
+										
+										
+										
+										<xsl:value-of select="$constGost_CaseNumberHeader"/>
+										<xsl:value-of select ="b:CaseNumber"/>
+									</xsl:if>
+
+									<xsl:if test ="string-length(b:AbbreviatedCaseNumber) >0">
+										
+										
+										
+										
+										
+										<xsl:value-of select="$constGost_AbbreviatedCaseNumberHeader"/>
+										<xsl:value-of select ="b:AbbreviatedCaseNumber"/>
+									</xsl:if>
+
+									<xsl:call-template name ='formatPrimaryResponsibilities'>
+										<xsl:with-param name ='FirstElement' select ='$Authors'/>
+										<xsl:with-param name ="NonEmptyPrimSectionsCount">
+											<xsl:call-template name ="getNonEmpty_Case_PrimSectionsCount"/>
+										</xsl:with-param>
+									</xsl:call-template>
+
+									<xsl:call-template name ='formatSecondaryResponsibilities'>
+										<xsl:with-param name ='FirstElement' select ='$Counsels'/>
+									</xsl:call-template>
+
+									<xsl:value-of select ="$CityCourtDateMonthYearHyphenSection"/>
+								</xsl:if>
+
+
+								<xsl:if test="b:SourceType='Misc'">
+									<xsl:call-template name ='formatPrimaryResponsibilities'>
+										<xsl:with-param name ='FirstElement' select ='$Authors'/>
+										<xsl:with-param name ="NonEmptyPrimSectionsCount">
+											<xsl:call-template name ="getNonEmpty_Misc_PrimSectionsCount"/>
+										</xsl:with-param>
+									</xsl:call-template>
+
+									<xsl:call-template name ='formatSecondaryResponsibilities'>
+										<xsl:with-param name ='CollectionName' select ='b:PublicationTitle'/>
+										<xsl:with-param name ='FirstElement' select ='$Compilers'/>
+										<xsl:with-param name ="SecondElement" select ="$Editors"/>
+										<xsl:with-param name ='ThirdElement' select ='$Translators'/>
+									</xsl:call-template>
+
+									<xsl:value-of select ="$CityPublisherDateMonthYearHyphenSection"/>
+									<xsl:value-of select ="$EditionHyphenSection"/>
+									<xsl:value-of select ="$VolumeHyphenSection"/>
+									<xsl:value-of select ="$PagesHyphenSection"/>
+								</xsl:if>
+
+								
+								<xsl:call-template name ="formatHyphenSection">
+									<xsl:with-param name ="FirstElement" select ="b:Comments"/>
+								</xsl:call-template>
+								
+								<xsl:call-template name ="formatHyphenSection">
+									<xsl:with-param name ="FirstElement" select ="b:StandardNumber"/>
+								</xsl:call-template>
+
+								</xsl:variable>
+
+								<xsl:if test = "string-length(normalize-space($srcText)) > 0">
+									<xsl:copy-of select = "$srcText" />
+									<xsl:call-template name="templ_prop_Dot"/>
+								</xsl:if>
+							</xsl:element>
+						</xsl:for-each>
+					</body>
+				</html>

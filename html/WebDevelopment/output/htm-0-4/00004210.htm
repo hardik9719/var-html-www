@@ -1,0 +1,107 @@
+<html><h1 class="refsect1">HIER_PARENT</h1>
+<p><code>HIER_PARENT</code> returns the parent of either all dimension members in a hierarchy or a particular member. The hierarchy can be either level-based or value-based.</p>
+<p class="titleinrefsubsect"><a id="sthref149" name="sthref149"></a>Return Value</p>
+<pre xml:space="preserve" class="oac_no_warn">VARCHAR2
+</pre>
+<p class="titleinrefsubsect"><a id="sthref150" name="sthref150"></a>Syntax</p>
+<pre xml:space="preserve" class="oac_no_warn"><span class="bold">HIER_PARENT (</span> 
+   [member_expression] [<span class="bold">WITHIN</span>]
+   {<span class="bold">DIMENSION</span> dimension_id | <span class="bold">HIERARCHY</span> hierarchy_id} <span class="bold">)</span> 
+</pre>
+<p class="titleinrefsubsect"><a id="sthref151" name="sthref151"></a>Arguments</p>
+<p class="subhead2"><a id="OLAXS241" name="OLAXS241"></a><a id="sthref152" name="sthref152"></a><span class="italic">member_expression</span></p>
+<p>Identifies a single dimension member within the hierarchy used for the calculation. If this optional argument is specified, then the result does not vary across dimension members.</p>
+<p class="subhead2"><a id="OLAXS242" name="OLAXS242"></a><a id="sthref153" name="sthref153"></a><span class="italic">dimension_id</span></p>
+<p>The dimension over which the values are calculated using the default hierarchy.</p>
+<p class="subhead2"><a id="OLAXS243" name="OLAXS243"></a><a id="sthref154" name="sthref154"></a><span class="italic">hierarchy_id</span></p>
+<p>The hierarchy over which the values are calculated. If <code><span class="codeinlineitalic">dimension_id</span></code> is used instead, the default hierarchy is used.</p>
+<p class="titleinrefsubsect"><a id="sthref155" name="sthref155"></a>Example</p>
+<p>This example returns the parents of all members of the default hierarchy of the Time dimension.</p>
+<p><code>HIER_PARENT(DIMENSION GLOBAL.TIME)</code></p>
+<div class="inftblinformal">
+<table class="Informal" title="HIER_PARENT Example 1" summary="Output from HIER_PARENT example 1" dir="ltr" border="1" width="100%" frame="hsides" rules="groups" cellpadding="3" cellspacing="0">
+<col width="*" />
+<col width="50%" />
+<thead>
+<tr align="left" valign="top">
+<th align="left" valign="bottom" id="r1c1-t13">Time</th>
+<th align="left" valign="bottom" id="r1c2-t13">Parent</th>
+</tr>
+</thead>
+<tbody>
+<tr align="left" valign="top">
+<td align="left" id="r2c1-t13" headers="r1c1-t13">2006</td>
+<td align="left" headers="r2c1-t13 r1c2-t13">TOTAL</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r3c1-t13" headers="r1c1-t13">Q1.06</td>
+<td align="left" headers="r3c1-t13 r1c2-t13">CY2006</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r4c1-t13" headers="r1c1-t13">Q2.06</td>
+<td align="left" headers="r4c1-t13 r1c2-t13">CY2006</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r5c1-t13" headers="r1c1-t13">Q3.06</td>
+<td align="left" headers="r5c1-t13 r1c2-t13">CY2006</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r6c1-t13" headers="r1c1-t13">Q4.06</td>
+<td align="left" headers="r6c1-t13 r1c2-t13">CY2006</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r7c1-t13" headers="r1c1-t13">JAN-06</td>
+<td align="left" headers="r7c1-t13 r1c2-t13">CY2006.Q1</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r8c1-t13" headers="r1c1-t13">FEB-06</td>
+<td align="left" headers="r8c1-t13 r1c2-t13">CY2006.Q1</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r9c1-t13" headers="r1c1-t13">MAR-06</td>
+<td align="left" headers="r9c1-t13 r1c2-t13">CY2006.Q1</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r10c1-t13" headers="r1c1-t13">APR-06</td>
+<td align="left" headers="r10c1-t13 r1c2-t13">CY2006.Q2</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r11c1-t13" headers="r1c1-t13">MAY-06</td>
+<td align="left" headers="r11c1-t13 r1c2-t13">CY2006.Q2</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r12c1-t13" headers="r1c1-t13">JUN-06</td>
+<td align="left" headers="r12c1-t13 r1c2-t13">CY2006.Q2</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r13c1-t13" headers="r1c1-t13">JUL-06</td>
+<td align="left" headers="r13c1-t13 r1c2-t13">CY2006.Q3</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r14c1-t13" headers="r1c1-t13">AUG-06</td>
+<td align="left" headers="r14c1-t13 r1c2-t13">CY2006.Q3</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r15c1-t13" headers="r1c1-t13">SEP-06</td>
+<td align="left" headers="r15c1-t13 r1c2-t13">CY2006.Q3</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r16c1-t13" headers="r1c1-t13">OCT-06</td>
+<td align="left" headers="r16c1-t13 r1c2-t13">CY2006.Q4</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r17c1-t13" headers="r1c1-t13">NOV-06</td>
+<td align="left" headers="r17c1-t13 r1c2-t13">CY2006.Q4</td>
+</tr>
+<tr align="left" valign="top">
+<td align="left" id="r18c1-t13" headers="r1c1-t13">DEC-06</td>
+<td align="left" headers="r18c1-t13 r1c2-t13">CY2006.Q4</td>
+</tr>
+</tbody>
+</table>
+<br /></div>
+<!-- class="inftblinformal" -->
+<p>The next example returns <code>EMEA</code> as the parent of Italy within the default hierarchy of the Customer dimension.</p>
+<p><code>HIER_PARENT('ITA' WITHIN DIMENSION CUSTOMER)</code></p>
+</div>
+</html>

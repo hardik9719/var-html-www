@@ -1,0 +1,151 @@
+<html>
+<head>
+<meta name="Version" content="4730"> <meta name="Microsoft Theme" content="none">
+<title>Add or Edit Discussion Servers</title>
+<style type="text/css"><!-- .dlgTitle {font: 12pt/14pt tahoma; font-weight: normal; color: "WindowText"; font-style: normal} .dlgLabel {font: 8pt/9pt tahoma; color: "WindowText"} .dlgLabelB {font: 8pt/9pt tahoma; font-weight:bold; color: "WindowText"} .dlgLabelI {font: 8pt/9pt tahoma; font-style:italic; color: "WindowText"} .dlgLabelU {font: 8pt/9pt tahoma; text-decoration:underline; color: "WindowText"} .dlgControl {font: 9pt tahoma; color: "WindowText"; width: 400px} .dlgLabelDisabled {font: 8pt/9pt tahoma; color: "GrayText"; filter: dropshadow(color=white, offx=1, offy=1)} .dlgEdit {font: 8pt/9pt tahoma; color: "WindowText"; width: 400px} .dlgLink {cursor: hand; text-decoration:none; color: "ButtonText"} .dlgLinkDisabled {cursor: default; text-decoration:none; color: "ButtonShadow"} .dlgBtn {cursor: hand; border-width: 0; color: "ButtonText"} .dlgBtnDisabled {cursor: default; border-width: 0; color: "ButtonShadow"; filter: dropshadow(color=white, offx=1, offy=1)} .dlgPushBtn {cursor: hand; font: 8pt/9pt tahoma; color: "ButtonText"; width=102px} .dlgOKCancelBtn {font: 8pt/9pt tahoma; color: "ButtonText"; width=80px} .dlgDropDown {font: 8pt/9pt tahoma; color: "WindowText"; width: 200px} .dlgTextEdit {font: 9pt tahoma; color: "WindowText"; width: 400px; height: 140px} .dlgHalfEdit {font: 8pt/9pt tahoma; color: "WindowText"; width: 262px} .dlgSmallDropDown {font: 8pt/9pt tahoma; color: "WindowText"; width: 100px} --></style>
+<script>
+function CloseDialog(fCancel)
+{
+	if (fCancel && !OnCancel())
+		return;
+	if (fCancel || ReturnDialogArgs())
+		window.close();
+}
+function BodyKeyDown()
+{
+	kc = window.event.keyCode;
+	if (kc == 27)  
+		{
+		CloseDialog(true);
+		window.event.keyCode = 34;  
+		}
+	else if (kc == 13 && OnEnter())  
+		CloseDialog(false);
+}
+var L_MissingServer_Text = "Please enter a valid Discussion Server";
+var L_ServerNameTooLong_Text = "The name specified for the server or its location is too long";
+var L_FriendlyNameExists_Text = "A server with this name already exists";
+var L_InvalidServerName_Text = "The name specified for the server is not valid";
+dialogWidth = "425px";
+dialogHeight = "328px";
+function ParseServer(SrvName)
+{
+	var ret = new Array(2);
+	var i, prot;
+	ret[1] = false;
+	i = SrvName.indexOf("://");	
+	if (i>=0)
+		{
+		prot = SrvName.substr(0, i);
+		if (prot == "https")
+			ret[1] = true;
+		SrvName = SrvName.substr(i+3);
+		l = SrvName.length;
+		if (SrvName.charAt(l-1) == '/')
+			SrvName = SrvName.substr(0, l-1)
+		}
+	ret[0] = SrvName
+	return ret;
+}
+function Init()
+{
+	var SrvName;
+	dialogHeight = 328+(328 -25)-document.body.clientHeight+"px";
+	OldFriendly = window.dialogArguments.getAttribute("Friendly");
+	SrvName = window.dialogArguments.getAttribute("Server");
+	friendly.value = OldFriendly;
+	if (SrvName != "")
+		{
+		srv = ParseServer(SrvName);
+		if (srv[1])
+			secure.checked = true;
+		server.value = srv[0];
+		}
+	Servers = window.dialogArguments.getAttribute("Servers");
+	server.select();
+}
+function OnEnter() { return true; }
+function OnCancel()
+{
+	window.dialogArguments.setAttribute("Friendly", "");
+	return true;
+}
+function ReturnDialogArgs()
+{
+	var srv = ParseServer(server.value);
+	var FrndName = friendly.value;
+	if (srv[0] == "" || srv[0] == " ")
+		{
+		alert(L_MissingServer_Text);
+		server.focus();
+		return false;
+		}
+	if (FrndName.length > 256 || srv[0].length > 256)
+		{
+		alert(L_ServerNameTooLong_Text);
+		server.focus();
+		return false;
+		}
+	if (FrndName == "" || FrndName == " ")
+		FrndName = srv[0];
+	if (FrndName.indexOf("\\") >= 0)
+		{
+		alert(L_InvalidServerName_Text);
+		friendly.focus();
+		return false;
+		}
+	if (OldFriendly.toLowerCase() != FrndName.toLowerCase() &&
+		Servers.item(FrndName) != null)
+		{
+		alert(L_FriendlyNameExists_Text);
+		friendly.focus();
+		return false;
+		}
+	if (secure.checked || srv[1])
+		srv[0] = "https://" + srv[0] + '/';
+	else
+		srv[0] = "http://" + srv[0] + '/';
+	window.dialogArguments.setAttribute("Friendly", FrndName);
+	window.dialogArguments.setAttribute("Server", srv[0]);
+	return true;
+}
+</script>
+</head>
+<body scroll="no" topmargin="4" leftmargin="5" bottommargin="0" rightmargin="13" bgcolor="ThreedFace" text="ThreedShadow"
+onLoad="Init()" bgproperties="fixed" onkeydown="BodyKeyDown()">
+<div align=left>
+<table border="0" cellpadding="0">
+	<tr>
+		<td width="127" rowspan="5">
+			<div align=left>
+			<table border="0" width="100%" height="100%" cellpadding="0"><tr><td width="100%">
+				<img src=addsvr.gif width=115 height=240>
+			</td></tr></table>
+			</div>
+		</td>
+	</tr>
+	<tr>	
+		<td width="326" valign="top" colspan="2">
+			<table border="0" style="padding-top:4px;padding-bottom:4px;padding-left:4px" cellspacing="0" width=100%> <tr> <td width="1%" nowrap bgcolor="ThreedFace"> <div id="diidTitle" class="dlgLabel">Choose a discussion server</div></td><td><hr></td></tr> </table></td></tr>
+		<tr>
+		<td width="326" valign="top" style="padding-left:5px;padding-top:1px" >
+			<div id=diidServerLabel class="dlgLabel" ><u>T</u>ype the name of the discussion server your administrator has provided:</div>
+		<br>
+			<input title="Discussion Server" id=diidServerEdit type="text" name="server" class="dlgHalfEdit" accesskey=t
+				style="margin-top:8px;margin-bottom:8px" maxLength=240>
+			<div id=diidSecureLabel class="dlgLabel">
+				<input title="Secure connection required" id=diidSecureCheck type="checkbox" name="secure" accesskey=s>
+				&nbsp<u>S</u>ecure connection required (SSL)</div>
+		<br>
+		<tr><td height=0 cellpadding=0></td></tr>
+		<tr><td width="326" valign="top" style="padding-left:5px;padding-top:1px" >
+		<div id=diidNameLabel class="dlgLabel">You can type any <u>n</u>ame you want to use as a friendly name for the discussion server</div>
+		<div><input title="Friendly name" id=diidFriendlyEdit type="text" class="dlgHalfEdit" name="friendly" accesskey=n
+			style="margin-top:8px;" maxLength=120></div>
+	</td></tr>
+</table>
+<hr>
+</div>
+<table border="0" cellpadding="0" style="padding-top:0;padding-bottom:0" cellspacing="0" width=397> <tr> <td bgcolor="ThreedFace" align="right">  <input type="button" class="dlgOKCancelBtn" id="diidOK" value="OK" onclick="CloseDialog(0)" /> &nbsp<input type="button" class="dlgOKCancelBtn" id="diidCancel" value="Cancel" onclick="CloseDialog(1)" onkeydown="window.event.cancelBubble = true" /> </td></tr> </table>
+</body>
+</html>

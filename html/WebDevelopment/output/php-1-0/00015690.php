@@ -1,0 +1,1 @@
+<?php\n$servername = \"localhost\";\n$username = \"root\";\n$password = \"root\";\n$dbname = \"mydb\";\n\n// Create connection\n\t\n\n// Check connection\nif ($conn->

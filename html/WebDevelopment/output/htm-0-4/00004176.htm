@@ -1,0 +1,42 @@
+<html><h1 class="refsect1">TO_BINARY_DOUBLE</h1>
+<p><code>TO_BINARY_DOUBLE</code> converts a text or numeric expression to a double-precision floating-point number.</p>
+<p class="titleinrefsubsect"><a id="sthref652" name="sthref652"></a>Return Value</p>
+<pre xml:space="preserve" class="oac_no_warn">BINARY_DOUBLE
+</pre>
+<p class="titleinrefsubsect"><a id="sthref653" name="sthref653"></a>Syntax</p>
+<pre xml:space="preserve" class="oac_no_warn"><span class="bold">TO_BINARY_DOUBLE </span>(expr [, fmt [, 'nlsparam' ] ])
+</pre>
+<p class="titleinrefsubsect"><a id="sthref654" name="sthref654"></a>Arguments</p>
+<p><code>n</code> can be any text or numeric expression.</p>
+<p><code>fmt</code> is a text expression that identifies a number format model as described in the <span class="italic">Oracle Database SQL Language Reference</span>.</p>
+<p><code>nlsparam</code> specifies the characters used by these number format elements:</p>
+<ul>
+<li>
+<p>Decimal character</p>
+</li>
+<li>
+<p>Group separator</p>
+</li>
+<li>
+<p>Local currency symbol</p>
+</li>
+<li>
+<p>International currency symbol</p>
+</li>
+</ul>
+<p>This argument has the format shown here:</p>
+<pre xml:space="preserve" class="oac_no_warn">'NLS_NUMERIC_CHARACTERS = ''dg''
+ NLS_CURRENCY = ''text''
+ NLS_ISO_CURRENCY = territory '
+</pre>
+<p>The <code>d</code> is the decimal character, and the <code>g</code> is the group separator. They must be different single-byte characters. Within the quoted string, use two single quotation marks around the parameter values. Ten characters are available for the currency symbol.</p>
+<p>If you omit this argument or any of the NLS parameters, then this function uses the default values for your session to interpret <code>expr</code>.</p>
+<p class="titleinrefsubsect"><a id="sthref655" name="sthref655"></a>Example</p>
+<p>All of these examples return the value <code>1.235E+003</code>:</p>
+<pre xml:space="preserve" class="oac_no_warn">TO_BINARY_DOUBLE(1234.56)
+
+TO_BINARY_DOUBLE('$1,234.56', '$9,999.99')
+
+TO_BINARY_DOUBLE('1.234,56', '9G999D99', 'NLS_NUMERIC_CHARACTERS='',.''')
+</pre></div>
+</html>

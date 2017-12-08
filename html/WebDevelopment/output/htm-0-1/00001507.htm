@@ -1,0 +1,157 @@
+<html xmlns="http://www.w3.org/1999/xhtml"$lang_bits>\n<head>\n<title>$title</title>)
+                        : ($lang ? qq(<html lang="$lang">) : "<html>")
+	                  . "<head><title>$title</title>");
+	if (defined $author) {
+    push(@result,$XHTML ? "<link rev=\"made\" href=\"mailto:$author\" />"
+			: "<link rev=\"made\" href=\"mailto:$author\">");
+	}
+
+    if ($base || $xbase || $target) {
+	my $href = $xbase || $self->url('-path'=>1);
+	my $t = $target ? qq/ target="$target"/ : '';
+	push(@result,$XHTML ? qq(<base href="$href"$t />) : qq(<base href="$href"$t>));
+    }
+
+    if ($meta && ref($meta) && (ref($meta) eq 'HASH')) {
+	for (sort keys %$meta) { push(@result,$XHTML ? qq(<meta name="$_" content="$meta->{$_}" />) 
+			: qq(<meta name="$_" content="$meta->{$_}">)); }
+    }
+
+    my $meta_bits_set = 0;
+    if( $head ) {
+        if( ref $head ) {
+            push @result, @$head;
+            $meta_bits_set = 1 if grep { /http-equiv=["']Content-Type/i }@$head;
+        }
+        else {
+            push @result, $head;
+            $meta_bits_set = 1 if $head =~ /http-equiv=["']Content-Type/i;
+        }
+    }
+
+    # handle the infrequently-used -style and -script parameters
+    push(@result,$self->_style($style))   if defined $style;
+    push(@result,$self->_script($script)) if defined $script;
+    push(@result,$meta_bits)              if defined $meta_bits and !$meta_bits_set;
+
+    # handle -noscript parameter
+    push(@result,<<END) if $noscript;
+<noscript>
+$noscript
+</noscript>
+END
+    ;
+    my($other) = @other ? " @other" : '';
+    push(@result,"</head>\n<body$other>\n");
+    return join("\n",@result);
+}
+
+### Method: _style
+# internal method for generating a CSS style section
+####
+sub _style {
+    my ($self,$style) = @_;
+    my (@result);
+
+    my $type = 'text/css';
+    my $rel  = 'stylesheet';
+
+
+    my $cdata_start = $XHTML ? "\n<!--/* <![CDATA[ */" : "\n<!-- ";
+    my $cdata_end   = $XHTML ? "\n/* ]]> */-->\n" : " -->\n";
+
+    my @s = ref($style) eq 'ARRAY' ? @$style : $style;
+    my $other = '';
+
+    for my $s (@s) {
+      if (ref($s)) {
+       my($src,$code,$verbatim,$stype,$alternate,$foo,@other) =
+           rearrange([qw(SRC CODE VERBATIM TYPE ALTERNATE FOO)],
+                      ('-foo'=>'bar',
+                       ref($s) eq 'ARRAY' ? @$s : %$s));
+       my $type = defined $stype ? $stype : 'text/css';
+       my $rel  = $alternate ? 'alternate stylesheet' : 'stylesheet';
+       $other = "@other" if @other;
+
+       if (ref($src) eq "ARRAY") # Check to see if the $src variable is an array reference
+       { # If it is, push a LINK tag for each one
+           for $src (@$src)
+         {
+           push(@result,$XHTML ? qq(<link rel="$rel" type="$type" href="$src" $other/>)
+                             : qq(<link rel="$rel" type="$type" href="$src"$other>)) if $src;
+         }
+       }
+       else
+       { # Otherwise, push the single -src, if it exists.
+         push(@result,$XHTML ? qq(<link rel="$rel" type="$type" href="$src" $other/>)
+                             : qq(<link rel="$rel" type="$type" href="$src"$other>)
+              ) if $src;
+        }
+     if ($verbatim) {
+           my @v = ref($verbatim) eq 'ARRAY' ? @$verbatim : $verbatim;
+           push(@result, "<style type=\"text/css\">\n$_\n</style>") for @v;
+      }
+       if ($code) {
+         my @c = ref($code) eq 'ARRAY' ? @$code : $code;
+         push(@result,style({'type'=>$type},"$cdata_start\n$_\n$cdata_end")) for @c;
+       }
+
+      } else {
+           my $src = $s;
+           push(@result,$XHTML ? qq(<link rel="$rel" type="$type" href="$src" $other/>)
+                               : qq(<link rel="$rel" type="$type" href="$src"$other>));
+      }
+    }
+    @result;
+}
+
+sub _script {
+    my ($self,$script) = @_;
+    my (@result);
+
+    my (@scripts) = ref($script) eq 'ARRAY' ? @$script : ($script);
+    for $script (@scripts) {
+    my($src,$code,$language,$charset);
+    if (ref($script)) { # script is a hash
+        ($src,$code,$type,$charset) =
+        rearrange(['SRC','CODE',['LANGUAGE','TYPE'],'CHARSET'],
+                 '-foo'=>'bar', # a trick to allow the '-' to be omitted
+                 ref($script) eq 'ARRAY' ? @$script : %$script);
+            $type ||= 'text/javascript';
+            unless ($type =~ m!\w+/\w+!) {
+                $type =~ s/[\d.]+$//;
+                $type = "text/$type";
+            }
+    } else {
+        ($src,$code,$type,$charset) = ('',$script, 'text/javascript', '');
+    }
+
+    my $comment = '//';  # javascript by default
+    $comment = '#' if $type=~/perl|tcl/i;
+    $comment = "'" if $type=~/vbscript/i;
+
+    my ($cdata_start,$cdata_end);
+    if ($XHTML) {
+       $cdata_start    = "$comment<![CDATA[\n";
+       $cdata_end     .= "\n$comment]]>";
+    } else {
+       $cdata_start  =  "\n<!-- Hide script\n";
+       $cdata_end    = $comment;
+       $cdata_end   .= " End script hiding -->\n";
+   }
+     my(@satts);
+     push(@satts,'src'=>$src) if $src;
+     push(@satts,'type'=>$type);
+     push(@satts,'charset'=>$charset) if ($src && $charset);
+     $code = $cdata_start . $code . $cdata_end if defined $code;
+     push(@result,$self->script({@satts},$code || ''));
+    }
+    @result;
+}
+
+#### Method: end_html
+# End an HTML document.
+# Trivial method for completeness.  Just returns "</body>"
+####
+sub end_html {
+    return "\n</body>\n</html>

@@ -1,0 +1,324 @@
+<html i18n-values="dir:textdirection;lang:language">
+<head>
+  <meta charset="utf-8">
+  <title i18n-content="Media Internals"></title>
+  <style>/* Copyright 2013 The Chromium Authors. All rights reserved.
+ * Use of this source code is governed by a BSD-style license that can be
+ * found in the LICENSE file. */
+
+html,
+body,
+#container {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  font-family:Arial;
+}
+
+tabbox {
+  margin-top: 10px;
+}
+
+tab {
+  -webkit-user-select: none;
+}
+
+body tabpanels {
+  box-shadow: none;
+}
+
+tabpanel {
+  padding: 10px;
+}
+
+table {
+  font-family: sans-serif;
+  -webkit-font-smoothing: antialiased;
+  font-size: 115%;
+  width: auto;
+  overflow: auto;
+  display: block;
+}
+th {
+  background-color: #4AA9E4;
+  font-weight: normal;
+  color: white;
+  padding: 2px;
+  text-align: center;
+  min-width: 230px;
+}
+td {
+  background-color: rgb(238, 238, 238);
+  padding: 2px;
+  color: rgb(111, 111, 111);
+  word-wrap: break-word;
+  min-width: 230px;
+}
+
+h1,
+h2,
+h3 {
+  color: rgb(50,50,50);
+}
+
+#container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  align-content: stretch;
+}
+
+#container > * {
+  padding: 0;
+  padding-left: 25px;
+  margin: 0;
+}
+
+#list-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  align-content: stretch;
+}
+
+#player-list-wrapper,
+#audio-component-list-wrapper {
+  flex-grow: 1;
+  align-self: stretch;
+  min-width: 200px;
+  overflow: auto;
+}
+
+#player-list-wrapper ul,
+#player-list-wrapper li,
+#audio-component-list-wrapper ul,
+#audio-component-list-wrapper li {
+  padding: 0px;
+  list-style-type: none;
+}
+#list-wrapper button {
+  padding: 0px;
+}
+
+.property-wrapper,
+#log-wrapper {
+  align-self: stretch;
+  display:block;
+  flex-grow: 0.25;
+  overflow: auto;
+  margin-bottom: 10px;
+}
+
+#video-capture-capabilities-wrapper {
+  flex-grow: 0.5;
+  align-self: stretch;
+  overflow: auto;
+}
+
+#log-wrapper > thead {
+  position: fixed;
+}
+
+#graphs li {
+  list-style-type: none;
+}
+
+#clipboard-textarea {
+  position: absolute;
+  width: 50%;
+  height: 50%;
+
+  left: 25%;
+  top: 25%;
+}
+
+.hiddenClipboard {
+  display: none;
+}
+
+.timestamp {
+  min-width: 115px;
+}
+
+#video-capture-capabilities-table {
+  margin-bottom:30px;
+}
+
+#video-capture-capabilities-table th,
+#video-capture-capabilities-table td {
+  min-width:120px;
+}
+
+#video-capture-capabilities-table td {
+  padding:5px;
+}
+
+#video-capture-capabilities-table tr td {
+  font-size:13px;
+  text-align:center;
+}
+
+#video-capture-capabilities-table .video-capture-formats-table th,
+#video-capture-capabilities-table .video-capture-formats-table td {
+  text-align:right;
+  min-width:80px;
+}
+
+#video-capture-capabilities-table .video-capture-formats-table th {
+  background:none;
+  color:#666;
+  font-size:13px;
+  font-weight:bold;
+}
+
+#video-capture-capabilities-table .video-capture-formats-table td {
+  padding:2px;
+}
+
+.show-none-if-empty:empty:after {
+  content: "none";
+  color: rgba(0, 0, 0, .5);
+}
+
+label.selectable-button {
+  -webkit-appearance: button;
+  -webkit-user-select: none;
+  padding: 2px 5px;
+  margin-bottom: 5px;
+}
+
+input.selectable-button {
+  display: none;
+}
+
+input.selectable-button:checked + label.selectable-button {
+  background-color: #4AA9E4;
+  color: white;
+}
+
+.no-players-selected #players .property-wrapper,
+.no-players-selected #players #log-wrapper {
+  display: none;
+}
+
+.no-components-selected #audio .property-wrapper {
+  display: none;
+}
+
+</style>
+  <script src="chrome://resources/js/cr.js"></script>
+  <script src="chrome://resources/js/cr/ui.js"></script>
+  <script src="chrome://resources/js/cr/ui/focus_outline_manager.js"></script>
+  <script src="chrome://resources/js/util.js"></script>
+  <script src="chrome://resources/js/cr/ui/tabs.js"></script>
+  <link rel="stylesheet" href="chrome://resources/css/text_defaults.css">
+  <link rel="stylesheet" href="chrome://resources/css/tabs.css">
+</head>
+
+<body>
+  <tabbox>
+    <tabs>
+      <tab>Players</tab>
+      <tab>Audio</tab>
+      <tab>Video Capture</tab>
+    </tabs>
+    <tabpanels>
+      <tabpanel id="players">
+        <div id="list-wrapper">
+          <div id="player-list-wrapper">
+            <h2>Players</h2>
+            <ul id="player-list" class="show-none-if-empty"></ul>
+          </div>
+        </div>
+        <div class="property-wrapper">
+          <h2>
+            Player Properties
+            <button class="copy-button">Copy to clipboard</button>
+          </h2>
+          <table id="player-property-table">
+            <thead>
+              <tr>
+                <th>Property</th>
+                <th>Value</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+        <div id="log-wrapper">
+          <h2>
+            Log <input id="filter-text" type="text" placeholder="property filter">
+          </h2>
+          <table id="log">
+            <thead>
+              <tr>
+                <th class="timestamp">Timestamp</th>
+                <th>Property</th>
+                <th>Value</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+        <ul id="graphs"></ul>
+      </tabpanel>
+      <tabpanel id="audio">
+        <div id="audio-component-list-wrapper">
+          <h2>Input Controllers</h2>
+          <ul id="audio-input-controller-list" class="show-none-if-empty"></ul>
+        </div>
+        <div id="audio-component-list-wrapper">
+          <h2>Output Controllers</h2>
+          <ul id="audio-output-controller-list" class="show-none-if-empty"></ul>
+        </div>
+        <div id="audio-component-list-wrapper">
+          <h2>Output Streams</h2>
+          <ul id="audio-output-stream-list" class="show-none-if-empty"></ul>
+        </div>
+        <div class="property-wrapper">
+          <h2>
+            <span id="audio-property-name"></span> Properties
+            <button class="copy-button">Copy to clipboard</button>
+          </h2>
+          <table id="audio-property-table">
+            <thead>
+              <tr>
+                <th>Property</th>
+                <th>Value</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </tabpanel>
+      <tabpanel id="video-capture">
+        <div id="video-capture-capabilities-wrapper">
+          <h2>
+            <span>Video Capture Device Capabilities</span>
+            <button id="video-capture-capabilities-copy-button">
+              Copy to clipboard
+            </button>
+          </h2>
+          <table id="video-capture-capabilities-table">
+            <thead>
+              <tr>
+                <th>Device Name</th>
+                <th>Formats</th>
+                <th>Capture API</th>
+                <th>Device ID</th>
+              </tr>
+            </thead>
+            <tbody id="video-capture-capabilities-tbody" class="show-none-if-empty"></tbody>
+          </table>
+        </div>
+      </tabpanel>
+    </tabpanels>
+  </tabbox>
+  <textarea id="clipboard-textarea" class="hiddenClipboard"></textarea>
+  <script src="media_internals.js"></script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+<html><h1 class="refsect1">RAWTOHEX</h1>
+<p><code>RAWTOHEX</code> converts raw data to a character value containing its hexadecimal representation.</p>
+<p class="titleinrefsubsect"><a id="sthref556" name="sthref556"></a>Return Value</p>
+<pre xml:space="preserve" class="oac_no_warn">VARCHAR2
+</pre>
+<p class="titleinrefsubsect"><a id="sthref557" name="sthref557"></a>Syntax</p>
+<pre xml:space="preserve" class="oac_no_warn"><span class="bold">RAWTOHEX</span>(raw)
+</pre>
+<p class="titleinrefsubsect"><a id="sthref558" name="sthref558"></a>Arguments</p>
+<p><code>raw</code> can be any scalar data type other than <code>LONG</code>, <code>LONG RAW</code>, <code>CLOB</code>, <code>BLOB</code>, or <code>BFILE</code>.</p>
+<p class="titleinrefsubsect"><a id="sthref559" name="sthref559"></a>Example</p>
+<p><code>RAWTOHEX(NLSSORT('Rumpelstiltskin'))</code> converts the raw value returned by <code>NLSSORT</code> to the hexadecimal value <code>52756D70656C7374696C74736B696E00</code>.</p>
+</div>
+</html>

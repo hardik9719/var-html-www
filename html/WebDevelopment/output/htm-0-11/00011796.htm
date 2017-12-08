@@ -1,0 +1,113 @@
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Invalidations</title>
+  <script src="chrome://resources/js/cr.js"></script>
+  <script src="chrome://resources/js/parse_html_subset.js"></script>
+  <script src="chrome://resources/js/util.js"></script>
+  <script src="chrome://invalidations/about_invalidations.js"></script>
+  <link rel="stylesheet" href="chrome://resources/css/text_defaults.css">
+  <style>/* Copyright 2014 The Chromium Authors. All rights reserved.
+ * Use of this source code is governed by a BSD-style license that can be
+ * found in the LICENSE file.
+ */
+
+body {
+  font-size: 80%;
+}
+
+#invalidations-info .lead {
+  color: rgb(74, 142, 230);
+  display: block;
+  font-size: 100%;
+  font-weight: bold;
+  margin-top: 10px;
+  word-wrap: normal;
+}
+
+#invalidations-info .section {
+  display: inline-block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+}
+
+#objectsid-table-container .td {
+  font-size: 50%;
+}
+
+#objectsid-table-container .error {
+ background: rgb(255, 204, 204);
+}
+
+#objectsid-table-container .header {
+ background: rgb(255, 255, 204);
+}
+
+#objectsid-table-container .content {
+ background: rgb(204, 255, 204);
+}
+
+#objectsid-table-container .greyed {
+ background: rgb(204, 204, 204);
+}
+
+</style>
+</head>
+<body>
+  <h1>Invalidations Debug Information</h1>
+  <div id="invalidations-info">
+    <div id="states" class="section">
+      <span class="lead">Invalidation service state:</span>
+      <span id="invalidations-state"></span>
+    </div>
+    <div>
+      <span class="lead">Registered InvalidationHandlers:</span>
+      <span id="registered-handlers"></span>
+    </div>
+    <div id="objectsid-table-div" class="section">
+      <span class="lead">Registered objectsIds for invalidations:</span>
+      <table id="objectsid-table-container">
+      <!-- 'objectsidtable' can't have dashes in the name
+            as jstemplate can't deal with them-->
+        <thead>
+          <tr class="header">
+            <th>Registrar</th>
+            <th>Source</th>
+            <th>Name</th>
+            <th>Total Count</th>
+            <th>Session Count</th>
+            <th>Version</th>
+            <th>Time</th>
+            <th>Last Payload</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr jsselect="objectsidtable" jsvalues="class:$this.type">
+            <td jscontent="registrar" width=5%></td>
+            <td jscontent="source" width=5%></td>
+            <td jscontent="name" width=20%></td>
+            <td jscontent="totalCount" width=5%></td>
+            <td jscontent="sessionCount" width=5%></td>
+            <td jscontent="version" width=10%></td>
+            <td jscontent="time" width=20%></td>
+            <td jscontent="payload" width=30%></td>
+         </tr>
+       </tbody>
+     </table>
+    </div>
+    <div class="section">
+      <span class="lead">Invalidations Log:</span>
+      <textarea
+        id="invalidations-log" rows="10" cols="120"readonly></textarea>
+    </div>
+    <div class="section">
+      <span class="lead">Detailed Internal Status:
+        <button id="request-detailed-status">Refresh</button>
+      </span>
+      <textarea id="internal-display" rows="10" cols="120" readonly></textarea>
+    </div>
+  </div>
+  <script src="chrome://resources/js/jstemplate_compiled.js"></script>
+</body>
+</html>
